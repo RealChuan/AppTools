@@ -13,15 +13,47 @@ QPushButton:hover{
 	background-color: #0066ff;
 }
 
+QPushButton:focus {
+    border-color: #57a3f3;
+}
+
 QStackedWidget{
 	background-color:#eeeeee;
 	padding:0;
 }
 
-QListWidget#listWidget{
-		color:white;
-		padding:0;
-        background-color:#818181;
+/******************************************************************************
+ *                                   QListWidget
+ *****************************************************************************/
+
+QListWidget{
+	border-width:0px;
+	font-size:18px;
+	color:white;
+	padding:0;
+    background-color:#818181;
+}
+
+QListWidget::Item{
+	border-width:0px;
+	min-height:45px;
+	padding:0;
+}
+
+QListWidget::Item:hover{
+	background:#0066ff;
+	padding:0;
+}
+
+QListWidget::item:selected{
+	background:#444444;
+	color:#0084ff;
+}
+
+QListWidget::item:selected:active{
+	border-width:0px;
+	background:#444444;
+	padding:0;
 }
 
 /******************************************************************************

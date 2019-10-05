@@ -6,12 +6,13 @@
 #include "CustomWidget.h"
 #include "FloatWidget.h"
 #include "CrcWidget.h"
+#include "LoginWidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     ,sizeGrip(nullptr)
-{
+{    
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
     setAttribute(Qt::WA_StyledBackground);
@@ -34,6 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWindow()
 {
+    this->resize(1000,600);
     UiSet::windowCenter(this);
     setWindowTitle("AppTools");
 
@@ -45,8 +47,8 @@ void MainWindow::initWindow()
     ui->label->setFont(QFont("微软雅黑", 14, QFont::Normal, false));
     ui->label->setAlignment(Qt::AlignCenter);
     ui->label->setText("AppTools");
-    ui->labelicon->setPixmap(QPixmap((QString("%1/image/setting-icon-dark.png")\
-                                      .arg(qApp->applicationDirPath()))));
+    //ui->labelicon->setPixmap(QPixmap((QString("%1/image/setting-icon-dark.png")\
+    //                                  .arg(qApp->applicationDirPath()))));
 
     QWidget *myWidget;
     myWidget=new CustomWidget(QString("你好呀!"),this);
@@ -68,6 +70,10 @@ void MainWindow::setPaddingAndSpacing()
 
 void MainWindow::titleBtn()
 {
+    ui->closebtn->setToolTip("关闭");
+    ui->hidebtn->setToolTip("最小化");
+    ui->maxbtn->setToolTip("最大化");
+    ui->minbtn->setToolTip("缩小窗口");
     if(!this->isMaximized())
     {
         ui->minbtn->hide();
@@ -78,9 +84,10 @@ void MainWindow::titleBtn()
         ui->maxbtn->hide();
         ui->minbtn->show();
     }
-    connect(ui->closebtn,&QPushButton::clicked,[]
+    connect(ui->closebtn,&QPushButton::clicked,[this]
     {
-        QApplication::quit();
+        this->close();
+        //QApplication::quit();
     });
     connect(ui->hidebtn,&QPushButton::clicked,[this]
     {
@@ -103,12 +110,14 @@ void MainWindow::titleBtn()
 void MainWindow::createListWidgetBtnMenu()
 {
     ui->listWidget->clear();
-    ui->listWidget->setFont(QFont("微软雅黑", 12, QFont::Normal, false));
+    ui->listWidget->setFocusPolicy(Qt::NoFocus);    //去除选中虚线框
+    //ui->listWidget->setFont(QFont("微软雅黑", 12, QFont::Normal, false));
     QStringList toolList;
     toolList<<"TCP助手"<<"串口助手"<<"浮点数转换助手"<<"CRC助手"<<"重新加载QSS";
     ui->listWidget->addItems(toolList);
     for(int i=0;i<toolList.size();i++)
         ui->listWidget->item(i)->setTextAlignment(Qt::AlignCenter);
+
 
     //    QListWidgetItem *tool;
     //    tool=new QListWidgetItem(QString("TCP助手"),ui->listWidget);

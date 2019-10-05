@@ -1,5 +1,6 @@
-#include "ui/mainwindow.h"
+﻿#include "ui/mainwindow.h"
 #include "help/UiSet.h"
+#include "ui/LoginWidget.h"
 
 #include <QApplication>
 
@@ -13,6 +14,9 @@ void set()
     //UiSet::setQSS(QString("%1/qss/mac.css").arg(qApp->applicationDirPath()));
     //UiSet::setQSS("qss/mac.css");
     UiSet::setQSS();
+
+    // 今后访问相对路径的文件，则是相对于可执行文件所在目录了，而不是系统的根目录
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
 }
 
 int main(int argc, char *argv[])
@@ -24,9 +28,10 @@ int main(int argc, char *argv[])
 
     set();
 
-    MainWindow w;
-    //设置窗口大小
-    w.resize(1000,600);
+    //主窗口
+    //MainWindow y;
+    LoginWidget w;
+
     w.show();
     return a.exec();
 }
