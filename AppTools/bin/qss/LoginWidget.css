@@ -1,7 +1,7 @@
 LoginWidget {
     background: white;
-    min-height: 350px;
-    min-width:  240px;
+    min-height: 380px;
+    min-width:  270px;
     border-radius: 10px;
 }
 
@@ -15,7 +15,16 @@ LoginWidget #picture{
 	border-image: url(image/login.png)
 }
 
-LoginWidget #jusername,LoginWidget #kpassword{
+LoginWidget #tipLable{
+	border: 2px solid gray;
+    min-height: 14px;
+    max-height: 14px;
+	font-size: 14px;
+	color: red;
+    border-width: 0 0 0 0;
+}
+
+LoginWidget #username,LoginWidget #password{
     min-width: 160px;
     min-height: 30px;
     font-size: 14px;

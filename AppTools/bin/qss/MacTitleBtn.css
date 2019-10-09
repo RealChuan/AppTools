@@ -71,3 +71,18 @@
     border-width: 0 0 0 0;	
 	border-image: url(image/setting-icon-dark2.png)
 }
+
+/******************************************************************************/
+#titlewidget #registerbtn{
+    min-width: 40px;
+    max-width: 40px;
+    min-height: 16px;
+    max-height: 16px;
+	font-size: 16px;
+	color: gray;
+    border-width: 0;
+}
+
+#titlewidget #registerbtn:hover{
+	background-color: #a6a6a6;
+}

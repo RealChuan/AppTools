@@ -20,6 +20,7 @@ private slots:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *);
 
+    void initWindow();
     void on_loginbtn_clicked();
 
 private:

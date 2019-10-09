@@ -21,7 +21,13 @@ MainWindow::MainWindow(QWidget *parent)
     setPaddingAndSpacing();
     titleBtn();
 
-    createListWidgetBtnMenu();
+    //QListWidget
+    ui->listWidget->hide();
+    //initListWidget();
+
+    //QTreeWidget
+    //ui->treeWidget->hide();
+    initTreeWidget();
 }
 
 MainWindow::~MainWindow()
@@ -42,7 +48,7 @@ void MainWindow::initWindow()
     sizeGrip=new QSizeGrip(nullptr);
     QGridLayout *l = qobject_cast<QGridLayout*>(ui->centralwidget->layout());
     // 添加 size grip 到窗口右下角
-    l->addWidget(sizeGrip, 1, 1, Qt::AlignRight | Qt::AlignBottom);
+    l->addWidget(sizeGrip, 1, 2, Qt::AlignRight | Qt::AlignBottom);
 
     ui->label->setFont(QFont("微软雅黑", 14, QFont::Normal, false));
     ui->label->setAlignment(Qt::AlignCenter);
@@ -50,8 +56,7 @@ void MainWindow::initWindow()
     //ui->labelicon->setPixmap(QPixmap((QString("%1/image/setting-icon-dark.png")\
     //                                  .arg(qApp->applicationDirPath()))));
 
-    QWidget *myWidget;
-    myWidget=new CustomWidget(QString("你好呀!"),this);
+    QWidget *myWidget=new CustomWidget(QString("你好呀!"),this);
     if(myWidget!=nullptr)
     {
         ui->stackedWidget->addWidget(myWidget);
@@ -65,7 +70,9 @@ void MainWindow::setPaddingAndSpacing()
     UiSet::setWidgetPaddingAndSpacing(this,0,0);
     UiSet::setWidgetPaddingAndSpacing(ui->centralwidget,0,0);
     UiSet::setWidgetPaddingAndSpacing(ui->titlewidget,5,10);
-    UiSet::setWidgetPaddingAndSpacing(ui->listWidget,0,0);
+    //UiSet::setWidgetPaddingAndSpacing(ui->listWidget,0,0);
+
+    //UiSet::setWidgetPaddingAndSpacing(ui->treeWidget,0,0);
 }
 
 void MainWindow::titleBtn()
@@ -105,19 +112,25 @@ void MainWindow::titleBtn()
         ui->maxbtn->show();
         ui->minbtn->hide();
     });
+
+    connect(ui->qssbtn,&QPushButton::clicked,[]
+    {
+        //UiSet::setQSS(QString("%1/qss/mac.css").arg(qApp->applicationDirPath()));
+        UiSet::setQSS();
+        qDebug()<<"重新加载QSS";
+    });
 }
 
-void MainWindow::createListWidgetBtnMenu()
+void MainWindow::initListWidget()
 {
     ui->listWidget->clear();
     ui->listWidget->setFocusPolicy(Qt::NoFocus);    //去除选中虚线框
     //ui->listWidget->setFont(QFont("微软雅黑", 12, QFont::Normal, false));
     QStringList toolList;
-    toolList<<"TCP助手"<<"串口助手"<<"浮点数转换助手"<<"CRC助手"<<"重新加载QSS";
+    toolList<<"TCP助手"<<"串口助手"<<"浮点数转换助手"<<"CRC助手";
     ui->listWidget->addItems(toolList);
     for(int i=0;i<toolList.size();i++)
         ui->listWidget->item(i)->setTextAlignment(Qt::AlignCenter);
-
 
     //    QListWidgetItem *tool;
     //    tool=new QListWidgetItem(QString("TCP助手"),ui->listWidget);
@@ -128,8 +141,6 @@ void MainWindow::createListWidgetBtnMenu()
     //    tool->setTextAlignment(Qt::AlignCenter);
     //    tool=new QListWidgetItem(QString("CRC助手"),ui->listWidget);
     //    tool->setTextAlignment(Qt::AlignCenter);
-    //    tool=new QListWidgetItem(QString("重新加载QSS"),ui->listWidget);
-    //    tool->setTextAlignment(Qt::AlignCenter);
 }
 
 void MainWindow::on_listWidget_clicked(const QModelIndex &)
@@ -137,13 +148,6 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &)
     QListWidgetItem *list=ui->listWidget->currentItem();
     QString className=list->data(Qt::DisplayRole).toString();
     //qDebug()<<className;
-    if(className=="重新加载QSS")
-    {
-        //UiSet::setQSS(QString("%1/qss/mac.css").arg(qApp->applicationDirPath()));
-        UiSet::setQSS();
-        qDebug()<<"重新加载QSS";
-        return;
-    }
     if(!menuMap.contains(className))
         createMenuMap(className);
     else
@@ -167,6 +171,72 @@ void MainWindow::createMenuMap(QString className)
         ui->stackedWidget->addWidget(myWidget);
         ui->stackedWidget->setCurrentWidget(myWidget);
         myWidget->setAttribute(Qt::WA_DeleteOnClose,true);
+    }
+}
+
+void MainWindow::initTreeWidget()
+{
+    ui->treeWidget->clear();
+    //设置1列
+    ui->treeWidget->setColumnCount(1);
+    //隐藏表头
+    ui->treeWidget->headerItem()->setHidden(true);
+    //隐藏前部控件
+    ui->treeWidget->setRootIsDecorated(false);
+    //去除选中虚线框
+    ui->treeWidget->setFocusPolicy(Qt::NoFocus);
+
+    //一级目录
+    //创建两个节点
+    QTreeWidgetItem *toolsitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"常用工具");
+    ui->treeWidget->addTopLevelItem(toolsitem);
+    //创建子节点
+    QTreeWidgetItem *tcpitem = new QTreeWidgetItem(toolsitem,QStringList()<<"TCP助手");
+    toolsitem->addChild(tcpitem);
+    QTreeWidgetItem *serialitem = new QTreeWidgetItem(toolsitem,QStringList()<<"串口助手");
+    toolsitem->addChild(serialitem);
+    QTreeWidgetItem *floatitem = new QTreeWidgetItem(toolsitem,QStringList()<<"浮点数助手");
+    toolsitem->addChild(floatitem);
+    QTreeWidgetItem *CRCitem = new QTreeWidgetItem(toolsitem,QStringList()<<"CRC助手");
+    toolsitem->addChild(CRCitem);
+
+    //二级目录
+    QTreeWidgetItem *setupitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"设置");
+    ui->treeWidget->addTopLevelItem(setupitem);
+    QTreeWidgetItem *accountitem = new QTreeWidgetItem(setupitem,QStringList()<<"账户设置");
+    setupitem->addChild(accountitem);
+
+    toolsitem->setExpanded(true);
+    setupitem->setExpanded(false);
+}
+
+void MainWindow::on_treeWidget_clicked(const QModelIndex &)
+{
+    QTreeWidgetItem* tree;
+    tree=ui->treeWidget->currentItem();
+    QString className=tree->data(0,Qt::DisplayRole).toString();
+    qDebug()<<className;
+    if(tree->childCount()<=0)
+    {
+        if(className=="账户设置")
+            return;
+        if(!menuMap.contains(className))
+            createMenuMap(className);
+        else
+            ui->stackedWidget->setCurrentWidget(menuMap.value(className));
+    }
+    else
+    {
+        bool isExpand=tree->isExpanded();
+        ui->treeWidget->collapseAll();
+        if(isExpand)
+        {
+            tree->setExpanded(false);
+        }
+        else
+        {
+            tree->setExpanded(true);
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #include "ui_LoginWidget.h"
 #include "../help/UiSet.h"
 #include "mainwindow.h"
+#include "../help/MySql.h"
 
 #pragma execution_character_set("utf-8")
 
@@ -12,15 +13,29 @@ LoginWidget::LoginWidget(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
     setAttribute(Qt::WA_StyledBackground);
+
+    initWindow();
+}
+
+LoginWidget::~LoginWidget()
+{
+    delete ui;
+}
+
+void LoginWidget::initWindow()
+{
+    this->resize(260,380);
     UiSet::windowCenter(this);
 
     ui->picture->setText("");
+    ui->tipLable->setText("");
+    ui->tipLable->setAlignment(Qt::AlignCenter);
 
-    ui->jusername->setPlaceholderText("用户名：admin");
-    ui->kpassword->setPlaceholderText("密码：admin");
-    ui->kpassword->setEchoMode(QLineEdit::Password);
+    ui->username->setPlaceholderText("用户名：admin");
+    ui->password->setPlaceholderText("密码：admin");
+    ui->password->setEchoMode(QLineEdit::Password);
 
-    UiSet::setWidgetPaddingAndSpacing(this,5,20);
+    UiSet::setWidgetPaddingAndSpacing(this,5,10);
     UiSet::setWidgetPaddingAndSpacing(ui->titlewidget,0,10);
 
     connect(ui->closebtn,&QPushButton::clicked,[]
@@ -35,26 +50,37 @@ LoginWidget::LoginWidget(QWidget *parent) :
     ui->loginbtn->setShortcut(Qt::Key_Enter);   //登录快捷键回车
 
     // 输入密码后按下回车进行登陆
-    connect(ui->kpassword, &QLineEdit::returnPressed, [this] {
+    connect(ui->password, &QLineEdit::returnPressed, [this] {
         ui->loginbtn->click();
     });
 }
 
-LoginWidget::~LoginWidget()
-{
-    delete ui;
-}
-
 void LoginWidget::on_loginbtn_clicked()
 {
-    QString username=ui->jusername->text().trimmed();
-    QString password=ui->kpassword->text().trimmed();
+    QString username=ui->username->text().trimmed();
+    QString password=ui->password->text().trimmed();
     if(username.isEmpty()||password.isEmpty())
     {
-        QMessageBox::warning(this, "警告", "用户名不存在或者密码为空！",QMessageBox::Ok);
+        ui->tipLable->setText("用户名或密码为空");
+        //QMessageBox::warning(this, "警告", "用户名不存在或者密码为空！",QMessageBox::Ok);
         return;
     }
-    if("admin"==username&&"admin"==password)
+
+    //增加数据库检索'账户''密码'明文
+    QVector<QStringList> result;
+    QStringList value;
+    value<<"password";
+    MySql db("127.0.0.1",3306,"apptools","root","root");
+    QString sql=QString("select password from users where username='%1'").arg(username);
+    result=db.query(sql,value);
+    if(result.isEmpty())
+    {
+        ui->tipLable->setText("用户名不存在");
+        //QMessageBox::warning(this, "警告", "用户名不存在！",QMessageBox::Ok);
+        return;
+    }
+    if(result.at(0).at(0)==password)
+        //if("admin"==username&&"admin"==password)
     {
         MainWindow *mainw=new MainWindow();
         this->hide();
@@ -64,6 +90,8 @@ void LoginWidget::on_loginbtn_clicked()
         //fix me?
         mainw->setAttribute(Qt::WA_DeleteOnClose,true);
     }
+    else
+        ui->tipLable->setText("密码错误");
 }
 
 //鼠标点击事件

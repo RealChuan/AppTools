@@ -48,19 +48,3 @@ void FloatWidget::on_convFlaot_clicked()
     float f=BinaryCvn::hexToFloat(buf);
     ui->FloatLine->setText(QString("%1").arg(static_cast<double>(f)));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

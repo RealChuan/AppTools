@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     set();
 
     //主窗口
-    //MainWindow y;
+    //MainWindow w;
     LoginWidget w;
 
     w.show();

@@ -3,6 +3,7 @@ HEADERS += \
     $$PWD/BinaryCvn.h \
     $$PWD/Crc.h \
     $$PWD/Json.h \
+    $$PWD/MySql.h \
     $$PWD/UiSet.h
            
 SOURCES += \
@@ -10,4 +11,5 @@ SOURCES += \
     $$PWD/BinaryCvn.cpp \
     $$PWD/Crc.cpp \
     $$PWD/Json.cpp \
+    $$PWD/MySql.cpp \
     $$PWD/UiSet.cpp

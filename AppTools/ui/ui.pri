@@ -4,7 +4,7 @@ HEADERS += \
     $$PWD/FloatWidget.h \
     $$PWD/LoginWidget.h \
     $$PWD/SerialWidget.h \
-	$$PWD/TcpWidget.h \
+    $$PWD/TcpWidget.h \
     $$PWD/mainwindow.h
            
 SOURCES += \

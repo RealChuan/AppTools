@@ -15,7 +15,10 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
+    <item row="1" column="2">
+     <widget class="QStackedWidget" name="stackedWidget"/>
+    </item>
+    <item row="0" column="0" colspan="3">
      <widget class="QWidget" name="titlewidget" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -39,8 +42,38 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>277</width>
-           <height>20</height>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="registerbtn">
+         <property name="text">
+          <string>注册</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="qssbtn">
+         <property name="text">
+          <string>重新加载QSS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -77,17 +110,16 @@
      </widget>
     </item>
     <item row="1" column="0" rowspan="2">
-     <widget class="QListWidget" name="listWidget">
-      <property name="maximumSize">
-       <size>
-        <width>230</width>
-        <height>16777215</height>
-       </size>
-      </property>
-     </widget>
+     <widget class="QListWidget" name="listWidget"/>
     </item>
     <item row="1" column="1">
-     <widget class="QStackedWidget" name="stackedWidget"/>
+     <widget class="QTreeWidget" name="treeWidget">
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
     </item>
    </layout>
   </widget>
