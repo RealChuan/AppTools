@@ -229,14 +229,7 @@ void MainWindow::on_treeWidget_clicked(const QModelIndex &)
     {
         bool isExpand=tree->isExpanded();
         ui->treeWidget->collapseAll();
-        if(isExpand)
-        {
-            tree->setExpanded(false);
-        }
-        else
-        {
-            tree->setExpanded(true);
-        }
+        tree->setExpanded(!isExpand);
     }
 }
 
