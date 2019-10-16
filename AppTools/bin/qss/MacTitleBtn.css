@@ -1,6 +1,8 @@
 #titlewidget{
 	border-color:black;
 	background: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 #titlewidget QPushButton {
@@ -21,48 +23,48 @@
     border-color: #57a3f3;
 }
 
-#titlewidget #closebtn {
+#closebtn {
     border-image: url(image/titlebutton-close.png);
 }
-#titlewidget #closebtn:hover {
+#closebtn:hover {
     border-image: url(image/titlebutton-close-active.png);
 }
-#titlewidget #closebtn:pressed {
+#closebtn:pressed {
     border-image: url(image/titlebutton-close-alt.png);
 }
 
-#titlewidget #hidebtn {
+#hidebtn {
     border-image: url(image/titlebutton-minimize.png);
 }
-#titlewidget #hidebtn:hover {
+#hidebtn:hover {
     border-image: url(image/titlebutton-minimize-active.png);
 }
-#titlewidget #hidebtn:pressed {
+#hidebtn:pressed {
     border-image: url(image/titlebutton-minimize-alt.png);
 }
 
-#titlewidget #minbtn {
+#minbtn {
     border-image: url(image/titlebutton-restore.png);
 }
-#titlewidget #minbtn:hover {
+#minbtn:hover {
     border-image: url(image/titlebutton-restore-active.png);
 }
-#titlewidget #minbtn:pressed {
+#minbtn:pressed {
     border-image: url(image/titlebutton-restore-alt.png);
 }
 
-#titlewidget #maxbtn {
+#maxbtn {
     border-image: url(image/titlebutton-maximize.png);
 }
-#titlewidget #maxbtn:hover {
+#maxbtn:hover {
     border-image: url(image/titlebutton-maximize-active.png);
 }
-#titlewidget #maxbtn:pressed {
+#maxbtn:pressed {
     border-image: url(image/titlebutton-maximize-alt.png);
 }
 
 /******************************************************************************/
-#titlewidget #labelicon{
+#labelicon{
 	border: 2px solid gray;
 	min-width: 30px;
     max-width: 30px;
@@ -75,14 +77,17 @@
 /******************************************************************************/
 #titlewidget #registerbtn{
     min-width: 40px;
-    max-width: 40px;
-    min-height: 16px;
-    max-height: 16px;
 	font-size: 16px;
-	color: gray;
     border-width: 0;
 }
 
+#titlewidget #qssbtn{
+	min-width: 100px;
+	font-size: 16px;
+    border-width: 0;
+}
+
+#titlewidget #qssbtn:hover,
 #titlewidget #registerbtn:hover{
-	background-color: #a6a6a6;
+	color: #0066ff;
 }

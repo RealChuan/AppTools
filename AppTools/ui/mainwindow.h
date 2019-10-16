@@ -33,8 +33,10 @@ private slots:
     void createMenuMap(QString className);
 
     //QTreeWidget菜单
-    void initTreeWidget();
-    void on_treeWidget_clicked(const QModelIndex &index);
+    //void initTreeWidget();
+    //void on_treeWidget_clicked(const QModelIndex &index);
+
+    void initMenuBtnWidget();
 
 private:
     Ui::MainWindow *ui;

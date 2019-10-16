@@ -8,10 +8,10 @@ void UiSet::setUTF8Code()
 
 void UiSet::setQSS()
 {
-    Json *json=new Json(QString("%1/cfg/config.json").arg(qApp->applicationDirPath()));
-    QStringList qssPath=json->getJsonArray("qss_files");
+    Json json(QString("%1/cfg/config.json").arg(qApp->applicationDirPath()));
+    QStringList qssPath=json.getJsonArray("qss_files");
     QString qss;
-    for (const QString &path : qssPath)
+    for (QString path : qssPath)
     {
         qDebug()<<QString("Loading QSS file: %1").arg(path);
         QFile file(path);
@@ -27,8 +27,6 @@ void UiSet::setQSS()
         qss.append(qss_).append("\n");
         file.close();
     }
-    delete json;
-    json=nullptr;
     if(!qss.isEmpty())
         qApp->setStyleSheet(qss);
 }

@@ -10,23 +10,21 @@
 class Json
 {
 public:
-    Json(QString jsonPath_);
+    Json(QString jsonPath);
     ~Json();
     //解析json普通节点
-    void parseJsonObject(QString rootName,QStringList objectName);
+    QJsonValue getJsonValue(QString rootName,QJsonObject fromNode=QJsonObject());
     //解析json数组
-    void parseJsonArray(QString rootName);
+    QStringList getJsonArray(QString rootName,QJsonObject fromNode=QJsonObject());
 
-    QMap<QString,QString> getJsonObject(QString rootName,QStringList objectName);
+    QJsonValue getObjectValue(QString rootName,QString nodeName,QJsonObject fromNode=QJsonObject());
 
-    QStringList getJsonArray(QString rootName);
+    QString getString(QString rootName,QString nodeName,QJsonObject fromNode=QJsonObject());
+    int getInt(QString rootName,QString nodeName,QJsonObject fromNode=QJsonObject());
 
 private:
     bool jsonLoad;
-    QString jsonPath;
-    QJsonObject rootObj;
-    QMap<QString,QString> jsonObject;
-    QStringList jsonArray;
+    QJsonObject rootObj;    //根节点
 };
 
 #endif // JSON_H

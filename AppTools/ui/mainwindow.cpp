@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../help/UiSet.h"
+#include "../help/AppCfg.h"
 #include "SerialWidget.h"
 #include "TcpWidget.h"
 #include "CustomWidget.h"
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 {    
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
+    setAttribute(Qt::WA_TranslucentBackground);//背景透明
     setAttribute(Qt::WA_StyledBackground);
 
     initWindow();
@@ -22,12 +24,21 @@ MainWindow::MainWindow(QWidget *parent)
     titleBtn();
 
     //QListWidget
-    ui->listWidget->hide();
-    //initListWidget();
+    //ui->listWidget->hide();
+    initListWidget();
+
+    ui->menubtnwidget->close();
+    //initMenuBtnWidget();
 
     //QTreeWidget
-    //ui->treeWidget->hide();
-    initTreeWidget();
+    //ui->treeWidget->close();
+    //initTreeWidget();
+
+    //    保存配置
+    //    QObject::connect(qApp,&QCoreApplication::aboutToQuit,[]
+    //    {
+    //        AppCfg::writeConfig();
+    //    });
 }
 
 MainWindow::~MainWindow()
@@ -48,7 +59,7 @@ void MainWindow::initWindow()
     sizeGrip=new QSizeGrip(nullptr);
     QGridLayout *l = qobject_cast<QGridLayout*>(ui->centralwidget->layout());
     // 添加 size grip 到窗口右下角
-    l->addWidget(sizeGrip, 1, 2, Qt::AlignRight | Qt::AlignBottom);
+    l->addWidget(sizeGrip, 1, 3, Qt::AlignRight | Qt::AlignBottom);
 
     ui->label->setFont(QFont("微软雅黑", 14, QFont::Normal, false));
     ui->label->setAlignment(Qt::AlignCenter);
@@ -70,8 +81,8 @@ void MainWindow::setPaddingAndSpacing()
     UiSet::setWidgetPaddingAndSpacing(this,0,0);
     UiSet::setWidgetPaddingAndSpacing(ui->centralwidget,0,0);
     UiSet::setWidgetPaddingAndSpacing(ui->titlewidget,5,10);
+    UiSet::setWidgetPaddingAndSpacing(ui->menubtnwidget,0,0);
     //UiSet::setWidgetPaddingAndSpacing(ui->listWidget,0,0);
-
     //UiSet::setWidgetPaddingAndSpacing(ui->treeWidget,0,0);
 }
 
@@ -174,64 +185,76 @@ void MainWindow::createMenuMap(QString className)
     }
 }
 
-void MainWindow::initTreeWidget()
+void MainWindow::initMenuBtnWidget()
 {
-    ui->treeWidget->clear();
-    //设置1列
-    ui->treeWidget->setColumnCount(1);
-    //隐藏表头
-    ui->treeWidget->headerItem()->setHidden(true);
-    //隐藏前部控件
-    ui->treeWidget->setRootIsDecorated(false);
-    //去除选中虚线框
-    ui->treeWidget->setFocusPolicy(Qt::NoFocus);
-
-    //一级目录
-    //创建两个节点
-    QTreeWidgetItem *toolsitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"常用工具");
-    ui->treeWidget->addTopLevelItem(toolsitem);
-    //创建子节点
-    QTreeWidgetItem *tcpitem = new QTreeWidgetItem(toolsitem,QStringList()<<"TCP助手");
-    toolsitem->addChild(tcpitem);
-    QTreeWidgetItem *serialitem = new QTreeWidgetItem(toolsitem,QStringList()<<"串口助手");
-    toolsitem->addChild(serialitem);
-    QTreeWidgetItem *floatitem = new QTreeWidgetItem(toolsitem,QStringList()<<"浮点数助手");
-    toolsitem->addChild(floatitem);
-    QTreeWidgetItem *CRCitem = new QTreeWidgetItem(toolsitem,QStringList()<<"CRC助手");
-    toolsitem->addChild(CRCitem);
-
-    //二级目录
-    QTreeWidgetItem *setupitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"设置");
-    ui->treeWidget->addTopLevelItem(setupitem);
-    QTreeWidgetItem *accountitem = new QTreeWidgetItem(setupitem,QStringList()<<"账户设置");
-    setupitem->addChild(accountitem);
-
-    toolsitem->setExpanded(true);
-    setupitem->setExpanded(false);
+//    QObjectList children = ui->menubtnwidget->children();
+//    for (QObject *child : children) {
+//        QAbstractButton *button = qobject_cast<QAbstractButton*>(child); // 可能是 QPushButton，也可能是 QToolButton
+//        QString className = child->property("class").toString();
+//        QString action    = child->property("action").toString();
+//        qDebug()<<className;
+//        qDebug()<<action;
+//    }
 }
 
-void MainWindow::on_treeWidget_clicked(const QModelIndex &)
-{
-    QTreeWidgetItem* tree;
-    tree=ui->treeWidget->currentItem();
-    QString className=tree->data(0,Qt::DisplayRole).toString();
-    qDebug()<<className;
-    if(tree->childCount()<=0)
-    {
-        if(className=="账户设置")
-            return;
-        if(!menuMap.contains(className))
-            createMenuMap(className);
-        else
-            ui->stackedWidget->setCurrentWidget(menuMap.value(className));
-    }
-    else
-    {
-        bool isExpand=tree->isExpanded();
-        ui->treeWidget->collapseAll();
-        tree->setExpanded(!isExpand);
-    }
-}
+//void MainWindow::initTreeWidget()
+//{
+//    ui->treeWidget->clear();
+//    //设置1列
+//    ui->treeWidget->setColumnCount(1);
+//    //隐藏表头
+//    ui->treeWidget->headerItem()->setHidden(true);
+//    //隐藏前部控件
+//    ui->treeWidget->setRootIsDecorated(false);
+//    //去除选中虚线框
+//    ui->treeWidget->setFocusPolicy(Qt::NoFocus);
+
+//    //一级目录
+//    //创建两个节点
+//    QTreeWidgetItem *toolsitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"常用工具");
+//    ui->treeWidget->addTopLevelItem(toolsitem);
+//    //创建子节点
+//    QTreeWidgetItem *tcpitem = new QTreeWidgetItem(toolsitem,QStringList()<<"TCP助手");
+//    toolsitem->addChild(tcpitem);
+//    QTreeWidgetItem *serialitem = new QTreeWidgetItem(toolsitem,QStringList()<<"串口助手");
+//    toolsitem->addChild(serialitem);
+//    QTreeWidgetItem *floatitem = new QTreeWidgetItem(toolsitem,QStringList()<<"浮点数助手");
+//    toolsitem->addChild(floatitem);
+//    QTreeWidgetItem *CRCitem = new QTreeWidgetItem(toolsitem,QStringList()<<"CRC助手");
+//    toolsitem->addChild(CRCitem);
+
+//    //二级目录
+//    QTreeWidgetItem *setupitem = new QTreeWidgetItem(ui->treeWidget,QStringList()<<"设置");
+//    ui->treeWidget->addTopLevelItem(setupitem);
+//    QTreeWidgetItem *accountitem = new QTreeWidgetItem(setupitem,QStringList()<<"账户设置");
+//    setupitem->addChild(accountitem);
+
+//    toolsitem->setExpanded(true);
+//    setupitem->setExpanded(false);
+//}
+
+//void MainWindow::on_treeWidget_clicked(const QModelIndex &)
+//{
+//    QTreeWidgetItem* tree;
+//    tree=ui->treeWidget->currentItem();
+//    QString className=tree->data(0,Qt::DisplayRole).toString();
+//    qDebug()<<className;
+//    if(tree->childCount()<=0)
+//    {
+//        if(className=="账户设置")
+//            return;
+//        if(!menuMap.contains(className))
+//            createMenuMap(className);
+//        else
+//            ui->stackedWidget->setCurrentWidget(menuMap.value(className));
+//    }
+//    else
+//    {
+//        bool isExpand=tree->isExpanded();
+//        ui->treeWidget->collapseAll();
+//        tree->setExpanded(!isExpand);
+//    }
+//}
 
 //鼠标点击事件
 void MainWindow::mousePressEvent(QMouseEvent *event)

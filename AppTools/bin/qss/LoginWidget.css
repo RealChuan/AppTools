@@ -1,11 +1,9 @@
 LoginWidget {
     background: white;
-    min-height: 380px;
-    min-width:  270px;
     border-radius: 10px;
 }
 
-LoginWidget #picture{
+#picture{
 	border: 2px solid gray;
     min-width:  160px;
     max-width:  160px;
@@ -15,7 +13,7 @@ LoginWidget #picture{
 	border-image: url(image/login.png)
 }
 
-LoginWidget #tipLable{
+#tipLable{
 	border: 2px solid gray;
     min-height: 14px;
     max-height: 14px;
@@ -24,13 +22,13 @@ LoginWidget #tipLable{
     border-width: 0 0 0 0;
 }
 
-LoginWidget #username,LoginWidget #password{
+#username,LoginWidget #password{
     min-width: 160px;
     min-height: 30px;
     font-size: 14px;
     border-radius: 4px;
 }
 
-LoginWidget #loginbtn {
+#loginbtn {
     height: 30px;
 }

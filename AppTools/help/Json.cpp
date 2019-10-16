@@ -5,9 +5,8 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 
-Json::Json(QString jsonPath_)
+Json::Json(QString jsonPath)
     :jsonLoad(false)
-    ,jsonPath(jsonPath_)
 {
     QString jsonError;
     QFile file(jsonPath);
@@ -39,56 +38,71 @@ Json::~Json()
 
 }
 
-void Json::parseJsonObject(QString rootName,QStringList objectName)
+QJsonValue Json::getJsonValue(QString rootName,QJsonObject fromNode)
 {
-    jsonObject.clear();
     if(!jsonLoad)
-        return;
-    if(!rootObj.contains(rootName))
+        return 0;
+    QJsonValue subObj;
+    if(fromNode.isEmpty()&&rootObj.contains(rootName))
+    {
+        subObj = rootObj.value(rootName);
+    }
+    else if(!fromNode.isEmpty()&&fromNode.contains(rootName))
+    {
+        subObj =fromNode.value(rootName);
+    }
+    else
     {
         QString jsonError;
         jsonError = QString("can not find %1").arg(rootName);
         qDebug() << jsonError;
-        return;
+        return 0;
     }
-    QJsonObject subObj = rootObj.value(rootName).toObject();
-    QString value;
-    for(int i=0;i<rootObj.size();i++)
-    {
-        if(subObj.contains(objectName.at(i)))
-        {
-            jsonObject.insert(objectName.at(i),subObj.value(objectName.at(i)).toString());
-        }
-    }
+    return subObj;
 }
 
-void Json::parseJsonArray(QString rootName)
+QStringList Json::getJsonArray(QString rootName,QJsonObject fromNode)
 {
-    jsonArray.clear();
-    if(!jsonLoad)
-        return;
-    if(!rootObj.contains(rootName))
-    {
-        QString jsonError;
-        jsonError = QString("can not find %1").arg(rootName);
-        qDebug() << jsonError;
-        return;
-    }
-    QJsonArray subArray = rootObj.value(rootName).toArray();
+    QStringList jsonArray;
+    QJsonArray subArray=getJsonValue(rootName,fromNode).toArray();
     for(int i = 0; i< subArray.size(); i++)
     {
         jsonArray << subArray.at(i).toString();
     }
-}
-
-QMap<QString, QString> Json::getJsonObject(QString rootName, QStringList objectName)
-{
-    parseJsonObject(rootName,objectName);
-    return jsonObject;
-}
-
-QStringList Json::getJsonArray(QString rootName)
-{
-    parseJsonArray(rootName);
     return jsonArray;
+}
+
+QJsonValue Json::getObjectValue(QString rootName, QString nodeName, QJsonObject fromNode)
+{
+    QJsonObject subObject=getJsonValue(rootName,fromNode).toObject();
+    for(int i=0;i<subObject.size();i++)
+    {
+        if(subObject.contains(nodeName))
+            return subObject.value(nodeName);
+    }
+    return 0;
+}
+
+QString Json::getString(QString rootName, QString nodeName, QJsonObject fromNode)
+{
+    QJsonValue value=getObjectValue(rootName,nodeName,fromNode);
+    if(value.isNull())
+    {
+        QString jsonError;
+        jsonError = QString("can not find %1").arg(rootName);
+        qDebug() << jsonError;
+    }
+    return value.toString();
+}
+
+int Json::getInt(QString rootName, QString nodeName, QJsonObject fromNode)
+{
+    QJsonValue value=getObjectValue(rootName,nodeName,fromNode);
+    if(value.isNull())
+    {
+        QString jsonError;
+        jsonError = QString("can not find %1").arg(rootName);
+        qDebug() << jsonError;
+    }
+    return value.toInt();
 }

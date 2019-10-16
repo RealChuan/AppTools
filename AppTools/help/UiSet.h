@@ -8,7 +8,7 @@
 #define QTIME qPrintable (QTime::currentTime().toString("HH-mm-ss"))
 #define DATETIME qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"))
 #define STRDATETIME qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss"))
-#define STRDATETIMEMS qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss-zzz"))
+#define STRDATETIMEMS qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz"))
 
 #define AppPath qApp->applicationDirPath()//返回包含应用程序可执行文件的目录
 

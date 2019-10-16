@@ -1,4 +1,9 @@
 {
+	"database": {
+        "type": "SQLITE",
+        "databasename": "sql/apptools.db"
+	},
+		
 	"qss_files": [
         "qss/Light.css",
 		"qss/MacTitleBtn.css",

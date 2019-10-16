@@ -2,7 +2,7 @@
 #include "ui_LoginWidget.h"
 #include "../help/UiSet.h"
 #include "mainwindow.h"
-#include "../help/MySql.h"
+#include "../help/Sql.h"
 
 #pragma execution_character_set("utf-8")
 
@@ -12,6 +12,7 @@ LoginWidget::LoginWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
+    //setAttribute(Qt::WA_TranslucentBackground);//背景透明
     setAttribute(Qt::WA_StyledBackground);
 
     initWindow();
@@ -67,20 +68,17 @@ void LoginWidget::on_loginbtn_clicked()
     }
 
     //增加数据库检索'账户''密码'明文
-    QVector<QStringList> result;
-    QStringList value;
-    value<<"password";
-    MySql db("127.0.0.1",3306,"apptools","root","root");
-    QString sql=QString("select password from users where username='%1'").arg(username);
-    result=db.query(sql,value);
-    if(result.isEmpty())
+    dbSql db;
+    QString sql=QString("select password from account where username='%1'").arg(username);
+    qDebug()<<sql;
+    QString dbpassword=db.getString(sql,"password");
+    if(dbpassword.isEmpty())
     {
         ui->tipLable->setText("用户名不存在");
         //QMessageBox::warning(this, "警告", "用户名不存在！",QMessageBox::Ok);
         return;
     }
-    if(result.at(0).at(0)==password)
-        //if("admin"==username&&"admin"==password)
+    if(dbpassword==password)
     {
         MainWindow *mainw=new MainWindow();
         this->hide();

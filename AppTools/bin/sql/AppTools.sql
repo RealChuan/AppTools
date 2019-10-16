@@ -16,20 +16,20 @@
 CREATE DATABASE IF NOT EXISTS `apptools` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `apptools`;
 
--- Dumping structure for table apptools.users
-CREATE TABLE IF NOT EXISTS `users` (
+-- Dumping structure for table apptools.account
+CREATE TABLE IF NOT EXISTS `account` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` char(50) NOT NULL DEFAULT '0',
   `password` char(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table apptools.users: ~0 rows (大约)
-DELETE FROM `users`;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`ID`, `username`, `password`) VALUES
+-- Dumping data for table apptools.account: ~0 rows (大约)
+DELETE FROM `account`;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` (`ID`, `username`, `password`) VALUES
 	(1, 'admin', 'admin');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
