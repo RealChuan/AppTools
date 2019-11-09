@@ -45,9 +45,9 @@ void dbSql::openMYSQL(QString ip, int port, QString databaseName, QString userNa
     dbSQL.setUserName(userName);            //数据库用户名
     dbSQL.setPassword(passWord);            //数据库密码
     if(!dbSQL.open())
-        qDebug()<<"不能连接"<<"connect to mysql error"<<dbSQL.lastError().text();
+        qDebug()<<"不能连接"<<"mysql error"<<dbSQL.lastError().text();
     else
-        qDebug()<<"连接成功"<<"connect to mysql OK";
+        qDebug()<<"连接成功"<<"mysql";
 }
 
 void dbSql::openSQLITE(QString databaseName)
@@ -62,9 +62,9 @@ void dbSql::openSQLITE(QString databaseName)
     QString dbname=QDir::currentPath() + "/"+databaseName;
     dbSQL.setDatabaseName(dbname);
     if(!dbSQL.open())
-        qDebug()<<"不能连接"<<"connect to sqlite error"<<dbSQL.lastError().text();
+        qDebug()<<"不能连接"<<"sqlite error"<<dbSQL.lastError().text();
     else
-        qDebug()<<"连接成功"<<"connect to sqlite OK";
+        qDebug()<<"连接成功"<<"sqlite";
 }
 
 QSqlQuery dbSql::query(QString sql)

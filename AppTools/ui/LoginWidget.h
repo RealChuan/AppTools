@@ -7,6 +7,8 @@ namespace Ui {
 class LoginWidget;
 }
 
+class LoginWidgetPrivate;
+
 class LoginWidget : public QWidget
 {
     Q_OBJECT
@@ -25,10 +27,7 @@ private slots:
 
 private:
     Ui::LoginWidget *ui;
-
-    //记录鼠标位置
-    QPoint lastPoint;
-    QPoint movePoint;
+    LoginWidgetPrivate *d;
 };
 
 #endif // LOGINWIDGET_H

@@ -1,6 +1,7 @@
 #include "FloatWidget.h"
 #include "ui_FloatWidget.h"
 #include "../help/BinaryCvn.h"
+#include <QDebug>
 
 FloatWidget::FloatWidget(QWidget *parent) :
     QWidget(parent),
@@ -23,11 +24,10 @@ void FloatWidget::on_convHex_clicked()
     {
         return;
     }
-    float f=ui->FloatLine->text().toFloat();
-    unsigned int Hex=BinaryCvn::floatToHex(f);
+    data.floater = ui->FloatLine->text().toFloat();
 
     //qDebug()<<Hex;
-    ui->HexLine->setText(QString("%1").arg(Hex,8,16,QChar('0')));
+    ui->HexLine->setText(QString("%1").arg(data.inter,8,16,QChar('0')));
 }
 
 void FloatWidget::on_convFlaot_clicked()
@@ -36,15 +36,10 @@ void FloatWidget::on_convFlaot_clicked()
     {
         return;
     }
+    bool ok;
     QString h=ui->HexLine->text();
-    QByteArray buffer=BinaryCvn::hexStrToByteArray(h);
-    unsigned char buf[4];
-    for(int i=0;i<4;i++)
-    {
-        buf[3-i]=static_cast<unsigned char>(buffer[i]);
-        buf[3-i]&=0xff;
-        //qDebug()<<hex<<buf[3-i];
-    }
-    float f=BinaryCvn::hexToFloat(buf);
-    ui->FloatLine->setText(QString("%1").arg(static_cast<double>(f)));
+    data.inter=h.toInt(&ok,16);
+//    qDebug()<<ok;
+//    qDebug()<<hex<<data.inter;
+    ui->FloatLine->setText(QString("%1").arg(static_cast<double>(data.floater)));
 }

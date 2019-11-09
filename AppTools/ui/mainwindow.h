@@ -10,6 +10,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class MainWindowPrivate;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -40,13 +42,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    //记录鼠标位置
-    QPoint lastPoint;
-    QPoint movePoint;
-    //右下角缩放功能
-    QSizeGrip *sizeGrip;
-    //界面map
-    QMap<QString,QWidget*> menuMap;
-
+    MainWindowPrivate *d;
 };
 #endif // MAINWINDOW_H

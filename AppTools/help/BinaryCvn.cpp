@@ -1,22 +1,5 @@
 ﻿#include "BinaryCvn.h"
 
-unsigned int BinaryCvn::floatToHex(float a)
-{
-    union fi
-    {
-        float f;
-        unsigned int h;
-    } ufi;
-    ufi.f = a;
-    return ufi.h;
-}
-
-float BinaryCvn::hexToFloat(unsigned char* a)//使用取地址的方法进行处理
-{
-    //return *((float*)a);
-    return *(reinterpret_cast<float*>(a));
-}
-
 QString BinaryCvn::byteArrayToHexStr(QByteArray data)//16进制接受
 {
     QString temp = "";

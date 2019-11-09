@@ -8,6 +8,8 @@ namespace Ui {
 class TcpWidget;
 }
 
+class TcpWidgetPrivate;
+
 class TcpWidget : public QWidget
 {
     Q_OBJECT
@@ -46,18 +48,7 @@ private slots:
 
 private:
     Ui::TcpWidget *ui;
-
-    QTcpServer *server;          //server
-    QList<QTcpSocket*> serverClient;
-    QTcpSocket *serverCurrentClient;
-
-    QTcpSocket *client;          //client
-    QTimer *timeConnect;
-
-    bool ok;
-    int recvCount;                  //接收数据计数
-    int sendCount;                  //发送计数
-    QTimer *sendTime;               //定时发送串口数据
+    TcpWidgetPrivate *d;
 };
 
 #endif // TCPWIDGET_H

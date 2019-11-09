@@ -9,10 +9,27 @@
 #include "CrcWidget.h"
 #include "LoginWidget.h"
 
+class MainWindowPrivate{
+public:
+    MainWindowPrivate(QWidget *owner)
+        :owner(owner)
+    {
+        sizeGrip=new QSizeGrip(nullptr);
+    }
+    QWidget *owner;
+    //记录鼠标位置
+    QPoint lastPoint;
+    QPoint movePoint;
+    //右下角缩放功能
+    QSizeGrip *sizeGrip;
+    //界面map
+    QMap<QString,QWidget*> menuMap;
+};
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    ,sizeGrip(nullptr)
+    ,d(new MainWindowPrivate(this))
 {    
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
@@ -43,11 +60,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    if(sizeGrip!=nullptr)
-    {
-        sizeGrip->close();
-    }
     delete ui;
+    delete d;
 }
 
 void MainWindow::initWindow()
@@ -56,10 +70,9 @@ void MainWindow::initWindow()
     UiSet::windowCenter(this);
     setWindowTitle("AppTools");
 
-    sizeGrip=new QSizeGrip(nullptr);
     QGridLayout *l = qobject_cast<QGridLayout*>(ui->centralwidget->layout());
     // 添加 size grip 到窗口右下角
-    l->addWidget(sizeGrip, 1, 3, Qt::AlignRight | Qt::AlignBottom);
+    l->addWidget(d->sizeGrip, 1, 3, Qt::AlignRight | Qt::AlignBottom);
 
     ui->label->setFont(QFont("微软雅黑", 14, QFont::Normal, false));
     ui->label->setAlignment(Qt::AlignCenter);
@@ -159,10 +172,10 @@ void MainWindow::on_listWidget_clicked(const QModelIndex &)
     QListWidgetItem *list=ui->listWidget->currentItem();
     QString className=list->data(Qt::DisplayRole).toString();
     //qDebug()<<className;
-    if(!menuMap.contains(className))
+    if(!d->menuMap.contains(className))
         createMenuMap(className);
     else
-        ui->stackedWidget->setCurrentWidget(menuMap.value(className));
+        ui->stackedWidget->setCurrentWidget(d->menuMap.value(className));
 }
 
 void MainWindow::createMenuMap(QString className)
@@ -178,7 +191,7 @@ void MainWindow::createMenuMap(QString className)
         myWidget=new CrcWidget(this);
     if(myWidget!=nullptr)
     {
-        menuMap.insert(className,myWidget);
+        d->menuMap.insert(className,myWidget);
         ui->stackedWidget->addWidget(myWidget);
         ui->stackedWidget->setCurrentWidget(myWidget);
         myWidget->setAttribute(Qt::WA_DeleteOnClose,true);
@@ -187,14 +200,14 @@ void MainWindow::createMenuMap(QString className)
 
 void MainWindow::initMenuBtnWidget()
 {
-//    QObjectList children = ui->menubtnwidget->children();
-//    for (QObject *child : children) {
-//        QAbstractButton *button = qobject_cast<QAbstractButton*>(child); // 可能是 QPushButton，也可能是 QToolButton
-//        QString className = child->property("class").toString();
-//        QString action    = child->property("action").toString();
-//        qDebug()<<className;
-//        qDebug()<<action;
-//    }
+    //    QObjectList children = ui->menubtnwidget->children();
+    //    for (QObject *child : children) {
+    //        QAbstractButton *button = qobject_cast<QAbstractButton*>(child); // 可能是 QPushButton，也可能是 QToolButton
+    //        QString className = child->property("class").toString();
+    //        QString action    = child->property("action").toString();
+    //        qDebug()<<className;
+    //        qDebug()<<action;
+    //    }
 }
 
 //void MainWindow::initTreeWidget()
@@ -260,26 +273,26 @@ void MainWindow::initMenuBtnWidget()
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     //读取坐鼠标点击坐标点
-    lastPoint = event->globalPos();
+    d->lastPoint = event->globalPos();
 }
 
 //鼠标移动事件
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
     if (this->isMaximized()) { return; }
-    if(!lastPoint.isNull())
+    if(!d->lastPoint.isNull())
     {
         //把移动的点记录下来
         //int dx = event->globalX() - lastpoint.x();//这种也可以
         //int dy = event->globalY() - lastpoint.y();
         //move(x() + dx, y() + dy); //窗口移动到此处
-        movePoint=event->globalPos()-lastPoint;
-        lastPoint = event->globalPos(); //更新记录点
-        move(pos()+movePoint);
+        d->movePoint=event->globalPos()-d->lastPoint;
+        d->lastPoint = event->globalPos(); //更新记录点
+        move(pos()+d->movePoint);
     }
 }
 //鼠标释放事件
 void MainWindow::mouseReleaseEvent(QMouseEvent *)
 {
-    lastPoint=QPoint();
+    d->lastPoint=QPoint();
 }

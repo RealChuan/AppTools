@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     set();
 
     //主窗口
-    //MainWindow w;
-    LoginWidget w;
+    MainWindow w;
+    //LoginWidget w;
 
     w.show();
     return a.exec();

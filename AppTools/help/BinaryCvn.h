@@ -6,12 +6,6 @@
 class BinaryCvn: public QObject
 {
 public:
-    //单精度浮点数 转 16进制
-    static unsigned int floatToHex(float a);
-
-    //16进制 转 单精度浮点数
-    static float hexToFloat(unsigned char* a);
-
     //16进制QByteArray 转 16进制QString
     static QString byteArrayToHexStr(QByteArray data);
 

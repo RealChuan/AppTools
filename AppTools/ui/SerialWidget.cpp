@@ -8,9 +8,28 @@
 
 #pragma execution_character_set("utf-8")
 
+class SerialWidgetPrivate{
+public:
+    SerialWidgetPrivate(QWidget *owner):
+        owner(owner)
+    {
+        mySerial = new QSerialPort(owner);
+        sendTime = new QTimer(owner);
+    }
+    QWidget *owner;
+    QSerialPort *mySerial;   //串口通信对象
+    QTimer *sendTime;        //定时发送串口数据
+    bool ok;
+
+    int waitTime;           //接收延时时间
+    int recvCount;          //接收数据计数
+    int sendCount;          //发送计数
+};
+
 SerialWidget::SerialWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SerialWidget)
+    ui(new Ui::SerialWidget),
+    d(new SerialWidgetPrivate(this))
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);   //去掉边框
@@ -26,14 +45,15 @@ SerialWidget::~SerialWidget()
 {
     saveConfig();
     delete ui;
+    delete d;
 }
 
 void SerialWidget::initData()
 {
-    ok=false;
-    recvCount = 0;
-    sendCount = 0;
-    waitTime = 20;
+    d->ok=false;
+    d->recvCount = 0;
+    d->sendCount = 0;
+    d->waitTime = 20;
 }
 
 void SerialWidget::initWindow()
@@ -105,6 +125,7 @@ void SerialWidget::initWindow()
     ui->hexrecv->setChecked(AppCfg::serialHexRecv);
     ui->autosendtime->setCurrentIndex(ui->autosendtime->findText(QString::number(AppCfg::serialAutoSendTime)));
     ui->senddata->setText(AppCfg::serialData);
+    ui->openbtn->setCheckable(true);
 }
 
 void SerialWidget::builtConnect()
@@ -112,9 +133,8 @@ void SerialWidget::builtConnect()
     //打开串口
     connect(ui->openbtn,SIGNAL(clicked()),this,SLOT(openSerial()));
     //发送数据
-    sendTime = new QTimer(this);
-    sendTime->setInterval(ui->autosendtime->currentText().toInt());
-    connect(sendTime, SIGNAL(timeout()), this, SLOT(sendData()));
+    d->sendTime->setInterval(ui->autosendtime->currentText().toInt());
+    connect(d->sendTime, SIGNAL(timeout()), this, SLOT(sendData()));
     connect(ui->sendbtn, SIGNAL(clicked()), this, SLOT(sendData()));
     //自动发送更改
     connect(ui->autosendtime, SIGNAL(currentIndexChanged(int)), this, SLOT(autoSendRestart()));
@@ -125,88 +145,93 @@ void SerialWidget::builtConnect()
     connect(ui->databit, SIGNAL(currentIndexChanged(int)), this, SLOT(restart()));
     connect(ui->checkbit, SIGNAL(currentIndexChanged(int)), this, SLOT(restart()));
 
-    connect(ui->savedatabtn,&QPushButton::clicked,this,[this]
+    connect(ui->savedatabtn,&QPushButton::clicked,[this]
     {
         UiSet::saveToFile(ui->display,this);
     });
+    QObject::connect(d->mySerial, &QSerialPort::readyRead, this, &SerialWidget::readData);
+}
+
+void SerialWidget::setupSerial()
+{
+    //清空缓冲区
+    d->mySerial->flush();
+    //设置波特率
+    d->mySerial->setBaudRate(ui->baudrate->currentText().toInt());
+    //设置停止位
+    switch(ui->stopbit->currentIndex())
+    {
+    case 0:d->mySerial->setStopBits(QSerialPort::OneStop);break;
+#ifdef Q_OS_WIN
+    case 1:d->mySerial->setStopBits(QSerialPort::OneAndHalfStop);break;
+    case 2:d->mySerial->setStopBits(QSerialPort::TwoStop);break;
+#else
+    case 1:myserial->setStopBits(QSerialPort::TwoStop);break;
+#endif
+    default: break;
+    }
+    //设置数据位
+    switch(ui->databit->currentIndex())
+    {
+    case 0:d->mySerial->setDataBits(QSerialPort::Data5);break;
+    case 1:d->mySerial->setDataBits(QSerialPort::Data6);break;
+    case 2:d->mySerial->setDataBits(QSerialPort::Data7);break;
+    case 3:d->mySerial->setDataBits(QSerialPort::Data8);break;
+    default: break;
+    }
+    //设置校验位
+    switch(ui->checkbit->currentIndex())
+    {
+    case 0:d->mySerial->setParity(QSerialPort::NoParity);break;
+    case 1:d->mySerial->setParity(QSerialPort::EvenParity);break;
+    case 2:d->mySerial->setParity(QSerialPort::OddParity);break;
+    default: break;
+    }
+    //设置流控制
+    d->mySerial->setFlowControl(QSerialPort::NoFlowControl);
+    ui->openbtn->setText("关闭串口");
+    changeEnable(true);
+    append(2,"打开串口成功！");
 }
 
 void SerialWidget::openSerial()
 {
     if(ui->openbtn->text()=="打开串口")
     {
-        mySerial = new QSerialPort(this);
         //设置串口名
-        mySerial->setPortName(ui->portname->currentText());
-        ok = mySerial->open(QIODevice::ReadWrite);
-        if (ok)
+        d->mySerial->setPortName(ui->portname->currentText());
+        d->ok = d->mySerial->open(QIODevice::ReadWrite);
+        if (d->ok)
         {
-            //清空缓冲区
-            mySerial->flush();
-            //设置波特率
-            mySerial->setBaudRate(ui->baudrate->currentText().toInt());
-            //设置停止位
-            switch(ui->stopbit->currentIndex())
-            {
-            case 0:mySerial->setStopBits(QSerialPort::OneStop);break;
-#ifdef Q_OS_WIN
-            case 1:mySerial->setStopBits(QSerialPort::OneAndHalfStop);break;
-            case 2:mySerial->setStopBits(QSerialPort::TwoStop);break;
-#else
-            case 1:myserial->setStopBits(QSerialPort::TwoStop);break;
-#endif
-            default: break;
-            }
-            //设置数据位
-            switch(ui->databit->currentIndex())
-            {
-            case 0:mySerial->setDataBits(QSerialPort::Data5);break;
-            case 1:mySerial->setDataBits(QSerialPort::Data6);break;
-            case 2:mySerial->setDataBits(QSerialPort::Data7);break;
-            case 3:mySerial->setDataBits(QSerialPort::Data8);break;
-            default: break;
-            }
-            //设置校验位
-            switch(ui->checkbit->currentIndex())
-            {
-            case 0:mySerial->setParity(QSerialPort::NoParity);break;
-            case 1:mySerial->setParity(QSerialPort::EvenParity);break;
-            case 2:mySerial->setParity(QSerialPort::OddParity);break;
-            default: break;
-            }
-            //设置流控制
-            mySerial->setFlowControl(QSerialPort::NoFlowControl);
+            setupSerial();
             ui->openbtn->setText("关闭串口");
-            changeEnable(true);
-            append(2,"打开串口成功！");
-            //连接信号槽
-            QObject::connect(mySerial, &QSerialPort::readyRead, this, &SerialWidget::readData);
         }
         else
-        {
             append(2,"打开串口失败，请重试！");
-        }
     }
     else
     {
         //关闭串口
-        mySerial->clear();
-        mySerial->deleteLater();
-        mySerial->close();
+        d->mySerial->flush();
+        d->mySerial->clear();
+        d->mySerial->deleteLater();
+        d->mySerial->close();
         ui->openbtn->setText("打开串口");
         changeEnable(false);
         append(2,"关闭串口成功！");
+        d->ok=false;
     }
+    ui->openbtn->setChecked(d->ok);
 }
 
 void SerialWidget::readData()
 {
-    if (mySerial->bytesAvailable() <= 0) {
+    if (d->mySerial->bytesAvailable() <= 0) {
         return;
     }
 
-    UiSet::sleep(waitTime);
-    QByteArray data = mySerial->readAll();
+    UiSet::sleep(d->waitTime);
+    QByteArray data = d->mySerial->readAll();
     int dataLen = data.length();
 
     if (dataLen <= 0) {
@@ -222,8 +247,8 @@ void SerialWidget::readData()
     }
 
     append(1, buffer);
-    recvCount = recvCount + data.size();//接收数据计数
-    ui->recvcountbtn->setText(QString("接收 : %1 字节").arg(recvCount));
+    d->recvCount += data.size();//接收数据计数
+    ui->recvcountbtn->setText(QString("接收 : %1 字节").arg(d->recvCount));
 }
 
 void SerialWidget::sendData()
@@ -241,9 +266,8 @@ void SerialWidget::sendData()
 
 void SerialWidget::sendData(QString data)
 {
-    if (mySerial == nullptr || !mySerial->isOpen()) {//串口未打开
+    if (d->mySerial == nullptr || !d->mySerial->isOpen())//串口未打开
         return;
-    }
 
     QByteArray buffer;
 
@@ -253,10 +277,10 @@ void SerialWidget::sendData(QString data)
         buffer = BinaryCvn::asciiStrToByteArray(data);
     }
 
-    mySerial->write(buffer);
+    d->mySerial->write(buffer);
     append(0, data);
-    sendCount = sendCount + buffer.size();
-    ui->sendcountbtn->setText(QString("发送 : %1 字节").arg(sendCount));
+    d->sendCount += buffer.size();
+    ui->sendcountbtn->setText(QString("发送 : %1 字节").arg(d->sendCount));
 }
 
 void SerialWidget::changeEnable(bool b)
@@ -268,72 +292,34 @@ void SerialWidget::changeEnable(bool b)
 void SerialWidget::on_autosend_stateChanged(int arg1)
 {
     if (arg1 == 0)
-        sendTime->stop();
+        d->sendTime->stop();
     else
-        sendTime->start();
+        d->sendTime->start();
 }
 
 void SerialWidget::restart()
 {
     if(ui->openbtn->text()=="打开串口")
         return;
-    else {
+    else
+    {
         if(ui->autosend->isChecked())
-            sendTime->stop();
-        mySerial->clear();
-        mySerial->deleteLater();
-        mySerial->close();
-        ok=false;
+            d->sendTime->stop();
+        d->mySerial->clear();
+        d->mySerial->deleteLater();
+        d->mySerial->close();
+        d->ok=false;
         changeEnable(false);
     }
-    mySerial = new QSerialPort(this);
+    d->mySerial = new QSerialPort(this);
     //设置串口名
-    mySerial->setPortName(ui->portname->currentText());
-    ok = mySerial->open(QIODevice::ReadWrite);
-    if (ok)
+    d->mySerial->setPortName(ui->portname->currentText());
+    d->ok = d->mySerial->open(QIODevice::ReadWrite);
+    if (d->ok)
     {
-        //清空缓冲区
-        mySerial->flush();
-        //设置波特率
-        mySerial->setBaudRate(ui->baudrate->currentText().toInt());
-        //设置停止位
-        switch(ui->stopbit->currentIndex())
-        {
-        case 0:mySerial->setStopBits(QSerialPort::OneStop);break;
-#ifdef Q_OS_WIN
-        case 1:mySerial->setStopBits(QSerialPort::OneAndHalfStop);break;
-        case 2:mySerial->setStopBits(QSerialPort::TwoStop);break;
-#else
-        case 1:myserial->setStopBits(QSerialPort::TwoStop);break;
-#endif
-        default: break;
-        }
-        //设置数据位
-        switch(ui->databit->currentIndex())
-        {
-        case 0:mySerial->setDataBits(QSerialPort::Data5);break;
-        case 1:mySerial->setDataBits(QSerialPort::Data6);break;
-        case 2:mySerial->setDataBits(QSerialPort::Data7);break;
-        case 3:mySerial->setDataBits(QSerialPort::Data8);break;
-        default: break;
-        }
-        //设置校验位
-        switch(ui->checkbit->currentIndex())
-        {
-        case 0:mySerial->setParity(QSerialPort::NoParity);break;
-        case 1:mySerial->setParity(QSerialPort::EvenParity);break;
-        case 2:mySerial->setParity(QSerialPort::OddParity);break;
-        default: break;
-        }
-        //设置流控制
-        mySerial->setFlowControl(QSerialPort::NoFlowControl);
-        ui->openbtn->setText("关闭串口");
-        changeEnable(true);
-        append(2,"串口更改设置成功！");
-        //连接信号槽
-        QObject::connect(mySerial, &QSerialPort::readyRead, this, &SerialWidget::readData);
+        setupSerial();
         if(ui->autosend->isChecked())
-            sendTime->start();
+            d->sendTime->start();
     }
     else
     {
@@ -343,14 +329,15 @@ void SerialWidget::restart()
         changeEnable(false);
         append(2,"串口设置更改失败，请重新打开串口！");
     }
+    ui->openbtn->setChecked(true);
 }
 
 void SerialWidget::autoSendRestart()
 {
     if (ui->autosend->isChecked()){
-        sendTime->stop();
-        sendTime->setInterval(ui->autosendtime->currentText().toInt());
-        sendTime->start();
+        d->sendTime->stop();
+        d->sendTime->setInterval(ui->autosendtime->currentText().toInt());
+        d->sendTime->start();
     }
 }
 
@@ -379,13 +366,13 @@ void SerialWidget::append(quint8 type, QString msg)
 
 void SerialWidget::on_sendcountbtn_clicked()
 {
-    sendCount = 0;
+    d->sendCount = 0;
     ui->sendcountbtn->setText("发送 : 0 字节");
 }
 
 void SerialWidget::on_recvcountbtn_clicked()
 {
-    recvCount = 0;
+    d->recvCount = 0;
     ui->recvcountbtn->setText("接收 : 0 字节");
 }
 
@@ -428,9 +415,9 @@ void SerialWidget::on_savedatabtn_clicked()
 void SerialWidget::on_cleardatabtn_clicked()
 {
     ui->display->clear();
-    sendCount = 0;
+    d->sendCount = 0;
     ui->sendcountbtn->setText("发送 : 0 字节");
-    recvCount = 0;
+    d->recvCount = 0;
     ui->recvcountbtn->setText("接收 : 0 字节");
 }
 

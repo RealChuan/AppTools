@@ -12,6 +12,12 @@ class FloatWidget : public QWidget
     Q_OBJECT
 
 public:
+    //联合体
+    union binaryCvn
+    {
+        int inter;
+        float floater;
+    };
     explicit FloatWidget(QWidget *parent = nullptr);
     ~FloatWidget();
 
@@ -22,6 +28,7 @@ private slots:
 
 private:
     Ui::FloatWidget *ui;
+    binaryCvn data;
 };
 
 #endif // FLOATWIDGET_H

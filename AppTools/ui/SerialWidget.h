@@ -10,6 +10,8 @@ namespace Ui {
 class SerialWidget;
 }
 
+class SerialWidgetPrivate;
+
 class SerialWidget : public QWidget
 {
     Q_OBJECT
@@ -22,6 +24,7 @@ private slots:
     void initData();
     void initWindow();
     void builtConnect();
+    void setupSerial();
     void openSerial();
     void readData();                //读取串口数据
     void sendData();                //发送串口数据
@@ -37,18 +40,9 @@ private slots:
     //void on_savedatabtn_clicked();
     void on_cleardatabtn_clicked();
     void on_checkport_clicked();
-
-    void saveConfig();
-
+    void saveConfig();  
 private:
     Ui::SerialWidget *ui;
-
-    QSerialPort *mySerial;   //串口通信对象
-    QTimer *sendTime;        //定时发送串口数据
-    bool ok;
-
-    int waitTime;           //接收延时时间
-    int recvCount;          //接收数据计数
-    int sendCount;          //发送计数
+    SerialWidgetPrivate *d;
 };
 #endif // SERIALWIDGET_H
