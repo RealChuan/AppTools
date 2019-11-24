@@ -1,0 +1,17 @@
+{
+	"database": {
+        "type": "MYSQL",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "databasename": "apptools",
+        "username": "root",
+        "password": "123456"
+	},
+		
+	"qss_files": [
+        "qss/Light.css",
+		"qss/MacTitleBtn.css",
+		"qss/LoginWidget.css",
+		"qss/MenuButton.css"
+    ]
+}

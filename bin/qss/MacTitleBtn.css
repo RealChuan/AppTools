@@ -1,0 +1,93 @@
+#titlewidget{
+	border-color:black;
+	background: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+#titlewidget QPushButton {
+    width:  16px;
+    height: 16px;
+    min-width:  16px;
+    max-width:  16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-width: 0;
+}
+
+#titlewidget QPushButton:hover{
+	background-color: #ffffff;
+}
+
+#titlewidget QPushButton:focus {
+    border-color: #57a3f3;
+}
+
+#closebtn {
+    border-image: url(image/titlebutton-close2.png);
+}
+#closebtn:hover {
+    border-image: url(image/titlebutton-close-active2.png);
+}
+#closebtn:pressed {
+    border-image: url(image/titlebutton-close-alt2.png);
+}
+
+#hidebtn {
+    border-image: url(image/titlebutton-minimize2.png);
+}
+#hidebtn:hover {
+    border-image: url(image/titlebutton-minimize-active2.png);
+}
+#hidebtn:pressed {
+    border-image: url(image/titlebutton-minimize-alt2.png);
+}
+
+#minbtn {
+    border-image: url(image/titlebutton-restore2.png);
+}
+#minbtn:hover {
+    border-image: url(image/titlebutton-restore-active2.png);
+}
+#minbtn:pressed {
+    border-image: url(image/titlebutton-restore-alt2.png);
+}
+
+#maxbtn {
+    border-image: url(image/titlebutton-maximize2.png);
+}
+#maxbtn:hover {
+    border-image: url(image/titlebutton-maximize-active2.png);
+}
+#maxbtn:pressed {
+    border-image: url(image/titlebutton-maximize-alt2.png);
+}
+
+/******************************************************************************/
+#labelicon{
+	border: 2px solid gray;
+	min-width: 30px;
+    max-width: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    border-width: 0 0 0 0;	
+	border-image: url(image/setting-icon-dark2.png)
+}
+
+/******************************************************************************/
+#titlewidget #registerbtn{
+    min-width: 40px;
+	font-size: 16px;
+    border-width: 0;
+}
+
+#titlewidget #qssbtn{
+	min-width: 100px;
+	font-size: 16px;
+    border-width: 0;
+}
+
+#titlewidget #qssbtn:hover,
+#titlewidget #registerbtn:hover{
+	color: #0066ff;
+}
