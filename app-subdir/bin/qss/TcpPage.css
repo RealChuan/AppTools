@@ -1,0 +1,13 @@
+#SendBox {
+    min-height: 120px;
+}
+
+#SetBox {
+    min-width: 220px;
+    max-width: 220px;
+}
+
+#SendButton {
+	min-width: 80px;
+	min-height: 80px;
+}

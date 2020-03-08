@@ -1,0 +1,12 @@
+#ifndef TCPTOOLPLUGIN_GLOBAL_H
+#define TCPTOOLPLUGIN_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(TCPTOOLPLUGIN_LIBRARY)
+#  define TCPTOOLPLUGIN_EXPORT Q_DECL_EXPORT
+#else
+#  define TCPTOOLPLUGIN_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // UTILS_GLOBAL_H

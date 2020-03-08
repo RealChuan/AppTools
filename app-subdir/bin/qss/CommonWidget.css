@@ -1,0 +1,36 @@
+/******************************************************************************
+ *                                   CommonWidget
+ *****************************************************************************/
+#CommonCentralWidget {
+	background: #f7f7f7;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+/******************************************************************************
+ *                                   MesaaBox
+ *****************************************************************************/
+#InfoLabel {
+	min-width: 48px;
+    max-width: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    border-width: 0;	
+	border-image: url(image/info.png);
+}
+ 
+#WarningLabel {
+	min-width: 48px;
+    max-width: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    border-width: 0;	
+	border-image: url(image/warn.png);
+}
+
+#MessageLabel {
+	font-weight: bold;
+	font-size: 30px;
+	font-weight: bold;
+	qproperty-alignment: AlignCenter;
+}
