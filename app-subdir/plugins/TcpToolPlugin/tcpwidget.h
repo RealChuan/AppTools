@@ -27,6 +27,9 @@ private slots:
     void onServerDisClient(const QString&);
     void onServerRecvMessage(const QString&, const QByteArray&);
 
+    void onClientOnLine(bool);
+    void onClientRecvMessage(const QByteArray&);
+
     void onAutoSend(bool);
     void onSave();
     void appendError(const QString&);

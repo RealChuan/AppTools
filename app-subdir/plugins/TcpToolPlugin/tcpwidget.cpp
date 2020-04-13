@@ -1,5 +1,6 @@
 #include "tcpwidget.h"
 #include "tcpserverthread.h"
+#include "tcpclientthread.h"
 
 #include <utils/utils.h>
 #include <controls/messbox.h>
@@ -75,6 +76,7 @@ public:
     QPushButton *clearButton;
 
     TcpServerThread *serverThread = nullptr;
+    TcpClientThread *clientThread = nullptr;
 
     QTimer *sendTime = nullptr;
     int sendCount = 0;
@@ -123,29 +125,49 @@ void TcpWidget::onModelChange(const QString &text)
 void TcpWidget::onListenOrConnect(bool state)
 {
     d->listenOrConnectButton->setChecked(!state);
-    QString ip = d->portEdit->text();
-    if(ip.isEmpty()){
-        QString error = tr("Please enter the port number!");
+    QString port = d->portEdit->text();
+    if(port.isEmpty()){
+        MessBox::Warning(this, tr("Please enter the port number!"));
         d->portEdit->setFocus();
+        return;
     }
 
     if(d->modelBox->currentText() == tr("TcpServer")){
         if(state) {
-            d->serverThread = new TcpServerThread(quint16(ip.toUInt()), d->localIPBox->currentText());
-            connect(d->serverThread, &TcpServerThread::serverOnLine, this, &TcpWidget::onServerOnline);
-            connect(d->serverThread, &TcpServerThread::errorMessage, this, &TcpWidget::appendError);
-            connect(d->serverThread, &TcpServerThread::newClientInfo, this, &TcpWidget::onServerNewClient);
-            connect(d->serverThread, &TcpServerThread::disconnectClientInfo, this, &TcpWidget::onServerDisClient);
-            connect(d->serverThread, &TcpServerThread::clientMessage, this, &TcpWidget::onServerRecvMessage);
+            d->serverThread = new TcpServerThread(quint16(port.toUInt()), d->localIPBox->currentText(), this);
+            connect(d->serverThread, &TcpServerThread::serverOnLine, this, &TcpWidget::onServerOnline, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::errorMessage, this, &TcpWidget::appendError, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::newClientInfo, this, &TcpWidget::onServerNewClient, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::disconnectClientInfo, this, &TcpWidget::onServerDisClient, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::clientMessage, this, &TcpWidget::onServerRecvMessage, Qt::UniqueConnection);
             d->serverThread->start();
         } else {
-            delete  d->serverThread;
+            d->serverThread->disconnect();
+            delete d->serverThread;
             d->serverThread = nullptr;
             for(int i=1; i<d->allConnectBox->count(); i++)
                 d->allConnectBox->removeItem(i);
+            onServerOnline(false);
         }
     }else if(d->modelBox->currentText() == tr("TcpClient")){
-
+        if(state){
+            QString ip = d->serverIPEdit->text().trimmed();
+            if(ip.isEmpty()){
+                MessBox::Warning(this, tr("Please enter the ip address!"));
+                d->serverIPEdit->setFocus();
+                return;
+            }
+            d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), false, this);
+            connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
+            connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::appendError, Qt::UniqueConnection);
+            connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
+            d->clientThread->start();
+        } else if(d->clientThread){
+            d->clientThread->disconnect();
+            delete d->clientThread;
+            d->clientThread = nullptr;
+            onClientOnLine(false);
+        }
     }
 }
 
@@ -153,7 +175,6 @@ void TcpWidget::sendData()
 {
     QString str = d->sendData->toPlainText();
     if(str.isEmpty()) return;
-
     QByteArray bytes;
     if(d->hexBox->isChecked())
         bytes = QByteArray::fromHex(str.toLocal8Bit()).toUpper();
@@ -170,6 +191,11 @@ void TcpWidget::sendData()
         emit d->serverThread->sendMessage(bytes, clientInfo);
         d->sendCount += str.size();
         sendCount(d->sendCount);
+    } else if(d->clientThread){
+        emit d->clientThread->sendMessage(bytes);
+         appendDisplay(Send, str);
+        d->sendCount += bytes.size();
+        sendCount(d->sendCount);
     }
 }
 
@@ -179,6 +205,7 @@ void TcpWidget::onServerOnline(bool state)
     d->localIPBox->setEnabled(!state);
     d->portEdit->setEnabled(!state);
     d->listenOrConnectButton->setChecked(state);
+    d->listenOrConnectButton->setText(state? tr("Disconnect") : tr("Listen"));
     if(!state)
         d->autoSendBox->setChecked(state);
     d->autoSendBox->setEnabled(state);
@@ -224,17 +251,45 @@ void TcpWidget::onServerRecvMessage(const QString &clientInfo, const QByteArray 
     appendDisplay(Recv, str);
 }
 
+void TcpWidget::onClientOnLine(bool state)
+{
+    d->modelBox->setEnabled(!state);
+    d->serverIPEdit->setEnabled(!state);
+    d->portEdit->setEnabled(!state);
+    d->listenOrConnectButton->setChecked(state);
+    d->listenOrConnectButton->setText(state? tr("Disconnect") : tr("Connect"));
+    if(!state)
+        d->autoSendBox->setChecked(state);
+    d->autoSendBox->setEnabled(state);
+    d->sendButton->setEnabled(state);
+
+//    if(!state && !d->autoConnectBox->isChecked() && d->clientThread){
+//        d->clientThread->disconnect();
+//        delete d->clientThread;
+//        d->clientThread = nullptr;
+//    }
+}
+
+void TcpWidget::onClientRecvMessage(const QByteArray &bytes)
+{
+    if(bytes.isEmpty()) return;
+    d->recvCount += bytes.size();
+    QString temp;
+    if(d->hexBox->isChecked()){
+        QString hex = QString::fromLocal8Bit(bytes.toHex().toUpper());
+        for (int i = 0; i < hex.length(); i = i + 2)
+            temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
+    } else
+        temp = bytes;
+    appendDisplay(Recv, temp);
+}
+
 void TcpWidget::onAutoSend(bool state)
 {
-    if(state) {
-        d->sendTime = new QTimer(this);
-        d->sendTime->setInterval(d->autoSendTimeBox->value());
-        connect(d->sendTime, &QTimer::timeout, this, &TcpWidget::sendData);
-        d->sendTime->start();
-    } else if(d->sendTime){
-        delete d->sendTime;
-        d->sendTime = nullptr;
-    }
+    if(state)
+        d->sendTime->start(d->autoSendTimeBox->value());
+    else
+        d->sendTime->stop();
 }
 
 void TcpWidget::onSave()
@@ -327,6 +382,9 @@ void TcpWidget::init()
     d->localIPBox->setCurrentIndex(d->localIPBox->count() - 1);
     d->serverIPEdit->setText("127.0.0.1");
     d->portEdit->setText("65533");
+
+    d->sendTime = new QTimer(this);
+    connect(d->sendTime, &QTimer::timeout, this, &TcpWidget::sendData);
 }
 
 void TcpWidget::buildConnect()
