@@ -13,7 +13,6 @@ public:
 
 public slots:
     void oConnectToServer();
-
     void onWrite(const QByteArray&);
 
 signals:
@@ -22,9 +21,10 @@ signals:
     void serverMessage(const QByteArray&);
 
 private slots:
-    void onError(QAbstractSocket::SocketError);
+    void onError();
     void onReadyRead();
-    void onStateChange(QAbstractSocket::SocketState socketState);
+    //void onStateChange(QAbstractSocket::SocketState socketState);
+    void onDisconenct();
 
 private:
     void buildConnect();

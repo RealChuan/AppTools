@@ -24,8 +24,10 @@ TcpClientThread::TcpClientThread(const QString &ip, quint16 port, bool flag, QOb
 
 TcpClientThread::~TcpClientThread()
 {
+    disconnect();
     join();
     delete  d;
+    qDebug() << "~TcpClientThread";
 }
 
 void TcpClientThread::setAutoReconnect(bool state)
@@ -40,7 +42,6 @@ void TcpClientThread::run()
     connect(tcpClient.data(), &TcpClient::errorMessage, this, &TcpClientThread::errorMessage);
     connect(tcpClient.data(), &TcpClient::serverMessage, this, &TcpClientThread::serverMessage);
     connect(this, &TcpClientThread::sendMessage, tcpClient.data(), &TcpClient::onWrite);
-    connect(this, &TcpClientThread::reconnect, tcpClient.data(), &TcpClient::oConnectToServer);
     tcpClient->oConnectToServer();
     exec();
 }

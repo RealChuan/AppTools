@@ -23,7 +23,6 @@ TcpServerThread::~TcpServerThread()
         wait();
     }
     delete d;
-    emit serverOnLine(false);
 }
 
 void TcpServerThread::run()
@@ -40,4 +39,6 @@ void TcpServerThread::run()
     if(false == ok) return;
 
     exec();
+
+    emit serverOnLine(false);
 }

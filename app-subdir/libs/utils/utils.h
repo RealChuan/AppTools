@@ -3,7 +3,8 @@
 
 #include "utils_global.h"
 
-#define STRDATETIMEMS qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz"))
+#define STRDATETIME qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss"))
+#define STRDATETIMEMS qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.zzz"))
 
 class QWidget;
 

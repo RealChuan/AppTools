@@ -20,8 +20,6 @@ signals:
     void serverMessage(const QByteArray&);
     void sendMessage(const QByteArray&);
 
-    void reconnect();
-
 protected:
     void run() override;
 

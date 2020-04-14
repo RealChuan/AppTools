@@ -29,6 +29,8 @@ private slots:
 
     void onClientOnLine(bool);
     void onClientRecvMessage(const QByteArray&);
+    void onAutoReconnectStartOrStop(bool);
+    void onAutoConnect();
 
     void onAutoSend(bool);
     void onSave();
@@ -42,6 +44,8 @@ private:
     void appendDisplay(MessageType, const QString&);
     void sendCount(int);
     void recvCount(int);
+
+    void destoryServerOrClientThread();
 
     TcpWidgetPrivate *d;
 };
