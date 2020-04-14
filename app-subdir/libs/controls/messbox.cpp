@@ -8,8 +8,9 @@ public:
         iconLabel = new QLabel(owner);
         messageLabel = new QLabel(owner);
         messageLabel->setObjectName("MessageLabel");
-        messageLabel->setWordWrap(true);
+        //messageLabel->setWordWrap(true);
         closeButton = new QPushButton(QObject::tr("Close"), owner);
+        closeButton->setObjectName("MessCloseButton");
     }
     CommonWidget *owner;
     QLabel *iconLabel;
@@ -71,20 +72,24 @@ void MessBox::setIconLabelObjectName(const QString &objectName)
 void MessBox::setupUI()
 {
     QHBoxLayout *mLayout = new QHBoxLayout;
-    mLayout->setSpacing(20);
+    mLayout->setSpacing(30);
     mLayout->addStretch(0);
     mLayout->addWidget(d->iconLabel);
     mLayout->addWidget(d->messageLabel);
     mLayout->addStretch(0);
 
-    QHBoxLayout *btnLayout = new QHBoxLayout;
+    QWidget *btnWidget = new QWidget(this);
+    btnWidget->setObjectName("MessBtnWidget");
+    QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
+    btnLayout->setContentsMargins(3, 3, 10, 3);
     btnLayout->addStretch(0);
     btnLayout->addWidget(d->closeButton);
 
     QWidget *widget = new QWidget(this);
     QVBoxLayout* layout = new QVBoxLayout(widget);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addLayout(mLayout);
-    layout->addLayout(btnLayout);
+    layout->addWidget(btnWidget);
 
     setCentralWidget(widget);
 }

@@ -34,3 +34,17 @@
 	font-weight: bold;
 	qproperty-alignment: AlignCenter;
 }
+
+#MessBtnWidget {
+	background: white;
+	max-height: 40px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#MessCloseButton {
+	min-width: 48;
+	min-height: 30;
+	color: white;
+	background-color: #39a3ff;
+}

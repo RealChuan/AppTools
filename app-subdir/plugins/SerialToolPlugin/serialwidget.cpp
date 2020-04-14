@@ -9,7 +9,7 @@ public:
         sendData = new QTextEdit(owner);
         sendButton = new QPushButton(QObject::tr("Send"), owner);
         sendButton->setObjectName("SendButton");
-        searchSerialButton = new QPushButton(QObject::tr("Detect Available Serial"), owner);
+        searchSerialButton = new QPushButton(QObject::tr("Search Available Serial"), owner);
         serialBox = new QComboBox(owner);
         baudRateBox = new QComboBox(owner);
         dataBitsBox = new QComboBox(owner);
