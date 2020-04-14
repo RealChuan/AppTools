@@ -15,15 +15,16 @@ TcpServer::TcpServer(QObject *parent) : QTcpServer(parent)
     buildConnect();
 }
 
+TcpServer::~TcpServer()
+{
+    delete d;
+    if(isListening())
+        close();
+}
+
 void TcpServer::onSendMessage(const QByteArray &bytes, const QString &clientInfo)
 {
     if(bytes.isEmpty()) return;
-
-    if(d->tcpClientList.isEmpty()){
-        QString error = tr("No client is currently online, please stop sending invalid!");
-        emit errorMessage(error);
-        return;
-    }
 
     if(clientInfo.isEmpty()) {
         for(QTcpSocket* client : d->tcpClientList)
@@ -39,7 +40,7 @@ void TcpServer::onSendMessage(const QByteArray &bytes, const QString &clientInfo
     }
 }
 
-void TcpServer::onAcceptError()
+void TcpServer::onError()
 {
     QString error = tr("TCPServer accept Error: %1").arg(errorString());
     emit errorMessage(error);
@@ -95,8 +96,12 @@ void TcpServer::onClientReadyRead()
     QTcpSocket *client = qobject_cast<QTcpSocket*>(sender());
     if(nullptr == client) return;
 
-    QByteArray bytes = client->readAll();
-    if(bytes.isEmpty()) return;
+    if(client->bytesAvailable() <= 0) return;
+
+    QByteArray bytes;
+    while (client->atEnd())
+        bytes += client->readAll();
+    //if(bytes.isEmpty()) return;
 
     QString clientInfo = tr("Client [%1 : %2] : ").
             arg(client->peerAddress().toString().split("::ffff:")[0]).
@@ -106,6 +111,6 @@ void TcpServer::onClientReadyRead()
 
 void TcpServer::buildConnect()
 {
-    connect(this, &QTcpServer::acceptError, this, &TcpServer::onAcceptError);
-    connect(this, &QTcpServer::newConnection, this, &TcpServer::onNewConnect);
+    connect(this, &TcpServer::acceptError, this, &TcpServer::onError);
+    connect(this, &TcpServer::newConnection, this, &TcpServer::onNewConnect);
 }

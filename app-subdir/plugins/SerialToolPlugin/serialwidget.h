@@ -13,8 +13,22 @@ public:
 
 signals:
 
+private slots:
+    void onSearchPort();
+
+    void onPortChanged(const QString&);
+    void onBaudRateChanged(const QString&);
+    void onDataBitsChanged(const QString&);
+    void onStopBitsChanged(const QString&);
+    void onParityChanged(const QString&);
+    void onFlowControlChanged(const QString&);
+
+    void onOpenOrCloseSerial(bool);
+
 private:
     void setupUI();
+    void init();
+    void buildConnect();
 
     SerialWidgetPrivate *d;
 };

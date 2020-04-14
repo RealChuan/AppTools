@@ -9,7 +9,7 @@ class TcpClientThread : public QThread
 {
     Q_OBJECT
 public:
-    TcpClientThread(const QString &ip, quint16 port, bool flag = false, QObject *parent = nullptr);
+    TcpClientThread(const QString &ip, quint16 port, QObject *parent = nullptr);
     ~TcpClientThread() override;
 
     void setAutoReconnect(bool);
@@ -19,16 +19,12 @@ signals:
     void errorMessage(const QString&);
     void serverMessage(const QByteArray&);
     void sendMessage(const QByteArray&);
+    void reconnect();
 
 protected:
     void run() override;
 
-private slots:
-    void onClientOnLine(bool);
-
 private:
-    void join();
-
     TcpClientThreadPrivate *d;
 };
 

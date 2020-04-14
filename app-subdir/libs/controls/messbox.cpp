@@ -27,7 +27,7 @@ MessBox::MessBox(QWidget *parent) : CommonWidget(parent)
     hideRestoreMaxButton();
     setupUI();
     buildConnect();
-    resize(600, 370);
+    resize(450, 280);
 }
 
 MessBox::~MessBox()
@@ -72,7 +72,7 @@ void MessBox::setIconLabelObjectName(const QString &objectName)
 void MessBox::setupUI()
 {
     QHBoxLayout *mLayout = new QHBoxLayout;
-    mLayout->setSpacing(30);
+    mLayout->setSpacing(20);
     mLayout->addStretch(0);
     mLayout->addWidget(d->iconLabel);
     mLayout->addWidget(d->messageLabel);

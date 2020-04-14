@@ -9,6 +9,15 @@
 #include <QNetworkInterface>
 #include <QtWidgets>
 
+inline QString formatHex(const QByteArray &msg)
+{
+    QString temp;
+    QString hex = QString::fromLocal8Bit(msg.toHex().toUpper());
+    for (int i = 0; i < hex.length(); i = i + 2)
+        temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
+    return temp;
+}
+
 enum Model { Server, Client };
 
 class TcpWidgetPrivate{
@@ -36,7 +45,7 @@ public:
         listenOrConnectButton = new QPushButton(owner);
         listenOrConnectButton->setCheckable(true);
 
-        hexBox = new QCheckBox(QObject::tr("HEX"), owner);
+        hexBox = new QCheckBox(QObject::tr("Hex"), owner);
         autoSendBox = new QCheckBox(QObject::tr("Auto Delivery"), owner);
         autoSendTimeBox = new QSpinBox(owner);
         autoSendTimeBox->setSuffix(QObject::tr(" ms"));
@@ -63,9 +72,11 @@ public:
         setWidget = new QWidget(owner);
     }
     QWidget *owner;
+
     QTextEdit *dataView;
     QTextEdit *sendData;
     QPushButton *sendButton;
+
     QComboBox *modelBox;
     QLabel *ipLabel;
     QComboBox *localIPBox;
@@ -73,12 +84,14 @@ public:
     QLabel *portLabel;
     QLineEdit *portEdit;
     QPushButton *listenOrConnectButton;
+
     QCheckBox *hexBox;
     QCheckBox *autoSendBox;
     QSpinBox *autoSendTimeBox;
     QComboBox *allConnectBox;
     QCheckBox *autoConnectBox;
     QSpinBox *autoConnectTimeBox;
+
     QPushButton *sendConutButton;
     QPushButton *recvConutButton;
     QPushButton *saveButton;
@@ -131,7 +144,7 @@ void TcpWidget::onModelChange(const QString &text)
         d->autoConnectBox->show();
         d->autoConnectTimeBox->show();
     }
-    clearButton();
+    clearCount();
 }
 
 void TcpWidget::onListenOrConnect(bool state)
@@ -149,7 +162,7 @@ void TcpWidget::onListenOrConnect(bool state)
             destoryServerOrClientThread();
             d->serverThread = new TcpServerThread(quint16(port.toUInt()), d->localIPBox->currentText(), this);
             connect(d->serverThread, &TcpServerThread::serverOnLine, this, &TcpWidget::onServerOnline, Qt::UniqueConnection);
-            connect(d->serverThread, &TcpServerThread::errorMessage, this, &TcpWidget::appendError, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
             connect(d->serverThread, &TcpServerThread::newClientInfo, this, &TcpWidget::onServerNewClient, Qt::UniqueConnection);
             connect(d->serverThread, &TcpServerThread::disconnectClientInfo, this, &TcpWidget::onServerDisClient, Qt::UniqueConnection);
             connect(d->serverThread, &TcpServerThread::clientMessage, this, &TcpWidget::onServerRecvMessage, Qt::UniqueConnection);
@@ -166,17 +179,6 @@ void TcpWidget::onListenOrConnect(bool state)
         if(state){
             destoryServerOrClientThread();
             onAutoConnect();
-            //            QString ip = d->serverIPEdit->text().trimmed();
-            //            if(ip.isEmpty()){
-            //                MessBox::Warning(this, tr("Please enter the ip address!"));
-            //                d->serverIPEdit->setFocus();
-            //                return;
-            //            }
-            //            d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), false, this);
-            //            connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
-            //            connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::appendError, Qt::UniqueConnection);
-            //            connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
-            //            d->clientThread->start();
         } else if(d->clientThread){
             delete d->clientThread;
             d->clientThread = nullptr;
@@ -185,17 +187,23 @@ void TcpWidget::onListenOrConnect(bool state)
     }
 }
 
-void TcpWidget::sendData()
+void TcpWidget::onSendData()
 {
     QString str = d->sendData->toPlainText();
     if(str.isEmpty()) return;
     QByteArray bytes;
-    if(d->hexBox->isChecked())
+    if(d->hexBox->isChecked()){
         bytes = QByteArray::fromHex(str.toLocal8Bit()).toUpper();
-    else
+        str = formatHex(bytes);
+    } else
         bytes = str.toUtf8();
 
     if(d->serverThread){
+        if(d->allConnectBox->count() == 1){
+            QString error = tr("No client is currently online, please stop sending invalid!");
+            appendDisplay(ErrorInfo, error);
+            return;
+        }
         QString clientInfo = d->allConnectBox->currentText();
         if(clientInfo == tr("Connect All")){
             appendDisplay(Send, QString(tr("Send To All Online Clients: %1.").arg(str)));
@@ -204,12 +212,12 @@ void TcpWidget::sendData()
             appendDisplay(Send, QString(tr("Send To Clients [%1] : %2.").arg(clientInfo).arg(str)));
         emit d->serverThread->sendMessage(bytes, clientInfo);
         d->sendCount += str.size();
-        sendCount(d->sendCount);
+        setSendCount(d->sendCount);
     } else if(d->clientThread){
         emit d->clientThread->sendMessage(bytes);
         appendDisplay(Send, str);
         d->sendCount += bytes.size();
-        sendCount(d->sendCount);
+        setSendCount(d->sendCount);
     }
 }
 
@@ -254,15 +262,11 @@ void TcpWidget::onServerRecvMessage(const QString &clientInfo, const QByteArray 
 {
     if(bytes.isEmpty()) return;
     d->recvCount += bytes.size();
-    recvCount(d->recvCount);
+    setRecvCount(d->recvCount);
     QString str = clientInfo;
-    if(d->hexBox->isChecked()){
-        QString temp = "";
-        QString hex = QString::fromLocal8Bit(bytes.toHex().toUpper());
-        for (int i = 0; i < hex.length(); i = i + 2)
-            temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
-        str += temp;
-    } else
+    if(d->hexBox->isChecked())
+        str += formatHex(bytes);
+    else
         str += bytes;
     appendDisplay(Recv, str);
 }
@@ -282,8 +286,8 @@ void TcpWidget::onClientOnLine(bool state)
     d->sendButton->setEnabled(state);
 
     if(!state && !d->autoConnectBox->isChecked() && d->clientThread){
-        //delete d->clientThread;
-        d->clientThread->deleteLater();
+        delete d->clientThread;
+        //d->clientThread->deleteLater();
         d->clientThread = nullptr;
     }
 
@@ -301,14 +305,13 @@ void TcpWidget::onClientRecvMessage(const QByteArray &bytes)
 {
     if(bytes.isEmpty()) return;
     d->recvCount += bytes.size();
-    QString temp;
-    if(d->hexBox->isChecked()){
-        QString hex = QString::fromLocal8Bit(bytes.toHex().toUpper());
-        for (int i = 0; i < hex.length(); i = i + 2)
-            temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
-    } else
-        temp = bytes;
-    appendDisplay(Recv, temp);
+    setRecvCount(d->recvCount);
+    QString str;
+    if(d->hexBox->isChecked())
+        str = formatHex(bytes);
+    else
+        str = bytes;
+    appendDisplay(Recv, str);
 }
 
 void TcpWidget::onAutoReconnectStartOrStop(bool state)
@@ -322,12 +325,6 @@ void TcpWidget::onAutoReconnectStartOrStop(bool state)
 
 void TcpWidget::onAutoConnect()
 {
-    if(!d->listenOrConnectButton->isChecked() && d->clientThread){
-        d->clientThread->quit();
-        //d->clientThread->wait();
-        d->clientThread->start();
-    }
-
     if(!d->clientThread){
         QString port = d->portEdit->text();
         if(port.isEmpty()){
@@ -345,12 +342,14 @@ void TcpWidget::onAutoConnect()
             onAutoReconnectStartOrStop(false);
             return;
         }
-        d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), false, this);
+        d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), this);
         connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
-        connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::appendError, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
         connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
         d->clientThread->start();
     }
+
+    emit d->clientThread->reconnect();
 }
 
 void TcpWidget::onAutoSend(bool state)
@@ -386,7 +385,7 @@ void TcpWidget::onSave()
         appendDisplay(ErrorInfo, tr("No file saved."));
 }
 
-void TcpWidget::appendError(const QString &error)
+void TcpWidget::onAppendError(const QString &error)
 {
     appendDisplay(ErrorInfo, error);
 }
@@ -469,24 +468,29 @@ void TcpWidget::buildConnect()
 {
     connect(d->modelBox, &QComboBox::currentTextChanged, this, &TcpWidget::onModelChange);
     connect(d->listenOrConnectButton, &QPushButton::clicked, this, &TcpWidget::onListenOrConnect);
-    connect(d->sendButton, &QPushButton::clicked, this, &TcpWidget::sendData);
+
+    QShortcut *sendShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return), this);
+    connect(sendShortcut, &QShortcut::activated, this, &TcpWidget::onSendData);
+    connect(d->sendButton, &QPushButton::clicked, this, &TcpWidget::onSendData);
 
     connect(d->autoSendBox, &QCheckBox::clicked, this, &TcpWidget::onAutoSend);
-    connect(d->sendTime, &QTimer::timeout, this, &TcpWidget::sendData);
+    connect(d->sendTime, &QTimer::timeout, this, &TcpWidget::onSendData);
 
     connect(d->autoConnectBox, &QCheckBox::clicked, this, &TcpWidget::onAutoReconnectStartOrStop);
     connect(d->autoConnectTime, &QTimer::timeout, this, &TcpWidget::onAutoConnect);
 
-    connect(d->sendConutButton, &QPushButton::clicked, [this]{ sendCount(0); });
-    connect(d->recvConutButton, &QPushButton::clicked, [this]{ recvCount(0); });
+    connect(d->sendConutButton, &QPushButton::clicked, [this]{ d->sendCount = 0; setSendCount(0); });
+    connect(d->recvConutButton, &QPushButton::clicked, [this]{ d->recvCount = 0; setRecvCount(0); });
     connect(d->saveButton, &QPushButton::clicked, this, &TcpWidget::onSave);
     connect(d->clearButton, &QPushButton::clicked, d->dataView, &QTextEdit::clear);
 }
 
-void TcpWidget::clearButton()
+void TcpWidget::clearCount()
 {
-    sendCount(0);
-    recvCount(0);
+    d->sendCount = 0;
+    d->recvCount = 0;
+    setSendCount(0);
+    setRecvCount(0);
 }
 
 void TcpWidget::appendDisplay(TcpWidget::MessageType type, const QString &message)
@@ -512,12 +516,12 @@ void TcpWidget::appendDisplay(TcpWidget::MessageType type, const QString &messag
                                 arg(display).arg(message)));
 }
 
-void TcpWidget::sendCount(int size)
+void TcpWidget::setSendCount(int size)
 {
     d->sendConutButton->setText(tr("Send: %1 Bytes").arg(size));
 }
 
-void TcpWidget::recvCount(int size)
+void TcpWidget::setRecvCount(int size)
 {
     d->recvConutButton->setText(tr("Recv: %1 Bytes").arg(size));
 }

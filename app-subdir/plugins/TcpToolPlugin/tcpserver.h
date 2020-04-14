@@ -9,6 +9,7 @@ class TcpServer : public QTcpServer
     Q_OBJECT
 public:
     TcpServer(QObject *parent = nullptr);
+    ~TcpServer();
 
 public slots:
     void onSendMessage(const QByteArray&, const QString &clientInfo = QString(""));
@@ -20,7 +21,7 @@ signals:
     void clientMessage(const QString&, const QByteArray&);
 
 private slots:
-    void onAcceptError();
+    void onError();
     void onNewConnect();
     void onClientError(QAbstractSocket::SocketError);
     void onClientDisconnect();

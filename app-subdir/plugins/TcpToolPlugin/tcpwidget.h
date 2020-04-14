@@ -20,7 +20,7 @@ signals:
 private slots:
     void onModelChange(const QString&);
     void onListenOrConnect(bool);
-    void sendData();
+    void onSendData();
 
     void onServerOnline(bool);
     void onServerNewClient(const QString&);
@@ -34,16 +34,16 @@ private slots:
 
     void onAutoSend(bool);
     void onSave();
-    void appendError(const QString&);
+    void onAppendError(const QString&);
 
 private:
     void setupUI();
     void init();
     void buildConnect();
-    void clearButton();
+    void clearCount();
     void appendDisplay(MessageType, const QString&);
-    void sendCount(int);
-    void recvCount(int);
+    void setSendCount(int);
+    void setRecvCount(int);
 
     void destoryServerOrClientThread();
 

@@ -1,6 +1,6 @@
 include(../plugins.pri)
 
-QT += widgets
+QT += widgets serialport
 
 DEFINES += SERIALTOOLPLUGIN_LIBRARY
 
@@ -21,11 +21,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     serialpage.cpp \
+    serialport.cpp \
+    serialportthread.cpp \
     serialtoolplugin.cpp \
     serialwidget.cpp
 
 HEADERS += \
+    SerialParam.h \
     serialpage.h \
+    serialport.h \
+    serialportthread.h \
     serialtoolplugin.h \
     serialwidget.h
 

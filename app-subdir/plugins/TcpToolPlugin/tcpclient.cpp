@@ -19,8 +19,9 @@ TcpClient::TcpClient(const QString &ip, quint16 port, QObject *parent)
 
 TcpClient::~TcpClient()
 {
-    disconnect();
     delete d;
+    if(isOpen())
+        close();
 }
 
 void TcpClient::oConnectToServer()
@@ -39,7 +40,7 @@ void TcpClient::onWrite(const QByteArray &bytes)
     if(state() != QAbstractSocket::ConnectedState) return;
 
     write(bytes);
-    waitForBytesWritten(500);
+    waitForBytesWritten(200);
 }
 
 void TcpClient::onError()
@@ -50,7 +51,13 @@ void TcpClient::onError()
 
 void TcpClient::onReadyRead()
 {
-    emit serverMessage(readAll());
+    if(bytesAvailable() <= 0 ) return;
+
+    QByteArray bytes;
+    while (!atEnd())
+        bytes += readAll();
+
+    emit serverMessage(bytes);
 }
 
 //void TcpClient::onStateChange(QAbstractSocket::SocketState socketState)
