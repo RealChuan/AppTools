@@ -52,7 +52,6 @@ public:
         autoSendTimeBox->setRange(0, 10000);
         autoSendTimeBox->setValue(1000);
         autoSendTimeBox->setSingleStep(50);
-        sendTime = new QTimer(owner);
 
         allConnectBox = new QComboBox(owner);
         allConnectBox->addItem(QObject::tr("Connect All"));
@@ -62,7 +61,6 @@ public:
         autoConnectTimeBox->setRange(1000, 100000);
         autoConnectTimeBox->setValue(1000);
         autoConnectTimeBox->setSingleStep(50);
-        autoConnectTime = new QTimer(owner);
 
         sendConutButton = new QPushButton(owner);
         recvConutButton = new QPushButton(owner);
@@ -70,6 +68,9 @@ public:
         clearButton = new QPushButton(QObject::tr("Clear Screen"), owner);
 
         setWidget = new QWidget(owner);
+
+        sendTime = new QTimer(owner);
+        autoConnectTime = new QTimer(owner);
     }
     QWidget *owner;
 
@@ -178,10 +179,11 @@ void TcpWidget::onListenOrConnect(bool state)
     }else if(d->modelBox->currentText() == tr("TcpClient")){
         if(state){
             destoryServerOrClientThread();
-            onAutoConnect();
+            createTcpClientThread();
         } else if(d->clientThread){
-            delete d->clientThread;
-            d->clientThread = nullptr;
+            destoryServerOrClientThread();
+            //            delete d->clientThread;
+            //            d->clientThread = nullptr;
             onClientOnLine(false);
         }
     }
@@ -191,6 +193,7 @@ void TcpWidget::onSendData()
 {
     QString str = d->sendData->toPlainText();
     if(str.isEmpty()) return;
+
     QByteArray bytes;
     if(d->hexBox->isChecked()){
         bytes = QByteArray::fromHex(str.toLocal8Bit()).toUpper();
@@ -317,38 +320,19 @@ void TcpWidget::onClientRecvMessage(const QByteArray &bytes)
 void TcpWidget::onAutoReconnectStartOrStop(bool state)
 {
     d->setWidget->setEnabled(!state);
-    if(state)
+    if(state) {
+        createTcpClientThread();
         d->autoConnectTime->start(d->autoConnectTimeBox->value());
-    else
+    } else {
         d->autoConnectTime->stop();
+        if(!d->listenOrConnectButton->isChecked())
+            destoryServerOrClientThread();
+    }
 }
 
 void TcpWidget::onAutoConnect()
 {
-    if(!d->clientThread){
-        QString port = d->portEdit->text();
-        if(port.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the port number!"));
-            d->portEdit->setFocus();
-            d->autoConnectBox->setChecked(false);
-            onAutoReconnectStartOrStop(false);
-            return;
-        }
-        QString ip = d->serverIPEdit->text().trimmed();
-        if(ip.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the ip address!"));
-            d->serverIPEdit->setFocus();
-            d->autoConnectBox->setChecked(false);
-            onAutoReconnectStartOrStop(false);
-            return;
-        }
-        d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), this);
-        connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
-        connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
-        connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
-        d->clientThread->start();
-    }
-
+    createTcpClientThread();
     emit d->clientThread->reconnect();
 }
 
@@ -365,15 +349,13 @@ void TcpWidget::onSave()
     QString data = d->dataView->toPlainText();
     if(data.isEmpty()) return;
 
-    QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Open File"),
+    QString path = QFileDialog::getSaveFileName(this, tr("Open File"),
                                                 QString("./data/%1").arg(STRDATETIME),
                                                 tr("Text Files(*.txt)"));
     if(!path.isEmpty()){
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            QMessageBox::warning(this, tr("Write File"),
-                                 tr("Can't open file:\n %1 !").arg(path));
+            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path));
             return;
         }
         QTextStream stream(&file);
@@ -425,14 +407,6 @@ void TcpWidget::setupUI()
     QGroupBox *setBox = new QGroupBox(tr("Parameter Setting Window"), this);
     setBox->setObjectName("SetBox");
     QVBoxLayout *allSetLayout = new QVBoxLayout(setBox);
-    //    allSetLayout->addWidget(new QLabel(tr("Communication Mode: "), this));
-    //    allSetLayout->addWidget(d->modelBox);
-    //    allSetLayout->addWidget(d->ipLabel);
-    //    allSetLayout->addWidget(d->localIPBox);
-    //    allSetLayout->addWidget(d->serverIPEdit);
-    //    allSetLayout->addWidget(d->portLabel);
-    //    allSetLayout->addWidget(d->portEdit);
-    //    allSetLayout->addWidget(d->listenOrConnectButton);
     allSetLayout->addWidget(d->setWidget);
     allSetLayout->addWidget(d->hexBox);
     allSetLayout->addWidget(d->autoSendBox);
@@ -524,6 +498,33 @@ void TcpWidget::setSendCount(int size)
 void TcpWidget::setRecvCount(int size)
 {
     d->recvConutButton->setText(tr("Recv: %1 Bytes").arg(size));
+}
+
+void TcpWidget::createTcpClientThread()
+{
+    if(!d->clientThread){
+        QString port = d->portEdit->text();
+        if(port.isEmpty()){
+            MessBox::Warning(this, tr("Please enter the port number!"));
+            d->portEdit->setFocus();
+            d->autoConnectBox->setChecked(false);
+            onAutoReconnectStartOrStop(false);
+            return;
+        }
+        QString ip = d->serverIPEdit->text().trimmed();
+        if(ip.isEmpty()){
+            MessBox::Warning(this, tr("Please enter the ip address!"));
+            d->serverIPEdit->setFocus();
+            d->autoConnectBox->setChecked(false);
+            onAutoReconnectStartOrStop(false);
+            return;
+        }
+        d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), this);
+        connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
+        d->clientThread->start();
+    }
 }
 
 void TcpWidget::destoryServerOrClientThread()

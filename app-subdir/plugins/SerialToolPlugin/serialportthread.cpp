@@ -1,8 +1,18 @@
 #include "serialportthread.h"
+#include "serialport.h"
 
-SerialPortThread::SerialPortThread(QObject *parent) : QThread(parent)
+class SerialPortThreadPrivate{
+public:
+    SerialPortThreadPrivate(QThread *parent) : owner(parent){}
+
+    QThread *owner;
+    SerialParam serialParam;
+};
+
+SerialPortThread::SerialPortThread(const SerialParam &serialParam, QObject *parent) : QThread(parent)
+  , d(new SerialPortThreadPrivate(this))
 {
-
+    d->serialParam = serialParam;
 }
 
 SerialPortThread::~SerialPortThread()
@@ -11,9 +21,21 @@ SerialPortThread::~SerialPortThread()
         quit();
         wait();
     }
+    delete d;
 }
 
 void SerialPortThread::run()
 {
+    QScopedPointer<SerialPort> serialPort(new SerialPort);
+    connect(serialPort.data(), &SerialPort::serialOnLine, this, &SerialPortThread::serialOnLine);
+    connect(serialPort.data(), &SerialPort::errorMessage, this, &SerialPortThread::errorMessage);
+    connect(serialPort.data(), &SerialPort::serialMessage, this, &SerialPortThread::serialMessage);
+    connect(this, &SerialPortThread::sendMessage, serialPort.data(), &SerialPort::onWrite);
 
+    bool ok = serialPort->openSerial(d->serialParam);
+    if(!ok) return;
+
+    exec();
+
+    emit serialOnLine(false);
 }

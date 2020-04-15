@@ -40,7 +40,7 @@ void TcpClient::onWrite(const QByteArray &bytes)
     if(state() != QAbstractSocket::ConnectedState) return;
 
     write(bytes);
-    waitForBytesWritten(200);
+    waitForBytesWritten(100);
 }
 
 void TcpClient::onError()

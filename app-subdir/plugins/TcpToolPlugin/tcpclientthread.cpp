@@ -27,6 +27,7 @@ TcpClientThread::~TcpClientThread()
         wait();
     }
     delete  d;
+    qDebug() << "~TcpClientThread";
 }
 
 void TcpClientThread::run()

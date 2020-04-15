@@ -45,6 +45,7 @@ private:
     void setSendCount(int);
     void setRecvCount(int);
 
+    void createTcpClientThread();
     void destoryServerOrClientThread();
 
     TcpWidgetPrivate *d;

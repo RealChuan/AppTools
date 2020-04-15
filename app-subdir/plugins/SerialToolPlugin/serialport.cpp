@@ -1,12 +1,5 @@
 #include "serialport.h"
 
-class SerialPortPrivate{
-public:
-    SerialPortPrivate(QSerialPort *parent) : owner(parent){}
-
-    QSerialPort *owner;
-};
-
 SerialPort::SerialPort(QObject *parent) : QSerialPort(parent)
 {
 
@@ -18,9 +11,33 @@ SerialPort::~SerialPort()
         close();
 }
 
-void SerialPort::openSerial()
+bool SerialPort::openSerial(const SerialParam &param)
 {
+    if(isOpen()) close();
 
+    bool ok = true;
+    setPortName(param.portName);
+    ok &= open(QIODevice::ReadWrite);
+    flush();
+    ok &= setBaudRate(param.baudRate);
+    ok &= setDataBits(static_cast<QSerialPort::DataBits>(param.dataBits));
+    ok &= setStopBits(static_cast<QSerialPort::StopBits>(param.stopBits));
+    ok &= setParity(static_cast<QSerialPort::Parity>(param.parity));
+    ok &= setFlowControl(static_cast<QSerialPort::FlowControl>(param.flowControl));
+
+    if(!ok) onError();
+
+    emit serialOnLine(ok);
+
+    return ok;
+}
+
+void SerialPort::onWrite(const QByteArray &bytes)
+{
+    if(!isOpen()) return;
+
+    write(bytes);
+    waitForBytesWritten(100);
 }
 
 void SerialPort::onError()

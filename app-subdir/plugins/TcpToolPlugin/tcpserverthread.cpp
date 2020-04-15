@@ -36,7 +36,7 @@ void TcpServerThread::run()
 
     bool ok = tcpServer->listen(QHostAddress(d->ip), d->port);
     emit serverOnLine(ok);
-    if(false == ok) return;
+    if(!ok) return;
 
     exec();
 

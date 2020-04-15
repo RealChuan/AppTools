@@ -1,8 +1,22 @@
 #include "serialwidget.h"
+#include "serialportthread.h"
+#include "serialparam.h"
+
+#include <utils/utils.h>
+#include <controls/messbox.h>
 
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QtWidgets>
+
+inline QString formatHex(const QByteArray &msg)
+{
+    QString temp;
+    QString hex = QString::fromLocal8Bit(msg.toHex().toUpper());
+    for (int i = 0; i < hex.length(); i = i + 2)
+        temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
+    return temp;
+}
 
 class SerialWidgetPrivate{
 public:
@@ -22,8 +36,8 @@ public:
         stopBitsBox = new QComboBox(owner);
         parityBox = new QComboBox(owner);
         flowControlBox = new QComboBox(owner);
-        openButton = new QPushButton(QObject::tr("Open Serial"), owner);
-        openButton->setCheckable(true);
+        openOrCloseButton = new QPushButton(QObject::tr("Open Serial"), owner);
+        openOrCloseButton->setCheckable(true);
 
         hexBox = new QCheckBox(QObject::tr("Hex"), owner);
         autoSendBox = new QCheckBox(QObject::tr("Auto Delivery"), owner);
@@ -37,6 +51,8 @@ public:
         recvConutButton = new QPushButton(QObject::tr("Receive: 0 Bytes"), owner);
         saveButton = new QPushButton(QObject::tr("Save Data"), owner);
         clearButton = new QPushButton(QObject::tr("Clear Screen"), owner);
+
+        sendTime = new QTimer(owner);
     }
     QWidget *owner;
 
@@ -51,7 +67,7 @@ public:
     QComboBox *stopBitsBox;
     QComboBox *parityBox;
     QComboBox *flowControlBox;
-    QPushButton *openButton;
+    QPushButton *openOrCloseButton;
 
     QCheckBox *hexBox;
     QCheckBox *autoSendBox;
@@ -60,6 +76,13 @@ public:
     QPushButton *recvConutButton;
     QPushButton *saveButton;
     QPushButton *clearButton;
+
+    SerialPortThread *serialThread = nullptr;
+    SerialParam serialParam;
+
+    QTimer *sendTime = nullptr;
+    int sendCount = 0;
+    int recvCount = 0;
 };
 
 SerialWidget::SerialWidget(QWidget *parent) : QWidget(parent)
@@ -87,6 +110,27 @@ void SerialWidget::onSearchPort()
             d->portBox->addItem(port.portName());     //将串口号添加到portname
             port.close();       //关闭串口等待人为(打开串口按钮)打开
         }
+    }
+}
+
+void SerialWidget::onSendData()
+{
+    QString str = d->sendData->toPlainText();
+    if(str.isEmpty()) return;
+
+    QByteArray bytes;
+
+    if(d->hexBox->isChecked()){
+        bytes = QByteArray::fromHex(str.toLocal8Bit()).toUpper();
+        str = formatHex(bytes);
+    } else
+        bytes = str.toLatin1();
+
+    if(d->serialThread){
+        emit d->serialThread->sendMessage(bytes);
+        appendDisplay(Send, str);
+        d->sendCount += bytes.size();
+        setSendCount(d->sendCount);
     }
 }
 
@@ -120,9 +164,68 @@ void SerialWidget::onFlowControlChanged(const QString &)
 
 }
 
-void SerialWidget::onOpenOrCloseSerial(bool)
+void SerialWidget::onOpenOrCloseSerial(bool state)
 {
+    d->openOrCloseButton->setChecked(!state);
+    if(state){
+        destorySerialThread();
+        setSerialParam();
+        d->serialThread = new SerialPortThread(d->serialParam, this);
+        connect(d->serialThread, &SerialPortThread::serialOnLine, this, &SerialWidget::onSerialOnline, Qt::UniqueConnection);
+        connect(d->serialThread, &SerialPortThread::errorMessage, this, &SerialWidget::onAppendError, Qt::UniqueConnection);
+        connect(d->serialThread, &SerialPortThread::serialMessage, this, &SerialWidget::onSerialRecvMessage, Qt::UniqueConnection);
+        d->serialThread->start();
+    } else {
+        destorySerialThread();
+        onSerialOnline(false);
+    }
+}
 
+void SerialWidget::onSerialOnline(bool state)
+{
+    d->openOrCloseButton->setChecked(state);
+    d->openOrCloseButton->setText(state? tr("Close Serial") : tr("Open Serial"));
+
+    if(!state){
+        d->autoSendBox->setChecked(state);
+        d->sendTime->stop();
+    }
+    d->autoSendBox->setEnabled(state);
+    d->sendButton->setEnabled(state);
+    QString str;
+    if(state){
+        str = tr("Serial Open!");
+        appendDisplay(SuccessInfo, str);
+    } else {
+        str = tr("Serial Close!");
+        appendDisplay(ErrorInfo, str);
+    }
+}
+
+void SerialWidget::onAppendError(const QString &error)
+{
+    appendDisplay(ErrorInfo, error);
+}
+
+void SerialWidget::onSerialRecvMessage(const QByteArray &bytes)
+{
+    if(bytes.isEmpty()) return;
+    d->recvCount += bytes.size();
+    setRecvCount(d->recvCount);
+    QString str;
+    if(d->hexBox->isChecked())
+        str = formatHex(bytes);
+    else
+        str = QString::fromLatin1(bytes);
+    appendDisplay(Recv, str);
+}
+
+void SerialWidget::onAutoSend(bool state)
+{
+    if(state)
+        d->sendTime->start(d->autoSendTimeBox->value());
+    else
+        d->sendTime->stop();
 }
 
 void SerialWidget::setupUI()
@@ -160,7 +263,7 @@ void SerialWidget::setupUI()
     QVBoxLayout *setLayout = new QVBoxLayout(setBox);
     setLayout->addWidget(d->searchSerialButton);
     setLayout->addLayout(formLayout);
-    setLayout->addWidget(d->openButton);
+    setLayout->addWidget(d->openOrCloseButton);
     setLayout->addWidget(d->hexBox);
     setLayout->addWidget(d->autoSendBox);
     setLayout->addWidget(d->autoSendTimeBox);
@@ -216,5 +319,67 @@ void SerialWidget::buildConnect()
     connect(d->parityBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParityChanged);
     connect(d->flowControlBox, &QComboBox::currentTextChanged, this, &SerialWidget::onFlowControlChanged);
 
-    connect(d->openButton, &QPushButton::clicked, this, &SerialWidget::onOpenOrCloseSerial);
+    connect(d->openOrCloseButton, &QPushButton::clicked, this, &SerialWidget::onOpenOrCloseSerial);
+
+    QShortcut *sendShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return), this);
+    connect(sendShortcut, &QShortcut::activated, this, &SerialWidget::onSendData);
+    connect(d->sendButton, &QPushButton::clicked, this, &SerialWidget::onSendData);
+
+    connect(d->autoSendBox, &QCheckBox::clicked, this, &SerialWidget::onAutoSend);
+    connect(d->sendTime, &QTimer::timeout, this, &SerialWidget::onSendData);
+
+
+
+}
+
+void SerialWidget::setSerialParam()
+{
+    d->serialParam.portName = d->portBox->currentText();
+    d->serialParam.baudRate = QSerialPort::BaudRate(d->baudRateBox->currentData().toInt());
+    d->serialParam.dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
+    d->serialParam.stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
+    d->serialParam.parity = QSerialPort::Parity(d->parityBox->currentData().toInt());
+    d->serialParam.flowControl = QSerialPort::FlowControl(d->flowControlBox->currentData().toInt());
+}
+
+void SerialWidget::destorySerialThread()
+{
+    if(!d->serialThread){
+        delete d->serialThread;
+        d->serialThread = nullptr;
+    }
+}
+
+void SerialWidget::appendDisplay(SerialWidget::MessageType type, const QString & message)
+{
+    if(message.isEmpty()) return;
+
+    QString display;
+    if(type == Send) {
+        display = tr(" >> Serial Send: ");
+        d->dataView->setTextColor(QColor("black"));
+    } else if(type == Recv) {
+        display = tr(" >> Serial Recv: ");
+        d->dataView->setTextColor(QColor("dodgerblue"));
+    } else if(type == SuccessInfo) {
+        display = tr(" >> Prompt Message: ");
+        d->dataView->setTextColor(QColor("green"));
+    } else if(type == ErrorInfo) {
+        display = tr(" >> Prompt Message: ");
+        d->dataView->setTextColor(QColor("red"));
+    } else return;
+
+    d->dataView->append(QString(tr("Time [%1] %2 %3").arg(STRDATETIMEMS).
+                                arg(display).arg(message)));
+
+}
+
+void SerialWidget::setSendCount(int size)
+{
+    d->sendConutButton->setText(tr("Send: %1 Bytes").arg(size));
+}
+
+void SerialWidget::setRecvCount(int size)
+{
+    d->recvConutButton->setText(tr("Recv: %1 Bytes").arg(size));
 }

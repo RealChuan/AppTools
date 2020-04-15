@@ -3,7 +3,8 @@
 
 #include <QSerialPort>
 
-class SerialPortPrivate;
+#include "serialparam.h"
+
 class SerialPort : public QSerialPort
 {
     Q_OBJECT
@@ -11,7 +12,10 @@ public:
     SerialPort(QObject *parent = nullptr);
     ~SerialPort();
 
-    void openSerial();
+    bool openSerial(const SerialParam &param);
+
+public slots:
+    void onWrite(const QByteArray&);
 
 signals:
     void serialOnLine(bool);
@@ -24,8 +28,6 @@ private slots:
 
 private:
     void buildConnect();
-
-    SerialPortPrivate *d;
 };
 
 #endif // SERIALPORT_H
