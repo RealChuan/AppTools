@@ -6,12 +6,11 @@ class MPagesPrivate{
 public:
     MPagesPrivate(QObject *parent) : owner(parent){
         button = new QPushButton;
-        //button->setFlat(true);
         button->setProperty("class", "GroupItemButton");
     }
     QObject *owner;
     QPushButton *button;
-    QWidget *widget;
+    QWidget *widget = nullptr;
 };
 
 MPages::MPages(QObject *parent)
@@ -22,14 +21,6 @@ MPages::MPages(QObject *parent)
 
 MPages::~MPages()
 {
-    if(d->button){
-        delete d->button;
-        d->button = nullptr;
-    }
-    if(d->widget){
-        delete d->widget;
-        d->widget = nullptr;
-    }
     delete d;
 }
 

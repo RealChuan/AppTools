@@ -31,8 +31,9 @@ void SerialPortThread::run()
     connect(serialPort.data(), &SerialPort::errorMessage, this, &SerialPortThread::errorMessage);
     connect(serialPort.data(), &SerialPort::serialMessage, this, &SerialPortThread::serialMessage);
     connect(this, &SerialPortThread::sendMessage, serialPort.data(), &SerialPort::onWrite);
+    connect(this, &SerialPortThread::paramChanged, serialPort.data(), &SerialPort::onOpenSerial);
 
-    bool ok = serialPort->openSerial(d->serialParam);
+    bool ok = serialPort->onOpenSerial(d->serialParam);
     if(!ok) return;
 
     exec();

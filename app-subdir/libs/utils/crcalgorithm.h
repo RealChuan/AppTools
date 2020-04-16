@@ -1,15 +1,3 @@
-/*
- * Copyright (C) 2018-2019 wuuhii. All rights reserved.
- *
- * The file is encoding with utf-8 (with BOM). It is a part of QtSwissArmyKnife
- * project. The project is a open source project, you can get the source from:
- *     https://github.com/wuuhii/QtSwissArmyKnife
- *     https://gitee.com/wuuhii/QtSwissArmyKnife
- *
- * For more information about the project, please join our QQ group(952218522).
- * In addition, the email address of the project author is wuuhii@outlook.com.
- */
-
 #ifndef CRCALGORITHM_H
 #define CRCALGORITHM_H
 
@@ -86,7 +74,6 @@ T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
         byte = *(input++);
 
         if (getInputReversal(model)){
-            //reverseInt(byte, byte);
             reverseInt(byte);
         }
 
@@ -101,7 +88,6 @@ T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
     }
 
     if (getOutputReversal(model)){
-        //reverseInt(crcReg, crcReg);
         reverseInt(crcReg);
     }
 
@@ -111,12 +97,10 @@ T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
 
 /**
  * @brief reverseInt    -- 将一个整数按位反转
- * @param input         -- 输入数据
- * @param output        -- 输出输出
- * @return              -- 转换是否成功
+ * @param input         -- 输入输出数据
  */
 template<typename T>
-void reverseInt(T &input/*, T &output*/){
+void reverseInt(T &input){
     int bitsWidth = sizeof (input) * 8;
 
     T result = 0;
@@ -125,17 +109,6 @@ void reverseInt(T &input/*, T &output*/){
         result |= ((input >> i) & 1); //任何数和0按位或都是它本身
     }
     input = result;
-
-    //    QString inputStr = QString("%1").arg(QString::number(input, 2), bitsWidth, '0');
-    //    QString outputStr;
-    //    outputStr.resize(bitsWidth);
-    //    for (int i = 0; i < bitsWidth; i++){
-    //        outputStr.replace(i, 1, inputStr.at(bitsWidth-1-i));
-    //    }
-
-    //    bool ok;
-    //    output = static_cast<T>(outputStr.toULongLong(&ok, 2));
-    //    return ok;
 }
 
 /**
@@ -167,16 +140,16 @@ UTILS_EXPORT uint32_t getPoly(CRCModel model);
 UTILS_EXPORT uint32_t getXorValue(CRCModel model);
 
 /**
- * @brief xorValue  -- 结果异或值
- * @param model     -- crc参数模型
- * @return          -- 结果异或值
+ * @brief getInputReversal  -- 判断输入是否需要翻转
+ * @param model             -- crc参数模型
+ * @return                  -- 输入数据需要翻转返回true，否则返回false
  */
 UTILS_EXPORT uint32_t getInputReversal(CRCModel model);
 
 /**
- * @brief getOutputReversal -- 判断输入是否需要翻转
+ * @brief getOutputReversal -- 判断输出是否需要翻转
  * @param model             -- crc参数模型
- * @return                  -- 输入数据需要翻转返回true，否则返回false
+ * @return                  -- 输出数据需要翻转返回true，否则返回false
  */
 UTILS_EXPORT bool getOutputReversal(CRCModel model);
 
@@ -186,6 +159,8 @@ UTILS_EXPORT bool getOutputReversal(CRCModel model);
  * @return              -- 位宽
  */
 UTILS_EXPORT int getBitsWidth(CRCModel model);
+
+UTILS_EXPORT quint32 CRC_Calculate(unsigned char *data, quint64 lenght, int model_);
 
 }
 

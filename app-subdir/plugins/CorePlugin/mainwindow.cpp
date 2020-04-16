@@ -210,12 +210,6 @@ QWidget *MainWindow::menuWidget()
         QMessageBox::aboutQt(this);
     });
 
-    //    toolsButton->setFlat(true);
-    //    aboutButton->setFlat(true);
-    //    pluginButton->setFlat(true);
-    //    qtButton->setFlat(true);
-    //    testButton->setFlat(true);
-
     toolsButton->setProperty("Group", MPages::Tool);
     aboutButton->setProperty("Group", MPages::About);
     pluginButton->setProperty("Group", MPages::About);

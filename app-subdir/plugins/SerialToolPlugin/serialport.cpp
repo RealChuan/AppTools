@@ -13,7 +13,7 @@ SerialPort::~SerialPort()
         close();
 }
 
-bool SerialPort::openSerial(const SerialParam &param)
+bool SerialPort::onOpenSerial(const SerialParam &param)
 {
     if(isOpen()) close();
 

@@ -88,9 +88,11 @@ public:
 SerialWidget::SerialWidget(QWidget *parent) : QWidget(parent)
   , d(new SerialWidgetPrivate(this))
 {
+    qRegisterMetaType<SerialParam>("SerialParam");
     setupUI();
     init();
     buildConnect();
+    onSerialOnline(false);
 }
 
 SerialWidget::~SerialWidget()
@@ -133,34 +135,12 @@ void SerialWidget::onSendData()
     }
 }
 
-void SerialWidget::onPortChanged(const QString &)
+void SerialWidget::onParamChanged(const QString &)
 {
+    if(!d->serialThread) return;
 
-}
-
-void SerialWidget::onBaudRateChanged(const QString &)
-{
-
-}
-
-void SerialWidget::onDataBitsChanged(const QString &)
-{
-
-}
-
-void SerialWidget::onStopBitsChanged(const QString &)
-{
-
-}
-
-void SerialWidget::onParityChanged(const QString &)
-{
-
-}
-
-void SerialWidget::onFlowControlChanged(const QString &)
-{
-
+    setSerialParam();
+    emit d->serialThread->paramChanged(d->serialParam);
 }
 
 void SerialWidget::onOpenOrCloseSerial(bool state)
@@ -208,7 +188,7 @@ void SerialWidget::onAppendError(const QString &error)
 
 void SerialWidget::onSerialRecvMessage(const QByteArray &bytes)
 {
-    qDebug() << "onSerialRecvMessage: " << bytes;
+    //qDebug() << "onSerialRecvMessage: " << bytes;
     if(bytes.isEmpty()) return;
     d->recvCount += bytes.size();
     setRecvCount(d->recvCount);
@@ -335,12 +315,12 @@ void SerialWidget::buildConnect()
 {
     connect(d->searchSerialButton, &QPushButton::clicked, this, &SerialWidget::onSearchPort);
 
-    connect(d->portBox, &QComboBox::currentTextChanged, this, &SerialWidget::onPortChanged);
-    connect(d->baudRateBox, &QComboBox::currentTextChanged, this, &SerialWidget::onBaudRateChanged);
-    connect(d->dataBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onDataBitsChanged);
-    connect(d->stopBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onStopBitsChanged);
-    connect(d->parityBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParityChanged);
-    connect(d->flowControlBox, &QComboBox::currentTextChanged, this, &SerialWidget::onFlowControlChanged);
+    connect(d->portBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->baudRateBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->dataBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->stopBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->parityBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->flowControlBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
 
     connect(d->openOrCloseButton, &QPushButton::clicked, this, &SerialWidget::onOpenOrCloseSerial);
 

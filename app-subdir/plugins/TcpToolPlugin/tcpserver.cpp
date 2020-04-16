@@ -99,7 +99,7 @@ void TcpServer::onClientReadyRead()
     if(client->bytesAvailable() <= 0) return;
 
     QByteArray bytes;
-    while (client->atEnd())
+    while (!client->atEnd())
         bytes += client->readAll();
     //if(bytes.isEmpty()) return;
 

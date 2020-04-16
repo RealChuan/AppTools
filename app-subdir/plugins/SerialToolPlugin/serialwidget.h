@@ -19,12 +19,7 @@ private slots:
     void onSearchPort();
     void onSendData();
 
-    void onPortChanged(const QString&);
-    void onBaudRateChanged(const QString&);
-    void onDataBitsChanged(const QString&);
-    void onStopBitsChanged(const QString&);
-    void onParityChanged(const QString&);
-    void onFlowControlChanged(const QString&);
+    void onParamChanged(const QString&);
 
     void onOpenOrCloseSerial(bool);
 

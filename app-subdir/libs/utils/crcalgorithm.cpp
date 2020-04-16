@@ -234,3 +234,32 @@ int CRC::getBitsWidth(CRC::CRCModel model)
     }
     return ret;
 }
+
+quint32 CRC::CRC_Calculate(unsigned char *data, quint64 lenght, int model_)
+{
+    CRCModel model = CRCModel(model_);
+
+    int bitsWidth = getBitsWidth(model);
+    uint8_t crc8;
+    uint16_t crc16;
+    uint32_t crc32;
+    quint32 crc = 0;
+    switch (bitsWidth) {
+    case 8:
+        crc8 = crcCalculate<uint8_t>(data, lenght, model);
+        crc = crc8;
+        break;
+    case 16:
+        crc16 = crcCalculate<uint16_t>(data, lenght, model);
+        crc = crc16;
+        break;
+    case 32:
+        crc32 = crcCalculate<uint32_t>(data, lenght, model);
+        crc = crc32;
+        break;
+    default:
+        break;
+    }
+
+    return crc;
+}

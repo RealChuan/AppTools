@@ -266,7 +266,7 @@ void TcpWidget::onServerRecvMessage(const QString &clientInfo, const QByteArray 
     if(d->hexBox->isChecked())
         str += formatHex(bytes);
     else
-        str += bytes;
+        str += QString::fromUtf8(bytes);
     appendDisplay(Recv, str);
 }
 

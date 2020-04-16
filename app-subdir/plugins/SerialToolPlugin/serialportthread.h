@@ -19,6 +19,8 @@ signals:
     void serialMessage(const QByteArray&);
     void sendMessage(const QByteArray&);
 
+    void paramChanged(const SerialParam&);
+
 protected:
     void run() override;
 

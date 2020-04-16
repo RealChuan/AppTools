@@ -12,9 +12,8 @@ public:
     SerialPort(QObject *parent = nullptr);
     ~SerialPort();
 
-    bool openSerial(const SerialParam &param);
-
 public slots:
+    bool onOpenSerial(const SerialParam &param);
     void onWrite(const QByteArray&);
 
 signals:
