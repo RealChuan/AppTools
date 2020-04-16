@@ -119,7 +119,6 @@ void SerialWidget::onSendData()
     if(str.isEmpty()) return;
 
     QByteArray bytes;
-
     if(d->hexBox->isChecked()){
         bytes = QByteArray::fromHex(str.toLocal8Bit()).toUpper();
         str = formatHex(bytes);
@@ -177,12 +176,12 @@ void SerialWidget::onOpenOrCloseSerial(bool state)
         d->serialThread->start();
     } else {
         destorySerialThread();
-        onSerialOnline(false);
     }
 }
 
 void SerialWidget::onSerialOnline(bool state)
 {
+    d->searchSerialButton->setEnabled(!state);
     d->openOrCloseButton->setChecked(state);
     d->openOrCloseButton->setText(state? tr("Close Serial") : tr("Open Serial"));
 
@@ -209,6 +208,7 @@ void SerialWidget::onAppendError(const QString &error)
 
 void SerialWidget::onSerialRecvMessage(const QByteArray &bytes)
 {
+    qDebug() << "onSerialRecvMessage: " << bytes;
     if(bytes.isEmpty()) return;
     d->recvCount += bytes.size();
     setRecvCount(d->recvCount);
@@ -226,6 +226,29 @@ void SerialWidget::onAutoSend(bool state)
         d->sendTime->start(d->autoSendTimeBox->value());
     else
         d->sendTime->stop();
+}
+
+void SerialWidget::onSave()
+{
+    QString data = d->dataView->toPlainText();
+    if(data.isEmpty()) return;
+
+    QString path = QFileDialog::getSaveFileName(this, tr("Open File"),
+                                                QString("./data/%1").arg(STRDATETIME),
+                                                tr("Text Files(*.txt)"));
+    if(!path.isEmpty()){
+        QFile file(path);
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path));
+            return;
+        }
+        QTextStream stream(&file);
+        stream << data;
+        file.close();
+        appendDisplay(SuccessInfo, tr("The file was saved successfully."));
+    }
+    else
+        appendDisplay(ErrorInfo, tr("No file saved."));
 }
 
 void SerialWidget::setupUI()
@@ -328,14 +351,16 @@ void SerialWidget::buildConnect()
     connect(d->autoSendBox, &QCheckBox::clicked, this, &SerialWidget::onAutoSend);
     connect(d->sendTime, &QTimer::timeout, this, &SerialWidget::onSendData);
 
-
-
+    connect(d->sendConutButton, &QPushButton::clicked, [this]{ d->sendCount = 0; setSendCount(0); });
+    connect(d->recvConutButton, &QPushButton::clicked, [this]{ d->recvCount = 0; setRecvCount(0); });
+    connect(d->saveButton, &QPushButton::clicked, this, &SerialWidget::onSave);
+    connect(d->clearButton, &QPushButton::clicked, d->dataView, &QTextEdit::clear);
 }
 
 void SerialWidget::setSerialParam()
 {
     d->serialParam.portName = d->portBox->currentText();
-    d->serialParam.baudRate = QSerialPort::BaudRate(d->baudRateBox->currentData().toInt());
+    d->serialParam.baudRate = QSerialPort::BaudRate(d->baudRateBox->currentText().toInt());
     d->serialParam.dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
     d->serialParam.stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
     d->serialParam.parity = QSerialPort::Parity(d->parityBox->currentData().toInt());
@@ -344,7 +369,7 @@ void SerialWidget::setSerialParam()
 
 void SerialWidget::destorySerialThread()
 {
-    if(!d->serialThread){
+    if(d->serialThread){
         delete d->serialThread;
         d->serialThread = nullptr;
     }

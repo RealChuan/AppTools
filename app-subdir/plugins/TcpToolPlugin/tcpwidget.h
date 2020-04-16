@@ -21,6 +21,7 @@ private slots:
     void onModelChange(const QString&);
     void onListenOrConnect(bool);
     void onSendData();
+    void onAppendError(const QString&);
 
     void onServerOnline(bool);
     void onServerNewClient(const QString&);
@@ -34,7 +35,6 @@ private slots:
 
     void onAutoSend(bool);
     void onSave();
-    void onAppendError(const QString&);
 
 private:
     void setupUI();

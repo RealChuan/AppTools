@@ -20,8 +20,10 @@ TcpClient::TcpClient(const QString &ip, quint16 port, QObject *parent)
 TcpClient::~TcpClient()
 {
     delete d;
-    if(isOpen())
+    if(isOpen()){
+        disconnectFromHost();
         close();
+    }
 }
 
 void TcpClient::oConnectToServer()
@@ -30,6 +32,7 @@ void TcpClient::oConnectToServer()
 
     connectToHost(d->ip, d->port);
     bool ok = waitForConnected(1000);
+
     emit clientOnLine(ok);
 
     if(!ok) onError();

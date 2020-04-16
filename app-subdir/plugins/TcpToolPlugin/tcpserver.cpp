@@ -6,7 +6,7 @@ class TcpServerPrivate{
 public:
     TcpServerPrivate(QTcpServer *parent) : owner(parent){}
     QTcpServer *owner;
-    QVector<QTcpSocket*> tcpClientList;
+    QVector<QTcpSocket*> tcpClientVector;
 };
 
 TcpServer::TcpServer(QObject *parent) : QTcpServer(parent)
@@ -27,12 +27,12 @@ void TcpServer::onSendMessage(const QByteArray &bytes, const QString &clientInfo
     if(bytes.isEmpty()) return;
 
     if(clientInfo.isEmpty()) {
-        for(QTcpSocket* client : d->tcpClientList)
+        for(QTcpSocket* client : d->tcpClientVector)
             client->write(bytes);
     } else {
         QString clientIP = clientInfo.split(":")[0].trimmed();
         int clientPort = clientInfo.split(":")[1].toInt();
-        for(QTcpSocket* client : d->tcpClientList){
+        for(QTcpSocket* client : d->tcpClientVector){
             if(client->peerAddress().toString().split("::ffff:")[0] == clientIP &&
                     client->peerPort() == clientPort)
                 client->write(bytes);
@@ -50,7 +50,7 @@ void TcpServer::onNewConnect()
 {
     QTcpSocket *client = nextPendingConnection();
     client->setParent(this);    //利用Qt的对象树进行析构
-    d->tcpClientList.push_back(client);
+    d->tcpClientVector.push_back(client);
 
     QString clientInfo = tr("%1 : %2").
             arg(client->peerAddress().toString().split("::ffff:")[0]).
@@ -85,7 +85,7 @@ void TcpServer::onClientDisconnect()
                 arg(client->peerAddress().toString().split("::ffff:")[0]).
                 arg(client->peerPort());
         emit disconnectClientInfo(clientInfo);
-        d->tcpClientList.removeOne(client);
+        d->tcpClientVector.removeOne(client);
         client->deleteLater();
         client = nullptr;
     }

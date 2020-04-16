@@ -33,7 +33,7 @@ private slots:
     void onSerialRecvMessage(const QByteArray &bytes);
 
     void onAutoSend(bool);
-
+    void onSave();
 
 private:
     void setupUI();
@@ -45,7 +45,6 @@ private:
     void appendDisplay(MessageType, const QString&);
     void setSendCount(int);
     void setRecvCount(int);
-
 
     SerialWidgetPrivate *d;
 };

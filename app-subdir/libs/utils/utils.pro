@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     benchmarker.cpp \
     categorysortfiltermodel.cpp \
+    crcalgorithm.cpp \
     hostosinfo.cpp \
     itemviews.cpp \
     json.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     algorithm.h \
     benchmarker.h \
     categorysortfiltermodel.h \
+    crcalgorithm.h \
     executeondestruction.h \
     hostosinfo.h \
     itemviews.h \

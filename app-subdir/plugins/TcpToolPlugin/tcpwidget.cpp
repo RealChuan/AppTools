@@ -169,12 +169,11 @@ void TcpWidget::onListenOrConnect(bool state)
             connect(d->serverThread, &TcpServerThread::clientMessage, this, &TcpWidget::onServerRecvMessage, Qt::UniqueConnection);
             d->serverThread->start();
         } else {
-            d->serverThread->disconnect();
-            delete d->serverThread;
-            d->serverThread = nullptr;
-            for(int i=1; i<d->allConnectBox->count(); i++)
+            destoryServerOrClientThread();
+            for(int i=1; i<d->allConnectBox->count(); i++){
+                onServerDisClient(d->allConnectBox->itemText(i));
                 d->allConnectBox->removeItem(i);
-            onServerOnline(false);
+            }
         }
     }else if(d->modelBox->currentText() == tr("TcpClient")){
         if(state){
@@ -182,9 +181,6 @@ void TcpWidget::onListenOrConnect(bool state)
             createTcpClientThread();
         } else if(d->clientThread){
             destoryServerOrClientThread();
-            //            delete d->clientThread;
-            //            d->clientThread = nullptr;
-            onClientOnLine(false);
         }
     }
 }
@@ -288,11 +284,8 @@ void TcpWidget::onClientOnLine(bool state)
     d->autoSendBox->setEnabled(state);
     d->sendButton->setEnabled(state);
 
-    if(!state && !d->autoConnectBox->isChecked() && d->clientThread){
-        delete d->clientThread;
-        //d->clientThread->deleteLater();
-        d->clientThread = nullptr;
-    }
+    if(!state && !d->autoConnectBox->isChecked() && d->clientThread)
+        destoryServerOrClientThread();
 
     QString str;
     if(state){
@@ -530,7 +523,7 @@ void TcpWidget::createTcpClientThread()
 void TcpWidget::destoryServerOrClientThread()
 {
     if(d->serverThread){
-        d->serverThread->deleteLater();
+        delete d->serverThread;
         d->serverThread = nullptr;
     }
     if(d->clientThread){

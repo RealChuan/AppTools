@@ -40,4 +40,6 @@ void TcpClientThread::run()
     connect(this, &TcpClientThread::reconnect, tcpClient.data(), &TcpClient::oConnectToServer);
     tcpClient->oConnectToServer();
     exec();
+
+    emit clientOnLine(false);
 }

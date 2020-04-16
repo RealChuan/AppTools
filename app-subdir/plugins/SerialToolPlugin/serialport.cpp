@@ -1,8 +1,10 @@
 #include "serialport.h"
 
+#include <QDebug>
+
 SerialPort::SerialPort(QObject *parent) : QSerialPort(parent)
 {
-
+    buildConnect();
 }
 
 SerialPort::~SerialPort()
@@ -19,7 +21,7 @@ bool SerialPort::openSerial(const SerialParam &param)
     setPortName(param.portName);
     ok &= open(QIODevice::ReadWrite);
     flush();
-    ok &= setBaudRate(param.baudRate);
+    ok &= setBaudRate(static_cast<QSerialPort::BaudRate>(param.baudRate));
     ok &= setDataBits(static_cast<QSerialPort::DataBits>(param.dataBits));
     ok &= setStopBits(static_cast<QSerialPort::StopBits>(param.stopBits));
     ok &= setParity(static_cast<QSerialPort::Parity>(param.parity));
