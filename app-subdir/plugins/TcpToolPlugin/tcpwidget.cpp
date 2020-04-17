@@ -331,6 +331,7 @@ void TcpWidget::onAutoConnect()
 
 void TcpWidget::onAutoSend(bool state)
 {
+    d->autoSendTimeBox->setEnabled(!state);
     if(state)
         d->sendTime->start(d->autoSendTimeBox->value());
     else

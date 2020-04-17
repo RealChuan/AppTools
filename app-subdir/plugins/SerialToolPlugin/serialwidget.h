@@ -18,7 +18,6 @@ signals:
 private slots:
     void onSearchPort();
     void onSendData();
-
     void onParamChanged(const QString&);
 
     void onOpenOrCloseSerial(bool);

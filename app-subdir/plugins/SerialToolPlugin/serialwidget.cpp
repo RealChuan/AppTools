@@ -202,6 +202,7 @@ void SerialWidget::onSerialRecvMessage(const QByteArray &bytes)
 
 void SerialWidget::onAutoSend(bool state)
 {
+    d->autoSendTimeBox->setEnabled(!state);
     if(state)
         d->sendTime->start(d->autoSendTimeBox->value());
     else
