@@ -1,0 +1,13 @@
+#CRCWidget QPushButton{
+	color: white;
+	background-color: #39a3ff;
+	min-width: 80px;
+}
+#CRCInfoBox {
+    min-width: 220px;
+}
+
+#CalculateButton {
+	min-width: 80px;
+	min-height: 80px;
+}

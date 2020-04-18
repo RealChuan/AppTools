@@ -25,12 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     crcpage.cpp \
     crctoolplugin.cpp \
-    crcwidget.cpp
+    crcwidget.cpp \
+    floatbox.cpp \
+    systemconversionbox.cpp
 
 HEADERS += \
     CRCToolPlugin_global.h \
     crcpage.h \
     crctoolplugin.h \
-    crcwidget.h
+    crcwidget.h \
+    floatbox.h \
+    systemconversionbox.h
 
 OTHER_FILES += crctoolplugin.json

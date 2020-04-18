@@ -18,6 +18,17 @@ inline QString formatHex(const QByteArray &msg)
     return temp;
 }
 
+struct WidgetParam{
+    int baudRate = 6;
+    int dataBits = 3;
+    int stopBits = 0;
+    int parity = 0;
+    int flowControl = 0;
+    bool hex = false;
+    int sendTime = 1000;
+    QString sendData = "";
+};
+
 class SerialWidgetPrivate{
 public:
     SerialWidgetPrivate(QWidget *parent) : owner(parent){
@@ -30,7 +41,7 @@ public:
         sendButton->setObjectName("SendButton");
 
         searchSerialButton = new QPushButton(QObject::tr("Search Available Serial"), owner);
-        portBox = new QComboBox(owner);
+        portNameBox = new QComboBox(owner);
         baudRateBox = new QComboBox(owner);
         dataBitsBox = new QComboBox(owner);
         stopBitsBox = new QComboBox(owner);
@@ -61,7 +72,7 @@ public:
     QPushButton *sendButton;
 
     QPushButton *searchSerialButton;
-    QComboBox *portBox;
+    QComboBox *portNameBox;
     QComboBox *baudRateBox;
     QComboBox *dataBitsBox;
     QComboBox *stopBitsBox;
@@ -83,6 +94,8 @@ public:
     QTimer *sendTime = nullptr;
     int sendCount = 0;
     int recvCount = 0;
+
+    WidgetParam widgetParam;
 };
 
 SerialWidget::SerialWidget(QWidget *parent) : QWidget(parent)
@@ -90,26 +103,30 @@ SerialWidget::SerialWidget(QWidget *parent) : QWidget(parent)
 {
     qRegisterMetaType<SerialParam>("SerialParam");
     setupUI();
-    init();
+    initWindow();
+    loadSetting();
+    setWindowParam();
     buildConnect();
     onSerialOnline(false);
+    d->dataView->clear();
 }
 
 SerialWidget::~SerialWidget()
 {
+    saveSetting();
     delete d;
 }
 
 void SerialWidget::onSearchPort()
 {
-    d->portBox->clear();
+    d->portNameBox->clear();
 
     // 查找可用的串口
     for(const QSerialPortInfo &info: QSerialPortInfo::availablePorts()){
         QSerialPort port;
         port.setPort(info);
         if(port.open(QIODevice::ReadWrite)) {
-            d->portBox->addItem(port.portName());     //将串口号添加到portname
+            d->portNameBox->addItem(port.portName());     //将串口号添加到portname
             port.close();       //关闭串口等待人为(打开串口按钮)打开
         }
     }
@@ -255,7 +272,7 @@ void SerialWidget::setupUI()
 
     QFormLayout *formLayout = new QFormLayout;
     formLayout->setContentsMargins(0, 0, 0, 0);
-    formLayout->addRow(tr("Port: "), d->portBox);
+    formLayout->addRow(tr("Port: "), d->portNameBox);
     formLayout->addRow(tr("Baud Rate: "), d->baudRateBox);
     formLayout->addRow(tr("Data Bits: "), d->dataBitsBox);
     formLayout->addRow(tr("Stop Bits: "), d->stopBitsBox);
@@ -282,20 +299,18 @@ void SerialWidget::setupUI()
     layout->addWidget(setBox);
 }
 
-void SerialWidget::init()
+void SerialWidget::initWindow()
 {
     onSearchPort();
     QList<qint32> baudList = QSerialPortInfo::standardBaudRates();
     for(const qint32 baudrate: baudList){
         d->baudRateBox->addItem(QString::number(baudrate));
     }
-    d->baudRateBox->setCurrentIndex(6);
 
     d->dataBitsBox->addItem("5", QSerialPort::Data5);
     d->dataBitsBox->addItem("6", QSerialPort::Data6);
     d->dataBitsBox->addItem("7", QSerialPort::Data7);
     d->dataBitsBox->addItem("8", QSerialPort::Data8);
-    d->dataBitsBox->setCurrentIndex(3);
 
     d->stopBitsBox->addItem("1",   QSerialPort::OneStop);
 #ifdef Q_OS_WIN
@@ -312,11 +327,24 @@ void SerialWidget::init()
     d->flowControlBox->addItem(tr("Software"), QSerialPort::SoftwareControl);
 }
 
+void SerialWidget::setWindowParam()
+{
+    d->baudRateBox->setCurrentIndex(d->widgetParam.baudRate);
+    d->dataBitsBox->setCurrentIndex(d->widgetParam.dataBits);
+    d->stopBitsBox->setCurrentIndex(d->widgetParam.stopBits);
+    d->parityBox->setCurrentIndex(d->widgetParam.parity);
+    d->flowControlBox->setCurrentIndex(d->widgetParam.flowControl);
+
+    d->hexBox->setChecked(d->widgetParam.hex);
+    d->autoSendTimeBox->setValue(d->widgetParam.sendTime);
+    d->sendData->setText(d->widgetParam.sendData);
+}
+
 void SerialWidget::buildConnect()
 {
     connect(d->searchSerialButton, &QPushButton::clicked, this, &SerialWidget::onSearchPort);
 
-    connect(d->portBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
+    connect(d->portNameBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
     connect(d->baudRateBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
     connect(d->dataBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
     connect(d->stopBitsBox, &QComboBox::currentTextChanged, this, &SerialWidget::onParamChanged);
@@ -340,7 +368,7 @@ void SerialWidget::buildConnect()
 
 void SerialWidget::setSerialParam()
 {
-    d->serialParam.portName = d->portBox->currentText();
+    d->serialParam.portName = d->portNameBox->currentText();
     d->serialParam.baudRate = QSerialPort::BaudRate(d->baudRateBox->currentText().toInt());
     d->serialParam.dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
     d->serialParam.stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
@@ -388,4 +416,38 @@ void SerialWidget::setSendCount(int size)
 void SerialWidget::setRecvCount(int size)
 {
     d->recvConutButton->setText(tr("Recv: %1 Bytes").arg(size));
+}
+
+void SerialWidget::loadSetting()
+{
+    if(!Utils::checkFileExist(ConfigFile)) return;
+
+    QSettings setting(ConfigFile, QSettings::IniFormat);
+    setting.beginGroup("seria_config");
+    d->widgetParam.baudRate = setting.value("BaudRate", d->widgetParam.baudRate).toInt();
+    d->widgetParam.dataBits = setting.value("DataBits", d->widgetParam.dataBits).toInt();
+    d->widgetParam.stopBits = setting.value("StopBits", d->widgetParam.stopBits).toInt();
+    d->widgetParam.parity = setting.value("Parity", d->widgetParam.parity).toInt();
+    d->widgetParam.flowControl = setting.value("FlowControl", d->widgetParam.flowControl).toInt();
+
+    d->widgetParam.hex = setting.value("Hex", d->widgetParam.hex).toBool();
+    d->widgetParam.sendTime = setting.value("SendTime", d->widgetParam.sendTime).toInt();
+    d->widgetParam.sendData = setting.value("SendData", d->widgetParam.sendData).toString();
+    setting.endGroup();
+}
+
+void SerialWidget::saveSetting()
+{
+    QSettings setting(ConfigFile, QSettings::IniFormat);
+    setting.beginGroup("seria_config");
+    setting.setValue("BaudRate", d->baudRateBox->currentIndex());
+    setting.setValue("DataBits", d->dataBitsBox->currentIndex());
+    setting.setValue("StopBits", d->stopBitsBox->currentIndex());
+    setting.setValue("Parity", d->parityBox->currentIndex());
+    setting.setValue("FlowControl", d->flowControlBox->currentIndex());
+
+    setting.setValue("Hex", d->hexBox->isChecked());
+    setting.setValue("SendTime", d->autoSendTimeBox->value());
+    setting.setValue("SendData", d->sendData->toPlainText().toUtf8());
+    setting.endGroup();
 }

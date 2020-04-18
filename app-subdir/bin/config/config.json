@@ -15,10 +15,14 @@
 		"qss/MenuButton.css",
 		"qss/CommonWidget.css",
 		"qss/HomePage.css",
-		"qss/TcpPage.css"
+		"qss/TcpPage.css",
+		"qss/CRCPage.css"
     ],
 	
 	"font_files": [
-        "fonts/pingfangSS.ttf"
+        "fonts/pingfangSS.ttf",
+		"fonts/萍方0.ttf",
+		"fonts/萍方粗.ttf",
+		"fonts/特殊符号.ttf"
     ]
 }

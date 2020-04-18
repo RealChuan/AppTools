@@ -18,6 +18,16 @@ inline QString formatHex(const QByteArray &msg)
     return temp;
 }
 
+struct WidgetParam{
+    int model = 0;
+    QString ip = "127.0.0.1";
+    QString port = "65533";
+    bool hex = false;
+    int sendTime = 1000;
+    int connectTime = 1000;
+    QString sendData = "";
+};
+
 enum Model { Server, Client };
 
 class TcpWidgetPrivate{
@@ -37,7 +47,7 @@ public:
         localIPBox = new QComboBox(owner);
         serverIPEdit = new QLineEdit(owner);
         QRegExp regExp("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
-        QValidator *validator = new QRegExpValidator(regExp, serverIPEdit);
+        QRegExpValidator *validator = new QRegExpValidator(regExp, serverIPEdit);
         serverIPEdit->setValidator(validator);
         portLabel = new QLabel(QObject::tr("Local Port: "), owner);
         portEdit = new QLineEdit(owner);
@@ -107,19 +117,23 @@ public:
     QTimer *autoConnectTime = nullptr;
     int sendCount = 0;
     int recvCount = 0;
+
+    WidgetParam widgetParam;
 };
 
 TcpWidget::TcpWidget(QWidget *parent) : QWidget(parent)
   , d(new TcpWidgetPrivate(this))
 {
     setupUI();
-    init();
+    initWindow();
+    loadSetting();
     buildConnect();
-    onModelChange(tr("TcpServer"));
+    setWindowParam();
 }
 
 TcpWidget::~TcpWidget()
 {
+    saveSetting();
     delete d;
 }
 
@@ -144,8 +158,10 @@ void TcpWidget::onModelChange(const QString &text)
         d->allConnectBox->hide();
         d->autoConnectBox->show();
         d->autoConnectTimeBox->show();
+        onClientOnLine(false);
     }
     clearCount();
+    d->dataView->textCursor().removeSelectedText();
 }
 
 void TcpWidget::onListenOrConnect(bool state)
@@ -419,7 +435,7 @@ void TcpWidget::setupUI()
     layout->addWidget(setBox);
 }
 
-void TcpWidget::init()
+void TcpWidget::initWindow()
 {
     d->localIPBox->clear();
     //  获得IP
@@ -428,8 +444,20 @@ void TcpWidget::init()
         if(address.protocol() == QAbstractSocket::IPv4Protocol)
             d->localIPBox->addItem(address.toString());
     d->localIPBox->setCurrentIndex(d->localIPBox->count() - 1);
-    d->serverIPEdit->setText("127.0.0.1");
-    d->portEdit->setText("65533");
+}
+
+void TcpWidget::setWindowParam()
+{
+    d->modelBox->setCurrentIndex(d->widgetParam.model);
+    d->serverIPEdit->setText(d->widgetParam.ip);
+    d->portEdit->setText(d->widgetParam.port);
+
+    d->hexBox->setChecked(d->widgetParam.hex);
+    d->autoSendTimeBox->setValue(d->widgetParam.sendTime);
+    d->autoConnectTimeBox->setValue(d->widgetParam.connectTime);
+    d->sendData->setText(d->widgetParam.sendData);
+
+    onModelChange(d->modelBox->currentText());
 }
 
 void TcpWidget::buildConnect()
@@ -531,4 +559,36 @@ void TcpWidget::destoryServerOrClientThread()
         d->clientThread->deleteLater();
         d->clientThread = nullptr;
     }
+}
+
+void TcpWidget::loadSetting()
+{
+    if(!Utils::checkFileExist(ConfigFile)) return;
+
+    QSettings setting(ConfigFile, QSettings::IniFormat);
+    setting.beginGroup("tcp_config");
+    d->widgetParam.model = setting.value("CommunicationMode", d->widgetParam.model).toInt();
+    d->widgetParam.ip = setting.value("ClientIP", d->widgetParam.ip).toString();
+    d->widgetParam.port = setting.value("Port", d->widgetParam.port).toString();
+
+    d->widgetParam.hex = setting.value("Hex", d->widgetParam.hex).toBool();
+    d->widgetParam.sendTime = setting.value("SendTime", d->widgetParam.sendTime).toInt();
+    d->widgetParam.connectTime = setting.value("ConnectTime", d->widgetParam.connectTime).toInt();
+    d->widgetParam.sendData = setting.value("SendData", d->widgetParam.sendData).toString();
+    setting.endGroup();
+}
+
+void TcpWidget::saveSetting()
+{
+    QSettings setting(ConfigFile, QSettings::IniFormat);
+    setting.beginGroup("tcp_config");
+    setting.setValue("CommunicationMode", d->modelBox->currentIndex());
+    setting.setValue("ClientIP", d->serverIPEdit->text());
+    setting.setValue("Port", d->portEdit->text());
+
+    setting.setValue("Hex", d->hexBox->isChecked());
+    setting.setValue("SendTime", d->autoSendTimeBox->value());
+    setting.setValue("ConnectTime", d->autoConnectTimeBox->value());
+    setting.setValue("SendData", d->sendData->toPlainText().toUtf8());
+    setting.endGroup();
 }

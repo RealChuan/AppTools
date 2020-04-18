@@ -1,13 +1,9 @@
 include(../libs.pri)
 include(mimetypes/mimetypes.pri)
 
-QT += widgets
+QT += widgets sql
 
 DEFINES += UTILS_LIBRARY
-
-#win32: LIBS += -luser32 -lshell32
-# PortsGatherer
-#win32: LIBS += -liphlpapi -lws2_32
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -24,6 +20,7 @@ SOURCES += \
     benchmarker.cpp \
     categorysortfiltermodel.cpp \
     crcalgorithm.cpp \
+    datbasesql.cpp \
     hostosinfo.cpp \
     itemviews.cpp \
     json.cpp \
@@ -37,6 +34,7 @@ HEADERS += \
     benchmarker.h \
     categorysortfiltermodel.h \
     crcalgorithm.h \
+    datbasesql.h \
     executeondestruction.h \
     hostosinfo.h \
     itemviews.h \

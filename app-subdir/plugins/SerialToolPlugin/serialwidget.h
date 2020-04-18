@@ -31,7 +31,8 @@ private slots:
 
 private:
     void setupUI();
-    void init();
+    void initWindow();
+    void setWindowParam();
     void buildConnect();
     void setSerialParam();
     void destorySerialThread();
@@ -39,6 +40,9 @@ private:
     void appendDisplay(MessageType, const QString&);
     void setSendCount(int);
     void setRecvCount(int);
+
+    void loadSetting();
+    void saveSetting();
 
     SerialWidgetPrivate *d;
 };

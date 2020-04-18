@@ -38,7 +38,8 @@ private slots:
 
 private:
     void setupUI();
-    void init();
+    void initWindow();
+    void setWindowParam();
     void buildConnect();
     void clearCount();
     void appendDisplay(MessageType, const QString&);
@@ -47,6 +48,9 @@ private:
 
     void createTcpClientThread();
     void destoryServerOrClientThread();
+
+    void loadSetting();
+    void saveSetting();
 
     TcpWidgetPrivate *d;
 };

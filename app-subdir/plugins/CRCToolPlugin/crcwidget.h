@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class QGroupBox;
 class CRCWidgetPrivate;
 class CRCWidget : public QWidget
 {

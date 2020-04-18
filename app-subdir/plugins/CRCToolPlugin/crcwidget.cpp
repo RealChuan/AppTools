@@ -1,19 +1,12 @@
 #include "crcwidget.h"
+#include "floatbox.h"
+#include "systemconversionbox.h"
 
 #include <utils/crcalgorithm.h>
 
 #include <QtWidgets>
 
 using namespace CRC;
-
-inline QString formatHex(const QByteArray &msg)
-{
-    QString temp;
-    QString hex = QString::fromLocal8Bit(msg.toHex().toUpper());
-    for (int i = 0; i < hex.length(); i = i + 2)
-        temp += hex.mid(i, 2) + " ";    //两个字符+空格（例子：7e ）
-    return temp;
-}
 
 class CRCWidgetPrivate{
 public:
@@ -70,8 +63,8 @@ void CRCWidget::onModelChanged(int index)
     d->polyFormulaLabel->setText(QString::fromStdString(getPolyFormula(model)));
     d->polyLabel->setText(QString::number(getPoly(model), 16));
     d->initLabel->setText(QString::number(getInitValue(model), 16));
-    d->reverseInputLable->setText(QString::number(getInputReversal(model), 16));
-    d->reverseOutputLable->setText(QString::number(getOutputReversal(model), 16));
+    d->reverseInputLable->setText(getInputReversal(model)? tr("true"): tr("false"));
+    d->reverseOutputLable->setText(getOutputReversal(model)? tr("true"): tr("false"));
     d->xOrOutLabel->setText(QString::number(getXorValue(model), 16));
 }
 
@@ -93,21 +86,21 @@ void CRCWidget::onCalculate()
     switch (bitsWidth) {
     case 8:
         crc8 = crcCalculate<uint8_t>(data, length, model);
-        str = QString::number(crc8, 16);
+        str = QString::number(crc8, 16).toUpper();
         //crc.append(reinterpret_cast<char*>(&crc8), 1);
         break;
     case 16:
         crc16 = crcCalculate<uint16_t>(data, length, model);
-        str = QString("%1 %2").arg(QString::number(crc16 >> 8, 16)).
-                arg(QString::number(crc16 & 0xff, 16));
+        str = QString("%1 %2").arg(QString::number(crc16 >> 8, 16)).toUpper().
+                arg(QString::number(crc16 & 0xff, 16)).toUpper();
         //crc.append(reinterpret_cast<char*>(&crc16), 2);
         break;
     case 32:
         crc32 = crcCalculate<uint32_t>(data, length, model);
-        str = QString("%1 %2 %3 %4").arg(QString::number(crc32 >> 24, 16)).
-                arg(QString::number((crc32 >> 16) & 0xff, 16)).
-                arg(QString::number((crc32 >> 8) & 0xff, 16)).
-                arg(QString::number(crc32 & 0xff, 16));
+        str = QString("%1 %2 %3 %4").arg(QString::number(crc32 >> 24, 16)).toUpper().
+                arg(QString::number((crc32 >> 16) & 0xff, 16)).toUpper().
+                arg(QString::number((crc32 >> 8) & 0xff, 16)).toUpper().
+                arg(QString::number(crc32 & 0xff, 16)).toUpper();
         //crc.append(reinterpret_cast<char*>(&crc32), 4);
         break;
     default:
@@ -120,8 +113,9 @@ void CRCWidget::onCalculate()
 
 void CRCWidget::setupUI()
 {
+    setObjectName("CRCWidget");
     QHBoxLayout *outLayout = new QHBoxLayout;
-    outLayout->addWidget(new QLabel(tr("CRC: "), this));
+    outLayout->addWidget(new QLabel(tr("CRC (CRCH CRCL): "), this));
     outLayout->addWidget(d->resultEdit);
 
     QPushButton *calButton = new QPushButton(tr("Calculate"), this);
@@ -140,12 +134,18 @@ void CRCWidget::setupUI()
     formLayout->addRow(tr("Reverse Output: "), d->reverseOutputLable);
     formLayout->addRow(tr("XOrOut: "), d->xOrOutLabel);
 
+    QGroupBox *CRCBox = new QGroupBox(tr("CRC Calculator"), this);
+    QGridLayout *crcLayout = new QGridLayout(CRCBox);
+    crcLayout->addLayout(outLayout, 0, 0);
+    crcLayout->addWidget(d->modelBox, 0, 1);
+    crcLayout->addWidget(d->inputEdit, 1, 0, 2, 1);
+    crcLayout->addWidget(infoBox, 1, 1);
+    crcLayout->addWidget(calButton, 2, 1);
+
     QGridLayout *layout = new QGridLayout(this);
-    layout->addLayout(outLayout, 0, 0);
-    layout->addWidget(d->modelBox, 0, 1);
-    layout->addWidget(d->inputEdit, 1, 0, 2, 1);
-    layout->addWidget(infoBox, 1, 1);
-    layout->addWidget(calButton, 2, 1);
+    layout->addWidget(CRCBox, 0, 0, 1, 2);
+    layout->addWidget(new FloatBox(this), 1, 0, 1, 1);
+    layout->addWidget(new SystemConversionBox(this), 1, 1, 1, 1);
 }
 
 void CRCWidget::init()

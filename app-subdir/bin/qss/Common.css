@@ -3,6 +3,20 @@
 }
 
 /******************************************************************************
+ *                                   QWidget
+ *****************************************************************************/
+
+QWidget {
+    color: #495060;
+	font-family: "pingfangSS";
+	font-size: 12px;
+}
+
+QWidget:focus {
+    outline: none; /* 去掉得到焦点时的虚线框 */
+}
+
+/******************************************************************************
  *                                   QPushButton
  *****************************************************************************/
 
@@ -191,9 +205,8 @@ QListWidget::item:selected:active{
  *                                   QLineEdit
  *****************************************************************************/
 
-QLineEdit{
-	height: 24px;
-    min-width: 90px;
+QLineEdit {
+    height: 24px;
     font-size: 12px;
     border: 1px solid #dddee1;
     border-radius: 4px;
@@ -204,6 +217,15 @@ QLineEdit{
 
 QLineEdit:focus {
     border-color: #57a3f3;
+}
+
+QLineEdit:read-only {
+    color: #495060;
+    border-color: #dddee1;
+}
+
+QLineEdit:read-only:focus {
+    border-color: #dddee1;
 }
 
 /******************************************************************************
