@@ -1,8 +1,8 @@
 # app-subdir  
-基于QtCreator的一套UI模板以及一些工具合集  
+基于QtCreator插件系统的一套UI模板以及一些工具合集。  
 如有侵权，请联系删除，谢谢！     
 
-A set of UI templates and a collection of tools based on QtCreator  
+A set of UI templates and a collection of tools based on the QtCreator plug-in system.  
 If there is any infringement, please contact to delete, thank you!    
 
 
