@@ -1,12 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <controls/commonwidget.h>
 
 class QStackedWidget;
 class QAbstractButton;
 class MainWindowPrivate;
-class MainWindow : public QMainWindow
+class MainWindow : public CommonWidget
 {
     Q_OBJECT
 public:
@@ -15,18 +15,13 @@ public:
 
     void extensionsInitialized();
 
-protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-
 private slots:
     void showGroupButton(QAbstractButton*);
     void aboutPlugins();
 
 private:
     void setupUI();
-    QWidget* titleWidget();
+    void initToolBar();
     QWidget* menuWidget();
     QStackedWidget* initPageWidget(QString);
     void initMenu();

@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDebug>
 
 class DatabaseSQLPrivate{
 public:
@@ -15,7 +16,7 @@ public:
 DatabaseSQL::DatabaseSQL(QObject *parent) : QObject(parent)
   , d(new DatabaseSQLPrivate(this))
 {
-
+    qDebug() << tr("Qt currently supports database drivers:") << QSqlDatabase::drivers();
 }
 
 DatabaseSQL::~DatabaseSQL()

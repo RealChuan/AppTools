@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "plugindialog.h"
+#include "configwidget.h"
+
 #include <utils/utils.h>
 #include <core/mpages.h>
 #include <extensionsystem/pluginmanager.h>
@@ -35,19 +37,12 @@ public:
     QVBoxLayout *v1;
     QVBoxLayout *v2;
     QVBoxLayout *v3;
-
-    //记录鼠标位置
-    QPoint lastPoint;
-    QPoint movePoint;
 };
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : CommonWidget(parent)
     , d(new MainWindowPrivate(this))
 {
-    setWindowFlags(Qt::FramelessWindowHint);        //去掉边框
-    setAttribute(Qt::WA_TranslucentBackground);     //背景透明
-    setAttribute(Qt::WA_StyledBackground);
     setWindowTitle("App");
     setupUI();
 }
@@ -81,28 +76,6 @@ void MainWindow::extensionsInitialized()
     initMenu();
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    //读取坐鼠标点击坐标点
-    d->lastPoint = event->globalPos();
-}
-
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    if (isMaximized()) return;
-    if(!d->lastPoint.isNull()){
-        //把移动的点记录下来
-        d->movePoint = event->globalPos() - d->lastPoint;
-        d->lastPoint = event->globalPos();      //更新记录点
-        move(pos() + d->movePoint);
-    }
-}
-
-void MainWindow::mouseReleaseEvent(QMouseEvent *)
-{
-    d->lastPoint = QPoint();
-}
-
 void MainWindow::showGroupButton(QAbstractButton *button)
 {
     QVariant group = button->property("Group");
@@ -120,80 +93,43 @@ void MainWindow::aboutPlugins()
 
 void MainWindow::setupUI()
 {
-    QFrame *frame = new QFrame(this);
-    QGridLayout *layout = new QGridLayout(frame);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
-    layout->addWidget(titleWidget(), 0, 0, 1, 2);
-    layout->addWidget(menuWidget(), 1, 0, 1, 1);
-    layout->addWidget(initPageWidget(tr("Hello World!")), 1, 1, 1, 1);
-    layout->addWidget(new QSizeGrip(this), 1, 1, Qt::AlignRight | Qt::AlignBottom);
-
-    setCentralWidget(frame);
-    setMinimumSize(1000, 618);
-    Utils::windowCenter(this);
-}
-
-QWidget *MainWindow::titleWidget()
-{
-    QLabel *iconLabel = new QLabel(this);
-    iconLabel->setObjectName("iconLabel");
-    QLabel *titleLabel = new QLabel(tr("App"), this);
-    titleLabel->setObjectName("titleLabel");
-    QPushButton *qssButton = new QPushButton(tr("Reload QSS"), this);
-    qssButton->setObjectName("qssButton");
-
-    QToolButton *minButton = new QToolButton(this);
-    minButton->setObjectName("minButton");
-    minButton->setToolTip(tr("Minimize"));
-    QToolButton *maxButton = new QToolButton(this);
-    maxButton->setObjectName("maxButton");
-    maxButton->setToolTip(tr("Maximize"));
-    QToolButton *restoreButton = new QToolButton(this);
-    restoreButton->setObjectName("restoreButton");
-    restoreButton->setToolTip(tr("Restore"));
-    QToolButton *closeButton = new QToolButton(this);
-    closeButton->setObjectName("closeButton");
-    closeButton->setToolTip(tr("Close"));
-
-    connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
-    connect(minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
-    connect(maxButton, &QToolButton::clicked, [=]{
-        showMaximized();
-        maxButton->hide();
-        restoreButton->show();
-    });
-    connect(restoreButton, &QToolButton::clicked, [=]{
-        showNormal();
-        maxButton->show();
-        restoreButton->hide();
-    });
-    connect(closeButton, &QToolButton::clicked, this, &QApplication::quit);
-
-    if(isMaximized()){
-        maxButton->hide();
-        restoreButton->show();
-    }else{
-        maxButton->show();
-        restoreButton->hide();
-    }
+    initToolBar();
 
     QWidget *widget = new QWidget(this);
-    widget->setObjectName("titleWidget");
     QHBoxLayout *layout = new QHBoxLayout(widget);
-    layout->setContentsMargins(5, 5, 5, 5);
-    layout->setSpacing(10);
-    layout->addWidget(iconLabel);
-    layout->addWidget(titleLabel);
-    layout->addStretch(0);
-    layout->addWidget(qssButton);
-    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));
-    layout->addWidget(minButton);
-    layout->addWidget(maxButton);
-    layout->addWidget(restoreButton);
-    layout->addWidget(closeButton);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(menuWidget());
+    layout->addWidget(initPageWidget(tr("Hello World!")));
 
-    return widget;
+    setCentralWidget(widget);
+    setMinimumSize(1000, 618);
+    Utils::windowCenter(this);
+
+    connect(this, &MainWindow::aboutToclose, qApp, &QApplication::quit);
+}
+
+void MainWindow::initToolBar()
+{
+    QPushButton *qssButton = new QPushButton(tr("Reload QSS"), this);
+    qssButton->setObjectName("QssButton");
+    connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
+
+    QToolButton *configButton = new QToolButton(this);
+    configButton->setObjectName("ConfigButton");
+    ConfigWidget *configWidget = new ConfigWidget(this);
+    d->pageWidget->addWidget(configWidget);
+    connect(configButton, &QToolButton::clicked, [=]{
+        d->pageWidget->setCurrentWidget(configWidget);
+    });
+
+    QWidget *titleBar = new QWidget(this);
+    QHBoxLayout *titleLayout = new QHBoxLayout(titleBar);
+    titleLayout->setContentsMargins(0, 0, 0, 0);
+    titleLayout->setSpacing(10);
+    titleLayout->addWidget(qssButton);
+    titleLayout->addWidget(configButton);
+    setTitleBar(titleBar);
 }
 
 QWidget *MainWindow::menuWidget()
@@ -271,4 +207,3 @@ void MainWindow::initMenu()
     showGroupButton(d->switchButtonGroup->buttons().at(0));
     connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(showGroupButton(QAbstractButton*)));
 }
-

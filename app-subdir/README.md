@@ -24,7 +24,7 @@ UI reference:[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/
 
 程序内部配置，可根据实际情况修改[config.json](bin/cfg/config.json)     
 
-The internal configuration of the program can be modified according to the actual situation [config.json](bin / cfg / config.json)    
+The internal configuration of the program can be modified according to the actual situation [config.json](bin/cfg/config.json)    
 
 
 

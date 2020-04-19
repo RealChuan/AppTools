@@ -13,6 +13,7 @@ public:
         restoreButton = new QToolButton(owner);
         centralWidget = new QWidget(owner);
         centralWidget->setObjectName("CommonCentralWidget");
+        titleBar = new QWidget(owner);
     }
     QWidget *owner;
     QLabel *iconLabel;
@@ -21,6 +22,7 @@ public:
     QToolButton *maxButton;
     QToolButton *restoreButton;
     QWidget *centralWidget;
+    QWidget *titleBar;
 
     //记录鼠标位置
     QPoint lastPoint;
@@ -71,6 +73,14 @@ void CommonWidget::setCentralWidget(QWidget *widget)
     layout->addWidget(widget);
 }
 
+void CommonWidget::setTitleBar(QWidget *widget)
+{
+    QHBoxLayout *layout = new QHBoxLayout(d->titleBar);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(widget);
+}
+
 void CommonWidget::mousePressEvent(QMouseEvent *event)
 {
     //读取坐鼠标点击坐标点
@@ -107,7 +117,7 @@ QWidget *CommonWidget::titleWidget()
 {
     QLabel *iconLabel = new QLabel(this);
     iconLabel->setObjectName("iconLabel");
-    QLabel *titleLabel = new QLabel(tr("App"), this);
+    QLabel *titleLabel = new QLabel(tr("AppPlugin"), this);
     titleLabel->setObjectName("titleLabel");
 
     d->minButton = new QToolButton(this);
@@ -152,6 +162,8 @@ QWidget *CommonWidget::titleWidget()
     layout->addWidget(iconLabel);
     layout->addWidget(titleLabel);
     layout->addStretch(0);
+    layout->addWidget(d->titleBar);
+    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));
     layout->addWidget(d->minButton);
     layout->addWidget(d->maxButton);
     layout->addWidget(d->restoreButton);

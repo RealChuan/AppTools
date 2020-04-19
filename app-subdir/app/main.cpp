@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     a.setApplicationVersion(QObject::tr("0.0.1"));
-    a.setApplicationName(QObject::tr("App"));
+    a.setApplicationName(QObject::tr("AppPlugin"));
     a.setOrganizationName(QObject::tr("Youth"));
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     Utils::setUTF8Code();
     Utils::setQSS();
     Utils::loadFonts();
+    Utils::loadLanguage();
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     PluginManager pluginManager;

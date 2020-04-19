@@ -19,6 +19,8 @@ class QWidget;
 
 namespace Utils{
 
+enum Language{ Chinese, English };
+
 UTILS_EXPORT void printBuildInfo();
 UTILS_EXPORT void setHighDpiEnvironmentVariable();
 UTILS_EXPORT void setUTF8Code();
@@ -27,6 +29,10 @@ UTILS_EXPORT void loadFonts();
 UTILS_EXPORT bool checkFileExist(const QString&);
 UTILS_EXPORT void windowCenter(QWidget *window);
 UTILS_EXPORT void sleep(int sec);
+UTILS_EXPORT void reboot();
+UTILS_EXPORT void saveLanguage(Language);
+UTILS_EXPORT void loadLanguage();
+UTILS_EXPORT Language getCurrentLanguage();
 
 }
 

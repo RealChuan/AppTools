@@ -1,4 +1,4 @@
-# AppTools  
+# AppTools 
 
 Build Environment  :    Qt 5.14.2		VS:2017                
 

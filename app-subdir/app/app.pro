@@ -5,10 +5,11 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
-TARGET = App
+TARGET = AppPlugin
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/utils.lib \
     $$APP_OUTPUT_PATH/../libs/extensionsystem.lib
+
 
 RC_ICONS = app.ico
 ICON     = app.icns

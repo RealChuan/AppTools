@@ -67,11 +67,8 @@ bool Utils::checkFileExist(const QString &path)
 
 QString compilerString()
 {
-#if defined(Q_CC_CLANG) // must be before GNU, because clang claims to be GNU too
-    QString isAppleString;
-#endif
 #if defined(__apple_build_version__) // Apple clang has other version numbers
-    isAppleString = QLatin1String(" (Apple)");
+    QString isAppleString = QLatin1String(" (Apple)");
     return QLatin1String("Clang " ) + QString::number(__clang_major__) + QLatin1Char('.')
             + QString::number(__clang_minor__) + isAppleString;
 #elif defined(Q_CC_GNU)
@@ -115,4 +112,52 @@ void Utils::setHighDpiEnvironmentVariable()
 #endif
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
+}
+
+void Utils::reboot()
+{
+    QString program = QApplication::applicationFilePath();
+    QStringList arguments = QApplication::arguments();
+    QString workingDirectory = QDir::currentPath();
+    QProcess::startDetached(program, arguments, workingDirectory);
+    QApplication::exit();
+}
+
+void Utils::saveLanguage(Utils::Language type)
+{
+    QSettings setting(ConfigFile, QSettings::IniFormat);
+    setting.beginGroup("Language_config");
+    setting.setValue("Language", type);
+    setting.endGroup();
+}
+
+static Utils::Language CURRENT_LANGUAGE = Utils::Chinese;
+
+void Utils::loadLanguage()
+{
+    static QTranslator translator;
+    if(!checkFileExist(ConfigFile)){
+        translator.load("./translator/language.zh_en.qm");
+        CURRENT_LANGUAGE = Utils::English;
+    }
+    else{
+        QSettings setting(ConfigFile, QSettings::IniFormat);
+        setting.beginGroup("Language_config");     //向当前组追加前缀
+        Utils::Language type = Utils::Language(setting.value("Language").toInt());
+        setting.endGroup();
+
+        switch (type) {
+        case Utils::Chinese: translator.load("./translator/language.zh_cn.qm");
+            CURRENT_LANGUAGE = Utils::Chinese; break;
+        case Utils::English: translator.load("./translator/language.zh_en.qm");
+            CURRENT_LANGUAGE = Utils::English; break;
+        }
+    }
+
+    qApp->installTranslator(&translator);
+}
+
+Utils::Language Utils::getCurrentLanguage()
+{
+    return CURRENT_LANGUAGE;
 }

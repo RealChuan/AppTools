@@ -20,6 +20,7 @@ public:
     void setIcon(const QIcon&);
 
     void setCentralWidget(QWidget*);
+    void setTitleBar(QWidget*);
 
 signals:
     void aboutToclose();

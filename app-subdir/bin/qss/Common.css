@@ -401,3 +401,73 @@ QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
     width: 0;
     height: 0;
 }
+
+/******************************************************************************
+ *                                QMenuBar QMenu
+ *****************************************************************************/
+
+QMenu {
+	background-color:white;
+	font-size: 13px;
+}
+
+QMenu::item {
+	background-color:transparent;
+}
+
+QMenu::item:selected {
+	background-color: #009dd1;
+	color: white;
+}
+
+QMenu::icon::checked {
+	background:red;
+	border:3px inset red;
+	position:absolute;
+	
+	top:2px;
+	right:2px;
+	bottom:4px;
+	left:4px;
+}
+
+QMenu::separator {
+	height:10px;
+	background:lightblue;
+	margin-left:10px;
+	margin-right:5px;
+}
+
+QMenu::indicator {
+	width:20px;
+	height:20px;
+}
+
+/* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
+QMenu::indicator:non-exclusive:unchecked {
+    image: url(image/checkbox-unchecked2.png);
+}
+
+QMenu::indicator:non-exclusive:unchecked:selected {
+    image: url(image/checkbox-unchecked2.png);
+}
+
+QMenu::indicator:non-exclusive:checked {
+    image: url(image/checkbox-checked-selectionmode.png);
+}
+
+QMenu::indicator:non-exclusive:checked:selected {
+    image: url(image/checkbox-checked-selectionmode.png);
+}
+
+QMenuBar {
+	background-color:transparent;
+	font-size: 14px;
+}
+
+QMenuBar::item {
+	background:transparent;
+	border-width: 1px;
+	border-style: none none solid none;
+	border-color: black;
+}

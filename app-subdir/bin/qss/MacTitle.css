@@ -79,14 +79,34 @@
 }
 
 /******************************************************************************/
-#qssButton{
+#QssButton{
 	min-width: 100px;
 	font-size: 14px;
     border-width: 0;
 	border-radius: 1;
 }
 
-#qssButton:hover{
+#QssButton:hover{
 	color: #0066ff;
 	background-color: white;
 }
+
+/******************************************************************************/
+
+#ConfigButton{
+	width:  30px;
+    height: 30px;
+    min-width:  30px;
+    max-width:  30px;
+    min-height: 30px;
+    max-height: 30px;
+    border-width: 0;
+	border-image: url(image/setting.png);
+}
+
+#ConfigButton:hover{
+	border-image: url(image/setting-hover.png);
+}
+
+
+

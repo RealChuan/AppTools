@@ -9,6 +9,8 @@
 
 dbSql::dbSql()
 {
+    qDebug() << "Qt currently supports database drivers:" << QSqlDatabase::drivers();
+
     Json json(QString("cfg/config.json"));
     QString type=json.getString("database","type");
     if("MYSQL"==type)
