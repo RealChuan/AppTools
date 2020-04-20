@@ -5,7 +5,6 @@
 
 #include "mainwindow.h"
 
-//class MainWindow;
 class CorePlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT

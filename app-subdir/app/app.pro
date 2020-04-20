@@ -8,7 +8,9 @@ TEMPLATE = app
 TARGET = AppPlugin
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/utils.lib \
-    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib
+    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib \
+    $$APP_OUTPUT_PATH/../libs/controls.lib \
+    $$APP_OUTPUT_PATH/../libs/UserAccountSystem.lib
 
 
 RC_ICONS = app.ico

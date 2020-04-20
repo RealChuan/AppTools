@@ -93,7 +93,7 @@
 
 /******************************************************************************/
 
-#ConfigButton{
+#ConfigButton, #AccountButton{
 	width:  30px;
     height: 30px;
     min-width:  30px;
@@ -101,11 +101,22 @@
     min-height: 30px;
     max-height: 30px;
     border-width: 0;
+}
+
+#ConfigButton {
 	border-image: url(image/setting.png);
 }
 
 #ConfigButton:hover{
 	border-image: url(image/setting-hover.png);
+}
+
+#AccountButton {
+	border-image: url(image/account.png);
+}
+
+#AccountButton:hover {
+	border-image: url(image/account-hover.png);
 }
 
 

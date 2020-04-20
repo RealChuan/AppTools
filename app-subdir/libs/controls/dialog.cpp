@@ -7,8 +7,8 @@ Dialog::Dialog(QWidget *parent)
 {
     setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
     setWindowModality(Qt::ApplicationModal);
-    hideMinButton();
-    hideRestoreMaxButton();
+    setMinButtonVisible(false);
+    setRestoreMaxButtonVisible(false);
     resize(600, 370);
 }
 

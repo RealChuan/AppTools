@@ -18,7 +18,7 @@ QObject *CorePlugin::remoteCommand(const QStringList &,
                                    const QString &,
                                    const QStringList &)
 {
-    qApp->setApplicationDisplayName(QObject::tr("App"));
+    qApp->setApplicationDisplayName(QObject::tr("AppPlugin"));
     m_mainWindow->show();
     return nullptr;
 }

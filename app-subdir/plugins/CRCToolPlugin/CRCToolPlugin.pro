@@ -4,8 +4,6 @@ QT += widgets
 
 DEFINES += CRCTOOLPLUGIN_LIBRARY
 
-CONFIG += c++11
-
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/utils.lib \
     $$APP_OUTPUT_PATH/../libs/extensionsystem.lib\

@@ -13,8 +13,8 @@ public:
     explicit CommonWidget(QWidget *parent = nullptr);
     ~CommonWidget();
 
-    void hideRestoreMaxButton();
-    void hideMinButton();
+    void setRestoreMaxButtonVisible(bool);
+    void setMinButtonVisible(bool);
 
     void setTitle(const QString&);
     void setIcon(const QIcon&);

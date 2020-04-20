@@ -23,8 +23,8 @@ MessBox::MessBox(QWidget *parent) : CommonWidget(parent)
 {
     setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
     setWindowModality(Qt::ApplicationModal);
-    hideMinButton();
-    hideRestoreMaxButton();
+    setMinButtonVisible(false);
+    setRestoreMaxButtonVisible(false);
     setupUI();
     buildConnect();
     resize(450, 280);

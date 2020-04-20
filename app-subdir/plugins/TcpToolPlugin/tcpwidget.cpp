@@ -242,7 +242,7 @@ void TcpWidget::onServerOnline(bool state)
     d->localIPBox->setEnabled(!state);
     d->portEdit->setEnabled(!state);
     d->listenOrConnectButton->setChecked(state);
-    d->listenOrConnectButton->setText(state? tr("Disconnect") : tr("Listen"));
+    d->listenOrConnectButton->setText(state? tr("Stop Listen") : tr("Listen"));
     if(!state){
         d->autoSendBox->setChecked(state);
         d->sendTime->stop();

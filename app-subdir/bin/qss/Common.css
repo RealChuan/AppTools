@@ -38,6 +38,7 @@ QPushButton:focus {
 }
 
 QPushButton:checked {
+	color: white;
     background-color: #0066ff;
 }
 
@@ -228,6 +229,10 @@ QLineEdit:read-only:focus {
     border-color: #dddee1;
 }
 
+QLineEdit[echoMode="2"] {
+      lineedit-password-character: 9679;
+}
+
 /******************************************************************************
  *                                   QTextBrowser
  *****************************************************************************/
@@ -254,9 +259,15 @@ QTextBrowser:focus {
     background-color: #fff;
     padding: 0 4px;
  }
+ 
 QTextEdit:focus {
     border-color: #57a3f3;
 } 
+
+QTextEdit:read-only {
+    color: #495060;
+    border-color: #dddee1;
+}
 
 /******************************************************************************
  *                                   QCheckBox&QRadioButton
@@ -306,7 +317,7 @@ QComboBox:focus {
 
 QComboBox::drop-down {
     width: 12px;
-    height: 12px;
+    height: 14px;
 	margin-right: 2px;
     margin-top: 2px;
     subcontrol-origin: border;
@@ -320,6 +331,7 @@ QComboBox::drop-down:hover {
 }
 
 QComboBox QAbstractItemView {
+	min-height:25px;
     margin-top: 0px;
     padding-bottom: 0px;
     border: 1px solid #FFF;
@@ -432,7 +444,7 @@ QMenu::icon::checked {
 }
 
 QMenu::separator {
-	height:10px;
+	height:2px;
 	background:lightblue;
 	margin-left:10px;
 	margin-right:5px;

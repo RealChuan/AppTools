@@ -5,6 +5,7 @@
 #include <utils/utils.h>
 #include <core/mpages.h>
 #include <extensionsystem/pluginmanager.h>
+#include <UserAccountSystem/loginwidget.h>
 
 #include <QtWidgets>
 
@@ -76,7 +77,7 @@ void MainWindow::extensionsInitialized()
     initMenu();
 }
 
-void MainWindow::showGroupButton(QAbstractButton *button)
+void MainWindow::onShowGroupButton(QAbstractButton *button)
 {
     QVariant group = button->property("Group");
     foreach(QAbstractButton *btn, d->menuButtonGroup->buttons()){
@@ -85,10 +86,16 @@ void MainWindow::showGroupButton(QAbstractButton *button)
     }
 }
 
-void MainWindow::aboutPlugins()
+void MainWindow::onAboutPlugins()
 {
     Core::Internal::PluginDialog dialog(this);
     dialog.exec();
+}
+
+void MainWindow::onAccount()
+{
+    LoginWidget login(this);
+    login.exec();
 }
 
 void MainWindow::setupUI()
@@ -115,6 +122,10 @@ void MainWindow::initToolBar()
     qssButton->setObjectName("QssButton");
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
+    QToolButton *accountButton = new QToolButton(this);
+    accountButton->setObjectName("AccountButton");
+    connect(accountButton, &QToolButton::clicked, this, &MainWindow::onAccount);
+
     QToolButton *configButton = new QToolButton(this);
     configButton->setObjectName("ConfigButton");
     ConfigWidget *configWidget = new ConfigWidget(this);
@@ -128,6 +139,7 @@ void MainWindow::initToolBar()
     titleLayout->setContentsMargins(0, 0, 0, 0);
     titleLayout->setSpacing(10);
     titleLayout->addWidget(qssButton);
+    titleLayout->addWidget(accountButton);
     titleLayout->addWidget(configButton);
     setTitleBar(titleBar);
 }
@@ -140,7 +152,7 @@ QWidget *MainWindow::menuWidget()
     QPushButton *qtButton = new QPushButton(tr("About Qt"), this);
     QPushButton *testButton = new QPushButton(tr("Test"), this);
 
-    connect(pluginButton, &QPushButton::clicked, this, &MainWindow::aboutPlugins);
+    connect(pluginButton, &QPushButton::clicked, this, &MainWindow::onAboutPlugins);
 
     connect(qtButton, &QPushButton::clicked, [this]{
         QMessageBox::aboutQt(this);
@@ -204,6 +216,6 @@ void MainWindow::initMenu()
         btn->setProperty("class", "GroupItemButton");
         btn->setCheckable(true);
     }
-    showGroupButton(d->switchButtonGroup->buttons().at(0));
-    connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(showGroupButton(QAbstractButton*)));
+    onShowGroupButton(d->switchButtonGroup->buttons().at(0));
+    connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onShowGroupButton(QAbstractButton*)));
 }

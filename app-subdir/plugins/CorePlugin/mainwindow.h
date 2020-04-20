@@ -16,8 +16,9 @@ public:
     void extensionsInitialized();
 
 private slots:
-    void showGroupButton(QAbstractButton*);
-    void aboutPlugins();
+    void onShowGroupButton(QAbstractButton*);
+    void onAboutPlugins();
+    void onAccount();
 
 private:
     void setupUI();

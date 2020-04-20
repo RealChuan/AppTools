@@ -1,19 +1,15 @@
-LoginWidget {
-    background: white;
-    border-radius: 10px;
-}
-
-#picture{
-	border: 2px solid gray;
+/*
+#AvatarLabel{
     min-width:  164px;
     max-width:  164px;
     min-height: 164px;
     max-height: 164px;
-    border-width: 0 0 0 0;
+	border-width: 0 0 0 0;
 	border-image: url(image/login.png)
 }
+*/
 
-#tipLable{
+#PromptLabel{
 	border: 2px solid gray;
     min-height: 14px;
     max-height: 14px;
@@ -22,13 +18,42 @@ LoginWidget {
     border-width: 0 0 0 0;
 }
 
-#username,LoginWidget #password{
+#PasswordEdit{
     min-width: 160px;
     min-height: 30px;
     font-size: 14px;
     border-radius: 4px;
 }
 
-#loginbtn {
+#LoginButton {
     height: 30px;
 }
+
+#FlatButton {
+	border: 0;
+	min-height: 20px;
+}
+
+#FlatButton:hover{
+	background-color: transparent;
+	color: #39a3ff;
+}
+
+#UserBox{
+	height: 30px;
+    font-size: 14px;
+}
+
+#UserBox QAbstractItemView {
+	min-height:32px;
+}
+
+#LoginWidget QCheckBox::indicator{
+    subcontrol-origin: border;
+    subcontrol-position: left center;
+
+    width: 24px;
+    height: 10px;
+    border-width: 0 0 0 0;
+}
+	

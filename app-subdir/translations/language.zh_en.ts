@@ -88,7 +88,7 @@
     <name>CommonWidget</name>
     <message>
         <location filename="../libs/controls/commonwidget.cpp" line="120"/>
-        <source>App</source>
+        <source>AppPlugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -685,6 +685,24 @@ Offset: %2</source>
     </message>
 </context>
 <context>
+    <name>LoginWidget</name>
+    <message>
+        <location filename="../plugins/LoginSystemPlugin/loginwidget.cpp" line="42"/>
+        <source>Registered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/LoginSystemPlugin/loginwidget.cpp" line="43"/>
+        <source>Recover Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/LoginSystemPlugin/loginwidget.cpp" line="51"/>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../plugins/CorePlugin/mainwindow.cpp" line="103"/>
@@ -859,12 +877,6 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/coreplugin.cpp" line="21"/>
-        <location filename="../app/main.cpp" line="21"/>
-        <source>App</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="40"/>
         <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="41"/>
         <source>Send</source>
@@ -976,6 +988,12 @@ Offset: %2</source>
         <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="25"/>
         <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="26"/>
         <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/CorePlugin/coreplugin.cpp" line="21"/>
+        <location filename="../app/main.cpp" line="21"/>
+        <source>AppPlugin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1287,7 +1305,6 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="245"/>
         <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="295"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
@@ -1295,6 +1312,11 @@ Offset: %2</source>
     <message>
         <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="254"/>
         <source>Server Online!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="245"/>
+        <source>Stop Listen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

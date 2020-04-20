@@ -8,9 +8,16 @@ public:
         iconLabel = new QLabel(owner);
         iconLabel->setObjectName("iconLabel");
         titleLabel = new QLabel(qAppName(), owner);
+        titleLabel->setObjectName("titleLabel");
         minButton = new QToolButton(owner);
+        minButton->setObjectName("minButton");
+        minButton->setToolTip(QObject::tr("Minimize"));
         maxButton = new QToolButton(owner);
+        maxButton->setObjectName("maxButton");
+        maxButton->setToolTip(QObject::tr("Maximize"));
         restoreButton = new QToolButton(owner);
+        restoreButton->setObjectName("restoreButton");
+        restoreButton->setToolTip(QObject::tr("Restore"));
         centralWidget = new QWidget(owner);
         centralWidget->setObjectName("CommonCentralWidget");
         titleBar = new QWidget(owner);
@@ -44,15 +51,15 @@ CommonWidget::~CommonWidget()
     delete d;
 }
 
-void CommonWidget::hideRestoreMaxButton()
+void CommonWidget::setRestoreMaxButtonVisible(bool visible)
 {
-    d->maxButton->hide();
-    d->restoreButton->hide();
+    d->maxButton->setVisible(visible);
+    d->restoreButton->setVisible(visible);
 }
 
-void CommonWidget::hideMinButton()
+void CommonWidget::setMinButtonVisible(bool visible)
 {
-    d->minButton->hide();
+    d->minButton->setVisible(visible);
 }
 
 void CommonWidget::setTitle(const QString &title)
@@ -115,20 +122,6 @@ void CommonWidget::setupUI()
 
 QWidget *CommonWidget::titleWidget()
 {
-    QLabel *iconLabel = new QLabel(this);
-    iconLabel->setObjectName("iconLabel");
-    QLabel *titleLabel = new QLabel(tr("AppPlugin"), this);
-    titleLabel->setObjectName("titleLabel");
-
-    d->minButton = new QToolButton(this);
-    d->minButton->setObjectName("minButton");
-    d->minButton->setToolTip(tr("Minimize"));
-    d->maxButton = new QToolButton(this);
-    d->maxButton->setObjectName("maxButton");
-    d->maxButton->setToolTip(tr("Maximize"));
-    d->restoreButton = new QToolButton(this);
-    d->restoreButton->setObjectName("restoreButton");
-    d->restoreButton->setToolTip(tr("Restore"));
     QToolButton *closeButton = new QToolButton(this);
     closeButton->setObjectName("closeButton");
     closeButton->setToolTip(tr("Close"));
@@ -159,8 +152,8 @@ QWidget *CommonWidget::titleWidget()
     QHBoxLayout *layout = new QHBoxLayout(widget);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(10);
-    layout->addWidget(iconLabel);
-    layout->addWidget(titleLabel);
+    layout->addWidget(d->iconLabel);
+    layout->addWidget(d->titleLabel);
     layout->addStretch(0);
     layout->addWidget(d->titleBar);
     layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));

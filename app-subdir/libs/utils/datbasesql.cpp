@@ -1,5 +1,7 @@
 #include "datbasesql.h"
 
+#include <controls/messbox.h>
+
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -53,6 +55,11 @@ QString DatabaseSQL::errorString() const
 bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &databaseName,
                             const QString &username, const QString &password)
 {
+    if (!QSqlDatabase::drivers().contains("QMYSQL")){
+        MessBox::Warning(nullptr, tr("Unable to load database, This program needs the MYSQL driver"));
+        return false;
+    }
+
     if(ip.isEmpty()) {
         d->error = tr("MySQL IP Empty!");
         return false;
@@ -90,6 +97,11 @@ bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &database
 
 bool DatabaseSQL::openSQLite(const QString &databaseName)
 {
+    if (!QSqlDatabase::drivers().contains("QSQLITE")){
+        MessBox::Warning(nullptr, tr("Unable to load database, This program needs the SQLITE driver"));
+        return false;
+    }
+
     if(databaseName.isEmpty()){
         d->error = tr("SQLite Database Name Empty!");
         return false;

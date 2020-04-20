@@ -2,6 +2,7 @@
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginspec.h>
 #include <extensionsystem/iplugin.h>
+#include <UserAccountSystem/loginwidget.h>
 
 #include <QApplication>
 #include <QDir>
@@ -25,9 +26,9 @@ int main(int argc, char *argv[])
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);
 
     Utils::setUTF8Code();
+    Utils::loadLanguage();
     Utils::setQSS();
     Utils::loadFonts();
-    Utils::loadLanguage();
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     PluginManager pluginManager;
@@ -40,6 +41,13 @@ int main(int argc, char *argv[])
     // Shutdown plugin manager on the exit
     QObject::connect(&a, SIGNAL(aboutToQuit()), &pluginManager, SLOT(shutdown()));
 
+    //---------------------------------------------------------------------------------
+
+    LoginWidget *login = new LoginWidget;
+    login->exec();
+    login->deleteLater();
+
+    //----------------------------------------------------------------------------------
     const QVector<PluginSpec *> plugins = PluginManager::plugins();
     PluginSpec *coreSpec = nullptr;
     for (PluginSpec *spec: plugins) {
