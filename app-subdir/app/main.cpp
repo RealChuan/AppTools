@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
 
     //---------------------------------------------------------------------------------
 
-    LoginWidget *login = new LoginWidget;
-    login->exec();
-    login->deleteLater();
+    //    LoginWidget *login = new LoginWidget;
+    //    login->exec();
+    //    login->deleteLater();
 
     //----------------------------------------------------------------------------------
     const QVector<PluginSpec *> plugins = PluginManager::plugins();

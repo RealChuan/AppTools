@@ -19,6 +19,7 @@ SOURCES += \
     commonwidget.cpp \
     controls.cpp \
     dialog.cpp \
+    editcombobox.cpp \
     messbox.cpp
 
 HEADERS += \
@@ -26,4 +27,5 @@ HEADERS += \
     controls_global.h \
     controls.h \
     dialog.h \
+    editcombobox.h \
     messbox.h

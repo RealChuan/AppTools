@@ -86,7 +86,6 @@ QTableView {
 	selection-color: white;
 }
  
- 
 /******************************************************************************
  *                                   QTabWidget
  *****************************************************************************/
@@ -163,35 +162,33 @@ QTreeWidget::item:selected:active{
  *****************************************************************************/
 
 QListWidget{
-	max-width:250px;
 	border-width:0px;
-	font-size:18px;
-	color:white;
 	padding:0;
-    background-color:#818181;
+    background:white;
 	border-bottom-left-radius: 5px;
 }
 
 QListWidget::Item{
 	border-width:0px;
-	min-height:45px;
 	padding:0;
 }
 
 QListWidget::Item:hover{
-	background: #0066ff;
+	background: #39a3ff;
 	padding:0;
+	color:white;
 }
 
 QListWidget::item:selected{
-	background:#444444;
-	color:#0084ff;
+	background:#39a3ff;
+	color:white;
 }
 
 QListWidget::item:selected:active{
 	border-width:0px;
 	background:#444444;
 	padding:0;
+	color:white;
 }
 
 /******************************************************************************
@@ -330,13 +327,14 @@ QComboBox::drop-down:hover {
     border-image: url(image/arrow-down-hover.png);
 }
 
-QComboBox QAbstractItemView {
-	min-height:25px;
+QComboBox QAbstractItemView::item {
+	min-height:40px;
     margin-top: 0px;
     padding-bottom: 0px;
     border: 1px solid #FFF;
     border-radius: 4px;
     background-color: white;
+	color: white;
 }
 
 /******************************************************************************

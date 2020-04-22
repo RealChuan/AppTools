@@ -9,7 +9,8 @@ DEFINES += PAGEPLUGIN_LIBRARY
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/extensionsystem.lib\
     $$APP_OUTPUT_PATH/../libs/core.lib \
-    $$APP_OUTPUT_PATH/../libs/utils.lib
+    $$APP_OUTPUT_PATH/../libs/utils.lib \
+    $$APP_OUTPUT_PATH/../libs/controls.lib
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
