@@ -237,7 +237,8 @@ void SerialWidget::onSave()
     if(!path.isEmpty()){
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path));
+            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path),
+                             MessBox::CloseButton);
             return;
         }
         QTextStream stream(&file);

@@ -2,22 +2,26 @@
 #define MESSAGEBOX_H
 
 #include "controls_global.h"
-#include "commonwidget.h"
+#include "dialog.h"
 
 class MessBoxPrivate;
-class CONTROLS_EXPORT MessBox : public CommonWidget
+class CONTROLS_EXPORT MessBox : public Dialog
 {
     Q_OBJECT
 public:
+    enum MessButton { YESButton, NOButton, CloseButton };
+
     MessBox(QWidget *parent = nullptr);
     ~MessBox();
 
-    static void Info(QWidget *parent, const QString& msg);
-    static void Warning(QWidget *parent, const QString& msg);
+    static Dialog::ExecFlags Info(QWidget *parent, const QString& msg, MessButton button = CloseButton);
+    static Dialog::ExecFlags Warning(QWidget *parent, const QString& msg, MessButton);
 
-    void exec();
     void setMessage(const QString&);
     void setIconLabelObjectName(const QString&);
+
+    void setYesAndNoButtonVisible(bool);
+    void setCloseButtonVisible(bool);
 
 private:
     void setupUI();

@@ -19,10 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    changepasswdwidget.cpp \
     loginwidget.cpp \
+    registerwidget.cpp \
     useraccountsystem.cpp
 
 HEADERS += \
     UserAccountSystem_global.h \
+    changepasswdwidget.h \
     loginwidget.h \
+    registerwidget.h \
     useraccountsystem.h

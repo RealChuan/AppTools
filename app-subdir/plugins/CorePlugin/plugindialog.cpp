@@ -25,6 +25,8 @@
 
 #include "plugindialog.h"
 
+#include <controls/dialog.h>
+
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginview.h>
 #include <extensionsystem/plugindetailsview.h>
@@ -143,17 +145,26 @@ void PluginDialog::openDetails(ExtensionSystem::PluginSpec *spec)
 {
     if (!spec)
         return;
-    QDialog dialog(this);
-    dialog.setWindowTitle(tr("Plugin Details of %1").arg(spec->name()));
-    QVBoxLayout *layout = new QVBoxLayout;
-    dialog.setLayout(layout);
+
+    Dialog dialog(this);
+    dialog.setTitle(tr("Plugin Details of %1").arg(spec->name()));
+
+    QPushButton *closeButton = new QPushButton(tr("Close"), this);
+    connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
+
+    QHBoxLayout *h1 = new QHBoxLayout;
+    h1->addStretch(0);
+    h1->addWidget(closeButton);
+
     ExtensionSystem::PluginDetailsView *details = new ExtensionSystem::PluginDetailsView(&dialog);
-    layout->addWidget(details);
     details->update(spec);
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, &dialog);
-    layout->addWidget(buttons);
-    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    QWidget *widget = new QWidget(this);
+    QVBoxLayout *layout = new QVBoxLayout(widget);
+    layout->addWidget(details);
+    layout->addLayout(h1);
+
+    dialog.setCentralWidget(widget);
     dialog.resize(400, 500);
     dialog.exec();
 }
@@ -163,18 +174,26 @@ void PluginDialog::openErrorDetails()
     ExtensionSystem::PluginSpec *spec = m_view->currentPlugin();
     if (!spec)
         return;
-    QDialog dialog(this);
-    dialog.setWindowTitle(tr("Plugin Errors of %1").arg(spec->name()));
-    QVBoxLayout *layout = new QVBoxLayout;
-    dialog.setLayout(layout);
+    Dialog dialog(this);
+    dialog.setTitle(tr("Plugin Details of %1").arg(spec->name()));
+
+    QPushButton *closeButton = new QPushButton(tr("Close"), this);
+    connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
+
+    QHBoxLayout *h1 = new QHBoxLayout;
+    h1->addStretch(0);
+    h1->addWidget(closeButton);
+
     ExtensionSystem::PluginErrorView *errors = new ExtensionSystem::PluginErrorView(&dialog);
-    layout->addWidget(errors);
     errors->update(spec);
-    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, &dialog);
-    layout->addWidget(buttons);
-    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-    dialog.resize(500, 300);
+
+    QWidget *widget = new QWidget(this);
+    QVBoxLayout *layout = new QVBoxLayout(widget);
+    layout->addWidget(errors);
+    layout->addLayout(h1);
+
+    dialog.setCentralWidget(widget);
+    dialog.resize(400, 500);
     dialog.exec();
 }
 

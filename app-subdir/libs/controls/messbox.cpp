@@ -11,14 +11,20 @@ public:
         //messageLabel->setWordWrap(true);
         closeButton = new QPushButton(QObject::tr("Close"), owner);
         closeButton->setObjectName("MessCloseButton");
+        yesButton = new QPushButton(QObject::tr("Yes"), owner);
+        yesButton->setObjectName("YesButton");
+        noButton = new QPushButton(QObject::tr("No"), owner);
+        noButton->setObjectName("NoButton");
     }
     CommonWidget *owner;
     QLabel *iconLabel;
     QLabel *messageLabel;
+    QPushButton *yesButton;
+    QPushButton *noButton;
     QPushButton *closeButton;
 };
 
-MessBox::MessBox(QWidget *parent) : CommonWidget(parent)
+MessBox::MessBox(QWidget *parent) : Dialog(parent)
   , d(new MessBoxPrivate(this))
 {
     setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
@@ -35,28 +41,30 @@ MessBox::~MessBox()
     delete d;
 }
 
-void MessBox::Info(QWidget *parent, const QString &msg)
+Dialog::ExecFlags MessBox::Info(QWidget *parent, const QString &msg, MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("InfoLabel");
     messBox.setMessage(msg);
-    messBox.exec();
+    if(button == (YESButton | NOButton)){
+        messBox.setYesAndNoButtonVisible(true);
+    }else if(button == CloseButton){
+        messBox.setCloseButtonVisible(true);
+    }
+    return messBox.exec();
 }
 
-void MessBox::Warning(QWidget *parent, const QString &msg)
+Dialog::ExecFlags MessBox::Warning(QWidget *parent, const QString &msg, MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("WarningLabel");
     messBox.setMessage(msg);
-    messBox.exec();
-}
-
-void MessBox::exec()
-{
-    show();
-    QEventLoop loop(this);
-    connect(this, &MessBox::aboutToclose, &loop, &QEventLoop::quit);
-    loop.exec();
+    if(button == (YESButton | NOButton)){
+        messBox.setYesAndNoButtonVisible(true);
+    }else if(button == CloseButton){
+        messBox.setCloseButtonVisible(true);
+    }
+    return messBox.exec();
 }
 
 void MessBox::setMessage(const QString &msg)
@@ -67,6 +75,17 @@ void MessBox::setMessage(const QString &msg)
 void MessBox::setIconLabelObjectName(const QString &objectName)
 {
     d->iconLabel->setObjectName(objectName);
+}
+
+void MessBox::setYesAndNoButtonVisible(bool state)
+{
+    d->yesButton->setVisible(state);
+    d->noButton->setVisible(state);
+}
+
+void MessBox::setCloseButtonVisible(bool state)
+{
+    d->closeButton->setVisible(state);
 }
 
 void MessBox::setupUI()
@@ -81,9 +100,16 @@ void MessBox::setupUI()
     QWidget *btnWidget = new QWidget(this);
     btnWidget->setObjectName("MessBtnWidget");
     QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
-    btnLayout->setContentsMargins(3, 3, 10, 3);
+    btnLayout->setContentsMargins(5, 5, 10, 5);
+    btnLayout->setSpacing(5);
     btnLayout->addStretch(0);
+    btnLayout->addWidget(d->yesButton);
+    btnLayout->addWidget(d->noButton);
     btnLayout->addWidget(d->closeButton);
+
+    d->yesButton->hide();
+    d->noButton->hide();
+    d->closeButton->hide();
 
     QWidget *widget = new QWidget(this);
     QVBoxLayout* layout = new QVBoxLayout(widget);
@@ -96,5 +122,7 @@ void MessBox::setupUI()
 
 void MessBox::buildConnect()
 {
-    connect(d->closeButton, &QPushButton::clicked, this, &MessBox::aboutToclose);
+    connect(d->closeButton, &QPushButton::clicked, this, &MessBox::rejected);
+    connect(d->yesButton, &QPushButton::clicked, this, &MessBox::accept);
+    connect(d->noButton, &QPushButton::clicked, this, &MessBox::rejected);
 }

@@ -169,7 +169,7 @@ void TcpWidget::onListenOrConnect(bool state)
     d->listenOrConnectButton->setChecked(!state);
     QString port = d->portEdit->text();
     if(port.isEmpty()){
-        MessBox::Warning(this, tr("Please enter the port number!"));
+        MessBox::Warning(this, tr("Please enter the port number!"), MessBox::CloseButton);
         d->portEdit->setFocus();
         return;
     }
@@ -365,7 +365,7 @@ void TcpWidget::onSave()
     if(!path.isEmpty()){
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path));
+            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path), MessBox::CloseButton);
             return;
         }
         QTextStream stream(&file);
@@ -527,7 +527,7 @@ void TcpWidget::createTcpClientThread()
     if(!d->clientThread){
         QString port = d->portEdit->text();
         if(port.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the port number!"));
+            MessBox::Warning(this, tr("Please enter the port number!"), MessBox::CloseButton);
             d->portEdit->setFocus();
             d->autoConnectBox->setChecked(false);
             onAutoReconnectStartOrStop(false);
@@ -535,7 +535,7 @@ void TcpWidget::createTcpClientThread()
         }
         QString ip = d->serverIPEdit->text().trimmed();
         if(ip.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the ip address!"));
+            MessBox::Warning(this, tr("Please enter the ip address!"), MessBox::CloseButton);
             d->serverIPEdit->setFocus();
             d->autoConnectBox->setChecked(false);
             onAutoReconnectStartOrStop(false);

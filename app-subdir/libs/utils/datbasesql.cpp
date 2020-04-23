@@ -56,7 +56,9 @@ bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &database
                             const QString &username, const QString &password)
 {
     if (!QSqlDatabase::drivers().contains("QMYSQL")){
-        MessBox::Warning(nullptr, tr("Unable to load database, This program needs the MYSQL driver"));
+        MessBox::Warning(nullptr,
+                         tr("Unable to load database, This program needs the MYSQL driver"),
+                         MessBox::CloseButton);
         return false;
     }
 
@@ -98,7 +100,9 @@ bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &database
 bool DatabaseSQL::openSQLite(const QString &databaseName)
 {
     if (!QSqlDatabase::drivers().contains("QSQLITE")){
-        MessBox::Warning(nullptr, tr("Unable to load database, This program needs the SQLITE driver"));
+        MessBox::Warning(nullptr,
+                         tr("Unable to load database, This program needs the SQLITE driver"),
+                         MessBox::CloseButton);
         return false;
     }
 

@@ -43,6 +43,49 @@ QPushButton:checked {
 }
 
 /******************************************************************************
+ *                                   QAbstractItemView
+ *****************************************************************************/
+QAbstractItemView {
+    border: 1px solid #dddee1;
+}
+
+QAbstractItemView::item {
+    border: 0px;
+    color: #495060;
+    border-bottom: 1px solid #e9eaec;
+    height: 24px;
+}
+
+QAbstractItemView::item:hover {
+    background: rgb(235, 247, 255);
+}
+
+QAbstractItemView::item:selected {
+    background: rgb(248, 248, 248);
+}
+
+/* 可选单元格前的 checkbox */
+QAbstractItemView::indicator {
+    width: 20px;
+    height: 20px;
+    border-width: 0 0 0 0;
+    margin-right: -4px;
+}
+
+QAbstractItemView::indicator {
+    border-image: url(image/checkbox-unchecked2.png) 0 0 0 0 stretch stretch;
+}
+
+QAbstractItemView::indicator:checked {
+    border-image: url(image/checkbox-checked-selectionmode.png) 0 0 0 0 stretch stretch;
+}
+
+QAbstractItemView::icon {
+    width: 20px;
+    height: 20px;
+}
+
+/******************************************************************************
  *                                   QGroupBox
  *****************************************************************************/
 /*
@@ -186,7 +229,7 @@ QListWidget::item:selected{
 
 QListWidget::item:selected:active{
 	border-width:0px;
-	background:#444444;
+	background:#0066ff;
 	padding:0;
 	color:white;
 }
@@ -202,7 +245,6 @@ QListWidget::item:selected:active{
 /******************************************************************************
  *                                   QLineEdit
  *****************************************************************************/
-
 QLineEdit {
     height: 24px;
     font-size: 12px;
@@ -218,6 +260,7 @@ QLineEdit:focus {
 }
 
 QLineEdit:read-only {
+	background: rgb(215,215,215);
     color: #495060;
     border-color: #dddee1;
 }
@@ -312,6 +355,33 @@ QComboBox:focus {
     border-color: #57a3f3;
 }
 
+QComboBox:editable {
+    background: white;
+}
+
+QComboBox::drop-down:editable {
+    background: white;
+}
+
+QComboBox::drop-down:editable:on {
+    background: white;
+}
+
+QComboBox:!editable{
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+	stop: 0 #E1E1E1, stop: 0.4 #DDDDDD, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+}
+
+QComboBox:!editable:on{
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+	stop: 0 #D3D3D3, stop: 0.4 #D8D8D8, stop: 0.5 #DDDDDD, stop: 1.0 #E1E1E1);
+}
+
+QComboBox:on {
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
 QComboBox::drop-down {
     width: 12px;
     height: 14px;
@@ -327,14 +397,12 @@ QComboBox::drop-down:hover {
     border-image: url(image/arrow-down-hover.png);
 }
 
-QComboBox QAbstractItemView::item {
-	min-height:40px;
+QComboBox QAbstractItemView {
     margin-top: 0px;
     padding-bottom: 0px;
     border: 1px solid #FFF;
     border-radius: 4px;
     background-color: white;
-	color: white;
 }
 
 /******************************************************************************

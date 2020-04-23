@@ -1,4 +1,5 @@
 #include "editcombobox.h"
+#include "messbox.h"
 
 #include <QtWidgets>
 
@@ -7,6 +8,7 @@ public:
     AccountItemPrivate(QWidget *parent) : owner(parent){
         avatarLabel = new QLabel("avatar", owner);
         usernameLabel = new QLabel("username", owner);
+        usernameLabel->setObjectName("UsernameLabel");
     }
     QWidget *owner;
     QLabel *avatarLabel;
@@ -83,7 +85,6 @@ void AccountItemWidget::setupUI()
  *
  * */
 
-
 class EditComboBoxPrivate{
 public:
     EditComboBoxPrivate(QWidget *parent) : owner(parent){
@@ -96,6 +97,7 @@ public:
 EditComboBox::EditComboBox(QWidget *parent) : QComboBox(parent)
   , d(new EditComboBoxPrivate(this))
 {
+    setObjectName("EditComboBox");
     setInsertPolicy(QComboBox::NoInsert);
     setModel(d->listWidget->model());
     setView(d->listWidget);
@@ -115,6 +117,7 @@ void EditComboBox::addAccount(const QString &username)
     d->listWidget->setItemWidget(item, accountItem);
     connect(accountItem, &AccountItemWidget::showAccount, this, &EditComboBox::onShowText);
     connect(accountItem, &AccountItemWidget::remove, this, &EditComboBox::onDeleteItem);
+    onShowText(username);
 }
 
 void EditComboBox::onShowText(const QString &text)
@@ -125,7 +128,14 @@ void EditComboBox::onShowText(const QString &text)
 
 void EditComboBox::onDeleteItem(const QString &text)
 {
-    QMessageBox::warning(this, "Warning", "delete this account!",QMessageBox::Yes);
+    hidePopup();
+    Dialog::ExecFlags flag = MessBox::Warning(this,
+                                              tr("Confirm to delete the current account?"),
+                                              MessBox::MessButton(MessBox::YESButton | MessBox::NOButton));
+
+    showPopup();
+
+    if(flag == Dialog::Rejected) return;
 
     for(int i=0; i<d->listWidget->count(); i++){
         QListWidgetItem *item = d->listWidget->item(i);

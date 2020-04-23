@@ -13,6 +13,11 @@ public:
     LoginWidget(QWidget *parent = nullptr);
     ~LoginWidget();
 
+private slots:
+    void onLogin();
+    void onRegister();
+    void onChangePasswd();
+
 private:
     void setupUI();
     void buildConnect();

@@ -18,7 +18,7 @@
     border-width: 0 0 0 0;
 }
 
-#PasswordEdit{
+#LoginWidget QLineEdit{
     min-width: 160px;
     min-height: 30px;
     font-size: 14px;
@@ -27,6 +27,7 @@
 
 #LoginButton {
     height: 30px;
+	background-color: #39a3ff;
 }
 
 #FlatButton {
@@ -39,21 +40,12 @@
 	color: #39a3ff;
 }
 
-#UserBox{
-	height: 30px;
-    font-size: 14px;
-}
-
-#UserBox QAbstractItemView {
-	min-height:32px;
-}
-
 #LoginWidget QCheckBox::indicator{
     subcontrol-origin: border;
     subcontrol-position: left center;
 
-    width: 24px;
-    height: 10px;
+    height: 15px;
+	width: 15px;
     border-width: 0 0 0 0;
 }
 	

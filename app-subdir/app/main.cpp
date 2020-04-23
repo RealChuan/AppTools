@@ -25,13 +25,17 @@ int main(int argc, char *argv[])
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);
 
+    //qDebug() << threadCount;
+
     Utils::setUTF8Code();
     Utils::loadLanguage();
     Utils::setQSS();
     Utils::loadFonts();
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
+    QSettings *setting = new QSettings(ConfigFile, QSettings::IniFormat);
     PluginManager pluginManager;
+    PluginManager::setSettings(setting);
     PluginManager::setPluginIID(QLatin1String("Youth.Qt.plugin"));
     QStringList pluginPaths;
     pluginPaths << "./plugins" << "./test";

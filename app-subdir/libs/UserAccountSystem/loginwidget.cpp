@@ -1,4 +1,8 @@
+#include "changepasswdwidget.h"
 #include "loginwidget.h"
+#include "registerwidget.h"
+
+#include <controls/editcombobox.h>
 
 #include <QtWidgets>
 
@@ -8,20 +12,17 @@ public:
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
-        userBox = new QComboBox(owner);
-        userBox->setEditable(true);
-        userBox->setObjectName("UserBox");
+        usernameBox = new EditComboBox(owner);
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
         passwordEdit = new QLineEdit(owner);
         passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
-        passwordEdit->setObjectName("PasswordEdit");
         autoLoginBox = new QCheckBox(QObject::tr("AutoLogin"), owner);
         rememberPasswordBox = new QCheckBox(QObject::tr("Remember Password"), owner);
     }
     QWidget *owner;
     QLabel *avatarLabel;
-    QComboBox *userBox;
+    EditComboBox *usernameBox;
     QLabel *promptLabel;
     QLineEdit *passwordEdit;
     QCheckBox *autoLoginBox;
@@ -31,6 +32,7 @@ public:
 LoginWidget::LoginWidget(QWidget *parent) : Dialog(parent)
   , d(new LoginWidgetPrivate(this))
 {
+    setObjectName("LoginWidget");
     setTitle(tr("Login Widget"));
     setMinButtonVisible(true);
     setupUI();
@@ -40,6 +42,23 @@ LoginWidget::LoginWidget(QWidget *parent) : Dialog(parent)
 LoginWidget::~LoginWidget()
 {
     delete d;
+}
+
+void LoginWidget::onLogin()
+{
+
+}
+
+void LoginWidget::onRegister()
+{
+    RegisterWidget regist(this);
+    regist.exec();
+}
+
+void LoginWidget::onChangePasswd()
+{
+    ChangePasswdWidget changePasswd(this);
+    changePasswd.exec();
 }
 
 void LoginWidget::setupUI()
@@ -53,11 +72,14 @@ void LoginWidget::setupUI()
 
     QPushButton *registerButton = new QPushButton(tr("Registered"), this);
     registerButton->setObjectName("FlatButton");
-    QPushButton *recoverPasswdButton = new QPushButton(tr("Recover Password"), this);
-    recoverPasswdButton->setObjectName("FlatButton");
+    connect(registerButton, &QPushButton::clicked, this, &LoginWidget::onRegister);
+    QPushButton *changePasswdButton = new QPushButton(tr("Change Password"), this);
+    changePasswdButton->setObjectName("FlatButton");
+    connect(changePasswdButton, &QPushButton::clicked, this, &LoginWidget::onChangePasswd);
 
     QPushButton *loginButton = new QPushButton(tr("Login"), this);
     loginButton->setObjectName("LoginButton");
+    connect(loginButton, &QPushButton::clicked, this, &LoginWidget::onLogin);
 
     QGridLayout *chooseLayout = new QGridLayout;
     chooseLayout->setContentsMargins(0, 0, 0, 0);
@@ -65,15 +87,14 @@ void LoginWidget::setupUI()
     chooseLayout->addWidget(d->rememberPasswordBox, 0, 1);
     chooseLayout->addWidget(loginButton, 1 ,0, 1, 2);
     chooseLayout->addWidget(registerButton, 2, 0);
-    chooseLayout->addWidget(recoverPasswdButton, 2, 1);
+    chooseLayout->addWidget(changePasswdButton, 2, 1);
 
     QWidget *centrawlidget = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(centrawlidget);
     layout->addLayout(avatarLayout);
-    layout->addWidget(d->userBox);
+    layout->addWidget(d->usernameBox);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->passwordEdit);
-//    layout->addWidget(loginButton);
     layout->addLayout(chooseLayout);
 
     setCentralWidget(centrawlidget);
@@ -81,5 +102,5 @@ void LoginWidget::setupUI()
 
 void LoginWidget::buildConnect()
 {
-    //connect(d->userBox, &QComboBox::);
+    connect(d->passwordEdit, &QLineEdit::returnPressed, this, &LoginWidget::onLogin);
 }
