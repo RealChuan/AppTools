@@ -44,6 +44,7 @@ public:
     ~EditComboBox();
 
     void addAccount(const QString&);
+    QStringList accountList() const;
 
 private slots:
     void onShowText(const QString&);

@@ -3,10 +3,22 @@
 
 #include "UserAccountSystem_global.h"
 
-class USERACCOUNTSYSTEM_EXPORT UserAccountSystem
+#include <QObject>
+
+class AccountQuery;
+class UserAccountSystemPrivate;
+class USERACCOUNTSYSTEM_EXPORT UserAccountSystem : public QObject
 {
 public:
-    UserAccountSystem();
+    UserAccountSystem(QObject *parent = nullptr);
+    ~UserAccountSystem();
+
+    void show();
+
+    static AccountQuery *accountQuery();
+
+private:
+    UserAccountSystemPrivate *d;
 };
 
 #endif // USERACCOUNTSYSTEM_H

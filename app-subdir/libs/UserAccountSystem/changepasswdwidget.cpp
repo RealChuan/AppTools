@@ -9,17 +9,20 @@ public:
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
         usernameEdit = new QLineEdit(owner);
-        usernameEdit->setObjectName("UsernameEdit");
-        promptLabel = new QLabel(owner);
-        promptLabel->setObjectName("PromptLabel");
+        usernameEdit->setObjectName("UsernameEdit");    
         passwordEdit = new QLineEdit(owner);
         passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+        promptLabel = new QLabel(owner);
+        promptLabel->setObjectName("PromptLabel");
+        passwdAgainEdit = new QLineEdit(owner);
+        passwdAgainEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
     }
     QWidget *owner;
     QLabel *avatarLabel;
     QLineEdit *usernameEdit;
     QLabel *promptLabel;
     QLineEdit *passwordEdit;
+    QLineEdit *passwdAgainEdit;
 };
 
 ChangePasswdWidget::ChangePasswdWidget(QWidget *parent) : Dialog(parent)
@@ -50,7 +53,7 @@ void ChangePasswdWidget::setupUI()
     avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
     avatarLayout->addWidget(d->avatarLabel, 1, 2);
 
-    QPushButton *changePasswdButton = new QPushButton(tr("Registered"), this);
+    QPushButton *changePasswdButton = new QPushButton(tr("Changed Password"), this);
     connect(changePasswdButton, &QPushButton::clicked, this, &ChangePasswdWidget::onChangePasswd);
     QPushButton *cancelButton = new QPushButton(tr("Cancel"), this);
     connect(cancelButton, &QPushButton::clicked, this, &ChangePasswdWidget::reject);
@@ -63,8 +66,9 @@ void ChangePasswdWidget::setupUI()
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->addLayout(avatarLayout);
     layout->addWidget(d->usernameEdit);
-    layout->addWidget(d->promptLabel);
     layout->addWidget(d->passwordEdit);
+    layout->addWidget(d->promptLabel);
+    layout->addWidget(d->passwdAgainEdit);
     layout->addLayout(btnLayout);
 
     setCentralWidget(widget);

@@ -1,6 +1,10 @@
 #include "registerwidget.h"
+#include "useraccountsystem.h"
+#include "accountquery.h"
 
 #include <QtWidgets>
+
+#include <controls/messbox.h>
 
 class RegisterWidgetPrivate{
 public:
@@ -9,7 +13,6 @@ public:
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
         usernameEdit = new QLineEdit(owner);
-        usernameEdit->setObjectName("UsernameEdit");
         passwordEdit = new QLineEdit(owner);
         passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
         promptLabel = new QLabel(owner);
@@ -39,9 +42,52 @@ RegisterWidget::~RegisterWidget()
     delete d;
 }
 
+QString RegisterWidget::username() const
+{
+    return d->usernameEdit->text();
+}
+
+QString RegisterWidget::password() const
+{
+    return d->passwordEdit->text();
+}
+
 void RegisterWidget::onRegister()
 {
-
+    QString username = d->usernameEdit->text().trimmed();
+    if(username.isEmpty()){
+        MessBox::Warning(this, tr("Username is empty, please enter username!"), MessBox::CloseButton);
+        d->usernameEdit->setFocus();
+        return;
+    }
+    QString password = d->passwordEdit->text().trimmed();
+    if(password.isEmpty()){
+        MessBox::Warning(this, tr("Password is empty, please enter password!"), MessBox::CloseButton);
+        d->passwordEdit->setFocus();
+        return;
+    }
+    QString passwdAgain = d->passwdAgainEdit->text().trimmed();
+    if(passwdAgain.isEmpty()){
+        MessBox::Warning(this, tr("please enter password again!"), MessBox::CloseButton);
+        d->passwdAgainEdit->setFocus();
+        return;
+    }
+    if(password != passwdAgain){
+        MessBox::Warning(this, tr("Two passwords are different, please enter password again!"), MessBox::CloseButton);
+        d->passwdAgainEdit->setFocus();
+        return;
+    }
+    AccountQuery * query =  UserAccountSystem::accountQuery();
+    if(query->contains(username)){
+        MessBox::Warning(this, tr("An account with the same name already exists, please modify the account name!"), MessBox::CloseButton);
+        d->usernameEdit->setFocus();
+        return;
+    }
+    if(query->addAccount(username, password)){
+        accept();
+        return;
+    }
+    d->promptLabel->setText(tr("Registration failed, please try again later!"));
 }
 
 void RegisterWidget::setupUI()

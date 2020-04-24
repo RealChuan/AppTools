@@ -5,7 +5,7 @@
 #include <utils/utils.h>
 #include <core/mpages.h>
 #include <extensionsystem/pluginmanager.h>
-#include <UserAccountSystem/loginwidget.h>
+#include <UserAccountSystem/useraccountsystem.h>
 
 #include <QtWidgets>
 
@@ -29,6 +29,8 @@ public:
         v2->setSpacing(0);
         v3->setContentsMargins(0, 0, 0, 0);
         v3->setSpacing(0);
+
+        userSystem = new UserAccountSystem(owner);
     }
 
     MainWindow *owner;
@@ -38,6 +40,8 @@ public:
     QVBoxLayout *v1;
     QVBoxLayout *v2;
     QVBoxLayout *v3;
+
+    UserAccountSystem *userSystem;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -94,8 +98,7 @@ void MainWindow::onAboutPlugins()
 
 void MainWindow::onAccount()
 {
-    LoginWidget login(this);
-    login.exec();
+    d->userSystem->show();
 }
 
 void MainWindow::setupUI()

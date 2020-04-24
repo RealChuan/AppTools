@@ -11,6 +11,9 @@ public:
     explicit RegisterWidget(QWidget *parent = nullptr);
     ~RegisterWidget();
 
+    QString username() const;
+    QString password() const;
+
 signals:
 
 private slots:

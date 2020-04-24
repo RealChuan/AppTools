@@ -8,7 +8,7 @@ class CONTROLS_EXPORT Dialog : public CommonWidget
 {
     Q_OBJECT
 public:
-    enum ExecFlags { Accepted, Rejected };
+    enum ExecFlags { Accepted, Rejected, Close };
 
     Dialog(QWidget *parent = nullptr);
 

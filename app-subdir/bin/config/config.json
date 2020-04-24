@@ -1,6 +1,6 @@
 {
 	"database": {
-        "type": "MYSQL",
+        "type": "MySQL",
         "host": "127.0.0.1",
         "port": 3306,
         "databasename": "apptools",

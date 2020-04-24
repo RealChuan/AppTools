@@ -120,6 +120,17 @@ void EditComboBox::addAccount(const QString &username)
     onShowText(username);
 }
 
+QStringList EditComboBox::accountList() const
+{
+    QStringList list;
+    for(int i=0; i<d->listWidget->count(); i++){
+        QListWidgetItem *item = d->listWidget->item(i);
+        AccountItemWidget *accountItem = qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
+        list.append(accountItem->getAccount());
+    }
+    return list;
+}
+
 void EditComboBox::onShowText(const QString &text)
 {
     setEditText(text);

@@ -4,7 +4,6 @@
 
 #include <QSqlDatabase>
 #include <QSqlError>
-#include <QSqlQuery>
 #include <QDebug>
 
 class DatabaseSQLPrivate{
@@ -37,14 +36,14 @@ bool DatabaseSQL::openSQL(const DatabaseParam &param)
     return false;
 }
 
-void DatabaseSQL::query(const QString &sql)
+QSqlQuery DatabaseSQL::query(const QString &sql)
 {
     QSqlQuery q;
     if(!q.exec(sql)){
         d->error = QString(tr("DataBase Query Error: %1 !").arg(q.lastError().text()));
-        return;
+        return q;
     }
-    //return q;
+    return q;
 }
 
 QString DatabaseSQL::errorString() const
@@ -57,7 +56,7 @@ bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &database
 {
     if (!QSqlDatabase::drivers().contains("QMYSQL")){
         MessBox::Warning(nullptr,
-                         tr("Unable to load database, This program needs the MYSQL driver"),
+                         tr("Unable to load database, This program needs the MYSQL driver!"),
                          MessBox::CloseButton);
         return false;
     }

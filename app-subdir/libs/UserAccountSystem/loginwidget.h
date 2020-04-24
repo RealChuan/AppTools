@@ -10,13 +10,16 @@ class USERACCOUNTSYSTEM_EXPORT LoginWidget : public Dialog
 {
     Q_OBJECT
 public:
-    LoginWidget(QWidget *parent = nullptr);
+    LoginWidget(const QStringList& usernameList,QWidget *parent = nullptr);
     ~LoginWidget();
+
+    QString username() const;
+    QString password() const;
+    QStringList usernameList() const;
 
 private slots:
     void onLogin();
     void onRegister();
-    void onChangePasswd();
 
 private:
     void setupUI();

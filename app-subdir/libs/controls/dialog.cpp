@@ -5,8 +5,6 @@
 Dialog::Dialog(QWidget *parent)
     : CommonWidget(parent)
 {
-    setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
-    setWindowModality(Qt::ApplicationModal);
     setMinButtonVisible(false);
     setRestoreMaxButtonVisible(false);
     resize(600, 370);
@@ -14,6 +12,8 @@ Dialog::Dialog(QWidget *parent)
 
 Dialog::ExecFlags Dialog::exec()
 {
+    setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
+    setWindowModality(Qt::ApplicationModal);
     show();
     ExecFlags flag = Rejected;
     QEventLoop loop(this);
@@ -25,7 +25,10 @@ Dialog::ExecFlags Dialog::exec()
         flag = Rejected;
         loop.quit();
     });
-    connect(this, &Dialog::aboutToclose, &loop, &QEventLoop::quit);
+    connect(this, &Dialog::aboutToclose, [&loop, &flag]{
+        flag = Close;
+        loop.quit();
+    });
     loop.exec();
 
     return flag;

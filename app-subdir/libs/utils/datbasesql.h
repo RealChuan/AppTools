@@ -4,6 +4,7 @@
 #include "utils_global.h"
 
 #include <QObject>
+#include <QSqlQuery>
 
 struct DatabaseParam{
     QString type = "MySQL";     //"SQLite"
@@ -24,7 +25,7 @@ public:
 
     bool openSQL(const DatabaseParam&);
 
-    void query(const QString &sql);
+    QSqlQuery query(const QString &sql);
 
     QString errorString() const;
 

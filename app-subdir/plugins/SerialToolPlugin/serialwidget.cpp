@@ -4,6 +4,7 @@
 
 #include <utils/utils.h>
 #include <controls/messbox.h>
+#include <extensionsystem/pluginmanager.h>
 
 #include <QSerialPort>
 #include <QSerialPortInfo>
@@ -421,34 +422,34 @@ void SerialWidget::setRecvCount(int size)
 
 void SerialWidget::loadSetting()
 {
-    if(!Utils::checkFileExist(ConfigFile)) return;
+    QSettings *setting = ExtensionSystem::PluginManager::settings();
+    if(!setting) return;
+    setting->beginGroup("seria_config");
+    d->widgetParam.baudRate = setting->value("BaudRate", d->widgetParam.baudRate).toInt();
+    d->widgetParam.dataBits = setting->value("DataBits", d->widgetParam.dataBits).toInt();
+    d->widgetParam.stopBits = setting->value("StopBits", d->widgetParam.stopBits).toInt();
+    d->widgetParam.parity = setting->value("Parity", d->widgetParam.parity).toInt();
+    d->widgetParam.flowControl = setting->value("FlowControl", d->widgetParam.flowControl).toInt();
 
-    QSettings setting(ConfigFile, QSettings::IniFormat);
-    setting.beginGroup("seria_config");
-    d->widgetParam.baudRate = setting.value("BaudRate", d->widgetParam.baudRate).toInt();
-    d->widgetParam.dataBits = setting.value("DataBits", d->widgetParam.dataBits).toInt();
-    d->widgetParam.stopBits = setting.value("StopBits", d->widgetParam.stopBits).toInt();
-    d->widgetParam.parity = setting.value("Parity", d->widgetParam.parity).toInt();
-    d->widgetParam.flowControl = setting.value("FlowControl", d->widgetParam.flowControl).toInt();
-
-    d->widgetParam.hex = setting.value("Hex", d->widgetParam.hex).toBool();
-    d->widgetParam.sendTime = setting.value("SendTime", d->widgetParam.sendTime).toInt();
-    d->widgetParam.sendData = setting.value("SendData", d->widgetParam.sendData).toString();
-    setting.endGroup();
+    d->widgetParam.hex = setting->value("Hex", d->widgetParam.hex).toBool();
+    d->widgetParam.sendTime = setting->value("SendTime", d->widgetParam.sendTime).toInt();
+    d->widgetParam.sendData = setting->value("SendData", d->widgetParam.sendData).toString();
+    setting->endGroup();
 }
 
 void SerialWidget::saveSetting()
 {
-    QSettings setting(ConfigFile, QSettings::IniFormat);
-    setting.beginGroup("seria_config");
-    setting.setValue("BaudRate", d->baudRateBox->currentIndex());
-    setting.setValue("DataBits", d->dataBitsBox->currentIndex());
-    setting.setValue("StopBits", d->stopBitsBox->currentIndex());
-    setting.setValue("Parity", d->parityBox->currentIndex());
-    setting.setValue("FlowControl", d->flowControlBox->currentIndex());
+    QSettings *setting = ExtensionSystem::PluginManager::settings();
+    if(!setting) return;
+    setting->beginGroup("seria_config");
+    setting->setValue("BaudRate", d->baudRateBox->currentIndex());
+    setting->setValue("DataBits", d->dataBitsBox->currentIndex());
+    setting->setValue("StopBits", d->stopBitsBox->currentIndex());
+    setting->setValue("Parity", d->parityBox->currentIndex());
+    setting->setValue("FlowControl", d->flowControlBox->currentIndex());
 
-    setting.setValue("Hex", d->hexBox->isChecked());
-    setting.setValue("SendTime", d->autoSendTimeBox->value());
-    setting.setValue("SendData", d->sendData->toPlainText().toUtf8());
-    setting.endGroup();
+    setting->setValue("Hex", d->hexBox->isChecked());
+    setting->setValue("SendTime", d->autoSendTimeBox->value());
+    setting->setValue("SendData", d->sendData->toPlainText().toUtf8());
+    setting->endGroup();
 }

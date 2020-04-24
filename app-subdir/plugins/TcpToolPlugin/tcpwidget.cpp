@@ -4,6 +4,7 @@
 
 #include <utils/utils.h>
 #include <controls/messbox.h>
+#include <extensionsystem/pluginmanager.h>
 
 #include <QHostAddress>
 #include <QNetworkInterface>
@@ -563,32 +564,33 @@ void TcpWidget::destoryServerOrClientThread()
 
 void TcpWidget::loadSetting()
 {
-    if(!Utils::checkFileExist(ConfigFile)) return;
+    QSettings *setting = ExtensionSystem::PluginManager::settings();
+    if(!setting) return;
 
-    QSettings setting(ConfigFile, QSettings::IniFormat);
-    setting.beginGroup("tcp_config");
-    d->widgetParam.model = setting.value("CommunicationMode", d->widgetParam.model).toInt();
-    d->widgetParam.ip = setting.value("ClientIP", d->widgetParam.ip).toString();
-    d->widgetParam.port = setting.value("Port", d->widgetParam.port).toString();
+    setting->beginGroup("tcp_config");
+    d->widgetParam.model = setting->value("CommunicationMode", d->widgetParam.model).toInt();
+    d->widgetParam.ip = setting->value("ClientIP", d->widgetParam.ip).toString();
+    d->widgetParam.port = setting->value("Port", d->widgetParam.port).toString();
 
-    d->widgetParam.hex = setting.value("Hex", d->widgetParam.hex).toBool();
-    d->widgetParam.sendTime = setting.value("SendTime", d->widgetParam.sendTime).toInt();
-    d->widgetParam.connectTime = setting.value("ConnectTime", d->widgetParam.connectTime).toInt();
-    d->widgetParam.sendData = setting.value("SendData", d->widgetParam.sendData).toString();
-    setting.endGroup();
+    d->widgetParam.hex = setting->value("Hex", d->widgetParam.hex).toBool();
+    d->widgetParam.sendTime = setting->value("SendTime", d->widgetParam.sendTime).toInt();
+    d->widgetParam.connectTime = setting->value("ConnectTime", d->widgetParam.connectTime).toInt();
+    d->widgetParam.sendData = setting->value("SendData", d->widgetParam.sendData).toString();
+    setting->endGroup();
 }
 
 void TcpWidget::saveSetting()
 {
-    QSettings setting(ConfigFile, QSettings::IniFormat);
-    setting.beginGroup("tcp_config");
-    setting.setValue("CommunicationMode", d->modelBox->currentIndex());
-    setting.setValue("ClientIP", d->serverIPEdit->text());
-    setting.setValue("Port", d->portEdit->text());
+    QSettings *setting = ExtensionSystem::PluginManager::settings();
+    if(!setting) return;
+    setting->beginGroup("tcp_config");
+    setting->setValue("CommunicationMode", d->modelBox->currentIndex());
+    setting->setValue("ClientIP", d->serverIPEdit->text());
+    setting->setValue("Port", d->portEdit->text());
 
-    setting.setValue("Hex", d->hexBox->isChecked());
-    setting.setValue("SendTime", d->autoSendTimeBox->value());
-    setting.setValue("ConnectTime", d->autoConnectTimeBox->value());
-    setting.setValue("SendData", d->sendData->toPlainText().toUtf8());
-    setting.endGroup();
+    setting->setValue("Hex", d->hexBox->isChecked());
+    setting->setValue("SendTime", d->autoSendTimeBox->value());
+    setting->setValue("ConnectTime", d->autoConnectTimeBox->value());
+    setting->setValue("SendData", d->sendData->toPlainText().toUtf8());
+    setting->endGroup();
 }
