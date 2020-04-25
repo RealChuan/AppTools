@@ -8,8 +8,10 @@ class ChangePasswdWidget : public Dialog
 {
     Q_OBJECT
 public:
-    ChangePasswdWidget(QWidget *parent = nullptr);
+    ChangePasswdWidget(const QString &username, const QString& password, QWidget *parent = nullptr);
     ~ChangePasswdWidget();
+
+    QString password() const;
 
 private slots:
     void onChangePasswd();

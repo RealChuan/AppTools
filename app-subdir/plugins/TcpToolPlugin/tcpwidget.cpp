@@ -47,14 +47,17 @@ public:
         ipLabel = new QLabel(QObject::tr("Local IP List: "), owner);
         localIPBox = new QComboBox(owner);
         serverIPEdit = new QLineEdit(owner);
+        serverIPEdit->setPlaceholderText(QObject::tr("Please enter the server IP address."));
         QRegExp regExp("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
         QRegExpValidator *validator = new QRegExpValidator(regExp, serverIPEdit);
         serverIPEdit->setValidator(validator);
         portLabel = new QLabel(QObject::tr("Local Port: "), owner);
         portEdit = new QLineEdit(owner);
+        portEdit->setPlaceholderText(QObject::tr("Please enter the port number."));
         portEdit->setValidator(new QIntValidator(0, 65536, portEdit));
         listenOrConnectButton = new QPushButton(owner);
         listenOrConnectButton->setCheckable(true);
+        listenOrConnectButton->setObjectName("OpenButton");
 
         hexBox = new QCheckBox(QObject::tr("Hex"), owner);
         autoSendBox = new QCheckBox(QObject::tr("Auto Delivery"), owner);

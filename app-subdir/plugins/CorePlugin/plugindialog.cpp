@@ -75,8 +75,11 @@ PluginDialog::PluginDialog(QWidget *parent)
     vl->addWidget(m_view);
 
     m_detailsButton = new QPushButton(tr("Details"), this);
+    m_detailsButton->setObjectName("BlueButton");
     m_errorDetailsButton = new QPushButton(tr("Error Details"), this);
+    m_errorDetailsButton->setObjectName("RedButton");
     m_closeButton = new QPushButton(tr("Close"), this);
+    m_closeButton->setObjectName("BlueButton");
     m_detailsButton->setEnabled(false);
     m_errorDetailsButton->setEnabled(false);
     m_closeButton->setEnabled(true);
@@ -150,6 +153,7 @@ void PluginDialog::openDetails(ExtensionSystem::PluginSpec *spec)
     dialog.setTitle(tr("Plugin Details of %1").arg(spec->name()));
 
     QPushButton *closeButton = new QPushButton(tr("Close"), this);
+    closeButton->setObjectName("BlueButton");
     connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
 
     QHBoxLayout *h1 = new QHBoxLayout;
@@ -178,6 +182,7 @@ void PluginDialog::openErrorDetails()
     dialog.setTitle(tr("Plugin Details of %1").arg(spec->name()));
 
     QPushButton *closeButton = new QPushButton(tr("Close"), this);
+    closeButton->setObjectName("BlueButton");
     connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
 
     QHBoxLayout *h1 = new QHBoxLayout;

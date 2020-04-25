@@ -3,8 +3,7 @@
 #include "useraccountsystem.h"
 #include "accountquery.h"
 
-#include <controls/editcombobox.h>
-#include <controls/messbox.h>
+#include <controls/accountcontrols.h>
 
 #include <QtWidgets>
 
@@ -14,21 +13,19 @@ public:
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
+
         usernameBox = new EditComboBox(owner);
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
-        passwordEdit = new QLineEdit(owner);
-        passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+        passwordEdit = new PasswordLineEdit(owner);
         autoLoginBox = new QCheckBox(QObject::tr("AutoLogin"), owner);
-        rememberPasswordBox = new QCheckBox(QObject::tr("Remember Password"), owner);
     }
     QWidget *owner;
     QLabel *avatarLabel;
     EditComboBox *usernameBox;
     QLabel *promptLabel;
-    QLineEdit *passwordEdit;
+    PasswordLineEdit *passwordEdit;
     QCheckBox *autoLoginBox;
-    QCheckBox *rememberPasswordBox;
 };
 
 LoginWidget::LoginWidget(const QStringList &usernameList, QWidget *parent) : Dialog(parent)
@@ -65,24 +62,31 @@ QStringList LoginWidget::usernameList() const
     return d->usernameBox->accountList();
 }
 
+bool LoginWidget::autoLogin()
+{
+    return d->autoLoginBox->isChecked();
+}
+
 void LoginWidget::onLogin()
 {
+    d->promptLabel->clear();
     QString username = d->usernameBox->currentText().trimmed();
     if(username.isEmpty()){
-        MessBox::Warning(this, tr("Username is empty, please enter username!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Please enter username!"));
         d->usernameBox->setFocus();
         return;
     }
     QString password = d->passwordEdit->text().trimmed();
     if(password.isEmpty()){
-        MessBox::Warning(this, tr("Password is empty, please enter password!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Please enter password!"));
         d->passwordEdit->setFocus();
         return;
     }
 
     AccountQuery * query =  UserAccountSystem::accountQuery();
     if(query->checkAccount(username, password)){
-        d->usernameBox->addAccount(username);
+        if(!d->usernameBox->accountList().contains(username))
+            d->usernameBox->addAccount(username);
         accept();
         return;
     }
@@ -113,17 +117,17 @@ void LoginWidget::setupUI()
     connect(registerButton, &QPushButton::clicked, this, &LoginWidget::onRegister);
 
     QPushButton *loginButton = new QPushButton(tr("Login"), this);
-    loginButton->setObjectName("LoginButton");
+    loginButton->setObjectName("BlueButton");
     connect(loginButton, &QPushButton::clicked, this, &LoginWidget::onLogin);
 
     QHBoxLayout *chooseLayout = new QHBoxLayout;
     chooseLayout->setContentsMargins(0, 0, 0, 0);
     chooseLayout->addWidget(d->autoLoginBox);
-    chooseLayout->addWidget(d->rememberPasswordBox);
     chooseLayout->addWidget(registerButton);
 
-    QWidget *centrawlidget = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(centrawlidget);
+    QWidget *widget = new QWidget(this);
+    widget->setObjectName("WhiteWidget");
+    QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->addLayout(avatarLayout);
     layout->addWidget(d->usernameBox);
     layout->addWidget(d->promptLabel);
@@ -131,10 +135,10 @@ void LoginWidget::setupUI()
     layout->addLayout(chooseLayout);
     layout->addWidget(loginButton);
 
-    setCentralWidget(centrawlidget);
+    setCentralWidget(widget);
 }
 
 void LoginWidget::buildConnect()
 {
-    connect(d->passwordEdit, &QLineEdit::returnPressed, this, &LoginWidget::onLogin);
+    connect(d->passwordEdit, &PasswordLineEdit::returnPressed, this, &LoginWidget::onLogin);
 }

@@ -4,6 +4,7 @@
 #include "controls_global.h"
 
 #include <QComboBox>
+#include <QLineEdit>
 
 class AccountItemPrivate;
 class AccountItemWidget : public QWidget
@@ -52,6 +53,16 @@ private slots:
 
 private:
     EditComboBoxPrivate *d;
+};
+
+class CONTROLS_EXPORT PasswordLineEdit : public QLineEdit
+{
+    Q_OBJECT
+public:
+    PasswordLineEdit(QWidget *parent = nullptr);
+
+private slots:
+    void onShowPassword(bool);
 };
 
 #endif // EIDTCOMBOBOX_H

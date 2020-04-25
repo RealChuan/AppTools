@@ -16,16 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    accountcontrols.cpp \
     commonwidget.cpp \
     controls.cpp \
     dialog.cpp \
-    editcombobox.cpp \
     messbox.cpp
 
 HEADERS += \
+    accountcontrols.h \
     commonwidget.h \
     controls_global.h \
     controls.h \
     dialog.h \
-    editcombobox.h \
     messbox.h

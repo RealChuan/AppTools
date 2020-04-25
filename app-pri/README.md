@@ -1,23 +1,13 @@
 # app-pri  
-UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
-QT的一套UI模板以及一些工具合集  
-
-
-
-UI reference:[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
-A set of QT UI templates and a collection of tools  
-
-
-
 1. 先编译构建；  
-
 2. 把[源码bin文件夹](AppTools/bin)复制到编译出来的可执行文件所在目录(`源码路径bin-64(32)/debug(release)/`)；  
+3. 将`bin/sql`目录下的[apptools.sql](bin/sql/apptools.sql)导入MySql数据库，或者把整个sql文件夹放入可执行程序目录, 使用SQLite数据库；    
 
-3. 将`bin/sql`目录下的[AppTools.sql](bin/sql/AppTools.sql)导入MySql数据库；
+
 
 1. Compile and build first;  
 2. Copy the [source bin folder](AppTools/bin) to the directory where the compiled executable file is located (`source path bin-64(32)/debug(release)/`);  
-3. Import [AppTools.sql](bin / sql / AppTools.sql) under the `bin/sql` directory into the MySql database;  
+3. Import [apptools.sql](bin/sql/apptools.sql) under the `bin/sql` directory into the MySql database, or put the entire sql folder into the executable program directory, use SQLite database;   
 
 
 

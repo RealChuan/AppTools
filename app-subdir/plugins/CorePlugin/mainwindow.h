@@ -15,10 +15,12 @@ public:
 
     void extensionsInitialized();
 
+public slots:
+    void onAccount(bool);
+
 private slots:
     void onShowGroupButton(QAbstractButton*);
     void onAboutPlugins();
-    void onAccount();
 
 private:
     void setupUI();

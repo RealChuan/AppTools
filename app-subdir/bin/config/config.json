@@ -1,11 +1,7 @@
 {
 	"database": {
-        "type": "MySQL",
-        "host": "127.0.0.1",
-        "port": 3306,
-        "databasename": "apptools",
-        "username": "root",
-        "password": "123456"
+        "type": "SQLite",
+        "databasename": "sql/apptools.db"
 	},
 		
 	"qss_files": [

@@ -1,6 +1,6 @@
 {
 	"database": {
-        "type": "SQLITE",
+        "type": "SQLite",
         "databasename": "sql/apptools.db"
 	},
 		

@@ -1,13 +1,12 @@
-/*
 #AvatarLabel{
-    min-width:  164px;
-    max-width:  164px;
-    min-height: 164px;
-    max-height: 164px;
+	color: transparent;
+    min-width:  200px;
+    max-width:  200px;
+    min-height: 200px;
+    max-height: 200px;
 	border-width: 0 0 0 0;
-	border-image: url(image/login.png)
+	border-image: url(image/avatar.png)
 }
-*/
 
 #PromptLabel{
 	border: 2px solid gray;
@@ -18,19 +17,8 @@
     border-width: 0 0 0 0;
 }
 
-#LoginWidget QLineEdit{
-    min-width: 160px;
-    min-height: 30px;
-    font-size: 14px;
-    border-radius: 4px;
-}
-
-#LoginButton {
-    height: 30px;
-	background-color: #39a3ff;
-}
-
 #FlatButton {
+	background-color: transparent;
 	border: 0;
 	min-height: 20px;
 }
@@ -47,5 +35,22 @@
     height: 15px;
 	width: 15px;
     border-width: 0 0 0 0;
+}
+
+#AccountLabel{
+	font-size: 16px;
+	qproperty-alignment: AlignCenter;
+	color: rgb(58,216,111);
+}
+
+#usernameEdit{
+	height: 40px;
+	font-size: 14px;
+	border-style: none none solid none;
+	border-radius: 0px;
+}
+
+#WhiteWidget{
+	background: white;
 }
 	

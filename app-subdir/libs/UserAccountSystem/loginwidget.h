@@ -15,7 +15,8 @@ public:
 
     QString username() const;
     QString password() const;
-    QStringList usernameList() const;
+    QStringList usernameList() const;  
+    bool autoLogin();
 
 private slots:
     void onLogin();

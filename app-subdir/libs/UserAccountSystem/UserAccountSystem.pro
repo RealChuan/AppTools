@@ -6,6 +6,7 @@ DEFINES += USERACCOUNTSYSTEM_LIBRARY
 
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/utils.lib \
+    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib \
     $$APP_OUTPUT_PATH/../libs/controls.lib
 
 # The following define makes your compiler emit warnings if you use
@@ -22,8 +23,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     accountquery.cpp \
     changepasswdwidget.cpp \
+    currentloginwidget.cpp \
     loginwidget.cpp \
-    logoutordeletewidget.cpp \
     registerwidget.cpp \
     useraccountsystem.cpp
 
@@ -31,7 +32,7 @@ HEADERS += \
     UserAccountSystem_global.h \
     accountquery.h \
     changepasswdwidget.h \
+    currentloginwidget.h \
     loginwidget.h \
-    logoutordeletewidget.h \
     registerwidget.h \
     useraccountsystem.h

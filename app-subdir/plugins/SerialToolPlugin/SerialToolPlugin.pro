@@ -6,7 +6,7 @@ DEFINES += SERIALTOOLPLUGIN_LIBRARY
 
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/utils.lib \
-    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib\
+    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib \
     $$APP_OUTPUT_PATH/../libs/core.lib \
     $$APP_OUTPUT_PATH/../libs/controls.lib
 

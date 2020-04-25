@@ -1,4 +1,4 @@
-#include "editcombobox.h"
+#include "accountcontrols.h"
 #include "messbox.h"
 
 #include <QtWidgets>
@@ -81,8 +81,6 @@ void AccountItemWidget::setupUI()
 
 /*
  *
- *
- *
  * */
 
 class EditComboBoxPrivate{
@@ -97,7 +95,7 @@ public:
 EditComboBox::EditComboBox(QWidget *parent) : QComboBox(parent)
   , d(new EditComboBoxPrivate(this))
 {
-    setObjectName("EditComboBox");
+    setMaxVisibleItems(3);
     setInsertPolicy(QComboBox::NoInsert);
     setModel(d->listWidget->model());
     setView(d->listWidget);
@@ -156,4 +154,28 @@ void EditComboBox::onDeleteItem(const QString &text)
             break;
         }
     }
+}
+
+/*
+ *
+ * */
+
+PasswordLineEdit::PasswordLineEdit(QWidget *parent) : QLineEdit(parent)
+{
+    setPlaceholderText(tr("Please enter the password."));
+    setEchoMode(QLineEdit::Password);
+    QToolButton *button = new QToolButton(this);
+    button->setObjectName("ShowPasswordButton");
+    button->setCursor(Qt::PointingHandCursor);
+    button->setCheckable(true);
+    connect(button, &QToolButton::clicked, this, &PasswordLineEdit::onShowPassword);
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->setSpacing(0);
+    layout->addStretch(0);
+    layout->addWidget(button);
+}
+
+void PasswordLineEdit::onShowPassword(bool state)
+{
+    setEchoMode(state? QLineEdit::Normal : QLineEdit::Password);
 }

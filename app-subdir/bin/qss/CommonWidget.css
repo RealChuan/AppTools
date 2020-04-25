@@ -1,3 +1,35 @@
+#BlueButton{
+	color: white;
+	background-color: #2d8cf0;
+    border-color: #2d8cf0;
+}
+
+#BlueButton:hover{
+	background-color: #57a3f3;
+    border-color: #57a3f3;
+}
+
+#BlueButton:pressed{
+    background-color: #2b85e4;
+    border-color: #2b85e4;
+}
+
+#GrayButton{
+	color: white;
+	background-color:rgb(192,192,192);
+	border-color: rgb(192,192,192);
+}
+
+#GrayButton:hover{
+	background-color:#878787;
+	border-color:#878787;
+}
+
+#GrayButton:pressed{
+	background-color:#878787;
+	border-color:#878787;
+}
+
 /******************************************************************************
  *                                   CommonWidget
  *****************************************************************************/
@@ -29,35 +61,16 @@
 }
 
 #MessageLabel {
-	font-size: 25px;
+	font-size: 20px;
 	qproperty-alignment: AlignCenter;
 }
 
 #MessBtnWidget {
 	background: white;
-	max-height: 50px;
+	height: 35px;
+	max-height: 40px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-}
-
-#MessBtnWidget QPushButton{
-	min-width: 57;
-	min-height: 35;
-}
-
-#MessCloseButton {
-	color: white;
-	background-color: #39a3ff;
-}
-
-#YesButton{
-	color: white;
-	background-color: #39a3ff;
-}
-
-#NoButton{
-	background-color:rgb(192,192,192);
-	color: white;
 }
 
 /******************************************************************************
@@ -75,20 +88,43 @@
 	border-image: url(image/delete.png);
 }
 
-#EditComboBox{
-	height: 35px;
-	font-size: 26px;
+.EditComboBox{
+	height: 40px;
+	font-size: 14px;
 	border-style: none none solid none;
+	border-radius: 0px;
 }
 
-#EditComboBox QAbstractItemView::item{
-	min-height: 35px;
+.EditComboBox QAbstractItemView::item{
+	min-height: 40px;
 }
 
 #UsernameLabel{
-	font-size:26px;
+	font-size:14px;
 }
 
 #UsernameLabel:hover{
 	color: white;
 }
+
+/******************************************************************************
+ *                                   PasswordLineEdit
+ *****************************************************************************/
+#ShowPasswordButton{
+    border-width: 0;
+	background-color: transparent;
+	border-image: url(image/hidePassword.png);
+	/*qproperty-icon: url(image/hidePassword.png)off, url(image/showPassword.png)on;*/
+}
+
+#ShowPasswordButton:checked{
+	border-image: url(image/showPassword.png);
+}
+
+.PasswordLineEdit{
+	height: 40px;
+	font-size: 14px;
+	border-style: none none solid none;
+	border-radius: 0px;
+}
+

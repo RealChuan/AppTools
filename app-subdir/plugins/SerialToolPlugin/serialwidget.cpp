@@ -42,6 +42,7 @@ public:
         sendButton->setObjectName("SendButton");
 
         searchSerialButton = new QPushButton(QObject::tr("Search Available Serial"), owner);
+        searchSerialButton->setObjectName("BlueButton");
         portNameBox = new QComboBox(owner);
         baudRateBox = new QComboBox(owner);
         dataBitsBox = new QComboBox(owner);
@@ -49,6 +50,7 @@ public:
         parityBox = new QComboBox(owner);
         flowControlBox = new QComboBox(owner);
         openOrCloseButton = new QPushButton(QObject::tr("Open Serial"), owner);
+        openOrCloseButton->setObjectName("OpenButton");
         openOrCloseButton->setCheckable(true);
 
         hexBox = new QCheckBox(QObject::tr("Hex"), owner);
@@ -324,9 +326,9 @@ void SerialWidget::initWindow()
     d->parityBox->addItem(tr("Even"), QSerialPort::EvenParity);
     d->parityBox->addItem(tr("Odd"),  QSerialPort::OddParity);
 
-    d->flowControlBox->addItem(tr("No"),     QSerialPort::NoFlowControl);
-    d->flowControlBox->addItem(tr("Hardware"), QSerialPort::HardwareControl);
-    d->flowControlBox->addItem(tr("Software"), QSerialPort::SoftwareControl);
+    d->flowControlBox->addItem(tr("NoFlowControl"),     QSerialPort::NoFlowControl);
+    d->flowControlBox->addItem(tr("HardwareFlowControl"), QSerialPort::HardwareControl);
+    d->flowControlBox->addItem(tr("SoftwareFlowControl"), QSerialPort::SoftwareControl);
 }
 
 void SerialWidget::setWindowParam()

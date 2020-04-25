@@ -2,9 +2,9 @@
 #include "useraccountsystem.h"
 #include "accountquery.h"
 
-#include <QtWidgets>
+#include <controls/accountcontrols.h>
 
-#include <controls/messbox.h>
+#include <QtWidgets>
 
 class RegisterWidgetPrivate{
 public:
@@ -12,20 +12,23 @@ public:
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
+
         usernameEdit = new QLineEdit(owner);
-        passwordEdit = new QLineEdit(owner);
-        passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+        usernameEdit->setObjectName("usernameEdit");
+        usernameEdit->setPlaceholderText(QObject::tr("Please enter user name."));
+        passwordEdit = new PasswordLineEdit(owner);
+        passwordEdit->setPlaceholderText(QObject::tr("Please enter the password."));
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
-        passwdAgainEdit = new QLineEdit(owner);
-        passwdAgainEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+        passwdAgainEdit = new PasswordLineEdit(owner);
+        passwdAgainEdit->setPlaceholderText(QObject::tr("Please enter the password again."));
     }
     QWidget *owner;
     QLabel *avatarLabel;
     QLineEdit *usernameEdit;
-    QLineEdit *passwordEdit;
+    PasswordLineEdit *passwordEdit;
     QLabel *promptLabel;
-    QLineEdit *passwdAgainEdit;
+    PasswordLineEdit *passwdAgainEdit;
 };
 
 RegisterWidget::RegisterWidget(QWidget *parent) : Dialog(parent)
@@ -54,32 +57,35 @@ QString RegisterWidget::password() const
 
 void RegisterWidget::onRegister()
 {
+    d->promptLabel->clear();
     QString username = d->usernameEdit->text().trimmed();
     if(username.isEmpty()){
-        MessBox::Warning(this, tr("Username is empty, please enter username!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Please enter username!"));
         d->usernameEdit->setFocus();
         return;
     }
     QString password = d->passwordEdit->text().trimmed();
     if(password.isEmpty()){
-        MessBox::Warning(this, tr("Password is empty, please enter password!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Please enter password!"));
         d->passwordEdit->setFocus();
         return;
     }
     QString passwdAgain = d->passwdAgainEdit->text().trimmed();
     if(passwdAgain.isEmpty()){
-        MessBox::Warning(this, tr("please enter password again!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Please enter password again!"));
         d->passwdAgainEdit->setFocus();
         return;
     }
     if(password != passwdAgain){
-        MessBox::Warning(this, tr("Two passwords are different, please enter password again!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("Two passwords are different, "
+                                   "please enter password again!"));
         d->passwdAgainEdit->setFocus();
         return;
     }
     AccountQuery * query =  UserAccountSystem::accountQuery();
     if(query->contains(username)){
-        MessBox::Warning(this, tr("An account with the same name already exists, please modify the account name!"), MessBox::CloseButton);
+        d->promptLabel->setText(tr("An account with the same name already exists, "
+                                   "please modify the account name!"));
         d->usernameEdit->setFocus();
         return;
     }
@@ -100,15 +106,19 @@ void RegisterWidget::setupUI()
     avatarLayout->addWidget(d->avatarLabel, 1, 2);
 
     QPushButton *registerButton = new QPushButton(tr("Registered"), this);
-    connect(registerButton, &QPushButton::clicked, this, &RegisterWidget::onRegister);
     QPushButton *cancelButton = new QPushButton(tr("Cancel"), this);
+    registerButton->setObjectName("BlueButton");
+    cancelButton->setObjectName("GrayButton");
+    connect(registerButton, &QPushButton::clicked, this, &RegisterWidget::onRegister);
     connect(cancelButton, &QPushButton::clicked, this, &RegisterWidget::reject);
+    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed, this, &RegisterWidget::onRegister);
 
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addWidget(cancelButton);
     btnLayout->addWidget(registerButton);
 
     QWidget *widget = new QWidget(this);
+    widget->setObjectName("WhiteWidget");
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->addLayout(avatarLayout);
     layout->addWidget(d->usernameEdit);

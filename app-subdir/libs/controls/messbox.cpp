@@ -8,13 +8,13 @@ public:
         iconLabel = new QLabel(owner);
         messageLabel = new QLabel(owner);
         messageLabel->setObjectName("MessageLabel");
-        //messageLabel->setWordWrap(true);
+        messageLabel->setWordWrap(true);
         closeButton = new QPushButton(QObject::tr("Close"), owner);
-        closeButton->setObjectName("MessCloseButton");
+        closeButton->setObjectName("BlueButton");
         yesButton = new QPushButton(QObject::tr("Yes"), owner);
-        yesButton->setObjectName("YesButton");
+        yesButton->setObjectName("BlueButton");
         noButton = new QPushButton(QObject::tr("No"), owner);
-        noButton->setObjectName("NoButton");
+        noButton->setObjectName("GrayButton");
     }
     CommonWidget *owner;
     QLabel *iconLabel;
@@ -27,13 +27,11 @@ public:
 MessBox::MessBox(QWidget *parent) : Dialog(parent)
   , d(new MessBoxPrivate(this))
 {
-    setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
-    setWindowModality(Qt::ApplicationModal);
     setMinButtonVisible(false);
     setRestoreMaxButtonVisible(false);
     setupUI();
     buildConnect();
-    resize(450, 280);
+    resize(400, 250);
 }
 
 MessBox::~MessBox()

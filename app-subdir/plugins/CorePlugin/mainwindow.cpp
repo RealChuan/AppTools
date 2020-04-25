@@ -30,6 +30,10 @@ public:
         v3->setContentsMargins(0, 0, 0, 0);
         v3->setSpacing(0);
 
+        accountButton = new QToolButton(owner);
+        accountButton->setCheckable(true);
+        accountButton->setObjectName("AccountButton");
+        accountButton->setToolTip(QObject::tr("Account control"));
         userSystem = new UserAccountSystem(owner);
     }
 
@@ -41,6 +45,7 @@ public:
     QVBoxLayout *v2;
     QVBoxLayout *v3;
 
+    QToolButton *accountButton;
     UserAccountSystem *userSystem;
 };
 
@@ -48,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     : CommonWidget(parent)
     , d(new MainWindowPrivate(this))
 {
-    setWindowTitle("App");
+    setWindowTitle("AppPlugin");
     setupUI();
 }
 
@@ -96,8 +101,9 @@ void MainWindow::onAboutPlugins()
     dialog.exec();
 }
 
-void MainWindow::onAccount()
+void MainWindow::onAccount(bool state)
 {
+    d->accountButton->setChecked(!state);
     d->userSystem->show();
 }
 
@@ -125,12 +131,12 @@ void MainWindow::initToolBar()
     qssButton->setObjectName("QssButton");
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
-    QToolButton *accountButton = new QToolButton(this);
-    accountButton->setObjectName("AccountButton");
-    connect(accountButton, &QToolButton::clicked, this, &MainWindow::onAccount);
+    connect(d->accountButton, &QToolButton::clicked, this, &MainWindow::onAccount);
+    connect(d->userSystem, &UserAccountSystem::login, d->accountButton, &QToolButton::setChecked);
 
     QToolButton *configButton = new QToolButton(this);
     configButton->setObjectName("ConfigButton");
+    configButton->setToolTip(tr("Set up"));
     ConfigWidget *configWidget = new ConfigWidget(this);
     d->pageWidget->addWidget(configWidget);
     connect(configButton, &QToolButton::clicked, [=]{
@@ -142,7 +148,7 @@ void MainWindow::initToolBar()
     titleLayout->setContentsMargins(0, 0, 0, 0);
     titleLayout->setSpacing(10);
     titleLayout->addWidget(qssButton);
-    titleLayout->addWidget(accountButton);
+    titleLayout->addWidget(d->accountButton);
     titleLayout->addWidget(configButton);
     setTitleBar(titleBar);
 }

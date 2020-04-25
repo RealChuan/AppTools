@@ -13,3 +13,13 @@
 	color: white;
 	background-color: #39a3ff;
 }
+
+#OpenButton{
+	color: white;
+	background-color: #39a3ff;
+	qproperty-icon: url(image/run.png)off, url(image/running.png)on;
+}
+
+#OpenButton:hover{
+	background-color: #0066ff;
+}

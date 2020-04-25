@@ -9,6 +9,7 @@ class AccountQuery;
 class UserAccountSystemPrivate;
 class USERACCOUNTSYSTEM_EXPORT UserAccountSystem : public QObject
 {
+    Q_OBJECT
 public:
     UserAccountSystem(QObject *parent = nullptr);
     ~UserAccountSystem();
@@ -17,7 +18,15 @@ public:
 
     static AccountQuery *accountQuery();
 
+signals:
+    void login(bool);
+
 private:
+    bool checkCurrentAccount();
+
+    void loadSetting();
+    void saveSetting();
+
     UserAccountSystemPrivate *d;
 };
 

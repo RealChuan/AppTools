@@ -112,11 +112,18 @@
 }
 
 #AccountButton {
-	border-image: url(image/account.png);
+	background-color: transparent;
+	border-width: 0;
+	border-image: url(image/offline.png);
+	/*qproperty-icon: url(image/offline.png)off, url(image/online.png)on;*/
 }
 
 #AccountButton:hover {
 	border-image: url(image/account-hover.png);
+}
+
+#AccountButton:checked{
+	border-image: url(image/online.png);
 }
 
 

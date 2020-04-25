@@ -1,17 +1,21 @@
-#include "logoutordeletewidget.h"
+#include "currentloginwidget.h"
 #include "useraccountsystem.h"
 #include "accountquery.h"
+#include "changepasswdwidget.h"
+
+#include <controls/accountcontrols.h>
 
 #include <QtWidgets>
 
-class LogoutOrDeleteWidgetPrivate{
+class CurrentLoginWidgetPrivate{
 public:
-    LogoutOrDeleteWidgetPrivate(QWidget *parent) : owner(parent){
+    CurrentLoginWidgetPrivate(QWidget *parent) : owner(parent){
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
         accountLabel = new QLabel(owner);
-        passwordEdit = new QLineEdit(owner);
+        accountLabel->setObjectName("AccountLabel");
+        passwordEdit = new PasswordLineEdit(owner);
         passwordEdit->setPlaceholderText(QObject::tr("Please enter password and click delete again!"));
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
@@ -20,30 +24,36 @@ public:
     QLabel *accountLabel;
     QLabel *avatarLabel;
     QLabel *promptLabel;
-    QLineEdit *passwordEdit;
+    PasswordLineEdit *passwordEdit;
     QString username;
     QString password;
 };
 
-LogoutOrDeleteWidget::LogoutOrDeleteWidget(const QString &username, const QString &password, QWidget *parent)
+CurrentLoginWidget::CurrentLoginWidget(const QString &username, const QString &password, QWidget *parent)
     : Dialog(parent)
-    , d(new LogoutOrDeleteWidgetPrivate(this))
+    , d(new CurrentLoginWidgetPrivate(this))
 {
     d->username = username;
     d->password = password;
-    setTitle(tr("ChangePasswd Widget"));
+    setTitle(tr("Current Login Widget"));
     setMinButtonVisible(true);
     setupUI();
     resize(300, 485);
 }
 
-LogoutOrDeleteWidget::~LogoutOrDeleteWidget()
+CurrentLoginWidget::~CurrentLoginWidget()
 {
     delete d;
 }
 
-void LogoutOrDeleteWidget::onDeleteAccount()
+QString CurrentLoginWidget::password() const
 {
+    return d->password;
+}
+
+void CurrentLoginWidget::onDeleteAccount()
+{
+    d->promptLabel->clear();
     if(d->passwordEdit->isVisible()){
         if(d->passwordEdit->text() == d->password){
             AccountQuery * query =  UserAccountSystem::accountQuery();
@@ -57,7 +67,15 @@ void LogoutOrDeleteWidget::onDeleteAccount()
     d->passwordEdit->setFocus();
 }
 
-void LogoutOrDeleteWidget::setupUI()
+void CurrentLoginWidget::onChangePassword()
+{
+    ChangePasswdWidget dialog(d->username, d->password, this);
+    if(dialog.exec() == ChangePasswdWidget::Accepted){
+        d->password = dialog.password();
+    }
+}
+
+void CurrentLoginWidget::setupUI()
 {
     QGridLayout *avatarLayout = new QGridLayout;
     avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 0, 2);
@@ -67,20 +85,27 @@ void LogoutOrDeleteWidget::setupUI()
     avatarLayout->addWidget(d->avatarLabel, 1, 2);
 
     QPushButton *logoutButton = new QPushButton(tr("Log Out"), this);
+    QPushButton *changePasswdButton = new QPushButton(tr("Change Password"), this);
     QPushButton *deleteAccountButton = new QPushButton(tr("Delete Account"), this);
-    connect(logoutButton, &QPushButton::clicked, this, &LogoutOrDeleteWidget::accepted);
-    connect(deleteAccountButton, &QPushButton::clicked, this, &LogoutOrDeleteWidget::onDeleteAccount);
+    logoutButton->setObjectName("BlueButton");
+    changePasswdButton->setObjectName("BlueButton");
+    deleteAccountButton->setObjectName("GrayButton");
+    connect(logoutButton, &QPushButton::clicked, this, &CurrentLoginWidget::accepted);
+    connect(changePasswdButton, &QPushButton::clicked, this, &CurrentLoginWidget::onChangePassword);
+    connect(deleteAccountButton, &QPushButton::clicked, this, &CurrentLoginWidget::onDeleteAccount);
 
     d->accountLabel->setText(tr("Current online account: %1.").arg(d->username));
     d->passwordEdit->hide();
 
     QWidget *widget = new QWidget(this);
+    widget->setObjectName("WhiteWidget");
     QGridLayout *layout = new QGridLayout(widget);
     layout->addLayout(avatarLayout, 0, 0, 1, 2);
     layout->addWidget(d->accountLabel, 1, 0, 1, 2);
     layout->addWidget(d->promptLabel, 2, 0, 1, 2);
     layout->addWidget(d->passwordEdit, 3, 0, 1, 2);
-    layout->addWidget(logoutButton, 4, 0, 1, 1);
+    layout->addWidget(changePasswdButton, 4, 0, 1, 1);
     layout->addWidget(deleteAccountButton, 4, 1, 1, 1);
+    layout->addWidget(logoutButton, 5, 0, 1, 2);
     setCentralWidget(widget);
 }
