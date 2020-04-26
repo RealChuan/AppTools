@@ -31,13 +31,16 @@ public:
 
     QString username;
     QString password;
+
+    AccountQuery *accountQuery = nullptr;
 };
 
-ChangePasswdWidget::ChangePasswdWidget(const QString &username, const QString& password, QWidget *parent) : Dialog(parent)
+ChangePasswdWidget::ChangePasswdWidget(AccountQuery *accountQuery, const QString &username, const QString& password, QWidget *parent) : Dialog(parent)
   , d(new ChangePasswdWidgetPrivate(this))
 {
     d->username = username;
     d->password = password;
+    d->accountQuery = accountQuery;
     setTitle(tr("ChangePasswd Widget"));
     setMinButtonVisible(true);
     setupUI();
@@ -94,8 +97,7 @@ void ChangePasswdWidget::onChangePasswd()
         return;
     }
     d->promptLabel->clear();
-    AccountQuery * query =  UserAccountSystem::accountQuery();
-    if(query->updateAccount(d->username, newPassword)){
+    if(d->accountQuery->updateAccount(d->username, newPassword)){
         d->password = newPassword;
         accept();
         return;

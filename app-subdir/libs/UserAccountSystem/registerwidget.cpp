@@ -29,12 +29,14 @@ public:
     PasswordLineEdit *passwordEdit;
     QLabel *promptLabel;
     PasswordLineEdit *passwdAgainEdit;
+    AccountQuery *accountQuery = nullptr;
 };
 
-RegisterWidget::RegisterWidget(QWidget *parent) : Dialog(parent)
+RegisterWidget::RegisterWidget(AccountQuery *accountQuery, QWidget *parent) : Dialog(parent)
   , d(new RegisterWidgetPrivate(this))
 {
     setTitle(tr("Register Widget"));
+    d->accountQuery = accountQuery;
     setMinButtonVisible(true);
     setupUI();
     resize(300, 485);
@@ -82,14 +84,13 @@ void RegisterWidget::onRegister()
         d->passwdAgainEdit->setFocus();
         return;
     }
-    AccountQuery * query =  UserAccountSystem::accountQuery();
-    if(query->contains(username)){
+    if(d->accountQuery->contains(username)){
         d->promptLabel->setText(tr("An account with the same name already exists, "
                                    "please modify the account name!"));
         d->usernameEdit->setFocus();
         return;
     }
-    if(query->addAccount(username, password)){
+    if(d->accountQuery->addAccount(username, password)){
         accept();
         return;
     }

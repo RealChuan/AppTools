@@ -428,7 +428,7 @@ void TcpWidget::setupUI()
     allSetLayout->addWidget(d->allConnectBox);
     allSetLayout->addWidget(d->autoConnectBox);
     allSetLayout->addWidget(d->autoConnectTimeBox);
-    allSetLayout->addStretch(0);
+    allSetLayout->addStretch();
     allSetLayout->addWidget(d->sendConutButton);
     allSetLayout->addWidget(d->recvConutButton);
     allSetLayout->addWidget(d->saveButton);

@@ -94,7 +94,7 @@ PluginDialog::PluginDialog(QWidget *parent)
     hl->addWidget(m_errorDetailsButton);
     hl->addSpacing(10);
     hl->addWidget(m_restartRequired);
-    hl->addStretch(5);
+    hl->addStretch();
     hl->addWidget(m_closeButton);
 
     vl->addLayout(hl);
@@ -157,7 +157,7 @@ void PluginDialog::openDetails(ExtensionSystem::PluginSpec *spec)
     connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
 
     QHBoxLayout *h1 = new QHBoxLayout;
-    h1->addStretch(0);
+    h1->addStretch();
     h1->addWidget(closeButton);
 
     ExtensionSystem::PluginDetailsView *details = new ExtensionSystem::PluginDetailsView(&dialog);
@@ -186,7 +186,7 @@ void PluginDialog::openErrorDetails()
     connect(closeButton, &QPushButton::clicked, &dialog, &Dialog::aboutToclose);
 
     QHBoxLayout *h1 = new QHBoxLayout;
-    h1->addStretch(0);
+    h1->addStretch();
     h1->addWidget(closeButton);
 
     ExtensionSystem::PluginErrorView *errors = new ExtensionSystem::PluginErrorView(&dialog);

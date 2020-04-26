@@ -27,14 +27,17 @@ public:
     PasswordLineEdit *passwordEdit;
     QString username;
     QString password;
+    AccountQuery *accountQuery = nullptr;
 };
 
-CurrentLoginWidget::CurrentLoginWidget(const QString &username, const QString &password, QWidget *parent)
+CurrentLoginWidget::CurrentLoginWidget(AccountQuery *accountQuery, const QString &username,
+                                       const QString &password, QWidget *parent)
     : Dialog(parent)
     , d(new CurrentLoginWidgetPrivate(this))
 {
     d->username = username;
     d->password = password;
+    d->accountQuery = accountQuery;
     setTitle(tr("Current Login Widget"));
     setMinButtonVisible(true);
     setupUI();
@@ -56,8 +59,7 @@ void CurrentLoginWidget::onDeleteAccount()
     d->promptLabel->clear();
     if(d->passwordEdit->isVisible()){
         if(d->passwordEdit->text() == d->password){
-            AccountQuery * query =  UserAccountSystem::accountQuery();
-            if(query->deleteAccount(d->username))
+            if(d->accountQuery->deleteAccount(d->username))
                 reject();
         }else
             d->promptLabel->setText(tr("Wrong password, please re-enter!"));
@@ -69,7 +71,7 @@ void CurrentLoginWidget::onDeleteAccount()
 
 void CurrentLoginWidget::onChangePassword()
 {
-    ChangePasswdWidget dialog(d->username, d->password, this);
+    ChangePasswdWidget dialog(d->accountQuery, d->username, d->password, this);
     if(dialog.exec() == ChangePasswdWidget::Accepted){
         d->password = dialog.password();
     }

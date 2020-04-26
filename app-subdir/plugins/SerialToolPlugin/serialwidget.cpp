@@ -292,7 +292,7 @@ void SerialWidget::setupUI()
     setLayout->addWidget(d->hexBox);
     setLayout->addWidget(d->autoSendBox);
     setLayout->addWidget(d->autoSendTimeBox);
-    setLayout->addStretch(0);
+    setLayout->addStretch();
     setLayout->addWidget(d->sendConutButton);
     setLayout->addWidget(d->recvConutButton);
     setLayout->addWidget(d->saveButton);

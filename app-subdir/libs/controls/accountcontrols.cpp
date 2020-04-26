@@ -73,7 +73,7 @@ void AccountItemWidget::setupUI()
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(d->avatarLabel);
     layout->addWidget(d->usernameLabel);
-    layout->addStretch(0);
+    layout->addStretch();
     layout->addWidget(deleteButton);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(5);
@@ -171,7 +171,7 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent) : QLineEdit(parent)
     connect(button, &QToolButton::clicked, this, &PasswordLineEdit::onShowPassword);
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setSpacing(0);
-    layout->addStretch(0);
+    layout->addStretch();
     layout->addWidget(button);
 }
 

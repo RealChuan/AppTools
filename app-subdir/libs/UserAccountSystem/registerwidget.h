@@ -3,12 +3,13 @@
 
 #include <controls/dialog.h>
 
+class AccountQuery;
 class RegisterWidgetPrivate;
 class RegisterWidget : public Dialog
 {
     Q_OBJECT
 public:
-    explicit RegisterWidget(QWidget *parent = nullptr);
+    explicit RegisterWidget(AccountQuery*, QWidget *parent = nullptr);
     ~RegisterWidget();
 
     QString username() const;

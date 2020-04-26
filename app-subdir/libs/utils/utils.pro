@@ -27,6 +27,7 @@ SOURCES += \
     hostosinfo.cpp \
     itemviews.cpp \
     json.cpp \
+    logasync.cpp \
     qtcassert.cpp \
     stringutils.cpp \
     treemodel.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     hostosinfo.h \
     itemviews.h \
     json.h \
+    logasync.h \
     qtcassert.h \
     stringutils.h \
     treemodel.h \

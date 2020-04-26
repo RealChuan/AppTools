@@ -154,7 +154,7 @@ QWidget *CommonWidget::titleWidget()
     layout->setSpacing(10);
     layout->addWidget(d->iconLabel);
     layout->addWidget(d->titleLabel);
-    layout->addStretch(0);
+    layout->addStretch();
     layout->addWidget(d->titleBar);
     layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));
     layout->addWidget(d->minButton);

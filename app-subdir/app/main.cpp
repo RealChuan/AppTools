@@ -1,3 +1,4 @@
+#include <utils/logasync.h>
 #include <utils/utils.h>
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginspec.h>
@@ -28,6 +29,12 @@ int main(int argc, char *argv[])
     //qDebug() << threadCount;
 
     Utils::setUTF8Code();
+
+    //异步日志
+    //    LogAsync log;
+    //    log.setLogLevel(QtDebugMsg);  //实际环境中可通过读取配置设置日志级别
+    //    log.start();
+
     Utils::loadLanguage();
     Utils::setQSS();
     Utils::loadFonts();
@@ -45,13 +52,6 @@ int main(int argc, char *argv[])
     // Shutdown plugin manager on the exit
     QObject::connect(&a, SIGNAL(aboutToQuit()), &pluginManager, SLOT(shutdown()));
 
-    //---------------------------------------------------------------------------------
-
-    //    LoginWidget *login = new LoginWidget;
-    //    login->exec();
-    //    login->deleteLater();
-
-    //----------------------------------------------------------------------------------
     const QVector<PluginSpec *> plugins = PluginManager::plugins();
     PluginSpec *coreSpec = nullptr;
     for (PluginSpec *spec: plugins) {

@@ -26,13 +26,15 @@ public:
     QLabel *promptLabel;
     PasswordLineEdit *passwordEdit;
     QCheckBox *autoLoginBox;
+    AccountQuery *accountQuery = nullptr;
 };
 
-LoginWidget::LoginWidget(const QStringList &usernameList, QWidget *parent) : Dialog(parent)
+LoginWidget::LoginWidget(AccountQuery *accountQuery, const QStringList &usernameList, QWidget *parent) : Dialog(parent)
   , d(new LoginWidgetPrivate(this))
 {
     setObjectName("LoginWidget");
     setTitle(tr("Login Widget"));
+    d->accountQuery = accountQuery;
     setMinButtonVisible(true);
     setupUI();
     buildConnect();
@@ -83,8 +85,7 @@ void LoginWidget::onLogin()
         return;
     }
 
-    AccountQuery * query =  UserAccountSystem::accountQuery();
-    if(query->checkAccount(username, password)){
+    if(d->accountQuery->checkAccount(username, password)){
         if(!d->usernameBox->accountList().contains(username))
             d->usernameBox->addAccount(username);
         accept();
@@ -95,7 +96,7 @@ void LoginWidget::onLogin()
 
 void LoginWidget::onRegister()
 {
-    RegisterWidget regist(this);
+    RegisterWidget regist(d->accountQuery, this);
     if(regist.exec() == RegisterWidget::Accepted){
         d->usernameBox->addAccount(regist.username());
         d->passwordEdit->setText(regist.password());

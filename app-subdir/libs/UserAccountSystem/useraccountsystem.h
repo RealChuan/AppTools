@@ -16,8 +16,6 @@ public:
 
     void show();
 
-    static AccountQuery *accountQuery();
-
 signals:
     void login(bool);
 

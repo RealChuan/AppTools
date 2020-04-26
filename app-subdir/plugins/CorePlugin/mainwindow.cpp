@@ -196,7 +196,7 @@ QWidget *MainWindow::menuWidget()
     layout->addLayout(d->v1);
     layout->addLayout(d->v2);
     layout->addLayout(d->v3);
-    layout->addStretch(1);
+    layout->addStretch();
 
     return widget;
 }

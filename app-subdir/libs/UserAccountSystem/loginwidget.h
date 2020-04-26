@@ -5,12 +5,13 @@
 
 #include <controls/dialog.h>
 
+class AccountQuery;
 class LoginWidgetPrivate;
 class USERACCOUNTSYSTEM_EXPORT LoginWidget : public Dialog
 {
     Q_OBJECT
 public:
-    LoginWidget(const QStringList& usernameList,QWidget *parent = nullptr);
+    LoginWidget(AccountQuery*, const QStringList& ,QWidget *parent = nullptr);
     ~LoginWidget();
 
     QString username() const;

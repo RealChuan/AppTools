@@ -13,21 +13,16 @@ struct Account{
     QString password = QLatin1String("");
 };
 
-static AccountQuery *ACOUNTQuery = nullptr;
-
 class UserAccountSystemPrivate{
 public:
     UserAccountSystemPrivate(QObject *parent) : owner(parent){
-        if(ACOUNTQuery){
-            delete ACOUNTQuery;
-            ACOUNTQuery = nullptr;
-        }
-        ACOUNTQuery = new AccountQuery(owner);
+        accountQuery = new AccountQuery(owner);
     }
     QObject* owner;
     Account currentAccount;
     QStringList usernameList;
     bool autoLogin = false;
+    AccountQuery *accountQuery;
 };
 
 UserAccountSystem::UserAccountSystem(QObject *parent) : QObject(parent)
@@ -41,10 +36,6 @@ UserAccountSystem::UserAccountSystem(QObject *parent) : QObject(parent)
 
 UserAccountSystem::~UserAccountSystem()
 {
-    if(ACOUNTQuery){
-        delete ACOUNTQuery;
-        ACOUNTQuery = nullptr;
-    }
     saveSetting();
     delete d;
 }
@@ -52,7 +43,7 @@ UserAccountSystem::~UserAccountSystem()
 void UserAccountSystem::show()
 {
     if(!checkCurrentAccount()){
-        LoginWidget login(d->usernameList, qApp->activeWindow());
+        LoginWidget login(d->accountQuery, d->usernameList, qApp->activeWindow());
         if(login.exec() == LoginWidget::Accepted){
             d->currentAccount.username = login.username();
             d->currentAccount.password = login.password();
@@ -62,9 +53,8 @@ void UserAccountSystem::show()
     }
     if(checkCurrentAccount()){
         emit login(true);
-        CurrentLoginWidget out(d->currentAccount.username,
-                               d->currentAccount.password,
-                               qApp->activeWindow());
+        CurrentLoginWidget out(d->accountQuery, d->currentAccount.username,
+                               d->currentAccount.password, qApp->activeWindow());
         CurrentLoginWidget::ExecFlags flag = out.exec();
         if(flag == CurrentLoginWidget::Accepted){
             d->currentAccount.username.clear();
@@ -82,17 +72,12 @@ void UserAccountSystem::show()
     }
 }
 
-AccountQuery *UserAccountSystem::accountQuery()
-{
-    return ACOUNTQuery;
-}
-
 bool UserAccountSystem::checkCurrentAccount()
 {
     if(d->currentAccount.username.isEmpty()) return false;
     if(d->currentAccount.password.isEmpty()) return false;
-    if(ACOUNTQuery->checkAccount(d->currentAccount.username,
-                                 d->currentAccount.password))
+    if(d->accountQuery->checkAccount(d->currentAccount.username,
+                                     d->currentAccount.password))
         return true;
     return false;
 }

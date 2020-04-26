@@ -3,12 +3,13 @@
 
 #include <controls/dialog.h>
 
+class AccountQuery;
 class CurrentLoginWidgetPrivate;
 class CurrentLoginWidget : public Dialog
 {
     Q_OBJECT
 public:
-    CurrentLoginWidget(const QString &username, const QString &password, QWidget *parent = nullptr);
+    CurrentLoginWidget(AccountQuery*, const QString &, const QString &, QWidget *parent = nullptr);
     ~CurrentLoginWidget();
 
     QString password() const;
