@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     //    log.setLogLevel(QtDebugMsg);  //实际环境中可通过读取配置设置日志级别
     //    log.start();
 
+    Utils::loadLanguage();
     Utils::setUTF8Code();
     Utils::setQSS();
 
@@ -43,7 +44,6 @@ int main(int argc, char *argv[])
 
     //qDebug() << threadCount;
 
-    Utils::loadLanguage();
     Utils::loadFonts();
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 

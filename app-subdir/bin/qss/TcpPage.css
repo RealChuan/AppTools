@@ -14,6 +14,11 @@
 	background-color: #39a3ff;
 }
 
+#SendButton:!enabled {
+	color: #495060;
+	background-color: rgb(215,215,215);
+}
+
 #OpenButton{
 	color: white;
 	background-color: #39a3ff;

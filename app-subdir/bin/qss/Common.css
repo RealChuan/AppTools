@@ -31,6 +31,10 @@ QPushButton {
     padding-right: 5px;
 }
 
+QPushButton:!enabled { 
+	background-color: rgb(215,215,215);
+}
+
 QPushButton:hover {
     color: #57a3f3;
     border-color: #57a3f3;
@@ -46,6 +50,10 @@ QPushButton:default {
     color: #fff;
     background-color: #2d8cf0;
     border-color: #2d8cf0;
+}
+
+QPushButton:default:!enabled { 
+	background-color: rgb(215,215,215);
 }
 
 QPushButton:default:hover {
