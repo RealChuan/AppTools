@@ -4,6 +4,9 @@ QT += widgets
 
 DEFINES += CONTROLS_LIBRARY
 
+LIBS += \
+    $$APP_OUTPUT_PATH/../libs/utils.lib \
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -20,7 +23,8 @@ SOURCES += \
     commonwidget.cpp \
     controls.cpp \
     dialog.cpp \
-    messbox.cpp
+    messbox.cpp \
+    waitwidget.cpp
 
 HEADERS += \
     accountcontrols.h \
@@ -28,4 +32,5 @@ HEADERS += \
     controls_global.h \
     controls.h \
     dialog.h \
-    messbox.h
+    messbox.h \
+    waitwidget.h

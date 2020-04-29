@@ -565,3 +565,18 @@ QMenuBar::item {
 	border-style: none none solid none;
 	border-color: black;
 }
+
+/******************************************************************************
+ *                                QProgressBar
+ *****************************************************************************/
+ 
+QProgressBar{
+	max-height: 5px;
+    border:2px solid lightblue;
+    border-radius: 1px;
+    background-color:white;;
+}
+
+QProgressBar::chunk{
+    background-color:rgb(56,156,255);
+}

@@ -3,8 +3,8 @@ CONFIG += ordered
 
 SUBDIRS += \
     aggregation \
+    utils \
     controls \
     core \
-    utils \
     extensionsystem \
     UserAccountSystem \

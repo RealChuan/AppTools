@@ -34,6 +34,7 @@
 	border-style: none none none solid;
 	border-color: rgb(54, 62, 78);
 }
+
 .GroupItemButton:checked {
 	color: #39a3ff;
     background: rgb(85,79,73);

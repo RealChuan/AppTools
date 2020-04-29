@@ -4,6 +4,7 @@
 #include <extensionsystem/pluginspec.h>
 #include <extensionsystem/iplugin.h>
 #include <UserAccountSystem/loginwidget.h>
+#include <controls/waitwidget.h>
 
 #include <QApplication>
 #include <QDir>
@@ -19,6 +20,20 @@ int main(int argc, char *argv[])
     Utils::setHighDpiEnvironmentVariable();
 
     QApplication a(argc, argv);
+
+    // 异步日志
+    //    LogAsync log;
+    //    log.setLogLevel(QtDebugMsg);  //实际环境中可通过读取配置设置日志级别
+    //    log.start();
+
+    Utils::setUTF8Code();
+    Utils::setQSS();
+
+    // 等待界面
+    WaitWidget waitWidget;
+    waitWidget.show();
+    a.processEvents();
+
     a.setApplicationVersion(QObject::tr("0.0.1"));
     a.setApplicationName(QObject::tr("AppPlugin"));
     a.setOrganizationName(QObject::tr("Youth"));
@@ -28,20 +43,13 @@ int main(int argc, char *argv[])
 
     //qDebug() << threadCount;
 
-    Utils::setUTF8Code();
-
-    //异步日志
-    //    LogAsync log;
-    //    log.setLogLevel(QtDebugMsg);  //实际环境中可通过读取配置设置日志级别
-    //    log.start();
-
     Utils::loadLanguage();
-    Utils::setQSS();
     Utils::loadFonts();
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     QSettings *setting = new QSettings(ConfigFile, QSettings::IniFormat);
     PluginManager pluginManager;
+
     PluginManager::setSettings(setting);
     PluginManager::setPluginIID(QLatin1String("Youth.Qt.plugin"));
     QStringList pluginPaths;
@@ -62,7 +70,9 @@ int main(int argc, char *argv[])
     }
 
     if(coreSpec) {
+        waitWidget.fullProgressBar();
         coreSpec->plugin()->remoteCommand(QStringList(), QString(), QStringList());
+        waitWidget.close();
     } else {
         pluginManager.shutdown();
         a.quit();
