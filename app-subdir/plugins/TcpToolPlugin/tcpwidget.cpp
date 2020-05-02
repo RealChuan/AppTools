@@ -402,7 +402,7 @@ void TcpWidget::setupUI()
     splitter->addWidget(dataBox);
     splitter->addWidget(sendBox);
     splitter->setHandleWidth(0);
-    splitter->setSizes(QList<int>() << 1000 << 10);
+    splitter->setSizes(QList<int>() << 1000 << 1);
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->addWidget(splitter);

@@ -32,6 +32,7 @@ SOURCES += \
     main.cpp
 
 OTHER_FILES += \
-    app.ico
+    app.ico \
+    app.icns
 
 DESTDIR = $$APP_OUTPUT_PATH

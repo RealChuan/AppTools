@@ -19,6 +19,7 @@ public:
         nameLabel = new QLabel(QObject::tr("-"), owner);
         widthLabel = new QLabel(QObject::tr("-"), owner);
         polyFormulaLabel = new QLabel(QObject::tr("-"), owner);
+        polyFormulaLabel->setWordWrap(true);
         polyLabel = new QLabel(QObject::tr("-"), owner);
         initLabel = new QLabel(QObject::tr("-"), owner);
         reverseInputLable = new QLabel(QObject::tr("-"), owner);
@@ -124,15 +125,33 @@ void CRCWidget::setupUI()
 
     QGroupBox *infoBox = new QGroupBox(tr("Information"), this);
     infoBox->setObjectName("CRCInfoBox");
-    QFormLayout *formLayout = new QFormLayout(infoBox);
-    formLayout->addRow(tr("Name: "), d->nameLabel);
-    formLayout->addRow(tr("Width: "), d->widthLabel);
-    formLayout->addRow(tr("Poly Formula: "), d->polyFormulaLabel);
-    formLayout->addRow(tr("Poly: "), d->polyLabel);
-    formLayout->addRow(tr("Init: "), d->initLabel);
-    formLayout->addRow(tr("Reverse Input: "), d->reverseInputLable);
-    formLayout->addRow(tr("Reverse Output: "), d->reverseOutputLable);
-    formLayout->addRow(tr("XOrOut: "), d->xOrOutLabel);
+    QGridLayout *infoLayout = new QGridLayout(infoBox);
+    infoLayout->addWidget(new QLabel(tr("Name: "), this), 0, 0, 1, 1);
+    infoLayout->addWidget(d->nameLabel, 0, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Width: "), this), 1, 0, 1, 1);
+    infoLayout->addWidget(d->widthLabel, 1, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Poly Formula: "), this), 2, 0, 1, 1);
+    infoLayout->addWidget(d->polyFormulaLabel, 2, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Poly: "), this), 3, 0, 1, 1);
+    infoLayout->addWidget(d->polyLabel, 3, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Init: "), this), 4, 0, 1, 1);
+    infoLayout->addWidget(d->initLabel, 4, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Reverse Input: "), this), 5, 0, 1, 1);
+    infoLayout->addWidget(d->reverseInputLable, 5, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("Reverse Output: "), this), 6, 0, 1, 1);
+    infoLayout->addWidget(d->reverseOutputLable, 6, 1, 1, 1);
+    infoLayout->addWidget(new QLabel(tr("XOrOut: "), this), 7, 0, 1, 1);
+    infoLayout->addWidget(d->xOrOutLabel, 7, 1, 1, 1);
+
+    //    QFormLayout *formLayout = new QFormLayout(infoBox);
+    //    formLayout->addRow(tr("Name: "), d->nameLabel);
+    //    formLayout->addRow(tr("Width: "), d->widthLabel);
+    //    formLayout->addRow(tr("Poly Formula: "), d->polyFormulaLabel);
+    //    formLayout->addRow(tr("Poly: "), d->polyLabel);
+    //    formLayout->addRow(tr("Init: "), d->initLabel);
+    //    formLayout->addRow(tr("Reverse Input: "), d->reverseInputLable);
+    //    formLayout->addRow(tr("Reverse Output: "), d->reverseOutputLable);
+    //    formLayout->addRow(tr("XOrOut: "), d->xOrOutLabel);
 
     QGroupBox *CRCBox = new QGroupBox(tr("CRC Calculator"), this);
     QGridLayout *crcLayout = new QGridLayout(CRCBox);

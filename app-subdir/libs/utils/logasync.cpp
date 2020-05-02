@@ -28,7 +28,6 @@ FileUtil::FileUtil(qint64 days, QObject *parent) : QObject(parent)
     d->autoDelFileDays = days;
     newDir("log");
     rollFile(0);
-    //autoDelFile();    //test
 }
 
 FileUtil::~FileUtil()
@@ -42,8 +41,6 @@ FileUtil::~FileUtil()
 
 void FileUtil::write(const QString &msg)
 {
-    d->file.write(msg.toLocal8Bit().constData());
-
     if(d->file.size() > ROLLSIZE){
         rollFile(++d->count);
     }else{
@@ -55,6 +52,8 @@ void FileUtil::write(const QString &msg)
             autoDelFile();
         }
     }
+
+    d->file.write(msg.toLocal8Bit().constData());
 }
 
 void FileUtil::newDir(const QString &path)

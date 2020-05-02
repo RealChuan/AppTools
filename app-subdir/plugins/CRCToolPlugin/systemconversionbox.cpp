@@ -69,11 +69,22 @@ void SystemConversionBox::onHexChanged(const QString &text)
 void SystemConversionBox::setupUI()
 {
     setTitle(tr("System Conversion"));
-    QFormLayout *layout = new QFormLayout(this);
-    layout->addRow(tr("Decimal: "), d->decimalEdit);
-    layout->addRow(tr("Binary: "), d->binaryEdit);
-    layout->addRow(tr("Octal: "), d->octalEdit);
-    layout->addRow(tr("Hex: "), d->hexEdit);
+
+    QGridLayout *layout = new QGridLayout(this);
+    layout->addWidget(new QLabel(tr("Decimal: "), this), 0, 0, 1, 1);
+    layout->addWidget(d->decimalEdit, 0, 1, 1, 1);
+    layout->addWidget(new QLabel(tr("Binary: "), this), 1, 0, 1, 1);
+    layout->addWidget(d->binaryEdit, 1, 1, 1, 1);
+    layout->addWidget(new QLabel(tr("Octal: "), this), 2, 0, 1, 1);
+    layout->addWidget(d->octalEdit, 2, 1, 1, 1);
+    layout->addWidget(new QLabel(tr("Octal: "), this),3, 0, 1, 1);
+    layout->addWidget(d->hexEdit, 3, 1, 1, 1);
+
+    //    QFormLayout *layout = new QFormLayout(this);
+    //    layout->addRow(tr("Decimal: "), d->decimalEdit);
+    //    layout->addRow(tr("Binary: "), d->binaryEdit);
+    //    layout->addRow(tr("Octal: "), d->octalEdit);
+    //    layout->addRow(tr("Hex: "), d->hexEdit);
 }
 
 void SystemConversionBox::buildConnect()

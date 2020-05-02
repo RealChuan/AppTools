@@ -24,7 +24,7 @@ WaitWidget::WaitWidget(QWidget *parent) : QSplashScreen(parent)
     setAttribute(Qt::WA_TranslucentBackground);
     setupUI();
     connect(&d->timer, &QTimer::timeout, this, &WaitWidget::updateProgressBar);
-    d->timer.start(200);
+    d->timer.start(100);
 }
 
 WaitWidget::~WaitWidget()

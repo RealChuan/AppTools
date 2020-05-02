@@ -1,0 +1,45 @@
+.ImageListView{
+	max-height: 100px;
+	min-height: 100px;
+}
+
+.ImageListView::icon{
+	min-width: 80px;
+	min-height: 80px;
+}
+
+.ImageListView::item{
+	min-height: 80px;
+}
+
+/*
+QListView {
+	max-height: 90px;
+    show-decoration-selected: 1; /* make the selection span the entire width of the view 
+}
+/*
+QListView::item:alternate {
+	width: 85px;
+	height: 85px;
+    background: #EEEEEE;
+}
+
+QListView::item:selected {
+    border: 1px solid #6a6ea9;
+}
+
+QListView::item:selected:!active {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #ABAFE5, stop: 1 #8588B2);
+}
+
+QListView::item:selected:active {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #6a6ea9, stop: 1 #888dd9);
+}
+
+QListView::item:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+}
+*/

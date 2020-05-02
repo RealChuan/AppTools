@@ -1,0 +1,12 @@
+{		
+	"qss_files": [
+        "qss/Common.css",
+		"qss/MacTitle.css",
+		"qss/CommonWidget.css",
+		"qss/main.css"
+    ],
+	
+	"font_files": [
+        "fonts/pingfangSS.ttf"
+    ]
+}

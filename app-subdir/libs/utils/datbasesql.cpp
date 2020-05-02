@@ -1,7 +1,5 @@
 #include "datbasesql.h"
 
-#include <controls/messbox.h>
-
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QDebug>
@@ -17,7 +15,8 @@ public:
 DatabaseSQL::DatabaseSQL(QObject *parent) : QObject(parent)
   , d(new DatabaseSQLPrivate(this))
 {
-    qDebug() << tr("Qt currently supports database drivers:") << QSqlDatabase::drivers();
+    qDebug() << tr("Qt currently supports database drivers:") <<
+                QSqlDatabase::drivers();
 }
 
 DatabaseSQL::~DatabaseSQL()
@@ -40,7 +39,8 @@ QSqlQuery DatabaseSQL::query(const QString &sql)
 {
     QSqlQuery q;
     if(!q.exec(sql)){
-        d->error = QString(tr("DataBase Query Error: %1 !").arg(q.lastError().text()));
+        d->error = QString(tr("DataBase Query Error: %1 !").
+                           arg(q.lastError().text()));
         return q;
     }
     return q;
@@ -51,13 +51,13 @@ QString DatabaseSQL::errorString() const
     return d->error;
 }
 
-bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &databaseName,
+bool DatabaseSQL::openMySQL(const QString &ip, int port,
+                            const QString &databaseName,
                             const QString &username, const QString &password)
 {
     if (!QSqlDatabase::drivers().contains("QMYSQL")){
-        MessBox::Warning(nullptr,
-                         tr("Unable to load database, This program needs the MYSQL driver!"),
-                         MessBox::CloseButton);
+        qDebug() <<tr("Unable to load database, "
+                      "This program needs the MYSQL driver!");
         return false;
     }
 
@@ -99,9 +99,8 @@ bool DatabaseSQL::openMySQL(const QString &ip, int port, const QString &database
 bool DatabaseSQL::openSQLite(const QString &databaseName)
 {
     if (!QSqlDatabase::drivers().contains("QSQLITE")){
-        MessBox::Warning(nullptr,
-                         tr("Unable to load database, This program needs the SQLITE driver"),
-                         MessBox::CloseButton);
+        qDebug() << tr("Unable to load database, "
+                       "This program needs the SQLITE driver");
         return false;
     }
 
@@ -119,6 +118,7 @@ bool DatabaseSQL::openSQLite(const QString &databaseName)
     d->database.setDatabaseName(databaseName);
     if(d->database.open()) return true;
 
-    d->error = QString(tr("SQLite Open Error: %1 !").arg(d->database.lastError().text()));
+    d->error = QString(tr("SQLite Open Error: %1 !").
+                       arg(d->database.lastError().text()));
     return false;
 }
