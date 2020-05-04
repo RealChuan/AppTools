@@ -72,14 +72,11 @@ void ImageViewer::onImageChanged(const QString &url)
         }
     }
 
-    if(d->imageLoadThread) delete d->imageLoadThread;
+    onDestroyImageLoadThread();
     clearThumbnail();
 
     d->imageLoadThread = new ImageLoadThread(WIDTH, url, this);
-    connect(d->imageLoadThread, &ImageLoadThread::finished, [this]{
-        d->imageLoadThread->deleteLater();
-        d->imageLoadThread = nullptr;
-    });
+    connect(d->imageLoadThread, &ImageLoadThread::finished, this, &ImageViewer::onDestroyImageLoadThread);
     connect(d->imageLoadThread, &ImageLoadThread::imageReady, this, &ImageViewer::onImageLoaded);
     d->imageLoadThread->start();
 }
@@ -96,6 +93,13 @@ void ImageViewer::onImageLoaded(const QString &filename, const QString &absolute
     if(pixmap.isNull()) return;
     d->imageVector.push_back(new Image{filename, absoluteFilePath, pixmap});
     d->imageListView->setImageVector(d->imageVector);
+}
+
+void ImageViewer::onDestroyImageLoadThread()
+{
+    if(!d->imageLoadThread) return;
+    d->imageLoadThread->deleteLater();
+    d->imageLoadThread = nullptr;
 }
 
 void ImageViewer::clearThumbnail()

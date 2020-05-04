@@ -28,6 +28,7 @@ public:
     QToolButton *minButton;
     QToolButton *maxButton;
     QToolButton *restoreButton;
+    QWidget *titleWidget;
     QWidget *centralWidget;
     QWidget *titleBar;
 
@@ -90,6 +91,8 @@ void CommonWidget::setTitleBar(QWidget *widget)
 
 void CommonWidget::mousePressEvent(QMouseEvent *event)
 {
+    if(!d->titleWidget->rect().contains(event->pos()))
+        return;     //标题栏点击有效
     //读取坐鼠标点击坐标点
     d->lastPoint = event->globalPos();
 }
@@ -110,12 +113,25 @@ void CommonWidget::mouseReleaseEvent(QMouseEvent *)
     d->lastPoint = QPoint();
 }
 
+void CommonWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(!d->titleWidget->rect().contains(event->pos()))
+        return;     //标题栏点击有效
+    if(d->maxButton->isVisible())
+        d->maxButton->click();
+    else if(d->restoreButton->isVisible())
+        d->restoreButton->click();
+}
+
 void CommonWidget::setupUI()
 {
+    d->titleWidget = titleWidget();
+    d->titleWidget->setObjectName("titleWidget");
+
     QGridLayout *layout = new QGridLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addWidget(titleWidget(), 0, 0);
+    layout->addWidget(d->titleWidget, 0, 0);
     layout->addWidget(d->centralWidget, 1, 0);
     layout->addWidget(new QSizeGrip(this), 1, 0, Qt::AlignRight | Qt::AlignBottom);
 }
@@ -148,7 +164,6 @@ QWidget *CommonWidget::titleWidget()
     }
 
     QWidget *widget = new QWidget(this);
-    widget->setObjectName("titleWidget");
     QHBoxLayout *layout = new QHBoxLayout(widget);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(10);

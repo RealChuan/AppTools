@@ -20,6 +20,7 @@ private slots:
     void onImageChanged(const QString&);
     void onChangedImage(int);
     void onImageLoaded(const QString&, const QString&, const QImage&);
+    void onDestroyImageLoadThread();
     
 private:
     void clearThumbnail();
