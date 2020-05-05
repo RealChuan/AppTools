@@ -3,6 +3,8 @@
 #include "imagelistmodel.h"
 #include "imageloadthread.h"
 
+#include <controls/messbox.h>
+
 #include <QtWidgets>
 #include <QtConcurrent>
 
@@ -10,20 +12,28 @@ class ImageViewerPrivate{
 public:
     ImageViewerPrivate(QWidget *parent): owner(parent){
         imageView = new ImageView(owner);
+        imageViewFormat = new ImageView(owner);
         imageUrlLabel = new QLabel("-", owner);
         imageUrlLabel->setWordWrap(true);
         sizeLabel = new QLabel("-", owner);
         scaleLabel = new QLabel("-", owner);
         imageListView = new ImageListView(owner);
+
+        formatBox = new QComboBox(owner);
+        colorBox = new QComboBox(owner);
     }
     QWidget *owner;
     ImageView *imageView;
+    ImageView *imageViewFormat;
     QLabel *imageUrlLabel;
     QLabel *sizeLabel;
     QLabel *scaleLabel;
     ImageVector imageVector;
     ImageListView *imageListView;
     ImageLoadThread *imageLoadThread = nullptr;
+
+    QComboBox *formatBox;
+    QComboBox *colorBox;
 };
 
 ImageViewer::ImageViewer(QWidget *parent) : QWidget(parent)
@@ -102,6 +112,28 @@ void ImageViewer::onDestroyImageLoadThread()
     d->imageLoadThread = nullptr;
 }
 
+void ImageViewer::onFormatChecked(bool state)
+{
+    d->formatBox->setVisible(state);
+    d->imageViewFormat->setVisible(state);
+    d->colorBox->setVisible(state);
+}
+
+void ImageViewer::onFormatChanged(const QString &)
+{
+    QImage::Format format = QImage::Format(d->formatBox->currentData().toInt());
+    Qt::ImageConversionFlags flags = Qt::ImageConversionFlags(d->colorBox->currentData().toInt());
+
+    QImage image = d->imageView->pixmap().toImage();
+    QPixmap pixmap = QPixmap::fromImage(image.convertToFormat(format, flags));
+    if(pixmap.isNull()){
+        MessBox::Warning(this, tr("Format Conversion Failed!"), MessBox::CloseButton);
+        return;
+    }
+    d->imageViewFormat->setPixmap(pixmap);
+    d->imageViewFormat->fitToScreen();
+}
+
 void ImageViewer::clearThumbnail()
 {
     if(d->imageVector.isEmpty()) return;
@@ -111,26 +143,41 @@ void ImageViewer::clearThumbnail()
 
 void ImageViewer::setupUI()
 {
+    QMetaEnum Conversionflags = QMetaEnum::fromType<Qt::ImageConversionFlags>();
+    for(int i=0; i<Conversionflags.keyCount(); i++)
+        d->colorBox->addItem(Conversionflags.key(i), Conversionflags.value(i));
+
+    QMetaEnum imageFormat = QMetaEnum::fromType<QImage::Format>();
+    for(int i=0; i<imageFormat.keyCount(); i++)
+        d->formatBox->addItem(imageFormat.key(i), imageFormat.value(i));
+
     QPushButton *openImageButton = new QPushButton(tr("Open Picture"), this);
-    QPushButton *zoomInButton = new QPushButton(tr("Zoom In"), this);
-    QPushButton *zoomOutButton = new QPushButton(tr("Zoom Out"), this);
     QPushButton *resetButton = new QPushButton(tr("Original Size"), this);
     QPushButton *fitToViewButton = new QPushButton(tr("Adapt To Screen"), this);
+    QPushButton *zoomInButton = new QPushButton(tr("Zoom In"), this);
+    QPushButton *zoomOutButton = new QPushButton(tr("Zoom Out"), this);
+    QPushButton *rotateButton = new QPushButton(tr("Rotate 90 Clockwise"), this);
+    QPushButton *anti_rotateButton = new QPushButton(tr("Rotate 90 Counterclockwise"), this);
+
     QCheckBox *showBackgroundBox = new QCheckBox(tr("Show Background"), this);
     QCheckBox *showOutlineBox = new QCheckBox(tr("Show Outline"), this);
     QCheckBox *showCrossLine = new QCheckBox(tr("Show CrossLine"), this);
 
     openImageButton->setObjectName("BlueButton");
-    zoomInButton->setObjectName("BlueButton");
-    zoomOutButton->setObjectName("BlueButton");
     resetButton->setObjectName("BlueButton");
     fitToViewButton->setObjectName("BlueButton");
+    zoomInButton->setObjectName("BlueButton");
+    zoomOutButton->setObjectName("BlueButton");
+    rotateButton->setObjectName("BlueButton");
+    anti_rotateButton->setObjectName("BlueButton");
 
     connect(openImageButton, &QPushButton::clicked, this, &ImageViewer::onOpenImage);
-    connect(zoomInButton, &QPushButton::clicked, d->imageView, &ImageView::zoomIn);
-    connect(zoomOutButton, &QPushButton::clicked, d->imageView, &ImageView::zoomOut);
     connect(resetButton, &QPushButton::clicked, d->imageView, &ImageView::resetToOriginalSize);
     connect(fitToViewButton, &QPushButton::clicked, d->imageView, &ImageView::fitToScreen);
+    connect(zoomInButton, &QPushButton::clicked, d->imageView, &ImageView::zoomIn);
+    connect(zoomOutButton, &QPushButton::clicked, d->imageView, &ImageView::zoomOut);
+    connect(rotateButton, &QPushButton::clicked, d->imageView, &ImageView::rotateNinetieth);
+    connect(anti_rotateButton, &QPushButton::clicked, d->imageView, &ImageView::anti_rotateNinetieth);
     connect(showBackgroundBox, &QCheckBox::clicked, d->imageView, &ImageView::setViewBackground);
     connect(showOutlineBox, &QCheckBox::clicked, d->imageView, &ImageView::setViewOutline);
     connect(showCrossLine, &QCheckBox::clicked, d->imageView, &ImageView::setViewCrossLine);
@@ -141,9 +188,11 @@ void ImageViewer::setupUI()
     controlLayout->addWidget(fitToViewButton, 1, 1, 1, 1);
     controlLayout->addWidget(zoomInButton, 2, 0, 1, 1);
     controlLayout->addWidget(zoomOutButton, 2, 1, 1, 1);
-    controlLayout->addWidget(showBackgroundBox, 3, 0, 1, 1);
-    controlLayout->addWidget(showOutlineBox, 3, 1, 1, 1);
-    controlLayout->addWidget(showCrossLine, 4, 0, 1, 1);
+    controlLayout->addWidget(rotateButton, 3, 0, 1, 1);
+    controlLayout->addWidget(anti_rotateButton, 3, 1, 1, 1);
+    controlLayout->addWidget(showBackgroundBox, 4, 0, 1, 1);
+    controlLayout->addWidget(showOutlineBox, 4, 1, 1, 1);
+    controlLayout->addWidget(showCrossLine, 5, 0, 1, 1);
 
     QGroupBox *infoBox = new QGroupBox(tr("Image Information"), this);
     QGridLayout *gridLayout = new QGridLayout(infoBox);
@@ -154,21 +203,35 @@ void ImageViewer::setupUI()
     gridLayout->addWidget(new QLabel(tr("Image Url: "), this), 2, 0, 1, 1);
     gridLayout->addWidget(d->imageUrlLabel, 2, 1, 1, 1);
 
+    QCheckBox *formatBox = new QCheckBox(tr("Format"), this);
+    connect(formatBox, &QCheckBox::clicked, this, &ImageViewer::onFormatChecked);
+    QHBoxLayout *formatLayout = new QHBoxLayout;
+    formatLayout->addWidget(formatBox);
+    formatLayout->addWidget(d->formatBox);
+    formatLayout->addWidget(d->colorBox);
+
     QWidget *rightWidget = new QWidget(this);
     QVBoxLayout *rightLayout = new QVBoxLayout(rightWidget);
     rightLayout->addLayout(controlLayout);
     rightLayout->addWidget(infoBox);
+    rightLayout->addLayout(formatLayout);
     rightLayout->addStretch();
 
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->addWidget(d->imageView);
+    splitter->addWidget(d->imageViewFormat);
     splitter->addWidget(rightWidget);
     splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 1);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(splitter);
     layout->addWidget(d->imageListView);
+
+    d->formatBox->hide();
+    d->imageViewFormat->hide();
+    d->colorBox->hide();
 }
 
 void ImageViewer::buildConnect()
@@ -177,4 +240,7 @@ void ImageViewer::buildConnect()
     connect(d->imageView, &ImageView::imageSizeChanged, this, &ImageViewer::onImageSizeChanged);
     connect(d->imageView, &ImageView::imageUrlChanged, this, &ImageViewer::onImageChanged);
     connect(d->imageListView, &ImageListView::changeItem, this, &ImageViewer::onChangedImage);
+
+    connect(d->formatBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
+    connect(d->colorBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
 }

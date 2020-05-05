@@ -61,6 +61,11 @@ ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
     initScene();
 }
 
+QPixmap ImageView::pixmap() const
+{
+    return d->imageItem->pixmap();
+}
+
 void ImageView::createScene(const QString &imageUrl)
 {
     QImage image(imageUrl);
@@ -71,13 +76,11 @@ void ImageView::createScene(const QString &imageUrl)
     }
 
     QPixmap pixmap = QPixmap::fromImage(image);
-
-//    QPixmap pixmap(imageUrl);
-//    if(pixmap.isNull()){
-//        MessBox::Warning(this, tr("Picture failed to open, Url: %1!").
-//                         arg(imageUrl), MessBox::CloseButton);
-//        return;
-//    }
+    if(pixmap.isNull()){
+        MessBox::Warning(this, tr("Picture failed to open, Url: %1!").
+                         arg(imageUrl), MessBox::CloseButton);
+        return;
+    }
 
     emit imageUrlChanged(imageUrl);
 
@@ -137,6 +140,16 @@ void ImageView::fitToScreen()
 {
     fitInView(d->imageItem, Qt::KeepAspectRatio);
     emitScaleFactor();
+}
+
+void ImageView::rotateNinetieth()
+{
+    rotate(90);
+}
+
+void ImageView::anti_rotateNinetieth()
+{
+    rotate(-90);
 }
 
 void ImageView::drawBackground(QPainter *p, const QRectF &)
@@ -281,7 +294,7 @@ void ImageView::drawCrossLine(QPainter *painter)
 
     painter->drawLine(QPointF(0, d->mousePoint.y()),
                       QPointF(w, d->mousePoint.y()));
-    painter->drawLine(QPointF(d->mousePoint.x(), 0),                    QPointF(d->mousePoint.x(), h));
+    painter->drawLine(QPointF(d->mousePoint.x(), 0), QPointF(d->mousePoint.x(), h));
 }
 
 void ImageView::emitScaleFactor()

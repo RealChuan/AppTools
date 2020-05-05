@@ -10,6 +10,8 @@ class ImageView : public QGraphicsView
 public:
     ImageView(QWidget *parent = nullptr);
 
+    QPixmap pixmap() const;
+
 public slots:
     void createScene(const QString &imageUrlChanged);
     void setPixmap(const QPixmap& pixmap);
@@ -21,6 +23,9 @@ public slots:
     void zoomOut();
     void resetToOriginalSize();
     void fitToScreen();
+
+    void rotateNinetieth();
+    void anti_rotateNinetieth();
 
 signals:
     void scaleFactorChanged(qreal factor);

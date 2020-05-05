@@ -21,6 +21,9 @@ private slots:
     void onChangedImage(int);
     void onImageLoaded(const QString&, const QString&, const QImage&);
     void onDestroyImageLoadThread();
+
+    void onFormatChecked(bool);
+    void onFormatChanged(const QString&);
     
 private:
     void clearThumbnail();
