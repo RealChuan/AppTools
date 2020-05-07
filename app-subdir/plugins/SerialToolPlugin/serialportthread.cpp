@@ -4,7 +4,6 @@
 class SerialPortThreadPrivate{
 public:
     SerialPortThreadPrivate(QThread *parent) : owner(parent){}
-
     QThread *owner;
     SerialParam serialParam;
 };

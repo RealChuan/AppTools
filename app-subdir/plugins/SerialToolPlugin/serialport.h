@@ -1,8 +1,6 @@
 #ifndef SERIALPORT_H
 #define SERIALPORT_H
 
-#include <QSerialPort>
-
 #include "serialparam.h"
 
 class SerialPort : public QSerialPort

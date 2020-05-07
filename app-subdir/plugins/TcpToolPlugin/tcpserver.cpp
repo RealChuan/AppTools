@@ -26,6 +26,13 @@ void TcpServer::onSendMessage(const QByteArray &bytes, const QString &clientInfo
 {
     if(bytes.isEmpty()) return;
 
+    if(d->tcpClientVector.isEmpty()){
+        QString error = tr("There is currently no client online, "
+                           "sending failed, please stop sending!");
+        emit errorMessage(error);
+        return;
+    }
+
     if(clientInfo.isEmpty()) {
         for(QTcpSocket* client : d->tcpClientVector)
             client->write(bytes);

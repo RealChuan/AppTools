@@ -6,6 +6,7 @@
 #include <QMutex>
 #include <QWaitCondition>
 #include <QApplication>
+#include <QTextStream>
 
 #define ROLLSIZE 1000*1000*1000
 
@@ -16,6 +17,7 @@ public:
     FileUtilPrivate(QObject *parent) : owner(parent){}
     QObject *owner;
     QFile file;
+    QTextStream stream;
     qint64 startTime = 0;
     qint64 lastRoll = 0;
     int count = 0;
@@ -32,6 +34,7 @@ FileUtil::FileUtil(qint64 days, QObject *parent) : QObject(parent)
 
 FileUtil::~FileUtil()
 {
+    d->stream.flush();
     if(d->file.isOpen()){
         d->file.flush();
         d->file.close();
@@ -53,7 +56,8 @@ void FileUtil::write(const QString &msg)
         }
     }
 
-    d->file.write(msg.toLocal8Bit().constData());
+    d->stream << msg;
+    //d->file.write(msg.toLocal8Bit().constData());
 }
 
 void FileUtil::newDir(const QString &path)
@@ -91,6 +95,7 @@ bool FileUtil::rollFile(int count)
         d->file.setFileName(filename);
         d->file.open(QIODevice::WriteOnly | QIODevice::Append |
                      QIODevice::Unbuffered);
+        d->stream.setDevice(&d->file);
         fprintf(stderr, "%s\n", filename.toLocal8Bit().constData());
         return true;
     }
@@ -141,7 +146,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
                 QString(context.file),
                 QString::number(context.line));
 
-    const QString message = QString("%1 %2 [%3] %4-%5\n")
+    const QString message = QString("%1 %2 [%3] %4 - %5\n")
             .arg(dataTimeString, threadId, level, msg, contexInfo);
 
     if(g_LogAsync)

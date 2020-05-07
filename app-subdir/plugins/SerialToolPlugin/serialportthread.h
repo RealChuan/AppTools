@@ -24,6 +24,7 @@ signals:
 protected:
     void run() override;
 
+private:
     SerialPortThreadPrivate *d;
 };
 
