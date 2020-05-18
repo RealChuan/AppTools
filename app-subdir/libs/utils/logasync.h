@@ -13,9 +13,8 @@ public:
     explicit FileUtil(qint64 days = 30, QObject *parent = nullptr);
     ~FileUtil();
 
-    void write(const QString&);
-
-signals:
+public slots:
+    void onWrite(const QString&);
 
 private:
     void newDir(const QString &);
@@ -23,7 +22,7 @@ private:
     bool rollFile(int);
     void autoDelFile();
 
-    FileUtilPrivate *d;
+    QScopedPointer<FileUtilPrivate> d;
 };
 
 class LogAsyncPrivate;
@@ -31,17 +30,23 @@ class UTILS_EXPORT LogAsync : public QThread
 {
     Q_OBJECT
 public:
-    LogAsync(unsigned long flushInterval = 5000, QObject *parent = nullptr);
-    ~LogAsync() override;
+    static LogAsync* instance();
 
-    void appendBuf(const QString&);
     void setLogLevel(QtMsgType);    //日志级别
+    void startWork();
+    void finish();
+
+signals:
+    void appendBuf(const QString&);
 
 protected:
     void run() override;
 
 private:
-    LogAsyncPrivate *d;
+    LogAsync(QObject *parent = nullptr);
+    ~LogAsync() override;
+
+    QScopedPointer<LogAsyncPrivate> d;
 };
 
 #endif // LOGASYNC_H

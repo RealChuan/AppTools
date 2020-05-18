@@ -21,7 +21,7 @@ private slots:
 private:
     void setupUI();
 
-    WaitWidgetPrivate *d;
+    QScopedPointer<WaitWidgetPrivate> d;
 };
 
 #endif // WAITWIDGET_H

@@ -3,6 +3,7 @@ include(../libs.pri)
 QT += core
 
 DEFINES += AGGREGATION_LIBRARY
+TARGET = $$replaceLibName(aggregation)
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

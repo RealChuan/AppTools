@@ -15,14 +15,16 @@ int main(int argc, char *argv[])
     Utils::setHighDpiEnvironmentVariable();
 
     QApplication a(argc, argv);
+    QDir::setCurrent(a.applicationDirPath());
 
     // 异步日志
-    //    LogAsync log;
-    //    log.setLogLevel(QtDebugMsg);  //实际环境中可通过读取配置设置日志级别
-    //    log.start();
+    //LogAsync *log = LogAsync::instance();
+    //log->setLogLevel(QtDebugMsg); // 实际环境中可通过读取配置设置日志级别
+    //log->startWork();
 
-    Utils::loadLanguage();
     Utils::setUTF8Code();
+    Utils::loadLanguage();
+    Utils::loadFonts();
     Utils::setQSS();
 
     // 等待界面
@@ -38,9 +40,6 @@ int main(int argc, char *argv[])
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);
 
     //qDebug() << threadCount;
-
-    Utils::loadFonts();
-    QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     MainWindow w;
     w.show();

@@ -14,8 +14,9 @@ public:
     volatile bool running = true;
 };
 
-ImageLoadThread::ImageLoadThread(int width, const QString &fileUrl, QObject *parent) : QThread(parent)
-  , d(new ImageLoadThreadPrivate(this))
+ImageLoadThread::ImageLoadThread(int width, const QString &fileUrl, QObject *parent)
+    : QThread(parent)
+    , d(new ImageLoadThreadPrivate(this))
 {
     d->width = width;
     d->fileUrl = fileUrl;
@@ -34,7 +35,8 @@ ImageLoadThread::~ImageLoadThread()
 void ImageLoadThread::run()
 {
     QFileInfo file(d->fileUrl);
-    QFileInfoList list = file.absoluteDir().entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+    QFileInfoList list = file.absoluteDir().entryInfoList(QDir::Files
+                                                          | QDir::NoDotAndDotDot);
 
     for(QFileInfo info : list){
         if(!d->running) break;

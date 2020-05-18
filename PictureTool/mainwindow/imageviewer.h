@@ -10,6 +10,7 @@ class ImageViewer : public QWidget
 public:
     explicit ImageViewer(QWidget *parent = nullptr);
     ~ImageViewer();
+
 signals:
     void imageReady(const QImage&);
 
@@ -28,6 +29,7 @@ private slots:
 private:
     void clearThumbnail();
     void setupUI();
+    QWidget *toolWidget();
     void buildConnect();
     
     QScopedPointer<ImageViewerPrivate> d;

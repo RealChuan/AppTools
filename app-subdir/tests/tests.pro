@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    PagePlugin \
-    TcpToolTest
+    pageplugin \
+    tcptooltest

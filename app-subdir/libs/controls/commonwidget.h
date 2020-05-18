@@ -37,7 +37,7 @@ private:
     QWidget* titleWidget();
     void buildConnnect();
 
-    CommonWidgetPrivate *d;
+    QScopedPointer<CommonWidgetPrivate> d;
 };
 
 #endif // COMMONWIDGET_H

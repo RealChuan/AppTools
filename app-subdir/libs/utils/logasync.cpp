@@ -1,12 +1,12 @@
 #include "logasync.h"
 
 #include <QDateTime>
-#include <QDir>
-#include <QFile>
-#include <QMutex>
 #include <QWaitCondition>
-#include <QApplication>
+#include <QMutex>
+#include <QFileInfoList>
+#include <QDir>
 #include <QTextStream>
+#include <QCoreApplication>
 
 #define ROLLSIZE 1000*1000*1000
 
@@ -17,7 +17,7 @@ public:
     FileUtilPrivate(QObject *parent) : owner(parent){}
     QObject *owner;
     QFile file;
-    QTextStream stream;
+    QTextStream stream;     //QTextStream 读写分离的，内部有缓冲区static const int QTEXTSTREAM_BUFFERSIZE = 16384;
     qint64 startTime = 0;
     qint64 lastRoll = 0;
     int count = 0;
@@ -35,14 +35,9 @@ FileUtil::FileUtil(qint64 days, QObject *parent) : QObject(parent)
 FileUtil::~FileUtil()
 {
     d->stream.flush();
-    if(d->file.isOpen()){
-        d->file.flush();
-        d->file.close();
-    }
-    delete d;
 }
 
-void FileUtil::write(const QString &msg)
+void FileUtil::onWrite(const QString &msg)
 {
     if(d->file.size() > ROLLSIZE){
         rollFile(++d->count);
@@ -84,8 +79,7 @@ bool FileUtil::rollFile(int count)
         filename += QString(".%1").arg(count);
     }
     qint64 start = now / kRollPerSeconds_ * kRollPerSeconds_;
-    if (now > d->lastRoll)
-    {
+    if (now > d->lastRoll){
         d->startTime = start;
         d->lastRoll = now;
         if(d->file.isOpen()){
@@ -107,7 +101,8 @@ void FileUtil::autoDelFile()
     newDir("log");
     QDir dir("./log/");
 
-    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot
+                                           , QDir::Time);
     QDateTime cur = QDateTime::currentDateTime();
     QDateTime pre = cur.addDays(-d->autoDelFileDays);
 
@@ -118,18 +113,15 @@ void FileUtil::autoDelFile()
     }
 }
 
-#define MAXLEN 1000*1000
-
-static LogAsync *g_LogAsync = nullptr;
-static QtMsgType MSGTYPE = QtWarningMsg;
+static QtMsgType g_MsgType = QtWarningMsg;
 
 // 消息处理函数
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-    if(type < MSGTYPE) return;
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    if(type < g_MsgType) return;
 
     QString level;
-    switch(type)
-    {
+    switch(type){
     case QtDebugMsg:    level = QLatin1String("Debug"); break;
     case QtWarningMsg:  level = QLatin1String("Warning"); break;
     case QtCriticalMsg: level = QLatin1String("Critica"); break;
@@ -137,106 +129,72 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     case QtInfoMsg:     level = QLatin1String("Info"); break;
     }
 
-    const QDateTime dataTime = QDateTime::currentDateTime();
-    const QString dataTimeString = dataTime.toString("yyyy-MM-dd hh:mm:ss.zzz");
+    const QString dataTimeString = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
     const QString threadId = QString::number(qulonglong(QThread::currentThreadId()));
 
-    QString contexInfo;
-    contexInfo = QString("File:(%1) Line:(%2)").arg(
-                QString(context.file),
-                QString::number(context.line));
+    QString contexInfo = QString("File:(%1) Line:(%2)")
+            .arg(QString(context.file),QString::number(context.line));
 
     const QString message = QString("%1 %2 [%3] %4 - %5\n")
             .arg(dataTimeString, threadId, level, msg, contexInfo);
 
-    if(g_LogAsync)
-        g_LogAsync->appendBuf(message);
-    else{
-        fprintf(stderr, "%s\n", "g_LogAsync = nullptr");
-        fprintf(stderr, "%s", message.toLocal8Bit().constData());
-    }
+    LogAsync::instance()->appendBuf(message);
 }
 
 class LogAsyncPrivate{
 public:
-    LogAsyncPrivate(QObject *parent) : owner(parent){}
-    QObject *owner;
-    volatile bool running = false;
-    QString currentBuf;
-    QVector<QString> buffers;
-    QVector<QString> bufferToWrite;
+    LogAsyncPrivate(QThread *owner) : owner(owner){}
+    QThread *owner;
+    QWaitCondition waitCondition;
     QMutex mutex;
-    QWaitCondition cond;
-    unsigned long flushInterval;
 };
 
-LogAsync::LogAsync(unsigned long flushInterval, QObject *parent) : QThread(parent)
-  , d(new LogAsyncPrivate(this))
-{
-    qInstallMessageHandler(messageHandler);
-    d->flushInterval = flushInterval;
-    d->running = true;
-    if(nullptr != g_LogAsync){
-        delete  g_LogAsync;
-        g_LogAsync = nullptr;
-    }
-    g_LogAsync = this;
-}
+static QMutex mutex;
 
-LogAsync::~LogAsync()
+LogAsync *LogAsync::instance()
 {
-    d->running = false;
-    if(isRunning()){
-        quit();
-        wait();
-    }
-    g_LogAsync = nullptr;
-    qInstallMessageHandler(nullptr);
-    delete d;
-    fprintf(stderr, "%s\n", "~LogAsync");
-}
-
-void LogAsync::appendBuf(const QString &buf)
-{
-    QMutexLocker lock(&d->mutex);
-    if(d->currentBuf.size() + buf.size() <= MAXLEN){
-        d->currentBuf.append(buf);
-    }else{
-        d->buffers.push_back(d->currentBuf);
-        d->currentBuf.clear();
-        d->currentBuf.append(buf);
-        d->cond.wakeOne();
-    }
+    QMutexLocker locker(&mutex);
+    static LogAsync log;
+    return &log;
 }
 
 void LogAsync::setLogLevel(QtMsgType type)
 {
-    MSGTYPE = type;
+    g_MsgType = type;
+}
+
+void LogAsync::startWork()
+{
+    start();
+    QMutexLocker lock(&d->mutex);
+    d->waitCondition.wait(&d->mutex);
+}
+
+void LogAsync::finish()
+{
+    QThread::msleep(200);
 }
 
 void LogAsync::run()
 {
     FileUtil fileUtil;
-    while(d->running){
-        {
-            QMutexLocker lock(&d->mutex);
-            if(d->buffers.isEmpty())
-                d->cond.wait(&d->mutex, d->flushInterval);
-            d->buffers.push_back(d->currentBuf);
-            d->currentBuf.clear();
-            d->bufferToWrite.swap(d->buffers);
-            d->buffers.clear();
-        }
-        if(d->bufferToWrite.isEmpty()) continue;
-        if(d->bufferToWrite.size() > 25){
-            d->bufferToWrite.erase(d->bufferToWrite.begin() + 2, d->bufferToWrite.end());
-        }
-        for(const QString& buf: d->bufferToWrite){
-            fileUtil.write(buf);        //输出到文件
-        }
-        for(int i=0; i < d->bufferToWrite.size(); i++)
-            d->bufferToWrite.pop_back();
-        d->bufferToWrite.clear();
-    }
+    connect(this, &LogAsync::appendBuf, &fileUtil, &FileUtil::onWrite);
+    d->waitCondition.wakeOne();
+    exec();
 }
 
+LogAsync::LogAsync(QObject *parent) : QThread(parent)
+  , d(new LogAsyncPrivate(this))
+{
+    qInstallMessageHandler(messageHandler);
+}
+
+LogAsync::~LogAsync()
+{
+    if(isRunning()){
+        quit();
+        wait();
+    }
+    qInstallMessageHandler(nullptr);
+    fprintf(stderr, "%s\n", "~LogAsync");
+}

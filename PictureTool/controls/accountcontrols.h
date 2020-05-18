@@ -33,7 +33,7 @@ private slots:
 private:
     void setupUI();
 
-    AccountItemPrivate *d;
+    QScopedPointer<AccountItemPrivate> d;
 };
 
 class EditComboBoxPrivate;

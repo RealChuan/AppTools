@@ -7,4 +7,4 @@ SUBDIRS += \
     controls \
     core \
     extensionsystem \
-    UserAccountSystem \
+    useraccountsystem \

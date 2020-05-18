@@ -4,6 +4,7 @@ include(mimetypes/mimetypes.pri)
 QT += widgets sql
 
 DEFINES += UTILS_LIBRARY
+TARGET = $$replaceLibName(utils)
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -43,6 +44,7 @@ HEADERS += \
     logasync.h \
     qtcassert.h \
     stringutils.h \
+    taskqueue.h \
     treemodel.h \
     utils_global.h \
     utils.h

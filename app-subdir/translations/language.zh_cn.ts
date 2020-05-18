@@ -4,7 +4,7 @@
 <context>
     <name>CRCPage</name>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcpage.cpp" line="13"/>
+        <location filename="../plugins/crctoolplugin/crcpage.cpp" line="13"/>
         <source>CRC Assistant</source>
         <translation>CRC 助手</translation>
     </message>
@@ -12,74 +12,74 @@
 <context>
     <name>CRCWidget</name>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="66"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="67"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="62"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="63"/>
         <source>true</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="66"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="67"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="62"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="63"/>
         <source>false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="118"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="114"/>
         <source>CRC (CRCH CRCL): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="121"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="117"/>
         <source>Calculate</source>
         <translation>计算</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="125"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="121"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="128"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="124"/>
         <source>Name: </source>
         <translation>名称： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="129"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="126"/>
         <source>Width: </source>
         <translation>数据宽度： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="130"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="128"/>
         <source>Poly Formula: </source>
         <translation>多项式公式： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="131"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="130"/>
         <source>Poly: </source>
         <translation>多项式： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="132"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="132"/>
         <source>Init: </source>
         <translation>初始值： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="133"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="134"/>
         <source>Reverse Input: </source>
         <translation>输入翻转： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="134"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="136"/>
         <source>Reverse Output: </source>
         <translation>输出翻转： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="135"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="138"/>
         <source>XOrOut: </source>
         <translation>异或值： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="137"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="151"/>
         <source>CRC Calculator</source>
         <translation>CRC 计算器</translation>
     </message>
@@ -87,42 +87,42 @@
 <context>
     <name>ChangePasswdWidget</name>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="41"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="44"/>
         <source>ChangePasswd Widget</source>
         <translation>修改密码界面</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="61"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="64"/>
         <source>Please enter the password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="67"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="70"/>
         <source>Please enter the new password!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="73"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="76"/>
         <source>Please enter the password again!</source>
         <translation>请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="79"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="82"/>
         <source>The current account %1 password is entered incorrectly, please re-enter!</source>
         <translation>当前帐户%1的密码输入错误，请重新输入！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="103"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="105"/>
         <source>Registration failed, please try again later!</source>
         <translation>注册失败，请稍后再试！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="115"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="117"/>
         <source>Changed Password</source>
         <translation>修改密码</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="116"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="118"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -142,7 +142,7 @@
         <translation type="vanished">还原</translation>
     </message>
     <message>
-        <location filename="../libs/controls/commonwidget.cpp" line="127"/>
+        <location filename="../libs/controls/commonwidget.cpp" line="142"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -150,17 +150,17 @@
 <context>
     <name>ConfigWidget</name>
     <message>
-        <location filename="../plugins/CorePlugin/configwidget.cpp" line="33"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="32"/>
         <source>Language(Requires Restart): </source>
         <translation>语言（需要重启）： </translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/configwidget.cpp" line="38"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="37"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/configwidget.cpp" line="39"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="38"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,45 +183,45 @@
 <context>
     <name>Core::Internal::PluginDialog</name>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="67"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="67"/>
         <source>Show all</source>
         <translation>显示所有</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="68"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="68"/>
         <source>Show all installed plugins, including base plugins and plugins that are not available on this platform.</source>
         <translation>显示所有已安装的插件，包括基本插件和该平台上不可用的插件。</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="77"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="77"/>
         <source>Details</source>
         <translation>详情</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="79"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="79"/>
         <source>Error Details</source>
         <translation>错误详情</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="81"/>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="155"/>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="184"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="81"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="155"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="184"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="88"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="88"/>
         <source>Restart required.</source>
         <translation>需要重启。</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="105"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="105"/>
         <source>Installed Plugins</source>
         <translation>已安装的插件</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="153"/>
-        <location filename="../plugins/CorePlugin/plugindialog.cpp" line="182"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="153"/>
+        <location filename="../plugins/coreplugin/plugindialog.cpp" line="182"/>
         <source>Plugin Details of %1</source>
         <translation>插件的详细信息 %1</translation>
     </message>
@@ -233,32 +233,32 @@
 <context>
     <name>CurrentLoginWidget</name>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="38"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="41"/>
         <source>Current Login Widget</source>
         <translation>当前登录界面</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="63"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="65"/>
         <source>Wrong password, please re-enter!</source>
         <translation>错误的密码，请再次输入！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="87"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="89"/>
         <source>Log Out</source>
         <translation>登出</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="88"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="90"/>
         <source>Change Password</source>
         <translation>修改密码</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="89"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="91"/>
         <source>Delete Account</source>
         <translation>删除账户</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="97"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="99"/>
         <source>Current online account: %1.</source>
         <translation>当前在线的账号：%1。</translation>
     </message>
@@ -266,17 +266,17 @@
 <context>
     <name>DatabaseSQL</name>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="20"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="18"/>
         <source>Qt currently supports database drivers:</source>
         <translation>Qt当前支持数据库驱动程序：</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="35"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="34"/>
         <source>Unknow SQL type!</source>
         <translation>未知的数据库类型！</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="43"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="42"/>
         <source>DataBase Query Error: %1 !</source>
         <translation>数据库查询错误：%1！</translation>
     </message>
@@ -316,17 +316,17 @@
         <translation>MySQL 打开错误: %1 !</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="103"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="102"/>
         <source>Unable to load database, This program needs the SQLITE driver</source>
         <translation>无法加载数据库，此程序需要SQLITE驱动程序</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="109"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="108"/>
         <source>SQLite Database Name Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="122"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="121"/>
         <source>SQLite Open Error: %1 !</source>
         <translation>SQLite 打开错误: %1 !</translation>
     </message>
@@ -334,7 +334,7 @@
 <context>
     <name>EditComboBox</name>
     <message>
-        <location filename="../libs/controls/accountcontrols.cpp" line="142"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="141"/>
         <source>Confirm to delete the current account?</source>
         <translation>确认删除当前帐户？</translation>
     </message>
@@ -734,27 +734,27 @@ will also disable the following plugins:
 <context>
     <name>FloatBox</name>
     <message>
-        <location filename="../plugins/CRCToolPlugin/floatbox.cpp" line="58"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="53"/>
         <source>Float Convert</source>
         <translation>浮点数转换</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/floatbox.cpp" line="59"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="54"/>
         <source>To Hex</source>
         <translation>转为Hex</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/floatbox.cpp" line="60"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="55"/>
         <source>To Float</source>
         <translation>转为Float</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/floatbox.cpp" line="65"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="60"/>
         <source>Float: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/floatbox.cpp" line="68"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="63"/>
         <source>Float Hex: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -762,7 +762,7 @@ will also disable the following plugins:
 <context>
     <name>Json</name>
     <message>
-        <location filename="../libs/utils/json.cpp" line="62"/>
+        <location filename="../libs/utils/json.cpp" line="61"/>
         <source>Cannot open the file: %1</source>
         <translation>无法打开文件：%1</translation>
     </message>
@@ -782,7 +782,7 @@ Offset: %2</source>
 <context>
     <name>LabelPage</name>
     <message>
-        <location filename="../tests/PagePlugin/labelpage.cpp" line="13"/>
+        <location filename="../tests/pageplugin/labelpage.cpp" line="13"/>
         <source>Page Test</source>
         <translation>页面测试</translation>
     </message>
@@ -790,32 +790,32 @@ Offset: %2</source>
 <context>
     <name>LoginWidget</name>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="35"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="36"/>
         <source>Login Widget</source>
         <translation>登录界面</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="75"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="77"/>
         <source>Please enter username!</source>
         <translation>请输入用户名！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="81"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="83"/>
         <source>Please enter password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="93"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="94"/>
         <source>Incorrect account or password!</source>
         <translation>帐号或密码错误！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="115"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="116"/>
         <source>Registered</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="119"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="120"/>
         <source>Login</source>
         <translation>登录</translation>
     </message>
@@ -823,12 +823,12 @@ Offset: %2</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="119"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="113"/>
         <source>Hello World!</source>
         <translation>你好哇！</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="130"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="124"/>
         <source>Reload QSS</source>
         <translation>重新加载QSS</translation>
     </message>
@@ -849,32 +849,32 @@ Offset: %2</source>
         <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="139"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="133"/>
         <source>Set up</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="158"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="152"/>
         <source>Common Tools</source>
         <translation>通用工具</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="159"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="153"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="160"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="154"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="161"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="155"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="162"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="156"/>
         <source>Test</source>
         <translation>测试</translation>
     </message>
@@ -882,7 +882,7 @@ Offset: %2</source>
 <context>
     <name>PasswordLineEdit</name>
     <message>
-        <location filename="../libs/controls/accountcontrols.cpp" line="165"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="164"/>
         <source>Please enter the password.</source>
         <translation>请输入密码。</translation>
     </message>
@@ -1024,109 +1024,109 @@ Offset: %2</source>
         <translation>构建：</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="41"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="42"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="41"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="42"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="46"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="46"/>
         <source>TcpServer</source>
         <translation>服务端</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="46"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="46"/>
         <source>TcpClient</source>
         <translation>客户端</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="47"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="47"/>
         <source>Local IP List: </source>
         <translation>本地IP列表： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="50"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="50"/>
         <source>Please enter the server IP address.</source>
         <translation>请输入服务器IP地址。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="54"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="54"/>
         <source>Local Port: </source>
         <translation>本地端口： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="56"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="56"/>
         <source>Please enter the port number.</source>
         <translation>请输入端口号。</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="57"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="63"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="57"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="63"/>
         <source>Auto Delivery</source>
         <translation>自动发送</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="59"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="65"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="74"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="59"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="65"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="74"/>
         <source> ms</source>
         <translation> 毫秒</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="71"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="71"/>
         <source>Connect All</source>
         <translation>全部连接</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="72"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="72"/>
         <source>Auto Reconnect</source>
         <translation>自动重连</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="44"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="44"/>
         <source>Search Available Serial</source>
         <translation>查找当前可用串口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="52"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="52"/>
         <source>Open Serial</source>
         <translation>打开串口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="56"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="62"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="56"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="62"/>
         <source>Hex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="64"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="64"/>
         <source>Send: 0 Bytes</source>
         <translation>发送： 0 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="65"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="65"/>
         <source>Receive: 0 Bytes</source>
         <translation>接收： 0 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="66"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="81"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="66"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="81"/>
         <source>Save Data</source>
         <translation>保存数据</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="67"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="82"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="67"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="82"/>
         <source>Clear Screen</source>
         <translation>清空屏幕</translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="21"/>
+        <location filename="../app/main.cpp" line="40"/>
         <source>0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="23"/>
+        <location filename="../app/main.cpp" line="42"/>
         <source>Youth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1146,20 +1146,20 @@ Offset: %2</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="19"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="20"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="21"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="22"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="23"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="24"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="25"/>
-        <location filename="../plugins/CRCToolPlugin/crcwidget.cpp" line="26"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="19"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="20"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="21"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="23"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="24"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="25"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="26"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="27"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/coreplugin.cpp" line="21"/>
-        <location filename="../app/main.cpp" line="22"/>
+        <location filename="../plugins/coreplugin/coreplugin.cpp" line="25"/>
+        <location filename="../app/main.cpp" line="41"/>
         <source>AppPlugin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1179,55 +1179,55 @@ Offset: %2</source>
         <translation>还原</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="13"/>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="14"/>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="14"/>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="13"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="13"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="14"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="14"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="13"/>
         <source>Avatar</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="17"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="17"/>
         <source>Please enter the current account password.</source>
         <translation>请输入当前帐户密码。</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="19"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="19"/>
         <source>Please enter a new password.</source>
         <translation>请输入新密码。</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/changepasswdwidget.cpp" line="23"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="23"/>
         <source>Please enter the new password again.</source>
         <translation>请再次输入新密码。</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/currentloginwidget.cpp" line="19"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="19"/>
         <source>Please enter password and click delete again!</source>
         <translation>请输入密码，然后再次单击删除！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/loginwidget.cpp" line="21"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="21"/>
         <source>AutoLogin</source>
         <translation>自动登录</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="18"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="18"/>
         <source>Please enter user name.</source>
         <translation>请输入用户名。</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="20"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="20"/>
         <source>Please enter the password.</source>
         <translation>请输入密码。</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="24"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="24"/>
         <source>Please enter the password again.</source>
         <translation>请再次输入密码。</translation>
     </message>
     <message>
-        <location filename="../plugins/CorePlugin/mainwindow.cpp" line="36"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="36"/>
         <source>Account control</source>
         <translation>账户控制</translation>
     </message>
@@ -1235,47 +1235,47 @@ Offset: %2</source>
 <context>
     <name>RegisterWidget</name>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="37"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="38"/>
         <source>Register Widget</source>
         <translation>注册界面</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="63"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="65"/>
         <source>Please enter username!</source>
         <translation>请输入用户名！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="69"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="71"/>
         <source>Please enter password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="75"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="77"/>
         <source>Please enter password again!</source>
         <translation>请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="80"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="82"/>
         <source>Two passwords are different, please enter password again!</source>
         <translation>两个密码不同，请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="87"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="88"/>
         <source>An account with the same name already exists, please modify the account name!</source>
         <translation>已经存在相同名称的帐户，请修改该帐户名称！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="96"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="97"/>
         <source>Registration failed, please try again later!</source>
         <translation>注册失败，请稍后再试！</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="108"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="109"/>
         <source>Registered</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../libs/UserAccountSystem/registerwidget.cpp" line="109"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="110"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1283,7 +1283,7 @@ Offset: %2</source>
 <context>
     <name>SerialPage</name>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialpage.cpp" line="13"/>
+        <location filename="../plugins/serialtoolplugin/serialpage.cpp" line="13"/>
         <source>Serial Assistant</source>
         <translation>串口助手</translation>
     </message>
@@ -1291,7 +1291,7 @@ Offset: %2</source>
 <context>
     <name>SerialPort</name>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialport.cpp" line="49"/>
+        <location filename="../plugins/serialtoolplugin/serialport.cpp" line="49"/>
         <source>Serial Error: %1</source>
         <translation>串口错误： %1</translation>
     </message>
@@ -1299,124 +1299,124 @@ Offset: %2</source>
 <context>
     <name>SerialWidget</name>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="186"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="185"/>
         <source>Close Serial</source>
         <translation>关闭串口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="186"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="185"/>
         <source>Open Serial</source>
         <translation>打开串口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="196"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="195"/>
         <source>Serial Open!</source>
         <translation>串口打开！</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="199"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="198"/>
         <source>Serial Close!</source>
         <translation>串口关闭！</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="237"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="236"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="239"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="238"/>
         <source>Text Files(*.txt)</source>
         <translation>文本文件(*.txt)</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="243"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="242"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation>写入文件：无法打开文件：
 &#xa0; %1！</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="250"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="249"/>
         <source>The file was saved successfully.</source>
         <translation>文件已成功保存。</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="253"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="252"/>
         <source>No file saved.</source>
         <translation>未保存文件。</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="258"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="257"/>
         <source>Data Display Window</source>
         <translation>数据显示窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="262"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="261"/>
         <source>Data Sending Window</source>
         <translation>数据发送窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="279"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="278"/>
         <source>Port: </source>
         <translation>串口名： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="280"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="279"/>
         <source>Baud Rate: </source>
         <translation>波特率： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="281"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="280"/>
         <source>Data Bits: </source>
         <translation>数据位： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="282"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="281"/>
         <source>Stop Bits: </source>
         <translation>停止位： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="283"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="282"/>
         <source>Parity: </source>
         <translation>校验位： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="284"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="283"/>
         <source>Flow Control: </source>
         <translation>流控： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="286"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="285"/>
         <source>Parameter Setting Window</source>
         <translation>参数设置窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="325"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="324"/>
         <source>No</source>
         <translation>无校验</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="326"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="325"/>
         <source>Even</source>
         <translation>偶校验</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="327"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="326"/>
         <source>Odd</source>
         <translation>奇校验</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="329"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="328"/>
         <source>NoFlowControl</source>
         <translation>无流控</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="330"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="329"/>
         <source>HardwareFlowControl</source>
         <translation>硬流控</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="331"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="330"/>
         <source>SoftwareFlowControl</source>
         <translation>软流控</translation>
     </message>
@@ -1429,33 +1429,33 @@ Offset: %2</source>
         <translation type="vanished">软件控制</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="397"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="396"/>
         <source> &gt;&gt; Serial Send: </source>
         <translation> &gt;&gt;  串口发送： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="400"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="399"/>
         <source> &gt;&gt; Serial Recv: </source>
         <translation> &gt;&gt; 串口接收： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="403"/>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="406"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="402"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="405"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation> &gt;&gt; 提示信息： </translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="410"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="409"/>
         <source>Time [%1] %2 %3</source>
         <translation>时间 [%1] %2 %3</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="417"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="416"/>
         <source>Send: %1 Bytes</source>
         <translation>发送： %1 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/SerialToolPlugin/serialwidget.cpp" line="422"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="421"/>
         <source>Recv: %1 Bytes</source>
         <translation>接收： %1 字节</translation>
     </message>
@@ -1463,35 +1463,35 @@ Offset: %2</source>
 <context>
     <name>SystemConversionBox</name>
     <message>
-        <location filename="../plugins/CRCToolPlugin/systemconversionbox.cpp" line="71"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="66"/>
         <source>System Conversion</source>
         <translation>进制转换</translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/systemconversionbox.cpp" line="73"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="69"/>
         <source>Decimal: </source>
         <translation>10进制： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/systemconversionbox.cpp" line="74"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="71"/>
         <source>Binary: </source>
         <translation>2进制： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/systemconversionbox.cpp" line="75"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="73"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="75"/>
         <source>Octal: </source>
         <translation>8进制： </translation>
     </message>
     <message>
-        <location filename="../plugins/CRCToolPlugin/systemconversionbox.cpp" line="76"/>
         <source>Hex: </source>
-        <translation>16进制： </translation>
+        <translation type="vanished">16进制： </translation>
     </message>
 </context>
 <context>
     <name>TcpClient</name>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpclient.cpp" line="51"/>
+        <location filename="../plugins/tcptoolplugin/tcpclient.cpp" line="50"/>
         <source>Client Error: %1</source>
         <translation>客户端错误： %1</translation>
     </message>
@@ -1499,7 +1499,7 @@ Offset: %2</source>
 <context>
     <name>TcpPage</name>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcppage.cpp" line="13"/>
+        <location filename="../plugins/tcptoolplugin/tcppage.cpp" line="13"/>
         <source>Tcp Assistant</source>
         <translation>Tcp助手</translation>
     </message>
@@ -1507,23 +1507,28 @@ Offset: %2</source>
 <context>
     <name>TcpServer</name>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpserver.cpp" line="45"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="29"/>
+        <source>There is currently no client online, sending failed, please stop sending!</source>
+        <translation>当前没有在线客户端，发送失败，请停止发送！</translation>
+    </message>
+    <message>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="51"/>
         <source>TCPServer accept Error: %1</source>
         <translation>服务端接受连接错误： %1</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpserver.cpp" line="55"/>
-        <location filename="../plugins/TcpToolPlugin/tcpserver.cpp" line="84"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="61"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="90"/>
         <source>%1 : %2</source>
         <translation>%1 ：%2</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpserver.cpp" line="71"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="77"/>
         <source>Client [%1 : %2] Error: %3.</source>
         <translation>客户端 [%1 : %2] 错误： %3。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpserver.cpp" line="106"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="112"/>
         <source>Client [%1 : %2] : </source>
         <translation>客户端[%1 ：%2]： </translation>
     </message>
@@ -1531,195 +1536,195 @@ Offset: %2</source>
 <context>
     <name>TcpWidget</name>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="146"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="181"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="145"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="180"/>
         <source>TcpServer</source>
         <translation>服务端</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="147"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="146"/>
         <source>Local IP List: </source>
         <translation>本地IP列表： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="150"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="149"/>
         <source>Local Port: </source>
         <translation>本地端口： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="151"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="249"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="150"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="248"/>
         <source>Listen</source>
         <translation>监听</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="156"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="198"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="155"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="197"/>
         <source>TcpClient</source>
         <translation>客户端</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="157"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="156"/>
         <source>Server IP: </source>
         <translation>服务端IP： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="160"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="299"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="159"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="298"/>
         <source>Connect</source>
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="161"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="160"/>
         <source>Server Port: </source>
         <translation>服务端端口： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="176"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="534"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="175"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="533"/>
         <source>Please enter the port number!</source>
         <translation>请输入端口号！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="222"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="221"/>
         <source>No client is currently online, please stop sending invalid!</source>
         <translation>当前没有客户端在线，请停止发送无效消息！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="227"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="226"/>
         <source>Connect All</source>
         <translation>全部连接</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="228"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="227"/>
         <source>Send To All Online Clients: %1.</source>
         <translation>发送给所有客户端： %1。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="231"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="230"/>
         <source>Send To Clients [%1] : %2.</source>
         <translation>发送给客户端[%1] : %2。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="299"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="298"/>
         <source>Disconnect</source>
         <translation>断开连接</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="258"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="257"/>
         <source>Server Online!</source>
         <translation>服务端在线！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="249"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="248"/>
         <source>Stop Listen</source>
         <translation>停止监听</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="261"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="260"/>
         <source>Server Offline!</source>
         <translation>服务端离线！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="269"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="268"/>
         <source> Online.</source>
         <translation> 在线。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="276"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="275"/>
         <source> Offline.</source>
         <translation> 离线。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="312"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="311"/>
         <source>Client Online!</source>
         <translation>客户端在线！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="315"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="314"/>
         <source>Client Offline!</source>
         <translation>客户端离线！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="366"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="365"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="368"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="367"/>
         <source>Text Files(*.txt)</source>
         <translation>文本文件(*.txt)</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="372"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="371"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation>写入文件：无法打开文件：
 &#xa0; %1！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="378"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="377"/>
         <source>The file was saved successfully.</source>
         <translation>文件已成功保存。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="381"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="380"/>
         <source>No file saved.</source>
         <translation>未保存文件。</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="391"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="390"/>
         <source>Data Display Window</source>
         <translation>数据显示窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="395"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="394"/>
         <source>Data Sending Window</source>
         <translation>数据发送窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="421"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="420"/>
         <source>Parameter Setting Window</source>
         <translation>参数设置窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="502"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="501"/>
         <source> &gt;&gt; Network Send: </source>
         <translation> &gt;&gt; 网络发送： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="505"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="504"/>
         <source> &gt;&gt; Network Recv: </source>
         <translation> &gt;&gt; 网络接收： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="508"/>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="511"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="507"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="510"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation> &gt;&gt; 提示信息： </translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="515"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="514"/>
         <source>Time [%1] %2 %3</source>
         <translation>时间 [%1] %2 %3</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="521"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="520"/>
         <source>Send: %1 Bytes</source>
         <translation>发送： %1 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="526"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="525"/>
         <source>Recv: %1 Bytes</source>
         <translation>接收： %1 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="542"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="541"/>
         <source>Please enter the ip address!</source>
         <translation>请输入IP地址！</translation>
     </message>
     <message>
-        <location filename="../plugins/TcpToolPlugin/tcpwidget.cpp" line="412"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="411"/>
         <source>Communication Mode: </source>
         <translation>通讯方式： </translation>
     </message>

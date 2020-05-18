@@ -3,10 +3,11 @@ include(../libs.pri)
 QT += widgets concurrent
 
 DEFINES += MAINWINDOW_LIBRARY
+TARGET = $$replaceLibName(mainwindow)
 
 LIBS += \
-    $$APP_OUTPUT_PATH/../libs/utils.lib \
-    $$APP_OUTPUT_PATH/../libs/controls.lib \
+    -l$$DESTDIR/$$replaceLibName(utils) \
+    -l$$DESTDIR/$$replaceLibName(controls) \
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

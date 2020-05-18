@@ -6,12 +6,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
 TARGET = AppPlugin
-LIBS += \
-    $$APP_OUTPUT_PATH/../libs/utils.lib \
-    $$APP_OUTPUT_PATH/../libs/extensionsystem.lib \
-    $$APP_OUTPUT_PATH/../libs/controls.lib \
-    $$APP_OUTPUT_PATH/../libs/UserAccountSystem.lib
 
+LIBSPATH = $$APP_OUTPUT_PATH/../libs
+LIBS += \
+    -l$$LIBSPATH$$/$$replaceLibName(utils) \
+    -l$$LIBSPATH$$/$$replaceLibName(extensionsystem) \
+    -l$$LIBSPATH$$/$$replaceLibName(controls) \
+    -l$$LIBSPATH$$/$$replaceLibName(UserAccountSystem) \
 
 RC_ICONS = app.ico
 ICON     = app.icns
@@ -26,7 +27,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
 
 SOURCES += \
     main.cpp

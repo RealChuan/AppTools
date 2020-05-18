@@ -21,7 +21,7 @@ DatabaseSQL::DatabaseSQL(QObject *parent) : QObject(parent)
 
 DatabaseSQL::~DatabaseSQL()
 {
-    delete d;
+
 }
 
 bool DatabaseSQL::openSQL(const DatabaseParam &param)

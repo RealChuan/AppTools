@@ -16,6 +16,6 @@ public:
 private:
     void initToolBar();
 
-    MainWindowPrivate *d;
+    QScopedPointer<MainWindowPrivate> d;
 };
 #endif // MAINWINDOW_H

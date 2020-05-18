@@ -3,9 +3,10 @@ include(../libs.pri)
 QT += widgets
 
 DEFINES += CONTROLS_LIBRARY
+TARGET = $$replaceLibName(controls)
 
 LIBS += \
-    $$APP_OUTPUT_PATH/../libs/utils.lib \
+    -l$$DESTDIR/$$replaceLibName(utils) \
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

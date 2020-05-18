@@ -3,6 +3,7 @@ include(../libs.pri)
 QT += widgets
 
 DEFINES += UTILS_LIBRARY
+TARGET = $$replaceLibName(utils)
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

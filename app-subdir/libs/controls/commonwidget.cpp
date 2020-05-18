@@ -49,7 +49,6 @@ CommonWidget::CommonWidget(QWidget *parent) : QWidget(parent)
 
 CommonWidget::~CommonWidget()
 {
-    delete d;
 }
 
 void CommonWidget::setRestoreMaxButtonVisible(bool visible)

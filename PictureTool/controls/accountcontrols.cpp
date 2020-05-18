@@ -24,7 +24,6 @@ AccountItemWidget::AccountItemWidget(QWidget *parent) : QWidget(parent)
 
 AccountItemWidget::~AccountItemWidget()
 {
-    delete d;
 }
 
 void AccountItemWidget::setAvatar(const QString &image)

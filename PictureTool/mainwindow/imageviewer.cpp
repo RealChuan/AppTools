@@ -50,8 +50,10 @@ ImageViewer::~ImageViewer()
 
 void ImageViewer::onOpenImage()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"),
-                                                    ".", tr("Images (*.png *.jpg)"));
+    QString filename = QFileDialog::getOpenFileName(this
+                                                    , tr("Open Image")
+                                                    , "."
+                                                    , tr("Images (*.png *.jpg)"));
     if(filename.isEmpty()) return;
     d->imageView->createScene(filename);
 }
@@ -85,9 +87,13 @@ void ImageViewer::onImageChanged(const QString &url)
     onDestroyImageLoadThread();
     clearThumbnail();
 
+    // 因为有可能在加载过程中中断，开启一个新的路径进行加载，
+    // 所以没有使用线程池方式丢入任务 （QtConcurrent::run）
     d->imageLoadThread = new ImageLoadThread(WIDTH, url, this);
-    connect(d->imageLoadThread, &ImageLoadThread::finished, this, &ImageViewer::onDestroyImageLoadThread);
-    connect(d->imageLoadThread, &ImageLoadThread::imageReady, this, &ImageViewer::onImageLoaded);
+    connect(d->imageLoadThread, &ImageLoadThread::finished,
+            this, &ImageViewer::onDestroyImageLoadThread);
+    connect(d->imageLoadThread, &ImageLoadThread::imageReady,
+            this, &ImageViewer::onImageLoaded);
     d->imageLoadThread->start();
 }
 
@@ -151,6 +157,28 @@ void ImageViewer::setupUI()
     for(int i=0; i<imageFormat.keyCount(); i++)
         d->formatBox->addItem(imageFormat.key(i), imageFormat.value(i));
 
+    QWidget *rightWidget = toolWidget();
+
+    QSplitter *splitter = new QSplitter(Qt::Horizontal);
+    splitter->addWidget(d->imageView);
+    splitter->addWidget(d->imageViewFormat);
+    splitter->addWidget(rightWidget);
+    splitter->setStretchFactor(0, 1);
+    splitter->setStretchFactor(1, 1);
+    splitter->setSizes(QList<int>() << INT_MAX << INT_MAX << 1);
+
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(splitter);
+    layout->addWidget(d->imageListView);
+
+    d->formatBox->hide();
+    d->imageViewFormat->hide();
+    d->colorBox->hide();
+}
+
+QWidget *ImageViewer::toolWidget()
+{
     QPushButton *openImageButton = new QPushButton(tr("Open Picture"), this);
     QPushButton *resetButton = new QPushButton(tr("Original Size"), this);
     QPushButton *fitToViewButton = new QPushButton(tr("Adapt To Screen"), this);
@@ -210,28 +238,14 @@ void ImageViewer::setupUI()
     formatLayout->addWidget(d->formatBox);
     formatLayout->addWidget(d->colorBox);
 
-    QWidget *rightWidget = new QWidget(this);
-    QVBoxLayout *rightLayout = new QVBoxLayout(rightWidget);
+    QWidget *widget = new QWidget(this);
+    QVBoxLayout *rightLayout = new QVBoxLayout(widget);
     rightLayout->addLayout(controlLayout);
     rightLayout->addWidget(infoBox);
     rightLayout->addLayout(formatLayout);
     rightLayout->addStretch();
 
-    QSplitter *splitter = new QSplitter(Qt::Horizontal);
-    splitter->addWidget(d->imageView);
-    splitter->addWidget(d->imageViewFormat);
-    splitter->addWidget(rightWidget);
-    splitter->setStretchFactor(0, 1);
-    splitter->setStretchFactor(1, 1);
-
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(splitter);
-    layout->addWidget(d->imageListView);
-
-    d->formatBox->hide();
-    d->imageViewFormat->hide();
-    d->colorBox->hide();
+    return widget;
 }
 
 void ImageViewer::buildConnect()

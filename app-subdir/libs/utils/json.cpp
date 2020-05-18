@@ -25,8 +25,7 @@ Json::Json(const QString &jsonOrFilePath, bool jsonfile, QObject *parent)
 
 Json::~Json()
 {
-    delete d;
-    d = nullptr;
+
 }
 
 QString Json::errorString() const
@@ -59,7 +58,8 @@ void Json::loadJson(const QString &jsonOrFilePath, bool jsonfile)
     if(jsonfile){
         QFile file(jsonOrFilePath);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-            d->errorString = QString(tr("Cannot open the file: %1")).arg(jsonOrFilePath);
+            d->errorString = QString(tr("Cannot open the file: %1")).
+                    arg(jsonOrFilePath);
             qDebug() << d->errorString;
             return;
         }
@@ -108,5 +108,3 @@ QJsonValue Json::getJsonValue(const QString &path, const QJsonObject &fromNode) 
 
     return parent.value(names.last());
 }
-
-

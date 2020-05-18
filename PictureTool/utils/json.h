@@ -23,7 +23,7 @@ private:
     QJsonArray getJsonArray(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
     QJsonValue getJsonValue(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
 
-    JsonPrivate *d;
+    QScopedPointer<JsonPrivate> d;
 };
 
 #endif // JSON_H

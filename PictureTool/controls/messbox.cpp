@@ -36,10 +36,11 @@ MessBox::MessBox(QWidget *parent) : Dialog(parent)
 
 MessBox::~MessBox()
 {
-    delete d;
+
 }
 
-Dialog::ExecFlags MessBox::Info(QWidget *parent, const QString &msg, MessButton button)
+Dialog::ExecFlags MessBox::Info(QWidget *parent, const QString &msg
+                                , MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("InfoLabel");
@@ -52,7 +53,8 @@ Dialog::ExecFlags MessBox::Info(QWidget *parent, const QString &msg, MessButton 
     return messBox.exec();
 }
 
-Dialog::ExecFlags MessBox::Warning(QWidget *parent, const QString &msg, MessButton button)
+Dialog::ExecFlags MessBox::Warning(QWidget *parent, const QString &msg
+                                   , MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("WarningLabel");

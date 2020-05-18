@@ -13,15 +13,14 @@ public:
     QWidget *widget = nullptr;
 };
 
-MPages::MPages(QObject *parent)
-    : QObject(parent)
-    , d(new MPagesPrivate(this))
+MPages::MPages(QObject *parent) : QObject(parent)
+  , d(new MPagesPrivate(this))
 {
 }
 
 MPages::~MPages()
 {
-    delete d;
+
 }
 
 QPushButton *MPages::button() const

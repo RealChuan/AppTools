@@ -25,8 +25,7 @@ Json::Json(const QString &jsonOrFilePath, bool jsonfile, QObject *parent)
 
 Json::~Json()
 {
-    delete d;
-    d = nullptr;
+
 }
 
 QString Json::errorString() const

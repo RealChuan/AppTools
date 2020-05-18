@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : CommonWidget(parent)
 
 MainWindow::~MainWindow()
 {
-    delete d;
+
 }
 
 void MainWindow::initToolBar()

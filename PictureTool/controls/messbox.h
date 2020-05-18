@@ -27,8 +27,7 @@ private:
     void setupUI();
     void buildConnect();
 
-    MessBoxPrivate *d;
-
+    QScopedPointer<MessBoxPrivate> d;
 };
 
 #endif // MESSAGEBOX_H

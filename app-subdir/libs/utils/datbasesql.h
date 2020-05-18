@@ -36,7 +36,7 @@ private:
                    const QString &username, const QString &password);
     bool openSQLite(const QString &databaseName);
 
-    DatabaseSQLPrivate *d;
+    QScopedPointer<DatabaseSQLPrivate> d;
 };
 
 #endif // DATBASESQL_H

@@ -14,7 +14,7 @@ public:
     enum Group{ Tool, About, Test };
 
     explicit MPages(QObject *parent = nullptr);
-    virtual ~MPages();
+    ~MPages();
 
     QPushButton* button() const;
     QWidget* widget() const;
@@ -25,7 +25,7 @@ protected:
     void setButtonGroup(Group);
 
 private:
-    MPagesPrivate *d;
+    QScopedPointer<MPagesPrivate> d;
 
 };
 

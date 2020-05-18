@@ -29,7 +29,7 @@ WaitWidget::WaitWidget(QWidget *parent) : QSplashScreen(parent)
 
 WaitWidget::~WaitWidget()
 {
-    delete d;
+
 }
 
 void WaitWidget::fullProgressBar()
