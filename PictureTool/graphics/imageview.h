@@ -3,12 +3,15 @@
 
 #include <QGraphicsView>
 
+#include "graphics_global.h"
+
 class ImageViewPrivate;
-class ImageView : public QGraphicsView
+class GRAPHICS_EXPORT ImageView : public QGraphicsView
 {
     Q_OBJECT
 public:
     ImageView(QWidget *parent = nullptr);
+    ~ImageView() override;
 
     QPixmap pixmap() const;
 

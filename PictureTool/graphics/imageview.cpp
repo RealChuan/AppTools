@@ -61,6 +61,10 @@ ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
     initScene();
 }
 
+ImageView::~ImageView()
+{
+}
+
 QPixmap ImageView::pixmap() const
 {
     return d->imageItem->pixmap();

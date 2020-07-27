@@ -2,10 +2,11 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
-	utils \
-        controls \
-        mainwindow \
-        app
+    utils \
+    controls \
+    graphics \
+    mainwindow \
+    app
 
 TRANSLATIONS += \
     translations/language.zh_cn.ts \

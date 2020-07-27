@@ -1,0 +1,17 @@
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
+#include <QCursor>
+#include <QLineF>
+#include <QPolygonF>
+
+
+namespace Graphics {
+
+void calculateCircle(const QPolygonF& pts, QPointF& center, double& radius);
+QCursor curorFromAngle(double angle);
+QPolygonF boundingFromLine(const QLineF& line, double margin);
+
+}
+
+#endif // GRAPHICS_H

@@ -1,8 +1,8 @@
 #include "imageviewer.h"
-#include "imageview.h"
 #include "imagelistmodel.h"
 #include "imageloadthread.h"
 
+#include <graphics/imageview.h>
 #include <controls/messbox.h>
 
 #include <QtWidgets>
