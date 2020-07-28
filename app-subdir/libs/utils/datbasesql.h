@@ -24,9 +24,7 @@ public:
     ~DatabaseSQL();
 
     bool openSQL(const DatabaseParam&);
-
     QSqlQuery query(const QString &sql);
-
     QString errorString() const;
 
 signals:

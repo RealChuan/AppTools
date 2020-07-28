@@ -14,7 +14,7 @@ public:
     QWidget *owner;
     QLabel *avatarLabel;
     QLabel *usernameLabel;
-    bool mousePress = false;
+    bool mousePressed = false;
 };
 
 AccountItemWidget::AccountItemWidget(QWidget *parent)
@@ -48,14 +48,14 @@ void AccountItemWidget::mousePressEvent(QMouseEvent *event)
 {
 
     if(event->button() == Qt::LeftButton)
-        d->mousePress = true;
+        d->mousePressed = true;
 }
 
 void AccountItemWidget::mouseReleaseEvent(QMouseEvent *)
 {
-    if(d->mousePress){
+    if(d->mousePressed){
         emit showAccount(d->usernameLabel->text());
-        d->mousePress = false;
+        d->mousePressed = false;
     }
 }
 
@@ -114,10 +114,10 @@ void EditComboBox::addAccount(const QString &username)
 {
     AccountItemWidget *accountItem = new AccountItemWidget(this);
     accountItem->setUsername(username);
-    QListWidgetItem *item = new QListWidgetItem(d->listWidget);
-    d->listWidget->setItemWidget(item, accountItem);
     connect(accountItem, &AccountItemWidget::showAccount, this, &EditComboBox::onShowText);
     connect(accountItem, &AccountItemWidget::remove, this, &EditComboBox::onDeleteItem);
+    QListWidgetItem *item = new QListWidgetItem(d->listWidget);
+    d->listWidget->setItemWidget(item, accountItem);
     onShowText(username);
 }
 
@@ -145,9 +145,7 @@ void EditComboBox::onDeleteItem(const QString &text)
     Dialog::ExecFlags flag = MessBox::Warning(this,
                                               tr("Confirm to delete the current account?"),
                                               MessBox::YesAndNoButton);
-
     showPopup();
-
     if(flag == Dialog::Rejected)
         return;
 
@@ -155,7 +153,7 @@ void EditComboBox::onDeleteItem(const QString &text)
         QListWidgetItem *item = d->listWidget->item(i);
         AccountItemWidget *accountItem =
                 qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
-        if(accountItem->getAccount() == text){
+        if(accountItem && accountItem->getAccount() == text){
             delete d->listWidget->takeItem(i);
             break;
         }
@@ -185,4 +183,41 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent)
 void PasswordLineEdit::onShowPassword(bool state)
 {
     setEchoMode(state? QLineEdit::Normal : QLineEdit::Password);
+}
+
+/*
+ *
+ * */
+
+class AvatarWidgetPrivate{
+public:
+    AvatarWidgetPrivate(QWidget *parent)
+        : owner(parent){
+        avatarLabel = new QLabel(owner);
+        avatarLabel->setText(QObject::tr("Avatar"));
+        avatarLabel->setObjectName("AvatarLabel");
+    }
+    QWidget *owner;
+    QLabel *avatarLabel;
+};
+
+AvatarWidget::AvatarWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new AvatarWidgetPrivate(this))
+{
+    QGridLayout *avatarLayout = new QGridLayout(this);
+    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 0, 2);
+    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 2, 2);
+    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 1);
+    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
+    avatarLayout->addWidget(d->avatarLabel, 1, 2);
+}
+
+AvatarWidget::~AvatarWidget()
+{
+}
+
+void AvatarWidget::setIcon(const QPixmap &icon)
+{
+    d->avatarLabel->setPixmap(icon);
 }

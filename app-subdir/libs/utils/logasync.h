@@ -25,7 +25,7 @@ private:
     QScopedPointer<FileUtilPrivate> d;
 };
 
-class LogAsyncPrivate;
+struct LogAsyncPrivate;
 class UTILS_EXPORT LogAsync : public QThread
 {
     Q_OBJECT

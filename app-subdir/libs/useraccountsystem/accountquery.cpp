@@ -41,9 +41,8 @@ bool AccountQuery::checkAccount(const QString &username, const QString &password
                                 "WHERE username = '%1'")
             .arg(username);
     QSqlQuery query = d->db->query(sql);
-    if(query.next())
-        if(query.value("password").toString() == password)
-            return true;
+    if(query.next() && query.value("password").toString() == password)
+        return true;
     qDebug() << d->db->errorString();
     return false;
 }
@@ -106,7 +105,6 @@ void AccountQuery::allUsername()
 {
     QString sql = QLatin1String("SELECT username FROM account");
     QSqlQuery query = d->db->query(sql);
-    while(query.next()){
+    while(query.next())
         d->allUsername.append(query.value("username").toString());
-    }
 }

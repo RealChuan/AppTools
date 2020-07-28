@@ -80,6 +80,7 @@ void DrawWidget::onRemoveShape()
 void DrawWidget::setupUI()
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(d->shapeWidget);
     layout->addWidget(d->imageView);
 

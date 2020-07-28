@@ -22,7 +22,6 @@ Json::Json(const QString &jsonOrFilePath, bool jsonfile, QObject *parent)
 
 Json::~Json()
 {
-
 }
 
 QString Json::errorString() const
@@ -43,7 +42,7 @@ QStringList Json::getStringList(const QString &path, const QJsonObject &fromNode
         return QStringList();
     QStringList list;
     QJsonArray array = getJsonValue(path, fromNode).toArray();
-    foreach(const QJsonValue &value, array)
+    for(const QJsonValue &value: array)
         list.append(value.toString());
 
     return list;
@@ -54,7 +53,8 @@ void Json::loadJson(const QString &jsonOrFilePath, bool jsonfile)
     QByteArray json;
     if(jsonfile){
         QFile file(jsonOrFilePath);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        if (!file.open(QIODevice::ReadOnly
+                       | QIODevice::Text)){
             d->errorString = QString(tr("Cannot open the file: %1")).
                     arg(jsonOrFilePath);
             qDebug() << d->errorString;
@@ -72,8 +72,9 @@ void Json::loadJson(const QString &jsonOrFilePath, bool jsonfile)
         d->rootObj = d->jsonDoc.object();
         d->jsonLoad = true;
     }else{
-        d->errorString = QString(tr("%1\nOffset: %2")).arg(jsonError.errorString()).
-                arg(jsonError.offset);
+        d->errorString = QString(tr("%1\nOffset: %2"))
+                .arg(jsonError.errorString())
+                .arg(jsonError.offset);
         qDebug() << d->errorString;
     }
 }
@@ -83,7 +84,6 @@ QJsonArray Json::getJsonArray(const QString &path, const QJsonObject &fromNode) 
     // 如果根节点是数组时特殊处理
     if (("." == path || "" == path) && fromNode.isEmpty())
         return d->jsonDoc.array();
-
     return getJsonValue(path, fromNode).toArray();
 }
 
@@ -99,9 +99,7 @@ QJsonValue Json::getJsonValue(const QString &path, const QJsonObject &fromNode) 
             qDebug() << d->errorString;
             return QJsonValue();
         }
-
         parent = parent.value(names.at(i)).toObject();
     }
-
     return parent.value(names.last());
 }

@@ -11,10 +11,7 @@ class LoginWidgetPrivate{
 public:
     LoginWidgetPrivate(QWidget *parent)
         : owner(parent){
-        avatarLabel = new QLabel(owner);
-        avatarLabel->setText(QObject::tr("Avatar"));
-        avatarLabel->setObjectName("AvatarLabel");
-
+        avatarWidget = new AvatarWidget(owner);
         usernameBox = new EditComboBox(owner);
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
@@ -22,7 +19,7 @@ public:
         autoLoginBox = new QCheckBox(QObject::tr("AutoLogin"), owner);
     }
     QWidget *owner;
-    QLabel *avatarLabel;
+    AvatarWidget *avatarWidget;
     EditComboBox *usernameBox;
     QLabel *promptLabel;
     PasswordLineEdit *passwordEdit;
@@ -44,7 +41,6 @@ LoginWidget::LoginWidget(AccountQuery *accountQuery,
     buildConnect();
     for(const QString& username: usernameList)
         d->usernameBox->addAccount(username);
-
     resize(300, 485);
 }
 
@@ -109,13 +105,6 @@ void LoginWidget::onRegister()
 
 void LoginWidget::setupUI()
 {
-    QGridLayout *avatarLayout = new QGridLayout;
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 0, 2);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 2, 2);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 1);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
-    avatarLayout->addWidget(d->avatarLabel, 1, 2);
-
     QPushButton *registerButton = new QPushButton(tr("Registered"), this);
     registerButton->setObjectName("FlatButton");
     connect(registerButton, &QPushButton::clicked, this, &LoginWidget::onRegister);
@@ -132,7 +121,7 @@ void LoginWidget::setupUI()
     QWidget *widget = new QWidget(this);
     widget->setObjectName("WhiteWidget");
     QVBoxLayout *layout = new QVBoxLayout(widget);
-    layout->addLayout(avatarLayout);
+    layout->addWidget(d->avatarWidget);
     layout->addWidget(d->usernameBox);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->passwordEdit);

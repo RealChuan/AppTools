@@ -19,7 +19,10 @@ class QWidget;
 
 namespace Utils{
 
-enum Language{ Chinese, English };
+enum Language{
+    Chinese,
+    English
+};
 
 UTILS_EXPORT void printBuildInfo();
 UTILS_EXPORT void setHighDpiEnvironmentVariable();

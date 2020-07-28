@@ -99,7 +99,8 @@ void FileUtil::autoDelFile()
     newDir("log");
     QDir dir("./log/");
 
-    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot
+    QFileInfoList list = dir.entryInfoList(QDir::Files
+                                           | QDir::NoDotAndDotDot
                                            , QDir::Time);
     QDateTime cur = QDateTime::currentDateTime();
     QDateTime pre = cur.addDays(-d->autoDelFileDays);
@@ -130,20 +131,15 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     const QString dataTimeString = QDateTime::currentDateTime()
             .toString("yyyy-MM-dd hh:mm:ss.zzz");
     const QString threadId = QString::number(qulonglong(QThread::currentThreadId()));
-
     QString contexInfo = QString("File:(%1) Line:(%2)")
             .arg(QString(context.file),QString::number(context.line));
-
     const QString message = QString("%1 %2 [%3] %4 - %5\n")
             .arg(dataTimeString, threadId, level, msg, contexInfo);
 
     LogAsync::instance()->appendBuf(message);
 }
 
-class LogAsyncPrivate{
-public:
-    LogAsyncPrivate(QThread *owner) : owner(owner){}
-    QThread *owner;
+struct LogAsyncPrivate{
     QWaitCondition waitCondition;
     QMutex mutex;
 };
@@ -182,8 +178,9 @@ void LogAsync::run()
     exec();
 }
 
-LogAsync::LogAsync(QObject *parent) : QThread(parent)
-  , d(new LogAsyncPrivate(this))
+LogAsync::LogAsync(QObject *parent)
+    : QThread(parent)
+    , d(new LogAsyncPrivate)
 {
     qInstallMessageHandler(messageHandler);
 }

@@ -31,9 +31,8 @@ UserAccountSystem::UserAccountSystem(QObject *parent)
     , d(new UserAccountSystemPrivate(this))
 {
     loadSetting();
-    if(d->autoLogin)
-        if(checkCurrentAccount())
-            emit login(true);
+    if(d->autoLogin && checkCurrentAccount())
+        emit login(true);
 }
 
 UserAccountSystem::~UserAccountSystem()
@@ -56,28 +55,31 @@ void UserAccountSystem::show()
         emit login(true);
         CurrentLoginWidget out(d->accountQuery, d->currentAccount.username,
                                d->currentAccount.password, qApp->activeWindow());
-        CurrentLoginWidget::ExecFlags flag = out.exec();
-        if(flag == CurrentLoginWidget::Accepted){
+        switch (out.exec()) {
+        case CurrentLoginWidget::Accepted:
             d->currentAccount.username.clear();
             d->currentAccount.password.clear();
             emit login(false);
-        }else if(flag == CurrentLoginWidget::Rejected){
+            break;
+        case CurrentLoginWidget::Rejected:
             d->usernameList.removeOne(d->currentAccount.username);
             d->currentAccount.username.clear();
             d->currentAccount.password.clear();
             emit login(false);
-        }else if(flag == CurrentLoginWidget::Close){
+            break;
+        case CurrentLoginWidget::Close:
             d->currentAccount.password = out.password();
             emit login(true);
+            break;
+        default: break;
         }
     }
 }
 
 bool UserAccountSystem::checkCurrentAccount()
 {
-    if(d->currentAccount.username.isEmpty())
-        return false;
-    if(d->currentAccount.password.isEmpty())
+    if(d->currentAccount.username.isEmpty()
+            || d->currentAccount.password.isEmpty())
         return false;
     if(d->accountQuery->checkAccount(d->currentAccount.username,
                                      d->currentAccount.password))
@@ -104,7 +106,8 @@ void UserAccountSystem::loadSetting()
 void UserAccountSystem::saveSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
+    if(!setting)
+        return;
 
     setting->beginGroup("accout_config");
     setting->setValue("AcountList", d->usernameList);

@@ -14,13 +14,13 @@ void Utils::setQSS()
     Json json("./config/config.json", true);
     QStringList qssPath = json.getStringList("qss_files");
     QString qss;
-    foreach(const QString& path, qssPath){
+    for(const QString& path: qssPath){
         qDebug() << QString(QObject::tr("Loading QSS file: %1.")).arg(path);
         QFile file(path);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            qDebug() << QString(QObject::tr("Cannot open the file: %1!")).arg(path);
-            qDebug() << file.errorString();
+        if (!file.open(QIODevice::ReadOnly
+                       | QIODevice::Text)){
+            qDebug() << QString(QObject::tr("Cannot open the file: %1!")).arg(path)
+                     << file.errorString();
             continue;
         }
         qss.append(QLatin1String(file.readAll())).append("\n");
@@ -53,16 +53,13 @@ void Utils::sleep(int sec)
 {
     QTime dieTime = QTime::currentTime().addMSecs(sec);
 
-    while (QTime::currentTime() < dieTime) {
+    while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-    }
 }
 
 bool Utils::checkFileExist(const QString &path)
 {
-    QFile file(path);
-    if(file.size() == 0) return false;
-    return true;
+    return QFileInfo::exists(path);
 }
 
 QString compilerString()
@@ -89,7 +86,8 @@ QString compilerString()
 void Utils::printBuildInfo()
 {
     QString info = QString("Qt %1 (%2, %3 bit)").
-            arg(QLatin1String(qVersion()), compilerString(),
+            arg(QLatin1String(qVersion()),
+                compilerString(),
                 QString::number(QSysInfo::WordSize));
     qDebug().noquote() << QObject::tr("Build with:") << info;
 
@@ -102,7 +100,7 @@ void Utils::setHighDpiEnvironmentVariable()
     //#ifdef Q_OS_WIN
     //    if (!qEnvironmentVariableIsSet("QT_OPENGL"))
     //        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    //#endi
+    //#endif
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
@@ -111,7 +109,6 @@ void Utils::setHighDpiEnvironmentVariable()
                 Qt::HighDpiScaleFactorRoundingPolicy::Round);
 #endif
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-
 }
 
 void Utils::reboot()
@@ -153,7 +150,6 @@ void Utils::loadLanguage()
             CURRENT_LANGUAGE = Utils::English; break;
         }
     }
-
     qApp->installTranslator(&translator);
 }
 

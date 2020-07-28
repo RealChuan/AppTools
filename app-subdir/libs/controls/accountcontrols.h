@@ -65,4 +65,17 @@ private slots:
     void onShowPassword(bool);
 };
 
+class AvatarWidgetPrivate;
+class CONTROLS_EXPORT AvatarWidget : public QWidget
+{
+public:
+    AvatarWidget(QWidget *parent = nullptr);
+    ~AvatarWidget();
+
+    void setIcon(const QPixmap&);
+
+private:
+    QScopedPointer<AvatarWidgetPrivate> d;
+};
+
 #endif // EIDTCOMBOBOX_H

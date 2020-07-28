@@ -10,10 +10,7 @@ class ChangePasswdWidgetPrivate{
 public:
     ChangePasswdWidgetPrivate(QWidget *parent)
         : owner(parent){
-        avatarLabel = new QLabel(owner);
-        avatarLabel->setText(QObject::tr("Avatar"));
-        avatarLabel->setObjectName("AvatarLabel");
-
+        avatarWidget = new AvatarWidget(owner);
         currentPasswordEdit = new PasswordLineEdit(owner);
         currentPasswordEdit->setPlaceholderText(
                     QObject::tr("Please enter the current account password."));
@@ -27,15 +24,13 @@ public:
                     QObject::tr("Please enter the new password again."));
     }
     QWidget *owner;
-    QLabel *avatarLabel;
+    AvatarWidget *avatarWidget;
     PasswordLineEdit *currentPasswordEdit;
     QLabel *promptLabel;
     PasswordLineEdit *newPasswordEdit;
     PasswordLineEdit *passwdAgainEdit;
-
     QString username;
     QString password;
-
     AccountQuery *accountQuery = nullptr;
 };
 
@@ -57,7 +52,6 @@ ChangePasswdWidget::ChangePasswdWidget(AccountQuery *accountQuery,
 
 ChangePasswdWidget::~ChangePasswdWidget()
 {
-
 }
 
 QString ChangePasswdWidget::password() const
@@ -116,22 +110,13 @@ void ChangePasswdWidget::onChangePasswd()
 
 void ChangePasswdWidget::setupUI()
 {
-    QGridLayout *avatarLayout = new QGridLayout;
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 0, 2);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 2, 2);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 1);
-    avatarLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 1, 3);
-    avatarLayout->addWidget(d->avatarLabel, 1, 2);
-
     QPushButton *changePasswdButton = new QPushButton(tr("Changed Password"), this);
     QPushButton *cancelButton = new QPushButton(tr("Cancel"), this);
     changePasswdButton->setObjectName("BlueButton");
     cancelButton->setObjectName("GrayButton");
-    connect(changePasswdButton, &QPushButton::clicked,
-            this, &ChangePasswdWidget::onChangePasswd);
+    connect(changePasswdButton, &QPushButton::clicked, this, &ChangePasswdWidget::onChangePasswd);
     connect(cancelButton, &QPushButton::clicked, this, &ChangePasswdWidget::reject);
-    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed,
-            this, &ChangePasswdWidget::onChangePasswd);
+    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed, this, &ChangePasswdWidget::onChangePasswd);
 
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addWidget(cancelButton);
@@ -140,7 +125,7 @@ void ChangePasswdWidget::setupUI()
     QWidget *widget = new QWidget(this);
     widget->setObjectName("WhiteWidget");
     QVBoxLayout *layout = new QVBoxLayout(widget);
-    layout->addLayout(avatarLayout);
+    layout->addWidget(d->avatarWidget);
     layout->addWidget(d->currentPasswordEdit);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->newPasswordEdit);
