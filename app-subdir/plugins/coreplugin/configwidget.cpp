@@ -6,15 +6,17 @@
 
 class ConfigWidgetPrivate{
 public:
-    ConfigWidgetPrivate(QWidget *parent) : owner(parent){
+    ConfigWidgetPrivate(QWidget *parent)
+        : owner(parent){
         languageBox = new QComboBox(owner);
     }
     QWidget *owner;
     QComboBox *languageBox;
 };
 
-ConfigWidget::ConfigWidget(QWidget *parent) : QWidget(parent)
-  , d(new ConfigWidgetPrivate(this))
+ConfigWidget::ConfigWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new ConfigWidgetPrivate(this))
 {
     setupUI();
     initWindow();

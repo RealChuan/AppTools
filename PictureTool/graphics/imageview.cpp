@@ -13,7 +13,8 @@ const qreal DEFAULT_SCALE_FACTOR = 1.2;
 
 class ImageViewPrivate{
 public:
-    ImageViewPrivate(QWidget *parent) : owner(parent){
+    ImageViewPrivate(QWidget *parent)
+        : owner(parent){
         imageItem = new QGraphicsPixmapItem;
         imageItem->setCacheMode(QGraphicsItem::NoCache);
         imageItem->setZValue(0);
@@ -57,7 +58,6 @@ ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
     setCursor(Qt::CrossCursor);
     setMouseTracking(true);
     setAcceptDrops(true);
-
     initScene();
 }
 
@@ -74,15 +74,17 @@ void ImageView::createScene(const QString &imageUrl)
 {
     QImage image(imageUrl);
     if(image.isNull()){
-        MessBox::Warning(this, tr("Picture failed to open, Url: %1!").
-                         arg(imageUrl), MessBox::CloseButton);
+        MessBox::Warning(this,
+                         tr("Picture failed to open, Url: %1!").arg(imageUrl),
+                         MessBox::CloseButton);
         return;
     }
 
     QPixmap pixmap = QPixmap::fromImage(image);
     if(pixmap.isNull()){
-        MessBox::Warning(this, tr("Picture failed to open, Url: %1!").
-                         arg(imageUrl), MessBox::CloseButton);
+        MessBox::Warning(this,
+                         tr("Picture failed to open, Url: %1!").arg(imageUrl),
+                         MessBox::CloseButton);
         return;
     }
 
@@ -322,7 +324,8 @@ void ImageView::doScale(qreal factor)
     scale(actualFactor, actualFactor);
     emitScaleFactor();
     d->imageItem->setTransformationMode(transform().m11() < 1 ?
-                                            Qt::SmoothTransformation : Qt::FastTransformation);
+                                            Qt::SmoothTransformation:
+                                            Qt::FastTransformation);
 }
 
 void ImageView::reset()

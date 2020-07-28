@@ -8,7 +8,8 @@
 
 class AccountQueryPrivate{
 public:
-    AccountQueryPrivate(QObject *parent) : owner(parent){
+    AccountQueryPrivate(QObject *parent)
+        : owner(parent){
         db = new DatabaseSQL(owner);
     }
     QObject *owner;
@@ -17,8 +18,9 @@ public:
     QStringList allUsername;
 };
 
-AccountQuery::AccountQuery(QObject *parent) : QObject(parent)
-  , d(new AccountQueryPrivate(this))
+AccountQuery::AccountQuery(QObject *parent)
+    : QObject(parent)
+    , d(new AccountQueryPrivate(this))
 {
     loadparam();
     if(!d->db->openSQL(d->dbParam)){
@@ -36,7 +38,8 @@ bool AccountQuery::contains(const QString &username)
 bool AccountQuery::checkAccount(const QString &username, const QString &password)
 {
     QString sql = QLatin1String("SELECT PASSWORD FROM account "
-                                "WHERE username = '%1'").arg(username);
+                                "WHERE username = '%1'")
+            .arg(username);
     QSqlQuery query = d->db->query(sql);
     if(query.next())
         if(query.value("password").toString() == password)
@@ -48,7 +51,9 @@ bool AccountQuery::checkAccount(const QString &username, const QString &password
 bool AccountQuery::addAccount(const QString &username, const QString &password)
 {
     QString sql = QLatin1String("INSERT INTO account (username, password) "
-                                "VALUES('%1', '%2')").arg(username).arg(password);
+                                "VALUES('%1', '%2')")
+            .arg(username)
+            .arg(password);
 
     QSqlQuery query = d->db->query(sql);
     if(query.isActive()){
@@ -62,7 +67,9 @@ bool AccountQuery::addAccount(const QString &username, const QString &password)
 bool AccountQuery::updateAccount(const QString &username, const QString &password)
 {
     QString sql = QLatin1String("UPDATE account SET PASSWORD = '%1' "
-                                "WHERE username = '%2'").arg(password).arg(username);
+                                "WHERE username = '%2'")
+            .arg(password)
+            .arg(username);
 
     QSqlQuery query = d->db->query(sql);
     if(query.isActive())
@@ -74,7 +81,8 @@ bool AccountQuery::updateAccount(const QString &username, const QString &passwor
 bool AccountQuery::deleteAccount(const QString &username)
 {
     QString sql = QLatin1String("DELETE FROM account "
-                                "WHERE username = '%1'").arg(username);
+                                "WHERE username = '%1'")
+            .arg(username);
 
     QSqlQuery query = d->db->query(sql);
     if(query.isActive())

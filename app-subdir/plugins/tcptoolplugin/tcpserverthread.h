@@ -3,7 +3,7 @@
 
 #include <QThread>
 
-class TcpServerThreadPrivate;
+struct TcpServerThreadPrivate;
 class TcpServerThread : public QThread
 {
     Q_OBJECT

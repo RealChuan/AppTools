@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "imageviewer.h"
 
+#include <graphics/drawwidget.h>
 #include <utils/utils.h>
 
 #include <QtWidgets>
 
 class MainWindowPrivate{
 public:
-    MainWindowPrivate(QWidget *parent) : owner(parent){}
+    MainWindowPrivate(QWidget *parent)
+        : owner(parent){}
     QWidget *owner;
 };
 
@@ -16,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) : CommonWidget(parent)
 {
     setTitle(tr("PictureTool"));
     connect(this, &MainWindow::aboutToclose, qApp, &QApplication::quit);
-    setCentralWidget(new ImageViewer(this));
+    //setCentralWidget(new ImageViewer(this));
+    setCentralWidget(new DrawWidget(this));
     initToolBar();
     resize(1000, 600);
 }

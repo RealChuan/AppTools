@@ -9,13 +9,22 @@ class CONTROLS_EXPORT MessBox : public Dialog
 {
     Q_OBJECT
 public:
-    enum MessButton { YESButton, NOButton, CloseButton };
+    enum MessButton {
+        YESButton,
+        NOButton,
+        CloseButton,
+        YesAndNoButton
+    };
 
     MessBox(QWidget *parent = nullptr);
     ~MessBox();
 
-    static Dialog::ExecFlags Info(QWidget *parent, const QString& msg, MessButton button = CloseButton);
-    static Dialog::ExecFlags Warning(QWidget *parent, const QString& msg, MessButton);
+    static Dialog::ExecFlags Info(QWidget *parent,
+                                  const QString& msg,
+                                  const MessButton button = CloseButton);
+    static Dialog::ExecFlags Warning(QWidget *parent,
+                                     const QString& msg,
+                                     const MessButton);
 
     void setMessage(const QString&);
     void setIconLabelObjectName(const QString&);

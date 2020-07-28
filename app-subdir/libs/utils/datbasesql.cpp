@@ -4,31 +4,31 @@
 #include <QSqlError>
 #include <QDebug>
 
-class DatabaseSQLPrivate{
-public:
-    DatabaseSQLPrivate(QObject *parent) : owner(parent) {}
-    QObject *owner;
+struct DatabaseSQLPrivate{
     QSqlDatabase database;
     QString error;
 };
 
-DatabaseSQL::DatabaseSQL(QObject *parent) : QObject(parent)
-  , d(new DatabaseSQLPrivate(this))
+DatabaseSQL::DatabaseSQL(QObject *parent)
+    : QObject(parent)
+    , d(new DatabaseSQLPrivate)
 {
-    qDebug() << tr("Qt currently supports database drivers:") <<
-                QSqlDatabase::drivers();
+    qDebug() << tr("Qt currently supports database drivers:")
+             << QSqlDatabase::drivers();
 }
 
 DatabaseSQL::~DatabaseSQL()
 {
-
 }
 
 bool DatabaseSQL::openSQL(const DatabaseParam &param)
 {
     if("MySQL" == param.type)
-        return openMySQL(param.ip, param.port, param.databaseName,
-                         param.uesrname, param.password);
+        return openMySQL(param.ip,
+                         param.port,
+                         param.databaseName,
+                         param.uesrname,
+                         param.password);
     else if("SQLite" == param.type)
         return openSQLite(param.databaseName);
     d->error = tr("Unknow SQL type!");
@@ -51,9 +51,11 @@ QString DatabaseSQL::errorString() const
     return d->error;
 }
 
-bool DatabaseSQL::openMySQL(const QString &ip, int port,
+bool DatabaseSQL::openMySQL(const QString &ip,
+                            int port,
                             const QString &databaseName,
-                            const QString &username, const QString &password)
+                            const QString &username,
+                            const QString &password)
 {
     if (!QSqlDatabase::drivers().contains("QMYSQL")){
         qDebug() <<tr("Unable to load database, "

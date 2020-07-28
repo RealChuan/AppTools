@@ -9,13 +9,14 @@
 #include <QSettings>
 
 struct Account{
-    QString username = QLatin1String("");
-    QString password = QLatin1String("");
+    QString username;
+    QString password;
 };
 
 class UserAccountSystemPrivate{
 public:
-    UserAccountSystemPrivate(QObject *parent) : owner(parent){
+    UserAccountSystemPrivate(QObject *parent)
+        : owner(parent){
         accountQuery = new AccountQuery(owner);
     }
     QObject* owner;
@@ -25,8 +26,9 @@ public:
     AccountQuery *accountQuery;
 };
 
-UserAccountSystem::UserAccountSystem(QObject *parent) : QObject(parent)
-  , d(new UserAccountSystemPrivate(this))
+UserAccountSystem::UserAccountSystem(QObject *parent)
+    : QObject(parent)
+    , d(new UserAccountSystemPrivate(this))
 {
     loadSetting();
     if(d->autoLogin)
@@ -73,8 +75,10 @@ void UserAccountSystem::show()
 
 bool UserAccountSystem::checkCurrentAccount()
 {
-    if(d->currentAccount.username.isEmpty()) return false;
-    if(d->currentAccount.password.isEmpty()) return false;
+    if(d->currentAccount.username.isEmpty())
+        return false;
+    if(d->currentAccount.password.isEmpty())
+        return false;
     if(d->accountQuery->checkAccount(d->currentAccount.username,
                                      d->currentAccount.password))
         return true;
@@ -84,7 +88,8 @@ bool UserAccountSystem::checkCurrentAccount()
 void UserAccountSystem::loadSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
+    if(!setting)
+        return;
 
     setting->beginGroup("accout_config");
     d->usernameList = setting->value("AcountList").toStringList();

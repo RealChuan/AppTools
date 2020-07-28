@@ -9,8 +9,10 @@ class CurrentLoginWidget : public Dialog
 {
     Q_OBJECT
 public:
-    CurrentLoginWidget(AccountQuery*, const QString &,
-                       const QString &, QWidget *parent = nullptr);
+    CurrentLoginWidget(AccountQuery*,
+                       const QString &,
+                       const QString &,
+                       QWidget *parent = nullptr);
     ~CurrentLoginWidget();
 
     QString password() const;

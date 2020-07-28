@@ -6,10 +6,7 @@
 #include <QJsonArray>
 #include <QRegularExpression>
 
-class JsonPrivate{
-public:
-    JsonPrivate(QObject *parent) : owner(parent){}
-    QObject *owner;
+struct JsonPrivate{
     bool jsonLoad = false;
     QJsonDocument jsonDoc;  // Json的文档对象
     QJsonObject rootObj;    // 根节点
@@ -18,7 +15,7 @@ public:
 
 Json::Json(const QString &jsonOrFilePath, bool jsonfile, QObject *parent)
     : QObject(parent)
-    , d(new JsonPrivate(this))
+    , d(new JsonPrivate)
 {
     loadJson(jsonOrFilePath, jsonfile);
 }

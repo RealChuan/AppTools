@@ -1,7 +1,7 @@
 #ifndef USERACCOUNTSYSTEM_H
 #define USERACCOUNTSYSTEM_H
 
-#include "UserAccountSystem_global.h"
+#include "useraccountsystem_global.h"
 
 #include <QObject>
 

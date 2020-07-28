@@ -4,7 +4,7 @@
 #include <QAbstractSocket>
 #include <QThread>
 
-class TcpClientThreadPrivate;
+struct TcpClientThreadPrivate;
 class TcpClientThread : public QThread
 {
     Q_OBJECT

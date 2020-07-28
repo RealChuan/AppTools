@@ -7,7 +7,8 @@
 
 class ImageLoadThreadPrivate{
 public:
-    ImageLoadThreadPrivate(QThread *parent) : owner(parent){}
+    ImageLoadThreadPrivate(QThread *parent)
+        : owner(parent){}
     QThread *owner;
     QString fileUrl;
     int width;
@@ -46,6 +47,4 @@ void ImageLoadThread::run()
             image = image.scaled(d->width, d->width, Qt::KeepAspectRatio);
         emit imageReady(info.fileName(), info.absoluteFilePath(), image);
     }
-
-
 }

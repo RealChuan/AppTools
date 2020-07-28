@@ -2,17 +2,16 @@
 
 #include <QTcpSocket>
 
-class TcpServerPrivate{
-public:
-    TcpServerPrivate(QTcpServer *parent) : owner(parent){}
-    QTcpServer *owner;
+struct TcpServerPrivate{
     QVector<QTcpSocket*> tcpClientVector;
 };
 
-TcpServer::TcpServer(QObject *parent) : QTcpServer(parent)
-  , d(new TcpServerPrivate(this))
+TcpServer::TcpServer(QObject *parent)
+    : QTcpServer(parent)
+    , d(new TcpServerPrivate)
 {
-    buildConnect();
+    connect(this, &TcpServer::acceptError, this, &TcpServer::onError);
+    connect(this, &TcpServer::newConnection, this, &TcpServer::onNewConnect);
 }
 
 TcpServer::~TcpServer()
@@ -113,10 +112,4 @@ void TcpServer::onClientReadyRead()
             arg(client->peerAddress().toString().split("::ffff:")[0]).
             arg(client->peerPort());
     emit clientMessage(clientInfo, bytes);
-}
-
-void TcpServer::buildConnect()
-{
-    connect(this, &TcpServer::acceptError, this, &TcpServer::onError);
-    connect(this, &TcpServer::newConnection, this, &TcpServer::onNewConnect);
 }

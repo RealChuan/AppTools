@@ -3,7 +3,7 @@
 
 #include <QTcpServer>
 
-class TcpServerPrivate;
+struct TcpServerPrivate;
 class TcpServer : public QTcpServer
 {
     Q_OBJECT
@@ -28,8 +28,6 @@ private slots:
     void onClientReadyRead();
 
 private:
-    void buildConnect();
-
     QScopedPointer<TcpServerPrivate> d;
 };
 

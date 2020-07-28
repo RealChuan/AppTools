@@ -2,15 +2,13 @@
 
 #include <QScrollBar>
 
-class ImageListModelPrivate{
-public:
-    ImageListModelPrivate(QObject* parent) : owner(parent){}
-    QObject *owner;
+struct ImageListModelPrivate{
     ImageVector imageVector;
 };
 
-ImageListModel::ImageListModel(QObject *parent) : QAbstractListModel(parent)
-  , d(new ImageListModelPrivate(this))
+ImageListModel::ImageListModel(QObject *parent)
+    : QAbstractListModel(parent)
+    , d(new ImageListModelPrivate)
 {
 }
 
@@ -46,20 +44,21 @@ void ImageListModel::setImageVector(const ImageVector &imageVector)
 
 /*
  *
- *
  * */
 
 class ImageListViewPrivate{
 public:
-    ImageListViewPrivate(QWidget *parent) : owner(parent){
+    ImageListViewPrivate(QWidget *parent)
+        : owner(parent){
         imageListModel = new ImageListModel(owner);
     }
     QWidget *owner;
     ImageListModel *imageListModel;
 };
 
-ImageListView::ImageListView(QWidget *parent) : QListView(parent)
-  , d(new ImageListViewPrivate(this))
+ImageListView::ImageListView(QWidget *parent)
+    : QListView(parent)
+    , d(new ImageListViewPrivate(this))
 {
     setupUI();
     connect(this, &QListView::doubleClicked, this, &ImageListView::onChangedItem);

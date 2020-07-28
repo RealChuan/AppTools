@@ -4,7 +4,8 @@
 
 class SystemConversionBoxPrivate{
 public:
-    SystemConversionBoxPrivate(QWidget *parent) : owner(parent){
+    SystemConversionBoxPrivate(QWidget *parent)
+        : owner(parent){
         decimalEdit = new QLineEdit(owner);
         binaryEdit = new QLineEdit(owner);
         octalEdit = new QLineEdit(owner);
@@ -20,8 +21,9 @@ public:
     QLineEdit *hexEdit;
 };
 
-SystemConversionBox::SystemConversionBox(QWidget *parent) : QGroupBox(parent)
-  , d(new SystemConversionBoxPrivate(this))
+SystemConversionBox::SystemConversionBox(QWidget *parent)
+    : QGroupBox(parent)
+    , d(new SystemConversionBoxPrivate(this))
 {
     setupUI();
     buildConnect();
@@ -84,6 +86,8 @@ void SystemConversionBox::setupUI()
 
 void SystemConversionBox::buildConnect()
 {
-    connect(d->decimalEdit, &QLineEdit::textChanged, this, &SystemConversionBox::onDecimalChanged);
-    connect(d->hexEdit, &QLineEdit::textChanged, this, &SystemConversionBox::onHexChanged);
+    connect(d->decimalEdit, &QLineEdit::textChanged,
+            this, &SystemConversionBox::onDecimalChanged);
+    connect(d->hexEdit, &QLineEdit::textChanged,
+            this, &SystemConversionBox::onHexChanged);
 }

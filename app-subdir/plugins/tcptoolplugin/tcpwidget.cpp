@@ -33,7 +33,8 @@ enum Model { Server, Client };
 
 class TcpWidgetPrivate{
 public:
-    TcpWidgetPrivate(QWidget *parent) : owner(parent){
+    TcpWidgetPrivate(QWidget *parent)
+        : owner(parent){
         dataView = new QTextEdit(owner);
         dataView->document()->setMaximumBlockCount(1000);
         dataView->setReadOnly(true);
@@ -43,7 +44,8 @@ public:
         sendButton->setObjectName("SendButton");
 
         modelBox = new QComboBox(owner);
-        modelBox->addItems(QStringList() << QObject::tr("TcpServer") << QObject::tr("TcpClient"));
+        modelBox->addItems(QStringList() << QObject::tr("TcpServer")
+                           << QObject::tr("TcpClient"));
         ipLabel = new QLabel(QObject::tr("Local IP List: "), owner);
         localIPBox = new QComboBox(owner);
         serverIPEdit = new QLineEdit(owner);
@@ -125,8 +127,9 @@ public:
     WidgetParam widgetParam;
 };
 
-TcpWidget::TcpWidget(QWidget *parent) : QWidget(parent)
-  , d(new TcpWidgetPrivate(this))
+TcpWidget::TcpWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new TcpWidgetPrivate(this))
 {
     setupUI();
     initWindow();
@@ -227,7 +230,9 @@ void TcpWidget::onSendData()
             appendDisplay(Send, QString(tr("Send To All Online Clients: %1.").arg(str)));
             clientInfo = "";
         } else
-            appendDisplay(Send, QString(tr("Send To Clients [%1] : %2.").arg(clientInfo).arg(str)));
+            appendDisplay(Send, QString(tr("Send To Clients [%1] : %2.")
+                                        .arg(clientInfo)
+                                        .arg(str)));
         emit d->serverThread->sendMessage(bytes, clientInfo);
         d->sendCount += str.size();
         setSendCount(d->sendCount);
@@ -362,13 +367,16 @@ void TcpWidget::onSave()
     QString data = d->dataView->toPlainText();
     if(data.isEmpty()) return;
 
-    QString path = QFileDialog::getSaveFileName(this, tr("Open File"),
+    QString path = QFileDialog::getSaveFileName(this,
+                                                tr("Open File"),
                                                 QString("./data/%1").arg(STRDATETIME),
                                                 tr("Text Files(*.txt)"));
     if(!path.isEmpty()){
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path), MessBox::CloseButton);
+            MessBox::Warning(this,
+                             tr("Write File: Can't open file:\n %1 !").arg(path),
+                             MessBox::CloseButton);
             return;
         }
         QTextStream stream(&file);

@@ -5,6 +5,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QCursor>
 #include <QPainter>
+#include <QWheelEvent>
 
 struct BasicGraphicsItemPrivate{
     QString name;
@@ -12,7 +13,7 @@ struct BasicGraphicsItemPrivate{
     int hoveredDotIndex = -1;
     QPointF clickedPos;
     QPolygonF cache;
-    double margin = 25;
+    double margin = 10;
 };
 
 BasicGraphicsItem::BasicGraphicsItem(QGraphicsItem *parent)
@@ -30,12 +31,11 @@ BasicGraphicsItem::BasicGraphicsItem(QGraphicsItem *parent)
 
 BasicGraphicsItem::~BasicGraphicsItem()
 {
-
 }
 
 QRectF BasicGraphicsItem::boundingRect() const
 {
-    if(!itemValid())
+    if(!isValid())
         return scene()->sceneRect();
 
     QRectF rectF = d->cache.boundingRect();
@@ -56,7 +56,7 @@ QString BasicGraphicsItem::name() const
 
 void BasicGraphicsItem::setMargin(double m11)
 {
-    d->margin = 2.0 *  10 / m11;
+    d->margin = 1.5 *  10 / m11;
     if(d->margin <= 3)
         d->margin = 3;
 
@@ -74,7 +74,8 @@ void BasicGraphicsItem::setItemEditable(bool editable)
     setAcceptHoverEvents(editable);
 }
 
-QVariant BasicGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
+QVariant BasicGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change,
+                                       const QVariant &value)
 {
     if (change == ItemPositionChange && scene()) {
         // value is the new position.
@@ -92,8 +93,12 @@ QVariant BasicGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change,
 
 void BasicGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
-    if(!itemValid())
+    if(!isValid())
         return;
+
+    d->mouseRegin = All;
+    d->hoveredDotIndex = -1;
+    setCursor(Qt::SizeAllCursor);
 
     QPointF pos = event->scenePos();
     for(QPointF p : d->cache){
@@ -106,10 +111,6 @@ void BasicGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
             return;
         }
     }
-
-    d->hoveredDotIndex = -1;
-    d->mouseRegin = All;
-    setCursor(Qt::SizeAllCursor);
 }
 
 void BasicGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
@@ -117,6 +118,16 @@ void BasicGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     unsetCursor();
     d->mouseRegin = None;
     QAbstractGraphicsShapeItem::hoverLeaveEvent(event);
+}
+
+void BasicGraphicsItem::keyPressEvent(QKeyEvent *event)
+{
+    if(!isSelected())
+        return;
+    switch (event->key()) {
+    case Qt::Key_Delete: emit deleteMyself(); break;
+    default: break;
+    }
 }
 
 void BasicGraphicsItem::setCache(const QPolygonF &cache)
@@ -159,7 +170,7 @@ void BasicGraphicsItem::drawAnchor(QPainter *painter)
     if(!acceptHoverEvents())
         return;
 
-    for(QPointF p : cache())
+    for(const QPointF &p : cache())
         painter->fillRect(QRectF(p.x() - d->margin / 2,
                                  p.y() - d->margin / 2,
                                  d->margin,

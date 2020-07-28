@@ -8,19 +8,23 @@
 
 class ChangePasswdWidgetPrivate{
 public:
-    ChangePasswdWidgetPrivate(QWidget *parent) : owner(parent){
+    ChangePasswdWidgetPrivate(QWidget *parent)
+        : owner(parent){
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
 
         currentPasswordEdit = new PasswordLineEdit(owner);
-        currentPasswordEdit->setPlaceholderText(QObject::tr("Please enter the current account password."));
+        currentPasswordEdit->setPlaceholderText(
+                    QObject::tr("Please enter the current account password."));
         newPasswordEdit = new PasswordLineEdit(owner);
-        newPasswordEdit->setPlaceholderText(QObject::tr("Please enter a new password."));
+        newPasswordEdit->setPlaceholderText(
+                    QObject::tr("Please enter a new password."));
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
         passwdAgainEdit = new PasswordLineEdit(owner);
-        passwdAgainEdit->setPlaceholderText(QObject::tr("Please enter the new password again."));
+        passwdAgainEdit->setPlaceholderText(
+                    QObject::tr("Please enter the new password again."));
     }
     QWidget *owner;
     QLabel *avatarLabel;
@@ -35,8 +39,12 @@ public:
     AccountQuery *accountQuery = nullptr;
 };
 
-ChangePasswdWidget::ChangePasswdWidget(AccountQuery *accountQuery, const QString &username, const QString& password, QWidget *parent) : Dialog(parent)
-  , d(new ChangePasswdWidgetPrivate(this))
+ChangePasswdWidget::ChangePasswdWidget(AccountQuery *accountQuery,
+                                       const QString &username,
+                                       const QString& password,
+                                       QWidget *parent)
+    : Dialog(parent)
+    , d(new ChangePasswdWidgetPrivate(this))
 {
     d->username = username;
     d->password = password;
@@ -79,8 +87,9 @@ void ChangePasswdWidget::onChangePasswd()
     }
 
     if(currentPassword != d->password){
-        d->promptLabel->setText(tr("The current account %1 password is entered incorrectly, "
-                                   "please re-enter!").arg(d->username));
+        d->promptLabel->setText(tr("The current account %1 password is "
+                                   "entered incorrectly, please re-enter!")
+                                .arg(d->username));
         d->currentPasswordEdit->setFocus();
         return;
     }
@@ -118,9 +127,11 @@ void ChangePasswdWidget::setupUI()
     QPushButton *cancelButton = new QPushButton(tr("Cancel"), this);
     changePasswdButton->setObjectName("BlueButton");
     cancelButton->setObjectName("GrayButton");
-    connect(changePasswdButton, &QPushButton::clicked, this, &ChangePasswdWidget::onChangePasswd);
+    connect(changePasswdButton, &QPushButton::clicked,
+            this, &ChangePasswdWidget::onChangePasswd);
     connect(cancelButton, &QPushButton::clicked, this, &ChangePasswdWidget::reject);
-    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed, this, &ChangePasswdWidget::onChangePasswd);
+    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed,
+            this, &ChangePasswdWidget::onChangePasswd);
 
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addWidget(cancelButton);

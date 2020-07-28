@@ -21,13 +21,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     basicgraphicsitem.cpp \
+    drawwidget.cpp \
     graphics.cpp \
+    graphicscircleitem.cpp \
     graphicsrectitem.cpp \
     imageview.cpp
 
 HEADERS += \
     basicgraphicsitem.h \
+    drawwidget.h \
     graphics.h \
     graphics_global.h \
+    graphicscircleitem.h \
     graphicsrectitem.h \
     imageview.h

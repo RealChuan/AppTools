@@ -9,7 +9,8 @@
 
 class LoginWidgetPrivate{
 public:
-    LoginWidgetPrivate(QWidget *parent) : owner(parent){
+    LoginWidgetPrivate(QWidget *parent)
+        : owner(parent){
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
@@ -29,8 +30,11 @@ public:
     AccountQuery *accountQuery = nullptr;
 };
 
-LoginWidget::LoginWidget(AccountQuery *accountQuery, const QStringList &usernameList, QWidget *parent) : Dialog(parent)
-  , d(new LoginWidgetPrivate(this))
+LoginWidget::LoginWidget(AccountQuery *accountQuery,
+                         const QStringList &usernameList,
+                         QWidget *parent)
+    : Dialog(parent)
+    , d(new LoginWidgetPrivate(this))
 {
     setObjectName("LoginWidget");
     setTitle(tr("Login Widget"));
@@ -38,15 +42,14 @@ LoginWidget::LoginWidget(AccountQuery *accountQuery, const QStringList &username
     setMinButtonVisible(true);
     setupUI();
     buildConnect();
-    for(const QString& username: usernameList){
+    for(const QString& username: usernameList)
         d->usernameBox->addAccount(username);
-    }
+
     resize(300, 485);
 }
 
 LoginWidget::~LoginWidget()
 {
-
 }
 
 QString LoginWidget::username() const

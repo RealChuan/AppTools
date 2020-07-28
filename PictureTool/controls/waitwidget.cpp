@@ -6,7 +6,8 @@
 
 class WaitWidgetPrivate{
 public:
-    WaitWidgetPrivate(QWidget *parent) : owner(parent){
+    WaitWidgetPrivate(QWidget *parent)
+        : owner(parent){
         processBar = new QProgressBar(owner);
         processBar->setTextVisible(false);
         processBar->setRange(0, 100);
@@ -16,8 +17,9 @@ public:
     QTimer timer;
 };
 
-WaitWidget::WaitWidget(QWidget *parent) : QSplashScreen(parent)
-  , d(new WaitWidgetPrivate(this))
+WaitWidget::WaitWidget(QWidget *parent)
+    : QSplashScreen(parent)
+    , d(new WaitWidgetPrivate(this))
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_StyledBackground);

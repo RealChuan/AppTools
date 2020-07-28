@@ -4,7 +4,8 @@
 
 class MessBoxPrivate{
 public:
-    MessBoxPrivate(CommonWidget *parent) : owner(parent){
+    MessBoxPrivate(CommonWidget *parent)
+        : owner(parent){
         iconLabel = new QLabel(owner);
         messageLabel = new QLabel(owner);
         messageLabel->setObjectName("MessageLabel");
@@ -24,8 +25,9 @@ public:
     QPushButton *closeButton;
 };
 
-MessBox::MessBox(QWidget *parent) : Dialog(parent)
-  , d(new MessBoxPrivate(this))
+MessBox::MessBox(QWidget *parent)
+    : Dialog(parent)
+    , d(new MessBoxPrivate(this))
 {
     setMinButtonVisible(false);
     setRestoreMaxButtonVisible(false);
@@ -36,33 +38,42 @@ MessBox::MessBox(QWidget *parent) : Dialog(parent)
 
 MessBox::~MessBox()
 {
-
 }
 
-Dialog::ExecFlags MessBox::Info(QWidget *parent, const QString &msg
-                                , MessButton button)
+Dialog::ExecFlags MessBox::Info(QWidget *parent,
+                                const QString &msg,
+                                const MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("InfoLabel");
     messBox.setMessage(msg);
-    if(button == (YESButton | NOButton)){
+    switch (button) {
+    case YesAndNoButton:
         messBox.setYesAndNoButtonVisible(true);
-    }else if(button == CloseButton){
+        break;
+    case CloseButton:
         messBox.setCloseButtonVisible(true);
+        break;
+    default: break;
     }
     return messBox.exec();
 }
 
-Dialog::ExecFlags MessBox::Warning(QWidget *parent, const QString &msg
-                                   , MessButton button)
+Dialog::ExecFlags MessBox::Warning(QWidget *parent,
+                                   const QString &msg,
+                                   const MessButton button)
 {
     MessBox messBox(parent);
     messBox.setIconLabelObjectName("WarningLabel");
     messBox.setMessage(msg);
-    if(button == (YESButton | NOButton)){
+    switch (button) {
+    case YesAndNoButton:
         messBox.setYesAndNoButtonVisible(true);
-    }else if(button == CloseButton){
+        break;
+    case CloseButton:
         messBox.setCloseButtonVisible(true);
+        break;
+    default: break;
     }
     return messBox.exec();
 }

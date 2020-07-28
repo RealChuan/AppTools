@@ -1,15 +1,13 @@
 #include "serialportthread.h"
 #include "serialport.h"
 
-class SerialPortThreadPrivate{
-public:
-    SerialPortThreadPrivate(QThread *parent) : owner(parent){}
-    QThread *owner;
+struct SerialPortThreadPrivate{
     SerialParam serialParam;
 };
 
-SerialPortThread::SerialPortThread(const SerialParam &serialParam, QObject *parent) : QThread(parent)
-  , d(new SerialPortThreadPrivate(this))
+SerialPortThread::SerialPortThread(const SerialParam &serialParam, QObject *parent)
+    : QThread(parent)
+    , d(new SerialPortThreadPrivate)
 {
     d->serialParam = serialParam;
 }

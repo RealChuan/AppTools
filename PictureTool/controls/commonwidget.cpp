@@ -4,7 +4,8 @@
 
 class CommonWidgetPrivate{
 public:
-    CommonWidgetPrivate(QWidget *parent) : owner(parent){
+    CommonWidgetPrivate(QWidget *parent)
+        : owner(parent){
         iconLabel = new QLabel(owner);
         iconLabel->setObjectName("iconLabel");
         titleLabel = new QLabel(qAppName(), owner);
@@ -37,8 +38,9 @@ public:
     QPoint movePoint;
 };
 
-CommonWidget::CommonWidget(QWidget *parent) : QWidget(parent)
-  , d(new CommonWidgetPrivate(this))
+CommonWidget::CommonWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new CommonWidgetPrivate(this))
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_StyledBackground);
@@ -69,7 +71,8 @@ void CommonWidget::setTitle(const QString &title)
 
 void CommonWidget::setIcon(const QIcon &icon)
 {
-    d->iconLabel->setPixmap(icon.pixmap(d->iconLabel->width(), d->iconLabel->height()));
+    d->iconLabel->setPixmap(icon.pixmap(d->iconLabel->width(),
+                                        d->iconLabel->height()));
 }
 
 void CommonWidget::setCentralWidget(QWidget *widget)
@@ -132,7 +135,8 @@ void CommonWidget::setupUI()
     layout->setSpacing(0);
     layout->addWidget(d->titleWidget, 0, 0);
     layout->addWidget(d->centralWidget, 1, 0);
-    layout->addWidget(new QSizeGrip(this), 1, 0, Qt::AlignRight | Qt::AlignBottom);
+    layout->addWidget(new QSizeGrip(this), 1, 0,
+                      Qt::AlignRight | Qt::AlignBottom);
 }
 
 QWidget *CommonWidget::titleWidget()
@@ -170,7 +174,9 @@ QWidget *CommonWidget::titleWidget()
     layout->addWidget(d->titleLabel);
     layout->addStretch();
     layout->addWidget(d->titleBar);
-    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));
+    layout->addSpacerItem(new QSpacerItem(20, 20,
+                                          QSizePolicy::Maximum,
+                                          QSizePolicy::Maximum));
     layout->addWidget(d->minButton);
     layout->addWidget(d->maxButton);
     layout->addWidget(d->restoreButton);

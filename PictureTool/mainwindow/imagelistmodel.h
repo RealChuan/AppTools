@@ -15,7 +15,7 @@ struct Image{
 
 typedef QVector<Image*> ImageVector;
 
-class ImageListModelPrivate;
+struct ImageListModelPrivate;
 class ImageListModel : public QAbstractListModel
 {
     Q_OBJECT

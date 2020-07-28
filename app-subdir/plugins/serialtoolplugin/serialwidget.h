@@ -8,7 +8,12 @@ class SerialWidget : public QWidget
 {
     Q_OBJECT
 public:   
-    enum MessageType { Send, Recv, SuccessInfo, ErrorInfo};
+    enum MessageType {
+        Send,
+        Recv,
+        SuccessInfo,
+        ErrorInfo
+    };
 
     explicit SerialWidget(QWidget *parent = nullptr);
     ~SerialWidget();

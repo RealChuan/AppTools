@@ -12,20 +12,18 @@
 
 const static int kRollPerSeconds_ = 60*60*24;
 
-class FileUtilPrivate{
-public:
-    FileUtilPrivate(QObject *parent) : owner(parent){}
-    QObject *owner;
+struct FileUtilPrivate{
     QFile file;
-    QTextStream stream;     //QTextStream 读写分离的，内部有缓冲区static const int QTEXTSTREAM_BUFFERSIZE = 16384;
+    QTextStream stream; //QTextStream 读写分离的，内部有缓冲区static const int QTEXTSTREAM_BUFFERSIZE = 16384;
     qint64 startTime = 0;
     qint64 lastRoll = 0;
     int count = 0;
     qint64 autoDelFileDays = 30;
 };
 
-FileUtil::FileUtil(qint64 days, QObject *parent) : QObject(parent)
-  , d(new FileUtilPrivate(this))
+FileUtil::FileUtil(qint64 days, QObject *parent)
+    : QObject(parent)
+    , d(new FileUtilPrivate)
 {
     d->autoDelFileDays = days;
     newDir("log");
@@ -129,7 +127,8 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     case QtInfoMsg:     level = QLatin1String("Info"); break;
     }
 
-    const QString dataTimeString = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
+    const QString dataTimeString = QDateTime::currentDateTime()
+            .toString("yyyy-MM-dd hh:mm:ss.zzz");
     const QString threadId = QString::number(qulonglong(QThread::currentThreadId()));
 
     QString contexInfo = QString("File:(%1) Line:(%2)")

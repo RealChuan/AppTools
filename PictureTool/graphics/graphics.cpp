@@ -8,8 +8,7 @@ void Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &ra
     double X1(0), Y1(0), X2(0), Y2(0), X3(0), Y3(0);
     double X1Y1(0), X1Y2(0), X2Y1(0);
 
-    for (int i = 0; i < pts.size(); i++)
-    {
+    for (int i = 0; i < pts.size(); i++){
         double x = pts[i].x();
         double y = pts[i].y();
         X1 = X1 +  x;
@@ -77,4 +76,19 @@ QPolygonF Graphics::boundingFromLine(const QLineF &line, double margin)
     ply << p2 - dp;
     ply << p2 + dp;
     return ply;
+}
+
+double Graphics::distance(QPointF pos, QPointF center)
+{
+    return QLineF(center, pos).length();
+}
+
+double Graphics::ConvertTo360(double angle)
+{
+    if(angle >= 0 && angle < 360)
+        return angle;
+    else if(angle < 0)
+        return ConvertTo360(angle + 360);
+    else
+        return ConvertTo360(angle - 360);
 }

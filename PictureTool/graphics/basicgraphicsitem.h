@@ -7,7 +7,8 @@
 #include "graphics_global.h"
 
 struct BasicGraphicsItemPrivate;
-class GRAPHICS_EXPORT BasicGraphicsItem : public QObject, public QAbstractGraphicsShapeItem
+class GRAPHICS_EXPORT BasicGraphicsItem : public QObject,
+        public QAbstractGraphicsShapeItem
 {
     Q_OBJECT
 public:
@@ -23,18 +24,20 @@ public:
         ELLIPSE,
         TEXT,
         EXTEND = 1024
-    }Q_ENUMS(Shape);
+    };
+    Q_ENUM(Shape)
 
     enum MouseRegion{
         DotRegion,
         All,
+        Edge,
         None
     };
 
     BasicGraphicsItem(QGraphicsItem *parent = nullptr);
     ~BasicGraphicsItem() override;
 
-    virtual bool itemValid() const  = 0;
+    virtual bool isValid() const  = 0;
     virtual int type() const override = 0;
     virtual QRectF boundingRect() const override;
 
@@ -47,12 +50,13 @@ public:
     void setItemEditable(bool editable);
 
 signals:
-    void itemChanged();
+    void deleteMyself();
 
 protected:
-    virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
     void setCache(const QPolygonF&);
     QPolygonF cache() const;

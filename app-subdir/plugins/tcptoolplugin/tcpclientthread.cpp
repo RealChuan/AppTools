@@ -3,18 +3,14 @@
 
 #include <QTcpSocket>
 
-class TcpClientThreadPrivate{
-public:
-    TcpClientThreadPrivate(QThread *parent) : owner(parent){}
-
-    QThread *owner;
+struct TcpClientThreadPrivate{
     QString ip;
     quint16 port;
 };
 
 TcpClientThread::TcpClientThread(const QString &ip, quint16 port, QObject *parent)
     : QThread(parent)
-    , d(new TcpClientThreadPrivate(this))
+    , d(new TcpClientThreadPrivate)
 {
     d->ip = ip;
     d->port = port;

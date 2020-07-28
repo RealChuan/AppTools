@@ -9,8 +9,10 @@ class ChangePasswdWidget : public Dialog
 {
     Q_OBJECT
 public:
-    ChangePasswdWidget(AccountQuery*, const QString &,
-                       const QString&, QWidget *parent = nullptr);
+    ChangePasswdWidget(AccountQuery*,
+                       const QString &,
+                       const QString&,
+                       QWidget *parent = nullptr);
     ~ChangePasswdWidget();
 
     QString password() const;

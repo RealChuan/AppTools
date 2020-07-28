@@ -9,7 +9,8 @@ union Float2Hex{
 
 class FloatBoxPrivate{
 public:
-    FloatBoxPrivate(QWidget *parent) : owner(parent){
+    FloatBoxPrivate(QWidget *parent)
+        : owner(parent){
         floatEdit = new QLineEdit(owner);
         floatHexEdit = new QLineEdit(owner);
     }
@@ -18,8 +19,9 @@ public:
     QLineEdit *floatHexEdit;
 };
 
-FloatBox::FloatBox(QWidget *parent) : QGroupBox(parent)
-  , d(new FloatBoxPrivate(this))
+FloatBox::FloatBox(QWidget *parent)
+    : QGroupBox(parent)
+    , d(new FloatBoxPrivate(this))
 {
     setupUI();
 }

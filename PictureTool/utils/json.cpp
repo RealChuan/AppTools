@@ -6,10 +6,7 @@
 #include <QJsonArray>
 #include <QRegularExpression>
 
-class JsonPrivate{
-public:
-    JsonPrivate(QObject *parent) : owner(parent){}
-    QObject *owner;
+struct JsonPrivate{
     bool jsonLoad = false;
     QJsonDocument jsonDoc;  // Json的文档对象
     QJsonObject rootObj;    // 根节点
@@ -18,7 +15,7 @@ public:
 
 Json::Json(const QString &jsonOrFilePath, bool jsonfile, QObject *parent)
     : QObject(parent)
-    , d(new JsonPrivate(this))
+    , d(new JsonPrivate)
 {
     loadJson(jsonOrFilePath, jsonfile);
 }
@@ -58,7 +55,8 @@ void Json::loadJson(const QString &jsonOrFilePath, bool jsonfile)
     if(jsonfile){
         QFile file(jsonOrFilePath);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-            d->errorString = QString(tr("Cannot open the file: %1")).arg(jsonOrFilePath);
+            d->errorString = QString(tr("Cannot open the file: %1")).
+                    arg(jsonOrFilePath);
             qDebug() << d->errorString;
             return;
         }
@@ -107,5 +105,3 @@ QJsonValue Json::getJsonValue(const QString &path, const QJsonObject &fromNode) 
 
     return parent.value(names.last());
 }
-
-

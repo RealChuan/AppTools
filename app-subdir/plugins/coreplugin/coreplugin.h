@@ -10,11 +10,13 @@ class CorePlugin : public ExtensionSystem::IPlugin
     Q_PLUGIN_METADATA(IID "Youth.Qt.plugin" FILE "coreplugin.json")
 public:
     CorePlugin();
-    ~CorePlugin();
+    ~CorePlugin() override;
 
     bool initialize(const QStringList &arguments, QString *errorString) override;
     void extensionsInitialized() override;
-    QObject *remoteCommand(const QStringList &, const QString &, const QStringList &) override;
+    QObject *remoteCommand(const QStringList &,
+                           const QString &,
+                           const QStringList &) override;
 
 private:
     QScopedPointer<MainWindow> m_mainWindow;

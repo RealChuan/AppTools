@@ -2,7 +2,8 @@
 
 #include <QDebug>
 
-SerialPort::SerialPort(QObject *parent) : QSerialPort(parent)
+SerialPort::SerialPort(QObject *parent)
+    : QSerialPort(parent)
 {
     buildConnect();
 }

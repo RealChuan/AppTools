@@ -10,7 +10,8 @@
 
 class ImageViewerPrivate{
 public:
-    ImageViewerPrivate(QWidget *parent): owner(parent){
+    ImageViewerPrivate(QWidget *parent)
+        : owner(parent){
         imageView = new ImageView(owner);
         imageViewFormat = new ImageView(owner);
         imageUrlLabel = new QLabel("-", owner);
@@ -36,8 +37,9 @@ public:
     QComboBox *colorBox;
 };
 
-ImageViewer::ImageViewer(QWidget *parent) : QWidget(parent)
-  , d(new ImageViewerPrivate(this))
+ImageViewer::ImageViewer(QWidget *parent)
+    : QWidget(parent)
+    , d(new ImageViewerPrivate(this))
 {
     setupUI();
     buildConnect();
@@ -103,7 +105,9 @@ void ImageViewer::onChangedImage(int index)
     d->imageView->createScene(filename);
 }
 
-void ImageViewer::onImageLoaded(const QString &filename, const QString &absoluteFilePath, const QImage &image)
+void ImageViewer::onImageLoaded(const QString &filename,
+                                const QString &absoluteFilePath,
+                                const QImage &image)
 {
     QPixmap pixmap = QPixmap::fromImage(image);
     if(pixmap.isNull()) return;
@@ -254,7 +258,6 @@ void ImageViewer::buildConnect()
     connect(d->imageView, &ImageView::imageSizeChanged, this, &ImageViewer::onImageSizeChanged);
     connect(d->imageView, &ImageView::imageUrlChanged, this, &ImageViewer::onImageChanged);
     connect(d->imageListView, &ImageListView::changeItem, this, &ImageViewer::onChangedImage);
-
     connect(d->formatBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
     connect(d->colorBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
 }

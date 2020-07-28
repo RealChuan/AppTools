@@ -5,7 +5,8 @@
 
 class AccountItemPrivate{
 public:
-    AccountItemPrivate(QWidget *parent) : owner(parent){
+    AccountItemPrivate(QWidget *parent)
+        : owner(parent){
         avatarLabel = new QLabel("avatar", owner);
         usernameLabel = new QLabel("username", owner);
         usernameLabel->setObjectName("UsernameLabel");
@@ -16,8 +17,9 @@ public:
     bool mousePress = false;
 };
 
-AccountItemWidget::AccountItemWidget(QWidget *parent) : QWidget(parent)
-  , d(new AccountItemPrivate(this))
+AccountItemWidget::AccountItemWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new AccountItemPrivate(this))
 {
     setupUI();
 }
@@ -84,15 +86,17 @@ void AccountItemWidget::setupUI()
 
 class EditComboBoxPrivate{
 public:
-    EditComboBoxPrivate(QWidget *parent) : owner(parent){
+    EditComboBoxPrivate(QWidget *parent)
+        : owner(parent){
         listWidget = new QListWidget(owner);
     }
     QWidget *owner;
     QListWidget *listWidget;
 };
 
-EditComboBox::EditComboBox(QWidget *parent) : QComboBox(parent)
-  , d(new EditComboBoxPrivate(this))
+EditComboBox::EditComboBox(QWidget *parent)
+    : QComboBox(parent)
+    , d(new EditComboBoxPrivate(this))
 {
     setMaxVisibleItems(3);
     setInsertPolicy(QComboBox::NoInsert);
@@ -122,7 +126,8 @@ QStringList EditComboBox::accountList() const
     QStringList list;
     for(int i=0; i<d->listWidget->count(); i++){
         QListWidgetItem *item = d->listWidget->item(i);
-        AccountItemWidget *accountItem = qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
+        AccountItemWidget *accountItem =
+                qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
         list.append(accountItem->getAccount());
     }
     return list;
@@ -139,15 +144,17 @@ void EditComboBox::onDeleteItem(const QString &text)
     hidePopup();
     Dialog::ExecFlags flag = MessBox::Warning(this,
                                               tr("Confirm to delete the current account?"),
-                                              MessBox::MessButton(MessBox::YESButton | MessBox::NOButton));
+                                              MessBox::YesAndNoButton);
 
     showPopup();
 
-    if(flag == Dialog::Rejected) return;
+    if(flag == Dialog::Rejected)
+        return;
 
     for(int i=0; i<d->listWidget->count(); i++){
         QListWidgetItem *item = d->listWidget->item(i);
-        AccountItemWidget *accountItem = qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
+        AccountItemWidget *accountItem =
+                qobject_cast<AccountItemWidget*>(d->listWidget->itemWidget(item));
         if(accountItem->getAccount() == text){
             delete d->listWidget->takeItem(i);
             break;
@@ -159,7 +166,8 @@ void EditComboBox::onDeleteItem(const QString &text)
  *
  * */
 
-PasswordLineEdit::PasswordLineEdit(QWidget *parent) : QLineEdit(parent)
+PasswordLineEdit::PasswordLineEdit(QWidget *parent)
+    : QLineEdit(parent)
 {
     setPlaceholderText(tr("Please enter the password."));
     setEchoMode(QLineEdit::Password);

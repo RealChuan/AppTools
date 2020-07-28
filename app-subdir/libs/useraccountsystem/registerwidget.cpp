@@ -8,7 +8,8 @@
 
 class RegisterWidgetPrivate{
 public:
-    RegisterWidgetPrivate(QWidget *parent) : owner(parent){
+    RegisterWidgetPrivate(QWidget *parent)
+        : owner(parent){
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
@@ -32,8 +33,9 @@ public:
     AccountQuery *accountQuery = nullptr;
 };
 
-RegisterWidget::RegisterWidget(AccountQuery *accountQuery, QWidget *parent) : Dialog(parent)
-  , d(new RegisterWidgetPrivate(this))
+RegisterWidget::RegisterWidget(AccountQuery *accountQuery, QWidget *parent)
+    : Dialog(parent)
+    , d(new RegisterWidgetPrivate(this))
 {
     setTitle(tr("Register Widget"));
     d->accountQuery = accountQuery;
@@ -112,7 +114,8 @@ void RegisterWidget::setupUI()
     cancelButton->setObjectName("GrayButton");
     connect(registerButton, &QPushButton::clicked, this, &RegisterWidget::onRegister);
     connect(cancelButton, &QPushButton::clicked, this, &RegisterWidget::reject);
-    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed, this, &RegisterWidget::onRegister);
+    connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed,
+            this, &RegisterWidget::onRegister);
 
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addWidget(cancelButton);

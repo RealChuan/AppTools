@@ -2,7 +2,8 @@
 
 #include <QEventLoop>
 
-Dialog::Dialog(QWidget *parent) : CommonWidget(parent)
+Dialog::Dialog(QWidget *parent)
+    : CommonWidget(parent)
 {
     setMinButtonVisible(false);
     setRestoreMaxButtonVisible(false);

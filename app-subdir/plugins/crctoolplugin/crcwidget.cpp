@@ -10,7 +10,8 @@ using namespace CRC;
 
 class CRCWidgetPrivate{
 public:
-    CRCWidgetPrivate(QWidget *parent) : owner(parent){
+    CRCWidgetPrivate(QWidget *parent)
+        : owner(parent){
         resultEdit = new QLineEdit(owner);
         resultEdit->setReadOnly(true);
         modelBox = new QComboBox(owner);
@@ -42,8 +43,9 @@ public:
     QLabel *xOrOutLabel;
 };
 
-CRCWidget::CRCWidget(QWidget *parent) : QWidget(parent)
-  , d(new CRCWidgetPrivate(this))
+CRCWidget::CRCWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new CRCWidgetPrivate(this))
 {
     setupUI();
     init();
@@ -164,12 +166,11 @@ void CRCWidget::setupUI()
 
 void CRCWidget::init()
 {
-    for(int i=0; i<CRC_MODEL_SIZE; i++){
+    for(int i=0; i<CRC_MODEL_SIZE; i++)
         d->modelBox->addItem(CRC_MODEL[i]);
-    }
 }
 
 void CRCWidget::buildConnect()
 {
-    connect(d->modelBox, SIGNAL(currentIndexChanged(int)), this,SLOT(onModelChanged(int)));
+    connect(d->modelBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onModelChanged(int)));
 }

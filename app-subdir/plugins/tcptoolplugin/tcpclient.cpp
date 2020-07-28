@@ -2,7 +2,8 @@
 
 class TcpClientPrivate{
 public:
-    TcpClientPrivate(QTcpSocket *parent) : owner(parent){}
+    TcpClientPrivate(QTcpSocket *parent)
+        : owner(parent){}
     QTcpSocket *owner;
     QString ip;
     quint16 port;

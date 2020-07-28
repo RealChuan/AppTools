@@ -9,14 +9,16 @@
 
 class CurrentLoginWidgetPrivate{
 public:
-    CurrentLoginWidgetPrivate(QWidget *parent) : owner(parent){
+    CurrentLoginWidgetPrivate(QWidget *parent)
+        : owner(parent){
         avatarLabel = new QLabel(owner);
         avatarLabel->setText(QObject::tr("Avatar"));
         avatarLabel->setObjectName("AvatarLabel");
         accountLabel = new QLabel(owner);
         accountLabel->setObjectName("AccountLabel");
         passwordEdit = new PasswordLineEdit(owner);
-        passwordEdit->setPlaceholderText(QObject::tr("Please enter password and click delete again!"));
+        passwordEdit->setPlaceholderText(
+                    QObject::tr("Please enter password and click delete again!"));
         promptLabel = new QLabel(owner);
         promptLabel->setObjectName("PromptLabel");
     }
@@ -30,8 +32,10 @@ public:
     AccountQuery *accountQuery = nullptr;
 };
 
-CurrentLoginWidget::CurrentLoginWidget(AccountQuery *accountQuery, const QString &username,
-                                       const QString &password, QWidget *parent)
+CurrentLoginWidget::CurrentLoginWidget(AccountQuery *accountQuery,
+                                       const QString &username,
+                                       const QString &password,
+                                       QWidget *parent)
     : Dialog(parent)
     , d(new CurrentLoginWidgetPrivate(this))
 {
@@ -46,7 +50,6 @@ CurrentLoginWidget::CurrentLoginWidget(AccountQuery *accountQuery, const QString
 
 CurrentLoginWidget::~CurrentLoginWidget()
 {
-
 }
 
 QString CurrentLoginWidget::password() const
@@ -93,8 +96,10 @@ void CurrentLoginWidget::setupUI()
     changePasswdButton->setObjectName("BlueButton");
     deleteAccountButton->setObjectName("GrayButton");
     connect(logoutButton, &QPushButton::clicked, this, &CurrentLoginWidget::accepted);
-    connect(changePasswdButton, &QPushButton::clicked, this, &CurrentLoginWidget::onChangePassword);
-    connect(deleteAccountButton, &QPushButton::clicked, this, &CurrentLoginWidget::onDeleteAccount);
+    connect(changePasswdButton, &QPushButton::clicked,
+            this, &CurrentLoginWidget::onChangePassword);
+    connect(deleteAccountButton, &QPushButton::clicked,
+            this, &CurrentLoginWidget::onDeleteAccount);
 
     d->accountLabel->setText(tr("Current online account: %1.").arg(d->username));
     d->passwordEdit->hide();

@@ -70,7 +70,9 @@ int main(int argc, char *argv[])
 
     if(coreSpec) {
         waitWidget.fullProgressBar();
-        coreSpec->plugin()->remoteCommand(QStringList(), QString(), QStringList());
+        coreSpec->plugin()->remoteCommand(QStringList(),
+                                          QString(),
+                                          QStringList());
         waitWidget.close();
     } else {
         pluginManager.shutdown();

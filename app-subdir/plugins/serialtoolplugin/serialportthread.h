@@ -5,7 +5,7 @@
 
 #include "serialparam.h"
 
-class SerialPortThreadPrivate;
+struct SerialPortThreadPrivate;
 class SerialPortThread : public QThread
 {
     Q_OBJECT

@@ -5,7 +5,7 @@
 
 #include "utils_global.h"
 
-class FileUtilPrivate;
+struct FileUtilPrivate;
 class FileUtil : public QObject
 {
     Q_OBJECT

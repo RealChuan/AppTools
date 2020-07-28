@@ -1,18 +1,16 @@
 #include "tcpserverthread.h"
 #include "tcpserver.h"
 
-class TcpServerThreadPrivate{
-public:
-    TcpServerThreadPrivate(QThread *parent) : owner(parent) {}
-    QThread *owner;
+struct TcpServerThreadPrivate{
     QString ip;
     quint16 port;
 };
 
-TcpServerThread::TcpServerThread(quint16 port, const QString &ip,
+TcpServerThread::TcpServerThread(quint16 port,
+                                 const QString &ip,
                                  QObject *parent)
     : QThread(parent)
-    , d(new TcpServerThreadPrivate(this))
+    , d(new TcpServerThreadPrivate)
 {
     d->ip = ip;
     d->port = port;

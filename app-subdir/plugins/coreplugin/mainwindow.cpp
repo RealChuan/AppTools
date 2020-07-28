@@ -5,7 +5,7 @@
 #include <utils/utils.h>
 #include <core/mpages.h>
 #include <extensionsystem/pluginmanager.h>
-#include <UserAccountSystem/useraccountsystem.h>
+#include <useraccountsystem/useraccountsystem.h>
 
 #include <QtWidgets>
 
@@ -13,7 +13,8 @@ using namespace ExtensionSystem;
 
 class MainWindowPrivate{
 public:
-    MainWindowPrivate(MainWindow *parent) : owner(parent){
+    MainWindowPrivate(MainWindow *parent)
+        : owner(parent){
         switchButtonGroup = new QButtonGroup(owner);
         switchButtonGroup->setExclusive(true);
         menuButtonGroup = new QButtonGroup(owner);
@@ -126,7 +127,8 @@ void MainWindow::initToolBar()
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
     connect(d->accountButton, &QToolButton::clicked, this, &MainWindow::onAccount);
-    connect(d->userSystem, &UserAccountSystem::login, d->accountButton, &QToolButton::setChecked);
+    connect(d->userSystem, &UserAccountSystem::login,
+            d->accountButton, &QToolButton::setChecked);
 
     QToolButton *configButton = new QToolButton(this);
     configButton->setObjectName("ConfigButton");
@@ -220,5 +222,6 @@ void MainWindow::initMenu()
         btn->setCheckable(true);
     }
     onShowGroupButton(d->switchButtonGroup->buttons().at(0));
-    connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onShowGroupButton(QAbstractButton*)));
+    connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)),
+            this, SLOT(onShowGroupButton(QAbstractButton*)));
 }

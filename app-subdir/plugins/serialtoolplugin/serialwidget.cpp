@@ -32,7 +32,8 @@ struct WidgetParam{
 
 class SerialWidgetPrivate{
 public:
-    SerialWidgetPrivate(QWidget *parent) : owner(parent){
+    SerialWidgetPrivate(QWidget *parent)
+        : owner(parent){
         dataView = new QTextEdit(owner);
         dataView->document()->setMaximumBlockCount(1000);
         dataView->setReadOnly(true);
@@ -101,8 +102,9 @@ public:
     WidgetParam widgetParam;
 };
 
-SerialWidget::SerialWidget(QWidget *parent) : QWidget(parent)
-  , d(new SerialWidgetPrivate(this))
+SerialWidget::SerialWidget(QWidget *parent)
+    : QWidget(parent)
+    , d(new SerialWidgetPrivate(this))
 {
     qRegisterMetaType<SerialParam>("SerialParam");
     setupUI();
@@ -169,13 +171,15 @@ void SerialWidget::onOpenOrCloseSerial(bool state)
         destorySerialThread();
         setSerialParam();
         d->serialThread = new SerialPortThread(d->serialParam, this);
-        connect(d->serialThread, &SerialPortThread::serialOnLine, this, &SerialWidget::onSerialOnline, Qt::UniqueConnection);
-        connect(d->serialThread, &SerialPortThread::errorMessage, this, &SerialWidget::onAppendError, Qt::UniqueConnection);
-        connect(d->serialThread, &SerialPortThread::serialMessage, this, &SerialWidget::onSerialRecvMessage, Qt::UniqueConnection);
+        connect(d->serialThread, &SerialPortThread::serialOnLine,
+                this, &SerialWidget::onSerialOnline, Qt::UniqueConnection);
+        connect(d->serialThread, &SerialPortThread::errorMessage,
+                this, &SerialWidget::onAppendError, Qt::UniqueConnection);
+        connect(d->serialThread, &SerialPortThread::serialMessage,
+                this, &SerialWidget::onSerialRecvMessage, Qt::UniqueConnection);
         d->serialThread->start();
-    } else {
+    } else
         destorySerialThread();
-    }
 }
 
 void SerialWidget::onSerialOnline(bool state)
@@ -233,13 +237,16 @@ void SerialWidget::onSave()
     QString data = d->dataView->toPlainText();
     if(data.isEmpty()) return;
 
-    QString path = QFileDialog::getSaveFileName(this, tr("Open File"),
+    QString path = QFileDialog::getSaveFileName(this,
+                                                tr("Open File"),
                                                 QString("./data/%1").arg(STRDATETIME),
                                                 tr("Text Files(*.txt)"));
     if(!path.isEmpty()){
         QFile file(path);
-        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-            MessBox::Warning(this, tr("Write File: Can't open file:\n %1 !").arg(path),
+        if(!file.open(QIODevice::WriteOnly
+                      | QIODevice::Text)){
+            MessBox::Warning(this,
+                             tr("Write File: Can't open file:\n %1 !").arg(path),
                              MessBox::CloseButton);
             return;
         }
@@ -363,8 +370,14 @@ void SerialWidget::buildConnect()
     connect(d->autoSendBox, &QCheckBox::clicked, this, &SerialWidget::onAutoSend);
     connect(d->sendTime, &QTimer::timeout, this, &SerialWidget::onSendData);
 
-    connect(d->sendConutButton, &QPushButton::clicked, [this]{ d->sendCount = 0; setSendCount(0); });
-    connect(d->recvConutButton, &QPushButton::clicked, [this]{ d->recvCount = 0; setRecvCount(0); });
+    connect(d->sendConutButton, &QPushButton::clicked, [this]{
+        d->sendCount = 0;
+        setSendCount(0);
+    });
+    connect(d->recvConutButton, &QPushButton::clicked, [this]{
+        d->recvCount = 0;
+        setRecvCount(0);
+    });
     connect(d->saveButton, &QPushButton::clicked, this, &SerialWidget::onSave);
     connect(d->clearButton, &QPushButton::clicked, d->dataView, &QTextEdit::clear);
 }

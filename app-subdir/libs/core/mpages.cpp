@@ -4,7 +4,8 @@
 
 class MPagesPrivate{
 public:
-    MPagesPrivate(QObject *parent) : owner(parent){
+    MPagesPrivate(QObject *parent)
+        : owner(parent){
         button = new QPushButton;
         button->setProperty("class", "GroupItemButton");
     }
@@ -13,8 +14,9 @@ public:
     QWidget *widget = nullptr;
 };
 
-MPages::MPages(QObject *parent) : QObject(parent)
-  , d(new MPagesPrivate(this))
+MPages::MPages(QObject *parent)
+    : QObject(parent)
+    , d(new MPagesPrivate(this))
 {
 }
 
