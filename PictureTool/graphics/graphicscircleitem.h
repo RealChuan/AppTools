@@ -4,9 +4,6 @@
 #include "basicgraphicsitem.h"
 
 struct GRAPHICS_EXPORT Circle{
-    Circle();
-    Circle(const QPointF& center, const double radius);
-
     bool isVaild();
     QRectF boundingRect();
 

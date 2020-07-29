@@ -7,8 +7,6 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
-#define MIN_RCET_SIZE 30
-
 struct GraphicsRectItemPrivate{
     QRectF rect;
     bool linehovered = false;
@@ -65,7 +63,6 @@ void GraphicsRectItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         return BasicGraphicsItem::mousePressEvent(event);
 
     setClickedPos(event->scenePos());
-
     QPointF p = event->pos();
     if(!isValid() && scene()->sceneRect().contains(p)){
         QPolygonF pts = cache();
@@ -75,6 +72,8 @@ void GraphicsRectItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         setCache(pts);
         showRectFromCache();
     }
+
+    update();
 }
 
 QPolygonF polygonFromRect(const QRectF& rect)
@@ -128,11 +127,14 @@ void GraphicsRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         ply.append(ply1.at(0));
         ply.append(ply1.at(2));
     }else{
-        if(mouseRegion() == DotRegion){
+        switch (mouseRegion()) {
+        case DotRegion:{
             int index = hoveredDotIndex();
-            ply.replace(index, p.toPoint());
-        }else if(mouseRegion() == All)
-            ply.translate(dp.toPoint());
+            ply.replace(index, p);
+        } break;
+        case All: ply.translate(dp); break;
+        default: break;
+        }
     }
     if(checkCacheValid(ply))
         setCache(ply);
@@ -174,8 +176,8 @@ void GraphicsRectItem::paint(QPainter *painter,
                              const QStyleOptionGraphicsItem *option,
                              QWidget*)
 {
-    double linew = pen().widthF() / painter->transform().m11();
-    painter->setPen(QPen(pen().color(), linew));
+    double linew = 2 * pen().widthF() / painter->transform().m11();
+    painter->setPen(QPen(LineColor, linew));
     setMargin(painter->transform().m11());
 
     QPolygonF pyg = cache();
@@ -192,8 +194,9 @@ bool GraphicsRectItem::checkCacheValid(const QPolygonF& pyg)
         return false;
     QPointF dp = pyg.back() - pyg.front();
     QRectF r(pyg.front(), pyg.back());
-    if((dp.x() < MIN_RCET_SIZE) || (dp.y() < MIN_RCET_SIZE)
-            || !scene() || !scene()->sceneRect().contains(r))
+    if((dp.x() < margin())
+            || (dp.y() < margin())
+            || !scene()->sceneRect().contains(r))
         return false;
     return true;
 }

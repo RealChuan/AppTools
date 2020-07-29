@@ -1,4 +1,5 @@
 #include "basicgraphicsitem.h"
+#include "graphics.h"
 
 #include <QPen>
 #include <QGraphicsScene>
@@ -74,22 +75,22 @@ void BasicGraphicsItem::setItemEditable(bool editable)
     setAcceptHoverEvents(editable);
 }
 
-QVariant BasicGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change,
-                                       const QVariant &value)
-{
-    if (change == ItemPositionChange && scene()) {
-        // value is the new position.
-        QPointF newPos = value.toPointF();
-        QRectF rect = scene()->sceneRect();
-        if (!rect.contains(newPos)) {
-            // Keep the item inside the scene rect.
-            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-            return newPos;
-        }
-    }
-    return QGraphicsItem::itemChange(change, value);
-}
+//QVariant BasicGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change,
+//                                       const QVariant &value)
+//{
+//    if (change == ItemPositionChange && scene()) {
+//        // value is the new position.
+//        QPointF newPos = value.toPointF();
+//        QRectF rect = scene()->sceneRect();
+//        if (!rect.contains(newPos)) {
+//            // Keep the item inside the scene rect.
+//            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
+//            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+//            return newPos;
+//        }
+//    }
+//    return QGraphicsItem::itemChange(change, value);
+//}
 
 void BasicGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
@@ -175,5 +176,11 @@ void BasicGraphicsItem::drawAnchor(QPainter *painter)
                                  p.y() - d->margin / 2,
                                  d->margin,
                                  d->margin),
-                          QColor(222,22,222));
+                          QColor(242,80,86));
+}
+
+void BasicGraphicsItem::setMyCursor(const QPointF &center, const QPointF &pos)
+{
+    double angle = QLineF(center, pos).angle();
+    setCursor(Graphics::curorFromAngle(Graphics::ConvertTo360(angle - 90)));
 }

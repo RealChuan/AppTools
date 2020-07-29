@@ -5,7 +5,6 @@
 #include <QLineF>
 #include <QPolygonF>
 
-
 namespace Graphics {
 
 void calculateCircle(const QPolygonF& pts, QPointF& center, double& radius);

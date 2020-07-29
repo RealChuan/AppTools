@@ -3,6 +3,10 @@
 #include "basicgraphicsitem.h"
 #include "graphicsrectitem.h"
 #include "graphicscircleitem.h"
+#include "graphicspolygonitem.h"
+#include "graphicsringitem.h"
+#include "graphicsarcitem.h"
+#include "graphicsrotatedrectitem.h"
 
 #include <QtWidgets>
 #include <QDebug>
@@ -50,9 +54,10 @@ void DrawWidget::onAddShape(QListWidgetItem *item)
     switch (type) {
     case BasicGraphicsItem::RECT: shape = new GraphicsRectItem; break;
     case BasicGraphicsItem::CIRCLE: shape = new GraphicsCircleItem; break;
-    case BasicGraphicsItem::POLYGON: break;
-    case BasicGraphicsItem::RING: break;
-    case BasicGraphicsItem::ROTATEDRECT: break;
+    case BasicGraphicsItem::POLYGON: shape = new GraphicsPolygonItem; break;
+    case BasicGraphicsItem::RING: shape = new GraphicsRingItem; break;
+    case BasicGraphicsItem::ARC: shape = new GraphicsArcItem; break;
+    case BasicGraphicsItem::ROTATEDRECT: shape = new GraphicsRotatedRectItem; break;
     case BasicGraphicsItem::POINTS: break;
     case BasicGraphicsItem::LINE: break;
     case BasicGraphicsItem::ELLIPSE: break;

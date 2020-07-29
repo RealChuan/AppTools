@@ -6,6 +6,8 @@
 
 #include "graphics_global.h"
 
+#define LineColor QColor(57,163,255)
+
 struct BasicGraphicsItemPrivate;
 class GRAPHICS_EXPORT BasicGraphicsItem : public QObject,
         public QAbstractGraphicsShapeItem
@@ -53,7 +55,7 @@ signals:
     void deleteMyself();
 
 protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    //QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
@@ -70,6 +72,8 @@ protected:
     int hoveredDotIndex() const;
 
     void drawAnchor(QPainter* painter);
+
+    void setMyCursor(const QPointF &center, const QPointF &pos);
 
 private:
     QScopedPointer<BasicGraphicsItemPrivate> d;

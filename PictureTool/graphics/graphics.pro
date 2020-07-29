@@ -23,8 +23,12 @@ SOURCES += \
     basicgraphicsitem.cpp \
     drawwidget.cpp \
     graphics.cpp \
+    graphicsarcitem.cpp \
     graphicscircleitem.cpp \
+    graphicspolygonitem.cpp \
     graphicsrectitem.cpp \
+    graphicsringitem.cpp \
+    graphicsrotatedrectitem.cpp \
     imageview.cpp
 
 HEADERS += \
@@ -32,6 +36,10 @@ HEADERS += \
     drawwidget.h \
     graphics.h \
     graphics_global.h \
+    graphicsarcitem.h \
     graphicscircleitem.h \
+    graphicspolygonitem.h \
     graphicsrectitem.h \
+    graphicsringitem.h \
+    graphicsrotatedrectitem.h \
     imageview.h

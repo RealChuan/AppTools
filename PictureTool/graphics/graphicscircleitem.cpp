@@ -10,18 +10,6 @@
 
 #define MIN_RADIUS 9
 
-Circle::Circle()
-    : center()
-    , radius()
-{
-}
-
-Circle::Circle(const QPointF &center, const double radius)
-    : center(center)
-    , radius(radius)
-{
-}
-
 bool Circle::isVaild()
 {
     return qAbs(radius) > MIN_RADIUS;
@@ -33,7 +21,9 @@ QRectF Circle::boundingRect()
                   center + QPointF(radius, radius));
 }
 
-
+/*
+ *
+ */
 
 struct GraphicsCircleItemPrivate{
     Circle circle;
@@ -43,7 +33,6 @@ GraphicsCircleItem::GraphicsCircleItem(QGraphicsItem *parent)
     : BasicGraphicsItem(parent)
     , d(new GraphicsCircleItemPrivate)
 {
-
 }
 
 GraphicsCircleItem::GraphicsCircleItem(const Circle &cicrle,
@@ -146,8 +135,7 @@ void GraphicsCircleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         break;
     case Edge:{
         QLineF lineF = QLineF(d->circle.center, pos);
-        setCursor(Graphics::curorFromAngle(
-                      Graphics::ConvertTo360(lineF.angle() - 90)));
+        setMyCursor(d->circle.center, pos);
         radius = lineF.length();
     } break;
     case All: center += dp; break;
@@ -158,7 +146,7 @@ void GraphicsCircleItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
                 center + QPointF(radius, radius));
 
     if(scene()->sceneRect().contains(rect) && radius >= MIN_RADIUS)
-        setCircle(Circle(center, radius));
+        setCircle(Circle{center, radius});
 }
 
 void GraphicsCircleItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -174,8 +162,7 @@ void GraphicsCircleItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if(qAbs(Graphics::distance(pos, d->circle.center) - d->circle.radius)
             < margin() / 3){
         setMouseRegion(Edge);
-        double angle = QLineF(d->circle.center, pos).angle();
-        setCursor(Graphics::curorFromAngle(Graphics::ConvertTo360(angle - 90)));
+        setMyCursor(d->circle.center, pos);
     }
 }
 
@@ -183,9 +170,9 @@ void GraphicsCircleItem::paint(QPainter *painter,
                                const QStyleOptionGraphicsItem *option,
                                QWidget*)
 {
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    double linew =  pen().widthF() / painter->transform().m11();
-    painter->setPen(QPen(pen().color(), linew));
+    painter->setRenderHint(QPainter::Antialiasing);
+    double linew = 2 * pen().widthF() / painter->transform().m11();
+    painter->setPen(QPen(LineColor, linew));
     setMargin(painter->transform().m11());
 
     if(isValid())
