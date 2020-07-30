@@ -3,11 +3,9 @@
 
 #include <QWidget>
 
-#include "graphics_global.h"
-
 class QListWidgetItem;
 class DrawWidgetPrivate;
-class GRAPHICS_EXPORT DrawWidget : public QWidget
+class DrawWidget : public QWidget
 {
 public:
     DrawWidget(QWidget *parent = nullptr);

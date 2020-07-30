@@ -14,6 +14,7 @@ public:
     ~MainWindow();
 
 private:
+    void setupUI();
     void initToolBar();
 
     QScopedPointer<MainWindowPrivate> d;

@@ -1,12 +1,14 @@
 #include "drawwidget.h"
-#include "imageview.h"
-#include "basicgraphicsitem.h"
-#include "graphicsrectitem.h"
-#include "graphicscircleitem.h"
-#include "graphicspolygonitem.h"
-#include "graphicsringitem.h"
-#include "graphicsarcitem.h"
-#include "graphicsrotatedrectitem.h"
+
+#include <graphics/imageview.h>
+#include <graphics/basicgraphicsitem.h>
+#include <graphics/graphicsrectitem.h>
+#include <graphics/graphicscircleitem.h>
+#include <graphics/graphicspolygonitem.h>
+#include <graphics/graphicsringitem.h>
+#include <graphics/graphicsarcitem.h>
+#include <graphics/graphicsrotatedrectitem.h>
+#include <graphics/graphicslineitem.h>
 
 #include <QtWidgets>
 #include <QDebug>
@@ -50,18 +52,14 @@ void DrawWidget::onAddShape(QListWidgetItem *item)
 
     BasicGraphicsItem *shape = nullptr;
     int type = d->shapeWidget->row(item) + 1;
-    qDebug() << "onAddShape: " << type;
     switch (type) {
+    case BasicGraphicsItem::LINE: shape = new GraphicsLineItem; break;
     case BasicGraphicsItem::RECT: shape = new GraphicsRectItem; break;
     case BasicGraphicsItem::CIRCLE: shape = new GraphicsCircleItem; break;
     case BasicGraphicsItem::POLYGON: shape = new GraphicsPolygonItem; break;
     case BasicGraphicsItem::RING: shape = new GraphicsRingItem; break;
     case BasicGraphicsItem::ARC: shape = new GraphicsArcItem; break;
     case BasicGraphicsItem::ROTATEDRECT: shape = new GraphicsRotatedRectItem; break;
-    case BasicGraphicsItem::POINTS: break;
-    case BasicGraphicsItem::LINE: break;
-    case BasicGraphicsItem::ELLIPSE: break;
-    case BasicGraphicsItem::TEXT: break;
     default: break;
     }
 

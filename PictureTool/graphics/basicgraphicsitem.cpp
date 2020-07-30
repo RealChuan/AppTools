@@ -7,20 +7,29 @@
 #include <QCursor>
 #include <QPainter>
 #include <QWheelEvent>
+#include <QMenu>
 
-struct BasicGraphicsItemPrivate{
+class BasicGraphicsItemPrivate{
+public:
+    BasicGraphicsItemPrivate(QObject *parent)
+        : owner(parent)
+        , menu(new QMenu)
+    {}
+
+    QObject *owner;
     QString name;
     BasicGraphicsItem::MouseRegion mouseRegin = BasicGraphicsItem::None;
     int hoveredDotIndex = -1;
     QPointF clickedPos;
     QPolygonF cache;
     double margin = 10;
+    QScopedPointer<QMenu> menu;
 };
 
 BasicGraphicsItem::BasicGraphicsItem(QGraphicsItem *parent)
     : QObject(nullptr)
     , QAbstractGraphicsShapeItem(parent)
-    , d(new BasicGraphicsItemPrivate)
+    , d(new BasicGraphicsItemPrivate(this))
 {
     setPen(QPen(Qt::blue));
     setFlags(ItemIsSelectable
@@ -28,6 +37,7 @@ BasicGraphicsItem::BasicGraphicsItem(QGraphicsItem *parent)
              | ItemSendsGeometryChanges
              | ItemIsFocusable );
     setAcceptHoverEvents(true);
+    createPopMenu();
 }
 
 BasicGraphicsItem::~BasicGraphicsItem()
@@ -97,11 +107,15 @@ void BasicGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if(!isValid())
         return;
 
-    d->mouseRegin = All;
+    d->mouseRegin = None;
     d->hoveredDotIndex = -1;
-    setCursor(Qt::SizeAllCursor);
 
     QPointF pos = event->scenePos();
+    if(shape().contains(pos)){
+        d->mouseRegin = All;
+        setCursor(Qt::SizeAllCursor);
+    }
+
     for(QPointF p : d->cache){
         QPointF m(margin() / 2, margin() / 2);
         QRectF area(p - m, p + m);
@@ -129,6 +143,11 @@ void BasicGraphicsItem::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Delete: emit deleteMyself(); break;
     default: break;
     }
+}
+
+void BasicGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    d->menu->exec(event->screenPos());
 }
 
 void BasicGraphicsItem::setCache(const QPolygonF &cache)
@@ -183,4 +202,9 @@ void BasicGraphicsItem::setMyCursor(const QPointF &center, const QPointF &pos)
 {
     double angle = QLineF(center, pos).angle();
     setCursor(Graphics::curorFromAngle(Graphics::ConvertTo360(angle - 90)));
+}
+
+void BasicGraphicsItem::createPopMenu()
+{
+    d->menu->addAction(tr("Delete"), this, &BasicGraphicsItem::deleteMyself);
 }

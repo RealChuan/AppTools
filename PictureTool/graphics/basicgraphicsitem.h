@@ -8,24 +8,20 @@
 
 #define LineColor QColor(57,163,255)
 
-struct BasicGraphicsItemPrivate;
+class BasicGraphicsItemPrivate;
 class GRAPHICS_EXPORT BasicGraphicsItem : public QObject,
         public QAbstractGraphicsShapeItem
 {
     Q_OBJECT
 public:
     enum Shape{
-        RECT = 1,
+        LINE = 1,
+        RECT,
         CIRCLE,
         POLYGON,
         RING,
         ARC,
-        ROTATEDRECT,
-        POINTS,
-        LINE,
-        ELLIPSE,
-        TEXT,
-        EXTEND = 1024
+        ROTATEDRECT
     };
     Q_ENUM(Shape)
 
@@ -59,6 +55,7 @@ protected:
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
 
     void setCache(const QPolygonF&);
     QPolygonF cache() const;
@@ -76,6 +73,8 @@ protected:
     void setMyCursor(const QPointF &center, const QPointF &pos);
 
 private:
+    void createPopMenu();
+
     QScopedPointer<BasicGraphicsItemPrivate> d;
 };
 

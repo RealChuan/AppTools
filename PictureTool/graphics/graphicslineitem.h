@@ -1,0 +1,32 @@
+#ifndef GRAPHICSLINEITEM_H
+#define GRAPHICSLINEITEM_H
+
+#include "basicgraphicsitem.h"
+
+struct GraphicsLineItemPrivate;
+class GRAPHICS_EXPORT GraphicsLineItem : public BasicGraphicsItem
+{
+public:
+    GraphicsLineItem(QGraphicsItem *parent = nullptr);
+    GraphicsLineItem(const QLineF& line, QGraphicsItem *parent = nullptr);
+    ~GraphicsLineItem() override;
+
+    void setLine(const QLineF& line);
+    QLineF line() const;
+
+    bool isValid() const override;
+    int type() const override;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr) override;
+private:
+    void pointsChanged(QPolygonF &ply);
+
+    QScopedPointer<GraphicsLineItemPrivate> d;
+};
+
+#endif // GRAPHICSLINEITEM_H

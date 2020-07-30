@@ -21,10 +21,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     basicgraphicsitem.cpp \
-    drawwidget.cpp \
     graphics.cpp \
     graphicsarcitem.cpp \
     graphicscircleitem.cpp \
+    graphicslineitem.cpp \
     graphicspolygonitem.cpp \
     graphicsrectitem.cpp \
     graphicsringitem.cpp \
@@ -33,11 +33,11 @@ SOURCES += \
 
 HEADERS += \
     basicgraphicsitem.h \
-    drawwidget.h \
     graphics.h \
     graphics_global.h \
     graphicsarcitem.h \
     graphicscircleitem.h \
+    graphicslineitem.h \
     graphicspolygonitem.h \
     graphicsrectitem.h \
     graphicsringitem.h \

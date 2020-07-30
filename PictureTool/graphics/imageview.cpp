@@ -8,26 +8,29 @@
 #include <QMimeData>
 #include <QMessageBox>
 #include <QDebug>
+#include <QMenu>
+#include <QApplication>
 
 const qreal DEFAULT_SCALE_FACTOR = 1.2;
 
 class ImageViewPrivate{
 public:
     ImageViewPrivate(QWidget *parent)
-        : owner(parent){
+        : owner(parent)
+        , menu(new QMenu){
         imageItem = new QGraphicsPixmapItem;
         imageItem->setCacheMode(QGraphicsItem::NoCache);
         imageItem->setZValue(0);
 
         // background item
-        backgroundItem = new QGraphicsRectItem();
+        backgroundItem = new QGraphicsRectItem;
         backgroundItem->setBrush(Qt::white);
         backgroundItem->setPen(Qt::NoPen);
         backgroundItem->setVisible(showBackground);
         backgroundItem->setZValue(-1);
 
         // outline
-        outlineItem = new QGraphicsRectItem();
+        outlineItem = new QGraphicsRectItem;
         QPen outline(Qt::black, 1, Qt::DashLine);
         outline.setCosmetic(true);
         outlineItem->setPen(outline);
@@ -44,6 +47,7 @@ public:
     bool showCrossLine = false;
     QString rgbInfo;
     QPointF mousePoint;
+    QScopedPointer<QMenu> menu;
 };
 
 ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
@@ -59,6 +63,7 @@ ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
     setMouseTracking(true);
     setAcceptDrops(true);
     initScene();
+    createPopMenu();
 }
 
 ImageView::~ImageView()
@@ -72,6 +77,7 @@ QPixmap ImageView::pixmap() const
 
 void ImageView::createScene(const QString &imageUrl)
 {
+    qDebug() << imageUrl;
     QImage image(imageUrl);
     if(image.isNull()){
         MessBox::Warning(this,
@@ -123,7 +129,8 @@ void ImageView::setViewOutline(bool enable)
 void ImageView::setViewCrossLine(bool enable)
 {
     d->showCrossLine = enable;
-    if(!enable) scene()->update();
+    if(!enable)
+        scene()->update();
 }
 
 void ImageView::zoomIn()
@@ -194,18 +201,23 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 
     if(d->showCrossLine && d->imageItem){
         QPointF pointF = mapToScene(event->pos());
-        d->mousePoint = mapToParent(event->pos());
+        d->mousePoint = event->pos();
         if(d->imageItem->contains(pointF)){
             QRgb rgb = d->imageItem->pixmap().toImage().pixel(pointF.toPoint());
-            d->rgbInfo = QString("( %1, %2 ) | %3 %4 %5").
-                    arg(QString::number(pointF.x()),
-                        QString::number(pointF.y()),
-                        QString::number(qRed(rgb)),
-                        QString::number(qGreen(rgb)),
-                        QString::number(qBlue(rgb)));
+            d->rgbInfo = QString("( %1, %2 ) | %3 %4 %5")
+                    .arg(QString::number(pointF.x())
+                         , QString::number(pointF.y())
+                         , QString::number(qRed(rgb))
+                         , QString::number(qGreen(rgb))
+                         , QString::number(qBlue(rgb)));
             scene()->update();
         }
     }
+}
+
+void ImageView::mouseDoubleClickEvent(QMouseEvent*)
+{
+    fitToScreen();
 }
 
 void ImageView::dragEnterEvent(QDragEnterEvent *event)
@@ -231,6 +243,11 @@ void ImageView::dropEvent(QDropEvent *event)
     createScene(fileName);
 }
 
+void ImageView::contextMenuEvent(QContextMenuEvent *event)
+{
+    d->menu->exec(event->globalPos());
+}
+
 void ImageView::initScene()
 {
     // Prepare background check-board pattern
@@ -249,6 +266,28 @@ void ImageView::initScene()
     scene()->addItem(d->outlineItem);
 }
 
+void ImageView::createPopMenu()
+{
+    d->menu->addAction(tr("Original Size"), this, &ImageView::resetToOriginalSize);
+    d->menu->addAction(tr("Adapt To Screen"), this, &ImageView::fitToScreen);
+    d->menu->addAction(tr("Rotate 90 Clockwise"), this, &ImageView::rotateNinetieth);
+    d->menu->addAction(tr("Rotate 90 Counterclockwise"), this, &ImageView::anti_rotateNinetieth);
+    d->menu->addSeparator();
+
+    QAction *showBackgroundAction = new QAction(tr("Show Background"), this);
+    showBackgroundAction->setCheckable(true);
+    connect(showBackgroundAction, &QAction::triggered, this, &ImageView::setViewBackground);
+    QAction *showOutlineAction = new QAction(tr("Show Outline"), this);
+    showOutlineAction->setCheckable(true);
+    connect(showOutlineAction, &QAction::triggered, this, &ImageView::setViewOutline);
+    QAction *showCrossLineAction = new QAction(tr("Show CrossLine"), this);
+    showCrossLineAction->setCheckable(true);
+    connect(showCrossLineAction, &QAction::triggered, this, &ImageView::setViewCrossLine);
+    d->menu->addAction(showBackgroundAction);
+    d->menu->addAction(showOutlineAction);
+    d->menu->addAction(showCrossLineAction);
+}
+
 QRect ImageView::textRect(const Qt::Corner pos, const QFontMetrics &metrics, const QString &text)
 {
     int startX = 1;
@@ -258,11 +297,11 @@ QRect ImageView::textRect(const Qt::Corner pos, const QFontMetrics &metrics, con
 
     switch (pos) {
     case Qt::TopLeftCorner: break;
-    case Qt::BottomLeftCorner: startY = this->height() - rectHeight; break;
-    case Qt::TopRightCorner: startX = this->width() - rectWidth; break;
+    case Qt::BottomLeftCorner: startY = height() - rectHeight; break;
+    case Qt::TopRightCorner: startX = width() - rectWidth; break;
     case Qt::BottomRightCorner:
-        startX = this->width() - rectWidth;
-        startY = this->height() - rectHeight;
+        startX = width() - rectWidth;
+        startY = height() - rectHeight;
         break;
     }
 
@@ -300,7 +339,8 @@ void ImageView::drawCrossLine(QPainter *painter)
 
     painter->drawLine(QPointF(0, d->mousePoint.y()),
                       QPointF(w, d->mousePoint.y()));
-    painter->drawLine(QPointF(d->mousePoint.x(), 0), QPointF(d->mousePoint.x(), h));
+    painter->drawLine(QPointF(d->mousePoint.x(), 0),
+                      QPointF(d->mousePoint.x(), h));
 }
 
 void ImageView::emitScaleFactor()

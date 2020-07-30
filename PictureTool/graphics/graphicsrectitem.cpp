@@ -176,6 +176,7 @@ void GraphicsRectItem::paint(QPainter *painter,
                              const QStyleOptionGraphicsItem *option,
                              QWidget*)
 {
+    painter->setRenderHint(QPainter::Antialiasing);
     double linew = 2 * pen().widthF() / painter->transform().m11();
     painter->setPen(QPen(LineColor, linew));
     setMargin(painter->transform().m11());
