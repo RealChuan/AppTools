@@ -19,7 +19,7 @@ inline QString formatHex(const QByteArray &msg)
     return temp;
 }
 
-struct WidgetParam{
+struct SerialWidgetParam{
     int baudRate = 6;
     int dataBits = 3;
     int stopBits = 0;
@@ -99,7 +99,7 @@ public:
     int sendCount = 0;
     int recvCount = 0;
 
-    WidgetParam widgetParam;
+    SerialWidgetParam widgetParam;
 };
 
 SerialWidget::SerialWidget(QWidget *parent)

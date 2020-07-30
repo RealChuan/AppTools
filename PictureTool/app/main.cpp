@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
     a.processEvents();
 
     a.setApplicationVersion(QObject::tr("0.0.1"));
+    a.setApplicationDisplayName(QObject::tr("PictureTool"));
     a.setApplicationName(QObject::tr("PictureTool"));
     a.setOrganizationName(QObject::tr("Youth"));
 

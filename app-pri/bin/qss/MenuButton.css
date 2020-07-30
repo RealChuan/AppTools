@@ -1,45 +1,42 @@
-#menubtnwidget, #listbtnwidget{
-    background: gray;
+#menuWidget{
     min-width: 200px;
     max-width: 200px;
     padding: 0px;
-    background: rgb(73, 80, 95);
-}
-
-.ListGroupButton {
-    border: 0;
-    height: 50px;
-    font-size: 16px;
-	color: #EEE;
+    background: rgb(54, 62, 78);
+	border-bottom-left-radius: 5px;
 }
 
 .GroupButton, .GroupItemButton {
-    color: #BBB;
+	border: 0;
+    color: #EEE;
+	border-radius: 0;
+	background: rgb(54, 62, 78);
 }
 
 .GroupButton:hover, .GroupItemButton:hover {
-    color: #EEE;
+	border-color: #389cff;
+	background: #389cff;
+    color: white;
 }
 .GroupButton {
-    border: 0;
-    height: 50px;
+    height: 40px;
     font-size: 18px;
     text-align: left;
     padding-left: 6px;
-
-    background: rgb(73, 80, 95);
 }
 
 .GroupItemButton {
-    border: 0;
-    height: 50px;
+    height: 38px;
     font-size: 16px;
     text-align: left;
     padding-left: 35px;
-
-    background: rgb(54, 62, 78);
+	border-width: 3px;
+	border-style: none none none solid;
+	border-color: rgb(54, 62, 78);
 }
+
 .GroupItemButton:checked {
-    color: #EEE;
-    background: rgb(52, 142, 237);
+	color: #39a3ff;
+    background: rgb(85,79,73);
+    border-color: #39a3ff;
 }

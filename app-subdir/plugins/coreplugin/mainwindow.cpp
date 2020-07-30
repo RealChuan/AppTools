@@ -62,7 +62,8 @@ void MainWindow::extensionsInitialized()
 {
     QVector<MPages*> mPages = PluginManager::getObjects<MPages>();
     for(const MPages* p: mPages){
-        if(!p->widget()) continue;
+        if(!p->widget())
+            continue;
         if(p->button()->property("Group") == MPages::Tool)
             d->v1->addWidget(p->button());
         else if(p->button()->property("Group") == MPages::About)
@@ -85,8 +86,10 @@ void MainWindow::onShowGroupButton(QAbstractButton *button)
 {
     QVariant group = button->property("Group");
     foreach(QAbstractButton *btn, d->menuButtonGroup->buttons()){
-        if(btn->property("Group") == group) btn->show();
-        else btn->hide();
+        if(btn->property("Group") == group)
+            btn->show();
+        else
+            btn->hide();
     }
 }
 
@@ -159,9 +162,7 @@ QWidget *MainWindow::menuWidget()
 
     connect(pluginButton, &QPushButton::clicked, this, &MainWindow::onAboutPlugins);
 
-    connect(qtButton, &QPushButton::clicked, [this]{
-        QMessageBox::aboutQt(this);
-    });
+    connect(qtButton, &QPushButton::clicked, [this]{ QMessageBox::aboutQt(this); });
 
     toolsButton->setProperty("Group", MPages::Tool);
     aboutButton->setProperty("Group", MPages::About);

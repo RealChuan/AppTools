@@ -19,7 +19,7 @@ inline QString formatHex(const QByteArray &msg)
     return temp;
 }
 
-struct WidgetParam{
+struct TcpWidgetParam{
     int model = 0;
     QString ip = "127.0.0.1";
     QString port = "65533";
@@ -124,7 +124,7 @@ public:
     int sendCount = 0;
     int recvCount = 0;
 
-    WidgetParam widgetParam;
+    TcpWidgetParam widgetParam;
 };
 
 TcpWidget::TcpWidget(QWidget *parent)

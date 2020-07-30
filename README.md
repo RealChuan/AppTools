@@ -23,15 +23,15 @@ UI reference:[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/
   
 
 
-1. app-pri：一套UI模板以及一些小工具合集，详情[README.md](app-pri/README.md) （这一套已经放弃了，可不看）；    
+1. app-pri：一套UI模板以及一些小工具合集，详情[README.md](app-pri/README.md) ；    
 
-2. app-subdir：基于QtCreator的插件系统写的应用，功能与app-pri类似,详情[README.md](app-subdir/README.md) （这一套是正在维护）；     
-
-
+2. app-subdir：基于QtCreator的插件系统写的应用，功能与app-pri类似,详情[README.md](app-subdir/README.md) （子工程）；     
 
 
 
-1. app-pri: a set of UI templates and a collection of gadgets, details [README.md](app-pri/README.md)(This set has been abandoned, don't watch it);  
 
-2. app-subdir: an application written based on QtCreator's plug-in system, the function is similar to app-pri, details[README.md](app-subdir/README.md) (This set is being maintained);  
+
+1. app-pri: a set of UI templates and a collection of gadgets, details [README.md](app-pri/README.md);  
+
+2. app-subdir: an application written based on QtCreator's plug-in system, the function is similar to app-pri, details[README.md](app-subdir/README.md);  
 

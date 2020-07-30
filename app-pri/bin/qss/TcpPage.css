@@ -1,0 +1,30 @@
+#SendBox {
+    min-height: 120px;
+}
+
+#SetBox {
+    min-width: 220px;
+    max-width: 220px;
+}
+
+#SendButton {
+	min-width: 80px;
+	min-height: 80px;
+	color: white;
+	background-color: #39a3ff;
+}
+
+#SendButton:!enabled {
+	color: #495060;
+	background-color: rgb(215,215,215);
+}
+
+#OpenButton{
+	color: white;
+	background-color: #39a3ff;
+	qproperty-icon: url(image/run.png)off, url(image/running.png)on;
+}
+
+#OpenButton:hover{
+	background-color: #0066ff;
+}

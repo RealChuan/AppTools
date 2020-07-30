@@ -1,0 +1,21 @@
+{
+	"database": {
+        "type": "SQLite",
+        "databasename": "sql/apptools.db"
+	},
+		
+	"qss_files": [
+        "qss/Common.css",
+		"qss/LoginWidget.css",
+		"qss/MacTitle.css",
+		"qss/MenuButton.css",
+		"qss/CommonWidget.css",
+		"qss/HomePage.css",
+		"qss/TcpPage.css",
+		"qss/CRCPage.css"
+    ],
+	
+	"font_files": [
+        "fonts/pingfangSS.ttf"
+    ]
+}
