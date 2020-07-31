@@ -417,60 +417,60 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="40"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="45"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="42"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="49"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="47"/>
         <source>TcpServer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="50"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="48"/>
         <source>TcpClient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="51"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="49"/>
         <source>Local IP List: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="54"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="52"/>
         <source>Please enter the server IP address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="58"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="56"/>
         <source>Local Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="60"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="58"/>
         <source>Please enter the port number.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="56"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="67"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="65"/>
         <source>Auto Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="58"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="69"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="78"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="67"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="76"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="75"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="73"/>
         <source>Connect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="76"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="74"/>
         <source>Auto Reconnect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -486,7 +486,7 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="55"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="66"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="64"/>
         <source>Hex</source>
         <translation type="unfinished"></translation>
     </message>
@@ -502,13 +502,13 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="65"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="85"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="83"/>
         <source>Save Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tools/serialtool/serialwidget.cpp" line="66"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="86"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="84"/>
         <source>Clear Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -694,139 +694,139 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="200"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="199"/>
         <source>Serial Close!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="239"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="236"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="241"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="238"/>
         <source>Text Files(*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="247"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="243"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="254"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="250"/>
         <source>The file was saved successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="257"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="253"/>
         <source>No file saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="262"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="258"/>
         <source>Data Display Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="266"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="262"/>
         <source>Data Sending Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="283"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="279"/>
         <source>Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="284"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="280"/>
         <source>Baud Rate: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="285"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="281"/>
         <source>Data Bits: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="286"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="282"/>
         <source>Stop Bits: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="287"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="283"/>
         <source>Parity: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="288"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="284"/>
         <source>Flow Control: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="290"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="286"/>
         <source>Parameter Setting Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="329"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="324"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="330"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="325"/>
         <source>Even</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="331"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="326"/>
         <source>Odd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="333"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="328"/>
         <source>NoFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="334"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="329"/>
         <source>HardwareFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="335"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="330"/>
         <source>SoftwareFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="407"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="412"/>
         <source> &gt;&gt; Serial Send: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="410"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="416"/>
         <source> &gt;&gt; Serial Recv: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="413"/>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="416"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="420"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="424"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="420"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="430"/>
         <source>Time [%1] %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="427"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="438"/>
         <source>Send: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/serialtool/serialwidget.cpp" line="432"/>
+        <location filename="../tools/serialtool/serialwidget.cpp" line="443"/>
         <source>Recv: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,194 +895,194 @@ Offset: %2</source>
 <context>
     <name>TcpWidget</name>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="150"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="185"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="148"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="183"/>
         <source>TcpServer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="151"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="149"/>
         <source>Local IP List: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="154"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="152"/>
         <source>Local Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="155"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="255"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="153"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="261"/>
         <source>Listen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="160"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="202"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="158"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="206"/>
         <source>TcpClient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="161"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="159"/>
         <source>Server IP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="164"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="305"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="162"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="311"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="165"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="163"/>
         <source>Server Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="180"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="543"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="178"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="556"/>
         <source>Please enter the port number!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="226"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="230"/>
         <source>No client is currently online, please stop sending invalid!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="231"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="236"/>
         <source>Connect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="232"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="237"/>
         <source>Send To All Online Clients: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="235"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="241"/>
         <source>Send To Clients [%1] : %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="305"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="311"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="264"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="270"/>
         <source>Server Online!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="255"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="261"/>
         <source>Stop Listen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="267"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="272"/>
         <source>Server Offline!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="275"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="279"/>
         <source> Online.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="282"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="286"/>
         <source> Offline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="318"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="323"/>
         <source>Client Online!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="321"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="325"/>
         <source>Client Offline!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="373"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="376"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="375"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="378"/>
         <source>Text Files(*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="380"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="383"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="387"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="390"/>
         <source>The file was saved successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="390"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="393"/>
         <source>No file saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="400"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="403"/>
         <source>Data Display Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="404"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="407"/>
         <source>Data Sending Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="430"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="433"/>
         <source>Parameter Setting Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="511"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="516"/>
         <source> &gt;&gt; Network Send: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="514"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="520"/>
         <source> &gt;&gt; Network Recv: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="517"/>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="520"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="524"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="528"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="524"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="534"/>
         <source>Time [%1] %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="530"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="542"/>
         <source>Send: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="535"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="547"/>
         <source>Recv: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="551"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="566"/>
         <source>Please enter the ip address!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tcptool/tcpwidget.cpp" line="421"/>
+        <location filename="../tools/tcptool/tcpwidget.cpp" line="424"/>
         <source>Communication Mode: </source>
         <translation type="unfinished"></translation>
     </message>

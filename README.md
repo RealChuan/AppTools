@@ -1,37 +1,53 @@
-# AppTools 
+# AppTools  
 
-图片资源等来自于互联网。       
+## [English Description](README_en.md)  
 
-本代码仓库，仅供学习，若被他人用于商业用途 与本人无关！ 请遵守许可证！   
-
-
-
-Picture resources, etc. come from the Internet.
-
-This code warehouse is for learning only. If it is used by others for commercial purposes, it has nothing to do with me! Please comply with the license!
+图片资源等来自于互联网。  
+本代码仓库，仅供学习，若被他人用于商业用途 与本人无关！ 请遵守许可证！  
 
 
 
-Build Environment  :    Qt 5.14.2		VS:2017            
-
-
+环境：Qt5.15.0	Visual Studio 2019  
 
 UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
 
-UI reference:[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")    
+1. PictureTool：基于Qt  Graphics View Framework框架写的看图和绘制简单图形的简易框架详情；  
 
-  
+2. app-pri：一套UI模板以及一些小工具合集；    
 
+3. app-subdir：基于QtCreator的插件系统写的应用（子工程），功能与app-pri类似并不复杂，主要学习QtCreator的插件系统 ； 
 
-1. app-pri：一套UI模板以及一些小工具合集，详情[README.md](app-pri/README.md) ；    
+   
 
-2. app-subdir：基于QtCreator的插件系统写的应用，功能与app-pri类似,详情[README.md](app-subdir/README.md) （子工程）；     
+### 使用方法：  
 
+1. 先编译构建；  
 
+2. 把源码`bin`文件夹复制到编译出来的可执行文件所在目录（源码`bin-32(64)/debug(release)/`）；  
 
+3. 将`bin/sql`目录下的[apptools.sql](bin/sql/apptools.sql)导入MySql数据库，或者把整个sql文件夹放入可执行程序目录，使用SQLite3数据库；  
 
+4. 在可执行程序路径下（`bin-32(64)/debug(release)/`）新建`translator`文件夹，用QtCreator工具-外部-Qt语言家发布翻译到`translator`文件夹；  
 
-1. app-pri: a set of UI templates and a collection of gadgets, details [README.md](app-pri/README.md);  
+5. 启动程序。  
 
-2. app-subdir: an application written based on QtCreator's plug-in system, the function is similar to app-pri, details[README.md](app-subdir/README.md);  
+   
 
+### 界面展示：  
+
+1. #### PictureTool：  
+
+   1. ##### 看图界面：  
+   
+   <div align=center><img src="PictureTool/doc/ImageView.png"></div>  
+   
+   2. ##### 简单图形绘制界面  
+
+   <div align=center><img src="PictureTool/doc/DrawScene.png"></div>  
+   
+2. #### app-pri（app-subdir类似）  
+   
+   <div align=center><img src="app-subdir/doc/MainWindow.png"></div>  
+   
+   <div align=center><img src="app-subdir/doc/LoginWidget.png"></div>  
+   

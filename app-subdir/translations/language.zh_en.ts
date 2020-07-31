@@ -12,74 +12,74 @@
 <context>
     <name>CRCWidget</name>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="62"/>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="63"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="64"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="65"/>
         <source>true</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="62"/>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="63"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="64"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="65"/>
         <source>false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="114"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="116"/>
         <source>CRC (CRCH CRCL): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="117"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="119"/>
         <source>Calculate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="121"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="123"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="124"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="126"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="126"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="128"/>
         <source>Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="128"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="130"/>
         <source>Poly Formula: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="130"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="132"/>
         <source>Poly: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="132"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="134"/>
         <source>Init: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="134"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="136"/>
         <source>Reverse Input: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="136"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="138"/>
         <source>Reverse Output: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="138"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="140"/>
         <source>XOrOut: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="151"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="153"/>
         <source>CRC Calculator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -87,42 +87,42 @@
 <context>
     <name>ChangePasswdWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="44"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="47"/>
         <source>ChangePasswd Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="64"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="66"/>
         <source>Please enter the password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="70"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="72"/>
         <source>Please enter the new password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="76"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="78"/>
         <source>Please enter the password again!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="82"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="84"/>
         <source>The current account %1 password is entered incorrectly, please re-enter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="105"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="108"/>
         <source>Registration failed, please try again later!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="117"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="113"/>
         <source>Changed Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="118"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="114"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,7 +130,7 @@
 <context>
     <name>CommonWidget</name>
     <message>
-        <location filename="../libs/controls/commonwidget.cpp" line="142"/>
+        <location filename="../libs/controls/commonwidget.cpp" line="146"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -138,17 +138,17 @@
 <context>
     <name>ConfigWidget</name>
     <message>
-        <location filename="../plugins/coreplugin/configwidget.cpp" line="32"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="34"/>
         <source>Language(Requires Restart): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/configwidget.cpp" line="37"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="39"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/configwidget.cpp" line="38"/>
+        <location filename="../plugins/coreplugin/configwidget.cpp" line="40"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -217,32 +217,32 @@
 <context>
     <name>CurrentLoginWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="41"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="43"/>
         <source>Current Login Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="65"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="66"/>
         <source>Wrong password, please re-enter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="89"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="82"/>
         <source>Log Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="90"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="83"/>
         <source>Change Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="91"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="84"/>
         <source>Delete Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="99"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="91"/>
         <source>Current online account: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -250,7 +250,7 @@
 <context>
     <name>DatabaseSQL</name>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="18"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="16"/>
         <source>Qt currently supports database drivers:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,52 +265,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="59"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="61"/>
         <source>Unable to load database, This program needs the MYSQL driver!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="65"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="67"/>
         <source>MySQL IP Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="69"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="71"/>
         <source>MySQL Port Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="73"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="75"/>
         <source>MySQL Database Name Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="77"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="79"/>
         <source>MySQL Username Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="81"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="83"/>
         <source>MySQL Password Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="95"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="97"/>
         <source>MySQL Open Error: %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="102"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="104"/>
         <source>Unable to load database, This program needs the SQLITE driver</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="108"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="110"/>
         <source>SQLite Database Name Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="121"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="123"/>
         <source>SQLite Open Error: %1 !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,7 +318,7 @@
 <context>
     <name>EditComboBox</name>
     <message>
-        <location filename="../libs/controls/accountcontrols.cpp" line="141"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="146"/>
         <source>Confirm to delete the current account?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -704,27 +704,27 @@ will also disable the following plugins:
 <context>
     <name>FloatBox</name>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="53"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="55"/>
         <source>Float Convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="54"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="56"/>
         <source>To Hex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="55"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="57"/>
         <source>To Float</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="60"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="62"/>
         <source>Float: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="63"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="65"/>
         <source>Float Hex: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -732,18 +732,18 @@ will also disable the following plugins:
 <context>
     <name>Json</name>
     <message>
-        <location filename="../libs/utils/json.cpp" line="61"/>
+        <location filename="../libs/utils/json.cpp" line="58"/>
         <source>Cannot open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/json.cpp" line="78"/>
+        <location filename="../libs/utils/json.cpp" line="75"/>
         <source>%1
 Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/json.cpp" line="101"/>
+        <location filename="../libs/utils/json.cpp" line="98"/>
         <source>%1 is empty!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -759,32 +759,32 @@ Offset: %2</source>
 <context>
     <name>LoginWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="36"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="37"/>
         <source>Login Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="77"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="76"/>
         <source>Please enter username!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="83"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="82"/>
         <source>Please enter password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="94"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="93"/>
         <source>Incorrect account or password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="116"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="108"/>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="120"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="112"/>
         <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
@@ -792,42 +792,42 @@ Offset: %2</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="113"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="117"/>
         <source>Hello World!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="124"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="128"/>
         <source>Reload QSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="133"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="138"/>
         <source>Set up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="152"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="157"/>
         <source>Common Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="153"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="158"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="154"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="159"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="155"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="160"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="156"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="161"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,7 +835,7 @@ Offset: %2</source>
 <context>
     <name>PasswordLineEdit</name>
     <message>
-        <location filename="../libs/controls/accountcontrols.cpp" line="164"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="170"/>
         <source>Please enter the password.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -972,66 +972,66 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/utils.cpp" line="94"/>
+        <location filename="../libs/utils/utils.cpp" line="92"/>
         <source>Build with:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="41"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="42"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="43"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="46"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="48"/>
         <source>TcpServer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="46"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="49"/>
         <source>TcpClient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="47"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="50"/>
         <source>Local IP List: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="50"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="53"/>
         <source>Please enter the server IP address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="54"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="57"/>
         <source>Local Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="56"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="59"/>
         <source>Please enter the port number.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="57"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="63"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="66"/>
         <source>Auto Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="59"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="65"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="74"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="68"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="77"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="71"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="74"/>
         <source>Connect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="72"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="75"/>
         <source>Auto Reconnect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1047,7 +1047,7 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="56"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="62"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="65"/>
         <source>Hex</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1063,13 +1063,13 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="66"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="81"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="84"/>
         <source>Save Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="67"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="82"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="85"/>
         <source>Clear Screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1084,29 +1084,29 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/messbox.cpp" line="12"/>
+        <location filename="../libs/controls/messbox.cpp" line="13"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/messbox.cpp" line="14"/>
+        <location filename="../libs/controls/messbox.cpp" line="15"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/messbox.cpp" line="16"/>
+        <location filename="../libs/controls/messbox.cpp" line="17"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="19"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="20"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="21"/>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="23"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="22"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="24"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="25"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="26"/>
         <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="27"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="28"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1117,30 +1117,27 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/commonwidget.cpp" line="14"/>
+        <location filename="../libs/controls/commonwidget.cpp" line="15"/>
         <source>Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/commonwidget.cpp" line="17"/>
+        <location filename="../libs/controls/commonwidget.cpp" line="18"/>
         <source>Maximize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/controls/commonwidget.cpp" line="20"/>
+        <location filename="../libs/controls/commonwidget.cpp" line="21"/>
         <source>Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="13"/>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="14"/>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="14"/>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="13"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="197"/>
         <source>Avatar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="17"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="16"/>
         <source>Please enter the current account password.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1150,7 +1147,7 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="23"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="24"/>
         <source>Please enter the new password again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1160,27 +1157,27 @@ Offset: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="21"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="19"/>
         <source>AutoLogin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="18"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="16"/>
         <source>Please enter user name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="20"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="18"/>
         <source>Please enter the password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="24"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="22"/>
         <source>Please enter the password again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="36"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="37"/>
         <source>Account control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1188,47 +1185,47 @@ Offset: %2</source>
 <context>
     <name>RegisterWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="38"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="37"/>
         <source>Register Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="65"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="63"/>
         <source>Please enter username!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="71"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="69"/>
         <source>Please enter password!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="77"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="75"/>
         <source>Please enter password again!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="82"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="80"/>
         <source>Two passwords are different, please enter password again!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="88"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="86"/>
         <source>An account with the same name already exists, please modify the account name!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="97"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="95"/>
         <source>Registration failed, please try again later!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="109"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="100"/>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="110"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="101"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1244,7 +1241,7 @@ Offset: %2</source>
 <context>
     <name>SerialPort</name>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialport.cpp" line="49"/>
+        <location filename="../plugins/serialtoolplugin/serialport.cpp" line="50"/>
         <source>Serial Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1252,154 +1249,154 @@ Offset: %2</source>
 <context>
     <name>SerialWidget</name>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="185"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="188"/>
         <source>Close Serial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="185"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="188"/>
         <source>Open Serial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="195"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="198"/>
         <source>Serial Open!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="198"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="200"/>
         <source>Serial Close!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="236"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="237"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="238"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="239"/>
         <source>Text Files(*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="242"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="244"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="249"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="251"/>
         <source>The file was saved successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="252"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="254"/>
         <source>No file saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="257"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="259"/>
         <source>Data Display Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="261"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="263"/>
         <source>Data Sending Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="278"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="280"/>
         <source>Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="279"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="281"/>
         <source>Baud Rate: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="280"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="282"/>
         <source>Data Bits: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="281"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="283"/>
         <source>Stop Bits: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="282"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="284"/>
         <source>Parity: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="283"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="285"/>
         <source>Flow Control: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="285"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="287"/>
         <source>Parameter Setting Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="324"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="325"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="325"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="326"/>
         <source>Even</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="326"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="327"/>
         <source>Odd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="328"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="329"/>
         <source>NoFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="329"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="330"/>
         <source>HardwareFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="330"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="331"/>
         <source>SoftwareFlowControl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="396"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="413"/>
         <source> &gt;&gt; Serial Send: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="399"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="417"/>
         <source> &gt;&gt; Serial Recv: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="402"/>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="405"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="421"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="425"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="409"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="431"/>
         <source>Time [%1] %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="416"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="439"/>
         <source>Send: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="421"/>
+        <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="444"/>
         <source>Recv: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1407,23 +1404,23 @@ Offset: %2</source>
 <context>
     <name>SystemConversionBox</name>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="66"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="68"/>
         <source>System Conversion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="69"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="71"/>
         <source>Decimal: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="71"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="73"/>
         <source>Binary: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="73"/>
         <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="75"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="77"/>
         <source>Octal: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1431,7 +1428,7 @@ Offset: %2</source>
 <context>
     <name>TcpClient</name>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpclient.cpp" line="50"/>
+        <location filename="../plugins/tcptoolplugin/tcpclient.cpp" line="51"/>
         <source>Client Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1447,28 +1444,28 @@ Offset: %2</source>
 <context>
     <name>TcpServer</name>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="29"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="28"/>
         <source>There is currently no client online, sending failed, please stop sending!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="51"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="50"/>
         <source>TCPServer accept Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="61"/>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="90"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="60"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="89"/>
         <source>%1 : %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="77"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="76"/>
         <source>Client [%1 : %2] Error: %3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="112"/>
+        <location filename="../plugins/tcptoolplugin/tcpserver.cpp" line="111"/>
         <source>Client [%1 : %2] : </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1476,194 +1473,194 @@ Offset: %2</source>
 <context>
     <name>TcpWidget</name>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="145"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="180"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="149"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="184"/>
         <source>TcpServer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="146"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="150"/>
         <source>Local IP List: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="149"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="153"/>
         <source>Local Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="150"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="248"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="154"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="262"/>
         <source>Listen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="155"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="197"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="159"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="207"/>
         <source>TcpClient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="156"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="160"/>
         <source>Server IP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="159"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="298"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="163"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="312"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="160"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="164"/>
         <source>Server Port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="175"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="533"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="179"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="557"/>
         <source>Please enter the port number!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="221"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="231"/>
         <source>No client is currently online, please stop sending invalid!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="226"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="237"/>
         <source>Connect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="227"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="238"/>
         <source>Send To All Online Clients: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="230"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="242"/>
         <source>Send To Clients [%1] : %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="298"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="312"/>
         <source>Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="257"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="271"/>
         <source>Server Online!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="248"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="262"/>
         <source>Stop Listen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="260"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="273"/>
         <source>Server Offline!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="268"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="280"/>
         <source> Online.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="275"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="287"/>
         <source> Offline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="311"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="324"/>
         <source>Client Online!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="314"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="326"/>
         <source>Client Offline!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="365"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="377"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="367"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="379"/>
         <source>Text Files(*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="371"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="384"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="377"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="391"/>
         <source>The file was saved successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="380"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="394"/>
         <source>No file saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="390"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="404"/>
         <source>Data Display Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="394"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="408"/>
         <source>Data Sending Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="420"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="434"/>
         <source>Parameter Setting Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="501"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="517"/>
         <source> &gt;&gt; Network Send: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="504"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="521"/>
         <source> &gt;&gt; Network Recv: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="507"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="510"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="525"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="529"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="514"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="535"/>
         <source>Time [%1] %2 %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="520"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="543"/>
         <source>Send: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="525"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="548"/>
         <source>Recv: %1 Bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="541"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="567"/>
         <source>Please enter the ip address!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="411"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="425"/>
         <source>Communication Mode: </source>
         <translation type="unfinished"></translation>
     </message>

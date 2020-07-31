@@ -6,7 +6,6 @@
 #include <controls/messbox.h>
 #include <extensionsystem/pluginmanager.h>
 
-#include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QtWidgets>
 
@@ -19,15 +18,15 @@ inline QString formatHex(const QByteArray &msg)
     return temp;
 }
 
-struct SerialWidgetParam{
-    int baudRate = 6;
-    int dataBits = 3;
-    int stopBits = 0;
-    int parity = 0;
-    int flowControl = 0;
+struct SerialExtraParam{
     bool hex = false;
     int sendTime = 1000;
-    QString sendData = "";
+    QString sendData;
+};
+
+struct SerialWidgetParam{
+    SerialParam serialParam;
+    SerialExtraParam serialExtraParam;
 };
 
 class SerialWidgetPrivate{
@@ -38,7 +37,7 @@ public:
         dataView->document()->setMaximumBlockCount(1000);
         dataView->setReadOnly(true);
 
-        sendData = new QTextEdit(owner);
+        sendEdit = new QTextEdit(owner);
         sendButton = new QPushButton(QObject::tr("Send"), owner);
         sendButton->setObjectName("SendButton");
 
@@ -72,7 +71,7 @@ public:
     QWidget *owner;
 
     QTextEdit *dataView;
-    QTextEdit *sendData;
+    QTextEdit *sendEdit;
     QPushButton *sendButton;
 
     QPushButton *searchSerialButton;
@@ -93,13 +92,11 @@ public:
     QPushButton *clearButton;
 
     SerialPortThread *serialThread = nullptr;
-    SerialParam serialParam;
+    SerialWidgetParam serialWidgetParam;
 
     QTimer *sendTime = nullptr;
     int sendCount = 0;
     int recvCount = 0;
-
-    SerialWidgetParam widgetParam;
 };
 
 SerialWidget::SerialWidget(QWidget *parent)
@@ -138,8 +135,9 @@ void SerialWidget::onSearchPort()
 
 void SerialWidget::onSendData()
 {
-    QString str = d->sendData->toPlainText();
-    if(str.isEmpty()) return;
+    QString str = d->sendEdit->toPlainText();
+    if(str.isEmpty())
+        return;
 
     QByteArray bytes;
     if(d->hexBox->isChecked()){
@@ -158,10 +156,11 @@ void SerialWidget::onSendData()
 
 void SerialWidget::onParamChanged(const QString &)
 {
-    if(!d->serialThread) return;
+    if(!d->serialThread)
+        return;
 
     setSerialParam();
-    emit d->serialThread->paramChanged(d->serialParam);
+    emit d->serialThread->paramChanged(d->serialWidgetParam.serialParam);
 }
 
 void SerialWidget::onOpenOrCloseSerial(bool state)
@@ -170,7 +169,7 @@ void SerialWidget::onOpenOrCloseSerial(bool state)
     if(state){
         destorySerialThread();
         setSerialParam();
-        d->serialThread = new SerialPortThread(d->serialParam, this);
+        d->serialThread = new SerialPortThread(d->serialWidgetParam.serialParam, this);
         connect(d->serialThread, &SerialPortThread::serialOnLine,
                 this, &SerialWidget::onSerialOnline, Qt::UniqueConnection);
         connect(d->serialThread, &SerialPortThread::errorMessage,
@@ -194,14 +193,11 @@ void SerialWidget::onSerialOnline(bool state)
     }
     d->autoSendBox->setEnabled(state);
     d->sendButton->setEnabled(state);
-    QString str;
-    if(state){
-        str = tr("Serial Open!");
-        appendDisplay(SuccessInfo, str);
-    } else {
-        str = tr("Serial Close!");
-        appendDisplay(ErrorInfo, str);
-    }
+
+    if(state)
+        appendDisplay(SuccessInfo, tr("Serial Open!"));
+    else
+        appendDisplay(ErrorInfo, tr("Serial Close!"));
 }
 
 void SerialWidget::onAppendError(const QString &error)
@@ -243,8 +239,7 @@ void SerialWidget::onSave()
                                                 tr("Text Files(*.txt)"));
     if(!path.isEmpty()){
         QFile file(path);
-        if(!file.open(QIODevice::WriteOnly
-                      | QIODevice::Text)){
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
             MessBox::Warning(this,
                              tr("Write File: Can't open file:\n %1 !").arg(path),
                              MessBox::CloseButton);
@@ -268,7 +263,7 @@ void SerialWidget::setupUI()
     QGroupBox *sendBox = new QGroupBox(tr("Data Sending Window"), this);
     sendBox->setObjectName("SendBox");
     QHBoxLayout *sendLayout = new QHBoxLayout(sendBox);
-    sendLayout->addWidget(d->sendData);
+    sendLayout->addWidget(d->sendEdit);
     sendLayout->addWidget(d->sendButton);
 
     QSplitter *splitter = new QSplitter(Qt::Vertical, this);
@@ -313,9 +308,8 @@ void SerialWidget::initWindow()
 {
     onSearchPort();
     QList<qint32> baudList = QSerialPortInfo::standardBaudRates();
-    for(const qint32 baudrate: baudList){
-        d->baudRateBox->addItem(QString::number(baudrate));
-    }
+    for(const qint32 baudrate: baudList)
+        d->baudRateBox->addItem(QString::number(baudrate), baudrate);
 
     d->dataBitsBox->addItem("5", QSerialPort::Data5);
     d->dataBitsBox->addItem("6", QSerialPort::Data6);
@@ -337,17 +331,24 @@ void SerialWidget::initWindow()
     d->flowControlBox->addItem(tr("SoftwareFlowControl"), QSerialPort::SoftwareControl);
 }
 
+inline void setComboxCurrentText(QComboBox *box, const QVariant& value)
+{
+    box->setCurrentIndex(box->findData(value));
+}
+
 void SerialWidget::setWindowParam()
 {
-    d->baudRateBox->setCurrentIndex(d->widgetParam.baudRate);
-    d->dataBitsBox->setCurrentIndex(d->widgetParam.dataBits);
-    d->stopBitsBox->setCurrentIndex(d->widgetParam.stopBits);
-    d->parityBox->setCurrentIndex(d->widgetParam.parity);
-    d->flowControlBox->setCurrentIndex(d->widgetParam.flowControl);
+    SerialParam *serialParam = &d->serialWidgetParam.serialParam;
+    setComboxCurrentText(d->baudRateBox, serialParam->baudRate);
+    setComboxCurrentText(d->dataBitsBox, serialParam->dataBits);
+    setComboxCurrentText(d->stopBitsBox, serialParam->stopBits);
+    setComboxCurrentText(d->parityBox, serialParam->parity);
+    setComboxCurrentText(d->flowControlBox, serialParam->flowControl);
 
-    d->hexBox->setChecked(d->widgetParam.hex);
-    d->autoSendTimeBox->setValue(d->widgetParam.sendTime);
-    d->sendData->setText(d->widgetParam.sendData);
+    SerialExtraParam *extraParam = &d->serialWidgetParam.serialExtraParam;
+    d->hexBox->setChecked(extraParam->hex);
+    d->autoSendTimeBox->setValue(extraParam->sendTime);
+    d->sendEdit->setText(extraParam->sendData);
 }
 
 void SerialWidget::buildConnect()
@@ -384,12 +385,13 @@ void SerialWidget::buildConnect()
 
 void SerialWidget::setSerialParam()
 {
-    d->serialParam.portName = d->portNameBox->currentText();
-    d->serialParam.baudRate = QSerialPort::BaudRate(d->baudRateBox->currentText().toInt());
-    d->serialParam.dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
-    d->serialParam.stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
-    d->serialParam.parity = QSerialPort::Parity(d->parityBox->currentData().toInt());
-    d->serialParam.flowControl = QSerialPort::FlowControl(d->flowControlBox->currentData().toInt());
+    SerialParam *serialParam = &d->serialWidgetParam.serialParam;
+    serialParam->portName = d->portNameBox->currentText();
+    serialParam->baudRate = QSerialPort::BaudRate(d->baudRateBox->currentText().toInt());
+    serialParam->dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
+    serialParam->stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
+    serialParam->parity = QSerialPort::Parity(d->parityBox->currentData().toInt());
+    serialParam->flowControl = QSerialPort::FlowControl(d->flowControlBox->currentData().toInt());
 }
 
 void SerialWidget::destorySerialThread()
@@ -402,26 +404,34 @@ void SerialWidget::destorySerialThread()
 
 void SerialWidget::appendDisplay(SerialWidget::MessageType type, const QString & message)
 {
-    if(message.isEmpty()) return;
+    if(message.isEmpty())
+        return;
 
     QString display;
-    if(type == Send) {
+    switch (type) {
+    case Send:
         display = tr(" >> Serial Send: ");
         d->dataView->setTextColor(QColor("black"));
-    } else if(type == Recv) {
+        break;
+    case Recv:
         display = tr(" >> Serial Recv: ");
         d->dataView->setTextColor(QColor("dodgerblue"));
-    } else if(type == SuccessInfo) {
+        break;
+    case SuccessInfo:
         display = tr(" >> Prompt Message: ");
         d->dataView->setTextColor(QColor("green"));
-    } else if(type == ErrorInfo) {
+        break;
+    case ErrorInfo:
         display = tr(" >> Prompt Message: ");
         d->dataView->setTextColor(QColor("red"));
-    } else return;
+        break;
+    default: return;
+    }
 
-    d->dataView->append(QString(tr("Time [%1] %2 %3").arg(STRDATETIMEMS).
-                                arg(display).arg(message)));
-
+    d->dataView->append(QString(tr("Time [%1] %2 %3")
+                                .arg(STRDATETIMEMS)
+                                .arg(display)
+                                .arg(message)));
 }
 
 void SerialWidget::setSendCount(int size)
@@ -437,33 +447,46 @@ void SerialWidget::setRecvCount(int size)
 void SerialWidget::loadSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
-    setting->beginGroup("seria_config");
-    d->widgetParam.baudRate = setting->value("BaudRate", d->widgetParam.baudRate).toInt();
-    d->widgetParam.dataBits = setting->value("DataBits", d->widgetParam.dataBits).toInt();
-    d->widgetParam.stopBits = setting->value("StopBits", d->widgetParam.stopBits).toInt();
-    d->widgetParam.parity = setting->value("Parity", d->widgetParam.parity).toInt();
-    d->widgetParam.flowControl = setting->value("FlowControl", d->widgetParam.flowControl).toInt();
+    if(!setting)
+        return;
 
-    d->widgetParam.hex = setting->value("Hex", d->widgetParam.hex).toBool();
-    d->widgetParam.sendTime = setting->value("SendTime", d->widgetParam.sendTime).toInt();
-    d->widgetParam.sendData = setting->value("SendData", d->widgetParam.sendData).toString();
+    setting->beginGroup("serial_config");
+
+    SerialParam *serialParam = &d->serialWidgetParam.serialParam;
+    serialParam->baudRate = QSerialPort::BaudRate(
+                setting->value("BaudRate", serialParam->baudRate).toInt());
+    serialParam->dataBits = QSerialPort::DataBits(
+                setting->value("DataBits", serialParam->dataBits).toInt());
+    serialParam->stopBits = QSerialPort::StopBits(
+                setting->value("StopBits", serialParam->stopBits).toInt());
+    serialParam->parity = QSerialPort::Parity(
+                setting->value("Parity", serialParam->parity).toInt());
+    serialParam->flowControl = QSerialPort::FlowControl(
+                setting->value("FlowControl", serialParam->flowControl).toInt());
+
+    SerialExtraParam *extraParam = &d->serialWidgetParam.serialExtraParam;
+    extraParam->hex = setting->value("Hex", extraParam->hex).toBool();
+    extraParam->sendTime = setting->value("SendTime", extraParam->sendTime).toInt();
+    extraParam->sendData = setting->value("SendData", extraParam->sendData).toString();
     setting->endGroup();
 }
 
 void SerialWidget::saveSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
-    setting->beginGroup("seria_config");
-    setting->setValue("BaudRate", d->baudRateBox->currentIndex());
-    setting->setValue("DataBits", d->dataBitsBox->currentIndex());
-    setting->setValue("StopBits", d->stopBitsBox->currentIndex());
-    setting->setValue("Parity", d->parityBox->currentIndex());
-    setting->setValue("FlowControl", d->flowControlBox->currentIndex());
+    if(!setting)
+        return;
+
+    SerialParam *serialParam = &d->serialWidgetParam.serialParam;
+    setting->beginGroup("serial_config");
+    setting->setValue("BaudRate", serialParam->baudRate);
+    setting->setValue("DataBits", serialParam->dataBits);
+    setting->setValue("StopBits", serialParam->stopBits);
+    setting->setValue("Parity", serialParam->parity);
+    setting->setValue("FlowControl", serialParam->flowControl);
 
     setting->setValue("Hex", d->hexBox->isChecked());
     setting->setValue("SendTime", d->autoSendTimeBox->value());
-    setting->setValue("SendData", d->sendData->toPlainText().toUtf8());
+    setting->setValue("SendData", d->sendEdit->toPlainText().toUtf8());
     setting->endGroup();
 }

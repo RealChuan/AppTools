@@ -26,7 +26,7 @@ struct TcpWidgetParam{
     bool hex = false;
     int sendTime = 1000;
     int connectTime = 1000;
-    QString sendData = "";
+    QString sendData;
 };
 
 enum Model { Server, Client };
@@ -44,7 +44,8 @@ public:
         sendButton->setObjectName("SendButton");
 
         modelBox = new QComboBox(owner);
-        modelBox->addItems(QStringList() << QObject::tr("TcpServer")
+        modelBox->addItems(QStringList()
+                           << QObject::tr("TcpServer")
                            << QObject::tr("TcpClient"));
         ipLabel = new QLabel(QObject::tr("Local IP List: "), owner);
         localIPBox = new QComboBox(owner);
@@ -124,7 +125,7 @@ public:
     int sendCount = 0;
     int recvCount = 0;
 
-    TcpWidgetParam widgetParam;
+    TcpWidgetParam tcpWidgetParam;
 };
 
 TcpWidget::TcpWidget(QWidget *parent)
@@ -183,12 +184,18 @@ void TcpWidget::onListenOrConnect(bool state)
     if(d->modelBox->currentText() == tr("TcpServer")){
         if(state) {
             destoryServerOrClientThread();
-            d->serverThread = new TcpServerThread(quint16(port.toUInt()), d->localIPBox->currentText(), this);
-            connect(d->serverThread, &TcpServerThread::serverOnLine, this, &TcpWidget::onServerOnline, Qt::UniqueConnection);
-            connect(d->serverThread, &TcpServerThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
-            connect(d->serverThread, &TcpServerThread::newClientInfo, this, &TcpWidget::onServerNewClient, Qt::UniqueConnection);
-            connect(d->serverThread, &TcpServerThread::disconnectClientInfo, this, &TcpWidget::onServerDisClient, Qt::UniqueConnection);
-            connect(d->serverThread, &TcpServerThread::clientMessage, this, &TcpWidget::onServerRecvMessage, Qt::UniqueConnection);
+            d->serverThread = new TcpServerThread(quint16(port.toUInt()),
+                                                  d->localIPBox->currentText(), this);
+            connect(d->serverThread, &TcpServerThread::serverOnLine,
+                    this, &TcpWidget::onServerOnline, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::errorMessage,
+                    this, &TcpWidget::onAppendError, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::newClientInfo,
+                    this, &TcpWidget::onServerNewClient, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::disconnectClientInfo,
+                    this, &TcpWidget::onServerDisClient, Qt::UniqueConnection);
+            connect(d->serverThread, &TcpServerThread::clientMessage,
+                    this, &TcpWidget::onServerRecvMessage, Qt::UniqueConnection);
             d->serverThread->start();
         } else {
             destoryServerOrClientThread();
@@ -201,16 +208,16 @@ void TcpWidget::onListenOrConnect(bool state)
         if(state){
             destoryServerOrClientThread();
             createTcpClientThread();
-        } else if(d->clientThread){
+        } else if(d->clientThread)
             destoryServerOrClientThread();
-        }
     }
 }
 
 void TcpWidget::onSendData()
 {
     QString str = d->sendData->toPlainText();
-    if(str.isEmpty()) return;
+    if(str.isEmpty())
+        return;
 
     QByteArray bytes;
     if(d->hexBox->isChecked()){
@@ -221,7 +228,8 @@ void TcpWidget::onSendData()
 
     if(d->serverThread){
         if(d->allConnectBox->count() == 1){
-            QString error = tr("No client is currently online, please stop sending invalid!");
+            QString error = tr("No client is currently online, "
+                               "please stop sending invalid!");
             appendDisplay(ErrorInfo, error);
             return;
         }
@@ -230,9 +238,10 @@ void TcpWidget::onSendData()
             appendDisplay(Send, QString(tr("Send To All Online Clients: %1.").arg(str)));
             clientInfo = "";
         } else
-            appendDisplay(Send, QString(tr("Send To Clients [%1] : %2.")
-                                        .arg(clientInfo)
-                                        .arg(str)));
+            appendDisplay(Send,
+                          QString(tr("Send To Clients [%1] : %2.")
+                                  .arg(clientInfo)
+                                  .arg(str)));
         emit d->serverThread->sendMessage(bytes, clientInfo);
         d->sendCount += str.size();
         setSendCount(d->sendCount);
@@ -257,14 +266,12 @@ void TcpWidget::onServerOnline(bool state)
     }
     d->autoSendBox->setEnabled(state);
     d->sendButton->setEnabled(state);
-    QString str;
-    if(state){
-        str = tr("Server Online!");
-        appendDisplay(SuccessInfo, str);
-    } else {
-        str = tr("Server Offline!");
-        appendDisplay(ErrorInfo, str);
-    }
+
+    if(state)
+        appendDisplay(SuccessInfo, tr("Server Online!"));
+    else
+        appendDisplay(ErrorInfo, tr("Server Offline!"));
+
 }
 
 void TcpWidget::onServerNewClient(const QString &clientInfo)
@@ -283,7 +290,9 @@ void TcpWidget::onServerDisClient(const QString &clientInfo)
 
 void TcpWidget::onServerRecvMessage(const QString &clientInfo, const QByteArray &bytes)
 {
-    if(bytes.isEmpty()) return;
+    if(bytes.isEmpty())
+        return;
+
     d->recvCount += bytes.size();
     setRecvCount(d->recvCount);
     QString str = clientInfo;
@@ -311,14 +320,11 @@ void TcpWidget::onClientOnLine(bool state)
     if(!state && !d->autoConnectBox->isChecked() && d->clientThread)
         destoryServerOrClientThread();
 
-    QString str;
-    if(state){
-        str = tr("Client Online!");
-        appendDisplay(SuccessInfo, str);
-    } else {
-        str = tr("Client Offline!");
-        appendDisplay(ErrorInfo, str);
-    }
+    if(state)
+        appendDisplay(SuccessInfo, tr("Client Online!"));
+    else
+        appendDisplay(ErrorInfo, tr("Client Offline!"));
+
 }
 
 void TcpWidget::onClientRecvMessage(const QByteArray &bytes)
@@ -459,14 +465,14 @@ void TcpWidget::initWindow()
 
 void TcpWidget::setWindowParam()
 {
-    d->modelBox->setCurrentIndex(d->widgetParam.model);
-    d->serverIPEdit->setText(d->widgetParam.ip);
-    d->portEdit->setText(d->widgetParam.port);
+    d->modelBox->setCurrentIndex(d->tcpWidgetParam.model);
+    d->serverIPEdit->setText(d->tcpWidgetParam.ip);
+    d->portEdit->setText(d->tcpWidgetParam.port);
 
-    d->hexBox->setChecked(d->widgetParam.hex);
-    d->autoSendTimeBox->setValue(d->widgetParam.sendTime);
-    d->autoConnectTimeBox->setValue(d->widgetParam.connectTime);
-    d->sendData->setText(d->widgetParam.sendData);
+    d->hexBox->setChecked(d->tcpWidgetParam.hex);
+    d->autoSendTimeBox->setValue(d->tcpWidgetParam.sendTime);
+    d->autoConnectTimeBox->setValue(d->tcpWidgetParam.connectTime);
+    d->sendData->setText(d->tcpWidgetParam.sendData);
 
     onModelChange(d->modelBox->currentText());
 }
@@ -502,25 +508,34 @@ void TcpWidget::clearCount()
 
 void TcpWidget::appendDisplay(TcpWidget::MessageType type, const QString &message)
 {
-    if(message.isEmpty()) return;
+    if(message.isEmpty())
+        return;
 
     QString display;
-    if(type == Send) {
+    switch (type) {
+    case Send:
         display = tr(" >> Network Send: ");
         d->dataView->setTextColor(QColor("black"));
-    } else if(type == Recv) {
+        break;
+    case Recv:
         display = tr(" >> Network Recv: ");
         d->dataView->setTextColor(QColor("dodgerblue"));
-    } else if(type == SuccessInfo) {
+        break;
+    case SuccessInfo:
         display = tr(" >> Prompt Message: ");
         d->dataView->setTextColor(QColor("green"));
-    } else if(type == ErrorInfo) {
+        break;
+    case ErrorInfo:
         display = tr(" >> Prompt Message: ");
         d->dataView->setTextColor(QColor("red"));
-    } else return;
+        break;
+    default: return;
+    }
 
-    d->dataView->append(QString(tr("Time [%1] %2 %3").arg(STRDATETIMEMS).
-                                arg(display).arg(message)));
+    d->dataView->append(QString(tr("Time [%1] %2 %3")
+                                .arg(STRDATETIMEMS)
+                                .arg(display)
+                                .arg(message)));
 }
 
 void TcpWidget::setSendCount(int size)
@@ -538,7 +553,9 @@ void TcpWidget::createTcpClientThread()
     if(!d->clientThread){
         QString port = d->portEdit->text();
         if(port.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the port number!"), MessBox::CloseButton);
+            MessBox::Warning(this,
+                             tr("Please enter the port number!"),
+                             MessBox::CloseButton);
             d->portEdit->setFocus();
             d->autoConnectBox->setChecked(false);
             onAutoReconnectStartOrStop(false);
@@ -546,16 +563,21 @@ void TcpWidget::createTcpClientThread()
         }
         QString ip = d->serverIPEdit->text().trimmed();
         if(ip.isEmpty()){
-            MessBox::Warning(this, tr("Please enter the ip address!"), MessBox::CloseButton);
+            MessBox::Warning(this,
+                             tr("Please enter the ip address!"),
+                             MessBox::CloseButton);
             d->serverIPEdit->setFocus();
             d->autoConnectBox->setChecked(false);
             onAutoReconnectStartOrStop(false);
             return;
         }
         d->clientThread = new TcpClientThread(ip, quint16(port.toUInt()), this);
-        connect(d->clientThread, &TcpClientThread::clientOnLine, this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
-        connect(d->clientThread, &TcpClientThread::errorMessage, this, &TcpWidget::onAppendError, Qt::UniqueConnection);
-        connect(d->clientThread, &TcpClientThread::serverMessage, this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::clientOnLine,
+                this, &TcpWidget::onClientOnLine, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::errorMessage,
+                this, &TcpWidget::onAppendError, Qt::UniqueConnection);
+        connect(d->clientThread, &TcpClientThread::serverMessage,
+                this, &TcpWidget::onClientRecvMessage, Qt::UniqueConnection);
         d->clientThread->start();
     }
 }
@@ -575,24 +597,27 @@ void TcpWidget::destoryServerOrClientThread()
 void TcpWidget::loadSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
+    if(!setting)
+        return;
 
     setting->beginGroup("tcp_config");
-    d->widgetParam.model = setting->value("CommunicationMode", d->widgetParam.model).toInt();
-    d->widgetParam.ip = setting->value("ClientIP", d->widgetParam.ip).toString();
-    d->widgetParam.port = setting->value("Port", d->widgetParam.port).toString();
+    d->tcpWidgetParam.model = setting->value("CommunicationMode", d->tcpWidgetParam.model).toInt();
+    d->tcpWidgetParam.ip = setting->value("ClientIP", d->tcpWidgetParam.ip).toString();
+    d->tcpWidgetParam.port = setting->value("Port", d->tcpWidgetParam.port).toString();
 
-    d->widgetParam.hex = setting->value("Hex", d->widgetParam.hex).toBool();
-    d->widgetParam.sendTime = setting->value("SendTime", d->widgetParam.sendTime).toInt();
-    d->widgetParam.connectTime = setting->value("ConnectTime", d->widgetParam.connectTime).toInt();
-    d->widgetParam.sendData = setting->value("SendData", d->widgetParam.sendData).toString();
+    d->tcpWidgetParam.hex = setting->value("Hex", d->tcpWidgetParam.hex).toBool();
+    d->tcpWidgetParam.sendTime = setting->value("SendTime", d->tcpWidgetParam.sendTime).toInt();
+    d->tcpWidgetParam.connectTime = setting->value("ConnectTime", d->tcpWidgetParam.connectTime).toInt();
+    d->tcpWidgetParam.sendData = setting->value("SendData", d->tcpWidgetParam.sendData).toString();
     setting->endGroup();
 }
 
 void TcpWidget::saveSetting()
 {
     QSettings *setting = ExtensionSystem::PluginManager::settings();
-    if(!setting) return;
+    if(!setting)
+        return;
+
     setting->beginGroup("tcp_config");
     setting->setValue("CommunicationMode", d->modelBox->currentIndex());
     setting->setValue("ClientIP", d->serverIPEdit->text());
