@@ -39,11 +39,41 @@ GraphicsRotatedRectItem::~GraphicsRotatedRectItem()
 {
 }
 
+inline bool checkRotatedRect(const RotatedRect &rotatedRect, const double margin)
+{
+    return rotatedRect.width > margin
+            && rotatedRect.height > margin;
+}
+
+inline QPointF rotate(const QPointF& p, double angle)
+{
+    double _angle = Graphics::ConvertTo360(angle) * M_PI * 2 / 360.0;
+    double cos = std::cos(_angle);
+    double sin = std::sin(_angle);
+    double _x = cos * p.x() - sin * p.y();
+    double _y = sin * p.x() + cos * p.y();
+    return QPointF(_x, _y);
+}
+
+inline QPolygonF cacheFromRotated(const RotatedRect &rotated)
+{
+    QPointF p0 = QPointF(-rotated.width / 2, -rotated.height / 2);
+    QPointF p1 = QPointF(rotated.width / 2,  -rotated.height / 2);
+    QPointF p2 = QPointF(rotated.width / 2,   rotated.height / 2);
+    QPointF p3 = QPointF(-rotated.width / 2,  rotated.height / 2);
+
+    QPolygonF pts;
+    pts << rotated.center + rotate(p0, rotated.angle);
+    pts << rotated.center + rotate(p1, rotated.angle);
+    pts << rotated.center + rotate(p2, rotated.angle);
+    pts << rotated.center + rotate(p3, rotated.angle);
+
+    return pts;
+}
+
 void GraphicsRotatedRectItem::setRotatedRect(const RotatedRect &rotatedRect)
 {
-    prepareGeometryChange();
-    RotatedRect rotatedRect_tmp = rotatedRect;
-    if(!rotatedRect_tmp.isValid())
+    if(!checkRotatedRect(rotatedRect, margin()))
         return;
     d->rotatedRect = rotatedRect;
     QPolygonF pts = cacheFromRotated(rotatedRect);
@@ -57,7 +87,7 @@ RotatedRect GraphicsRotatedRectItem::rotatedRect() const
 
 bool GraphicsRotatedRectItem::isValid() const
 {
-    return d->rotatedRect.isValid();
+    return checkRotatedRect(d->rotatedRect, margin());
 }
 
 int GraphicsRotatedRectItem::type() const
@@ -67,48 +97,36 @@ int GraphicsRotatedRectItem::type() const
 
 void GraphicsRotatedRectItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton){
-        QPointF p = event->pos();
-        this->setClickedPos(event->scenePos());
-        if(!isValid() && scene() && scene()->sceneRect().contains(p)){
-            QPolygonF cache = this->cache();
-            cache << event->scenePos();
-            if(cache.count() < 3)
-                setCache(cache);
+    if(event->button() != Qt::LeftButton)
+        return;
 
-            if(cache.count() == 3 && !checkCacheValid(cache))
-                cache.removeLast();
+    setClickedPos(event->scenePos());
 
-            if(checkCacheValid(cache)){
-                setCache(cache);
-                showRotatedFromCache();
-                return;
-            }
-        }
-    }else if(event->button() == Qt::RightButton && !isValid()){
-        QPolygonF cache = this->cache();
-        if(!cache.empty())
-            cache.removeLast();
-        setCache(cache);
-    }
+    if(isValid())
+        return;
 
-    update();
-    BasicGraphicsItem::mousePressEvent(event);
+    QPointF point = event->pos();
+    QPolygonF pts_tmp = cache();
+    pts_tmp.append(point);
+    pointsChanged(pts_tmp);
 }
 
 void GraphicsRotatedRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if((event->buttons() & Qt::LeftButton) == 0 || !isValid())
+    if((event->buttons() & Qt::LeftButton) == 0
+            || !isValid())
         return;
 
-    setSelected(true);
-    QPointF p = event->scenePos();
-    QPointF dp = p - clickedPos();
+    if(!isSelected())
+        setSelected(true);
+
+    QPointF point = event->scenePos();
+    QPointF dp = point - clickedPos();
 
     RotatedRect rrt = d->rotatedRect;
     QPointF c = rrt.center;
-    QPolygonF pts = cache();
-    QLineF l0(c, p);
+    QPolygonF pts_tmp = cache();
+    QLineF l0(c, point);
     QLineF l1(c, clickedPos());
     double m = qSqrt(dp.x() * dp.x() + dp.y() * dp.y());
     if(d->rotatedHovered){
@@ -121,8 +139,8 @@ void GraphicsRotatedRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         QPointF p1 = d->hoveredLine.p1();
         QPointF p2 = d->hoveredLine.p2();
 
-        int index0 = pts.indexOf(p1);
-        int index1 = pts.indexOf(p2);
+        int index0 = pts_tmp.indexOf(p1);
+        int index1 = pts_tmp.indexOf(p2);
         if(index0 < 0 || index1 < 0)
             return;
 
@@ -132,29 +150,30 @@ void GraphicsRotatedRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         QPointF p4 = p2 + QPointF(dl.dx() * m, dl.dy() * m)
                 /dl.length() * (strech ? 1 : -1);
 
-        pts.replace(index0, p3);
-        pts.replace(index1, p4);
+        pts_tmp.replace(index0, p3);
+        pts_tmp.replace(index1, p4);
         d->hoveredLine = QLineF(p3, p4);
 
-        rrt.width = QLineF(pts.at(0), pts.at(1)).length();
-        rrt.height = QLineF(pts.at(0), pts.at(3)).length();
-        rrt.center = (pts.at(0) + pts.at(2)) / 2;
+        rrt.width = QLineF(pts_tmp.at(0), pts_tmp.at(1)).length();
+        rrt.height = QLineF(pts_tmp.at(0), pts_tmp.at(3)).length();
+        rrt.center = (pts_tmp.at(0) + pts_tmp.at(2)) / 2;
 
     }else{
-        if(this->mouseRegion() == DotRegion){
-
-        }else if(this->mouseRegion() == All){
-            rrt.center += dp;
+        switch (mouseRegion()) {
+        case DotRegion: break;
+        case All: rrt.center += dp; break;
+        default: return;
         }
     }
 
-    pts = cacheFromRotated(rrt);
-    if(checkCacheValid(pts)){
+    pts_tmp = cacheFromRotated(rrt);
+    if(scene()->sceneRect().contains(pts_tmp.boundingRect())
+            && checkRotatedRect(rrt, margin())){
         setRotatedRect(rrt);
-
+        update();
     }
 
-    setClickedPos(p);
+    setClickedPos(point);
 }
 
 void GraphicsRotatedRectItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -162,26 +181,26 @@ void GraphicsRotatedRectItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if(!isValid())
         return;
 
-    QPointF p = event->scenePos();
-    QPointF c = d->rotatedRect.center;
+    QPointF point = event->scenePos();
+    QPointF center = d->rotatedRect.center;
+    QPolygonF pts_tmp = cache();
 
-    QPolygonF ply = this->cache();
-    QPointF c1 = (ply.at(1) + ply.at(2)) / 2;
-    QLineF l = QLineF(c, c1);
-    l = QLineF(c, l.pointAt(0.9));
+    QPointF c1 = (pts_tmp[1] + pts_tmp[2]) / 2;
+    QLineF l = QLineF(center, c1);
+    l = QLineF(center, l.pointAt(0.9));
 
-    ply = Graphics::boundingFromLine(l, margin() / 4);
-    if(ply.containsPoint(p, Qt::OddEvenFill)){
+    pts_tmp = Graphics::boundingFromLine(l, margin() / 4);
+    if(pts_tmp.containsPoint(point, Qt::OddEvenFill)){
         d->rotatedHovered = true;
         setCursor(Graphics::curorFromAngle(l.angle()));
         return;
     }
 
-    ply = this->cache();
-    for(int i = 0; i < ply.count(); ++i){
-        QLineF pl(ply.at(i), ply.at( (i + 1) % 4));
+    pts_tmp = cache();
+    for(int i = 0; i < pts_tmp.count(); ++i){
+        QLineF pl(pts_tmp.at(i), pts_tmp.at( (i + 1) % 4));
         QPolygonF tmp = Graphics::boundingFromLine(pl, margin() / 4);
-        if(tmp.containsPoint(p, Qt::OddEvenFill)){
+        if(tmp.containsPoint(point, Qt::OddEvenFill)){
             d->linehovered = true;
             d->hoveredLine = pl;
             setCursor(Graphics::curorFromAngle(pl.angle()));
@@ -205,10 +224,10 @@ void GraphicsRotatedRectItem::paint(QPainter *painter,
 
     if(isValid()){
         QPointF c = d->rotatedRect.center;
-        painter->drawPolygon(this->cache());
+        painter->drawPolygon(cache());
         if(option->state & QStyle::State_Selected){
             painter->setPen(QPen(pen().color().darker(), linew));
-            QPointF c1 = (cache().at(1) + cache().at(2)) / 2;
+            QPointF c1 = (cache()[1] + cache()[2]) / 2;
             QLineF l = QLineF(c, c1);
             l = QLineF(c, l.pointAt(0.9));
             painter->drawLine(l);
@@ -216,74 +235,52 @@ void GraphicsRotatedRectItem::paint(QPainter *painter,
         }
     }
 
-    if(!isValid() || (option->state & QStyle::State_Selected)){
+    if(!isValid() || (option->state & QStyle::State_Selected))
         drawAnchor(painter);
-    }
 }
 
-QPointF rotate(const QPointF& p, double angle)
+inline RotatedRect showRotatedFromCache(const QPolygonF& ply)
 {
-    double _angle = Graphics::ConvertTo360(angle) * M_PI * 2 / 360.0;
-    double cos = std::cos(_angle);
-    double sin = std::sin(_angle);
-    double _x = cos * p.x() - sin * p.y();
-    double _y = sin * p.x() + cos * p.y();
-    return QPointF(_x, _y);
+    if(ply.count() < 3)
+        return RotatedRect{};
+
+    RotatedRect rrt;
+    rrt.width = QLineF(ply[0], ply[1]).length();
+    rrt.height = QLineF(ply[1], ply[2]).length();
+    rrt.center = (ply[0] + ply[2]) / 2;
+    rrt.angle = Graphics::ConvertTo360(QLineF(ply[0], ply[1]).angle());
+    return rrt;
 }
 
-QPolygonF GraphicsRotatedRectItem::cacheFromRotated(const RotatedRect &rotated)
+void GraphicsRotatedRectItem::pointsChanged(const QPolygonF &ply)
 {
-    QPointF p0 = QPointF(-rotated.width / 2, -rotated.height / 2);
-    QPointF p1 = QPointF(rotated.width / 2,  -rotated.height / 2);
-    QPointF p2 = QPointF(rotated.width / 2,   rotated.height / 2);
-    QPointF p3 = QPointF(-rotated.width / 2,  rotated.height / 2);
+    QRectF rect = scene()->sceneRect();
+    if(!rect.contains(ply.last()))
+        return;
 
-    QPolygonF pts;
-    pts << rotated.center + rotate(p0, rotated.angle);
-    pts << rotated.center + rotate(p1, rotated.angle);
-    pts << rotated.center + rotate(p2, rotated.angle);
-    pts << rotated.center + rotate(p3, rotated.angle);
-
-    return pts;
-}
-
-bool GraphicsRotatedRectItem::checkCacheValid(const QPolygonF& pts)
-{
-    double w, h;
-    if(pts.count() < 3)
-        return false;
-    else if(pts.count() == 3){
-        QLineF l = QLineF(pts.at(0), pts.at(1));
+    double width = 0;
+    double height = 0;
+    switch (ply.size()) {
+    case 1:
+    case 2:
+        setCache(ply);
+        break;
+    case 3:{
+        QLineF l = QLineF(ply[0], ply[1]);
         QLineF l1 = l.normalVector();
         QPointF p;
         l.intersects(l1, &p);
-        w = l.length();
-        h = QLineF(p, pts.at(2)).length();
-    }else{
-        w = QLineF(pts.at(0), pts.at(1)).length();
-        h = QLineF(pts.at(0), pts.at(3)).length();
+        width = l.length();
+        height = QLineF(p, ply[2]).length();
+        if(width < margin() || height < margin())
+            return;
+        RotatedRect rotatedRect = showRotatedFromCache(ply);
+        if(!checkRotatedRect(rotatedRect, margin()))
+            return;
+        setRotatedRect(rotatedRect);
+    } break;
+    default: return;
     }
 
-    QRectF r = pts.boundingRect();
-    if(w < margin()
-            || h < margin()
-            || !scene()->sceneRect().contains(r))
-        return false;
-    return true;
-}
-
-void GraphicsRotatedRectItem::showRotatedFromCache()
-{
-    // compute rotatedRect
-    QPolygonF ply = this->cache();
-    if(ply.count() < 3)
-        return;
-
-    RotatedRect rrt;
-    rrt.width = QLineF(ply.at(0), ply.at(1)).length();
-    rrt.height = QLineF(ply.at(1), ply.at(2)).length();
-    rrt.center = (ply.at(0) + ply.at(2)) / 2;
-    rrt.angle = Graphics::ConvertTo360(QLineF(ply.at(0), ply.at(1)).angle());
-
-    setRotatedRect(rrt);
+    update();
 }

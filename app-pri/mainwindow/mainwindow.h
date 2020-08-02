@@ -3,6 +3,7 @@
 
 #include <controls/commonwidget.h>
 
+class QPushButton;
 class QStackedWidget;
 class QAbstractButton;
 class MainWindowPrivate;
@@ -10,7 +11,7 @@ class MainWindow : public CommonWidget
 {
     Q_OBJECT
 public:
-    enum {
+    enum ButtonType{
         Tool = 1,
         About
     };
@@ -29,6 +30,7 @@ private:
     void setupUI();
     void initToolBar();
     QWidget* menuWidget();
+    QPushButton *initButton(const QString &text, const ButtonType type);
     QStackedWidget* initPageWidget(const QString&);
     void initMenu();
     void createMenuMap(const QString& name);

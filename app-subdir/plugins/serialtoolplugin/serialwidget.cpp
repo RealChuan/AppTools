@@ -387,7 +387,7 @@ void SerialWidget::setSerialParam()
 {
     SerialParam *serialParam = &d->serialWidgetParam.serialParam;
     serialParam->portName = d->portNameBox->currentText();
-    serialParam->baudRate = QSerialPort::BaudRate(d->baudRateBox->currentText().toInt());
+    serialParam->baudRate = QSerialPort::BaudRate(d->baudRateBox->currentData().toInt());
     serialParam->dataBits = QSerialPort::DataBits(d->dataBitsBox->currentData().toInt());
     serialParam->stopBits = QSerialPort::StopBits(d->stopBitsBox->currentData().toInt());
     serialParam->parity = QSerialPort::Parity(d->parityBox->currentData().toInt());

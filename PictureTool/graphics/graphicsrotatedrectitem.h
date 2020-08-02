@@ -36,9 +36,7 @@ protected:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
 private:
-    QPolygonF cacheFromRotated(const RotatedRect& rotated);
-    bool checkCacheValid(const QPolygonF& pts);
-    void showRotatedFromCache();
+    void pointsChanged(const QPolygonF &ply);
 
     QScopedPointer<GraphicsRotatedRectItemPrivate> d;
 };

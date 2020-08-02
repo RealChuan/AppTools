@@ -1,9 +1,9 @@
 #include "graphics.h"
 
-void Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &radius)
+bool Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &radius)
 {
     if(pts.size() < 3)
-        return;
+        return false;
 
     double X1(0), Y1(0), X2(0), Y2(0), X3(0), Y3(0);
     double X1Y1(0), X1Y2(0), X2Y1(0);
@@ -39,6 +39,8 @@ void Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &ra
     B = b / (-2);
     radius = sqrt(a*a + b*b - 4 * c) / 2;
     center = QPointF(A, B);
+
+    return true;
 }
 
 QCursor Graphics::curorFromAngle(double angle)

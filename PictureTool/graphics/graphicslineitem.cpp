@@ -4,9 +4,11 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QDebug>
 
 struct GraphicsLineItemPrivate{
     QLineF line;
+    QLineF tempLine;
 };
 
 GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
@@ -26,11 +28,14 @@ GraphicsLineItem::~GraphicsLineItem()
 {
 }
 
+inline bool checkLine(const QLineF &line, const double margin)
+{
+    return !line.isNull() && line.length() > margin;
+}
+
 void GraphicsLineItem::setLine(const QLineF& line)
 {
-    prepareGeometryChange();
-    QLineF line_tmp = line;
-    if(line_tmp.isNull())
+    if(!checkLine(line, margin()))
         return;
     d->line = line;
     QPolygonF cache;
@@ -45,7 +50,7 @@ QLineF GraphicsLineItem::line() const
 
 bool GraphicsLineItem::isValid() const
 {
-    return !d->line.isNull();
+    return checkLine(d->line, margin());
 }
 
 int GraphicsLineItem::type() const
@@ -59,14 +64,14 @@ void GraphicsLineItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         return BasicGraphicsItem::mousePressEvent(event);
 
     setClickedPos(event->scenePos());
+
+    if(isValid())
+        return;
+
     QPointF point = event->pos();
-    if(!isValid() && scene()->sceneRect().contains(point)){
-        QPolygonF pts_tmp = cache();
-        if(pts_tmp.size() < 2){
-            pts_tmp.append(point);
-            pointsChanged(pts_tmp);
-        }
-    }
+    QPolygonF pts_tmp = cache();
+    pts_tmp.append(point);
+    pointsChanged(pts_tmp);
 }
 
 void GraphicsLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -78,19 +83,29 @@ void GraphicsLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if(!isSelected())
         setSelected(true);
 
-    QPointF pos = event->scenePos();
-    QPolygonF ply = cache();
-    QPointF dp = pos - clickedPos();
-    setClickedPos(pos);
+    QPointF point = event->scenePos();
+    QPolygonF pts_tmp = cache();
+    QPointF dp = point - clickedPos();
+    setClickedPos(point);
+
     switch (mouseRegion()) {
-    case DotRegion:{
-        int index = hoveredDotIndex();
-        ply.replace(index, pos);
-    } break;
-    case All: ply.translate(dp); break;
-    default: break;
+    case DotRegion: pts_tmp.replace(hoveredDotIndex(), point); break;
+    case All: pts_tmp.translate(dp); break;
+    default: return;
     }
-    pointsChanged(ply);
+
+    pointsChanged(pts_tmp);
+}
+
+void GraphicsLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QPolygonF pts_tmp = cache();
+    if(pts_tmp.size() == 1){
+        pts_tmp.append(event->scenePos());
+        showHoverLine(pts_tmp);
+    }
+
+    BasicGraphicsItem::hoverMoveEvent(event);
 }
 
 void GraphicsLineItem::paint(QPainter *painter,
@@ -104,20 +119,37 @@ void GraphicsLineItem::paint(QPainter *painter,
 
     if(isValid())
         painter->drawLine(d->line);
+    else
+        painter->drawLine(d->tempLine);
 
     if(option->state & QStyle::State_Selected)
         drawAnchor(painter);
 }
 
-void GraphicsLineItem::pointsChanged(QPolygonF &ply)
+void GraphicsLineItem::pointsChanged(const QPolygonF &ply)
 {
+    QRectF rect = scene()->sceneRect();
+    if(!rect.contains(ply.last()))
+        return;
+
     switch (ply.size()) {
     case 1: setCache(ply); break;
-    case 2:
-        if(scene()->sceneRect().contains(ply.boundingRect()))
-            setLine(QLineF(ply[0], ply[1]));
-        break;
-    default: break;
+    case 2: {
+        QLineF line(ply[0], ply[1]);
+        if(checkLine(line, margin()))
+            setLine(line);
+        else
+            return;
+    } break;
+    default: return;
     }
+    update();
+}
+
+void GraphicsLineItem::showHoverLine(const QPolygonF &ply)
+{
+    if(ply.size() != 2)
+        return;
+    d->tempLine.setPoints(ply[0], ply[1]);
     update();
 }

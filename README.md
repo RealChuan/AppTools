@@ -11,7 +11,7 @@
 
 UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
 
-1. PictureTool：基于Qt  Graphics View Framework框架写的看图和绘制简单图形的简易框架详情；  
+1. PictureTool：基于Qt  Graphics View Framework框架写的看图和绘制简单图形的简易框架；  
 
 2. app-pri：一套UI模板以及一些小工具合集；    
 

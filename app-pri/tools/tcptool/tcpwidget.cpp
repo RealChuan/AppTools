@@ -28,7 +28,10 @@ struct TcpWidgetParam{
     QString sendData;
 };
 
-enum Model { Server, Client };
+enum Model {
+    Server,
+    Client
+};
 
 class TcpWidgetPrivate{
 public:
@@ -84,9 +87,6 @@ public:
         clearButton = new QPushButton(QObject::tr("Clear Screen"), owner);
 
         setWidget = new QWidget(owner);
-
-        sendTime = new QTimer(owner);
-        autoConnectTime = new QTimer(owner);
     }
     QWidget *owner;
 
@@ -119,8 +119,8 @@ public:
     TcpServerThread *serverThread = nullptr;
     TcpClientThread *clientThread = nullptr;
 
-    QTimer *sendTime = nullptr;
-    QTimer *autoConnectTime = nullptr;
+    QTimer sendTime;
+    QTimer autoConnectTime;
     int sendCount = 0;
     int recvCount = 0;
 
@@ -261,7 +261,7 @@ void TcpWidget::onServerOnline(bool state)
     d->listenOrConnectButton->setText(state? tr("Stop Listen") : tr("Listen"));
     if(!state){
         d->autoSendBox->setChecked(state);
-        d->sendTime->stop();
+        d->sendTime.stop();
     }
     d->autoSendBox->setEnabled(state);
     d->sendButton->setEnabled(state);
@@ -311,7 +311,7 @@ void TcpWidget::onClientOnLine(bool state)
     d->listenOrConnectButton->setText(state? tr("Disconnect") : tr("Connect"));
     if(!state){
         d->autoSendBox->setChecked(state);
-        d->sendTime->stop();
+        d->sendTime.stop();
     }
     d->autoSendBox->setEnabled(state);
     d->sendButton->setEnabled(state);
@@ -344,9 +344,9 @@ void TcpWidget::onAutoReconnectStartOrStop(bool state)
     d->setWidget->setEnabled(!state);
     if(state) {
         createTcpClientThread();
-        d->autoConnectTime->start(d->autoConnectTimeBox->value());
+        d->autoConnectTime.start(d->autoConnectTimeBox->value());
     } else {
-        d->autoConnectTime->stop();
+        d->autoConnectTime.stop();
         if(!d->listenOrConnectButton->isChecked())
             destoryServerOrClientThread();
     }
@@ -362,15 +362,16 @@ void TcpWidget::onAutoSend(bool state)
 {
     d->autoSendTimeBox->setEnabled(!state);
     if(state)
-        d->sendTime->start(d->autoSendTimeBox->value());
+        d->sendTime.start(d->autoSendTimeBox->value());
     else
-        d->sendTime->stop();
+        d->sendTime.stop();
 }
 
 void TcpWidget::onSave()
 {
     QString data = d->dataView->toPlainText();
-    if(data.isEmpty()) return;
+    if(data.isEmpty())
+        return;
 
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Open File"),
@@ -486,10 +487,10 @@ void TcpWidget::buildConnect()
     connect(d->sendButton, &QPushButton::clicked, this, &TcpWidget::onSendData);
 
     connect(d->autoSendBox, &QCheckBox::clicked, this, &TcpWidget::onAutoSend);
-    connect(d->sendTime, &QTimer::timeout, this, &TcpWidget::onSendData);
+    connect(&d->sendTime, &QTimer::timeout, this, &TcpWidget::onSendData);
 
     connect(d->autoConnectBox, &QCheckBox::clicked, this, &TcpWidget::onAutoReconnectStartOrStop);
-    connect(d->autoConnectTime, &QTimer::timeout, this, &TcpWidget::onAutoConnect);
+    connect(&d->autoConnectTime, &QTimer::timeout, this, &TcpWidget::onAutoConnect);
 
     connect(d->sendConutButton, &QPushButton::clicked, [this]{ d->sendCount = 0; setSendCount(0); });
     connect(d->recvConutButton, &QPushButton::clicked, [this]{ d->recvCount = 0; setRecvCount(0); });

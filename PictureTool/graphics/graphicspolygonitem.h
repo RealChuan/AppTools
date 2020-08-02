@@ -11,7 +11,7 @@ public:
     GraphicsPolygonItem(const QPolygonF &polygon, QGraphicsItem* parent = nullptr);
     ~GraphicsPolygonItem() override;
 
-    void setPolygon(const QPolygonF& pyg);
+    void setPolygon(const QPolygonF& ply);
     QPolygonF polygon() const;
 
     bool isValid() const override;
@@ -20,12 +20,13 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
 private:
-    bool checkCacheValid(const QPolygonF &pyg);
-    void showPolygonFromCache();
+    void pointsChanged(const QPolygonF &ply);
+    void showHoverPolygon(const QPolygonF &ply);
 
     QScopedPointer<GraphicsPolygonItemPrivate> d;
 };

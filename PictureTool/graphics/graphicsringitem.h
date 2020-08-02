@@ -31,6 +31,7 @@ public:
 
     bool isValid() const override;
     int type() const override;
+    QPainterPath shape() const override;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -40,10 +41,8 @@ protected:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
 private:
-    void computeCache(const Ring& ring, QPolygonF& pts);
-    bool checkMaxCircleValid(const QPolygonF& pts, QPointF& center, double& radius);
-    bool checkMinCircleValid(const QPolygonF& pts);
-    void showRingFromCache();
+    void pointsChanged(const QPolygonF &ply);
+    void showHoverRing(const QPolygonF &ply);
 
     QScopedPointer<GraphicsRingItemPrivate> d;
 };

@@ -6,8 +6,11 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
+#define PolygonMinPointSize 3
+
 struct GraphicsPolygonItemPrivate{
     QPolygonF polygon;
+    QPolygonF tempPolygon;
 };
 
 GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
@@ -28,16 +31,21 @@ GraphicsPolygonItem::~GraphicsPolygonItem()
 {
 }
 
-void GraphicsPolygonItem::setPolygon(const QPolygonF &pyg)
+inline bool checkPolygon(const QPolygonF &ply, const double margin)
+{
+    QRectF rect = ply.boundingRect();
+    return ply.size() >= PolygonMinPointSize
+            && rect.width() > margin
+            && rect.height() > margin;
+}
+
+void GraphicsPolygonItem::setPolygon(const QPolygonF &ply)
 {
     prepareGeometryChange();
-    QPolygonF pyg_tmp = d->polygon;
-    d->polygon = pyg;
-    if(!isValid()){
-        d->polygon = pyg_tmp;
+    if(!checkPolygon(ply, margin()))
         return;
-    }
-    setCache(pyg);
+    d->polygon = ply;
+    setCache(ply);
 }
 
 QPolygonF GraphicsPolygonItem::polygon() const
@@ -47,10 +55,7 @@ QPolygonF GraphicsPolygonItem::polygon() const
 
 bool GraphicsPolygonItem::isValid() const
 {
-    QRectF rectF = d->polygon.boundingRect();
-    return (d->polygon.size() >= 3)
-            && rectF.width() >= margin()
-            && rectF.height() >= margin();
+    return checkPolygon(d->polygon, margin());
 }
 
 int GraphicsPolygonItem::type() const
@@ -60,58 +65,57 @@ int GraphicsPolygonItem::type() const
 
 void GraphicsPolygonItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton){
-        QPointF pos = event->pos();
-        setClickedPos(event->scenePos());
+    if(event->button() != Qt::LeftButton)
+        return;
 
-        QPolygonF pyg = cache();
-        if(!isValid() && scene()->sceneRect().contains(pos)){
-            pyg.append(clickedPos());
-            if(pyg.size() >= 3){
-                double l = Graphics::distance(pyg.front(), pyg.back());
-                if(l <= margin() / 2){
-                    pyg.removeLast();
-                    setCache(pyg);
-                    showPolygonFromCache();
-                }
-            }
-            setCache(pyg);
-        }
-    }else if(event->button() == Qt::RightButton && !isValid()){
-        QPolygonF pyg_tmp = cache();
-        if(!pyg_tmp.isEmpty())
-            pyg_tmp.removeLast();
-        setCache(pyg_tmp);
-    }
+    setClickedPos(event->scenePos());
 
-    update();
+    if(isValid())
+        return;
+
+    QPolygonF pts_tmp = cache();
+    pts_tmp.append( event->pos());
+    pointsChanged(pts_tmp);
 }
 
 void GraphicsPolygonItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if((event->buttons() & Qt::LeftButton) == 0 || !isValid())
+    if((event->buttons() & Qt::LeftButton) == 0
+            || !isValid())
         return;
 
     if(!isSelected())
         setSelected(true);
 
-    QPointF p = event->scenePos();
-    QPolygonF pyg = cache();
+    QPointF point = event->scenePos();
+    QPolygonF pts_tmp = cache();
 
     switch (mouseRegion()) {
-    case DotRegion: pyg.replace(hoveredDotIndex(), p); break;
+    case DotRegion: pts_tmp.replace(hoveredDotIndex(), point); break;
     case All: {
-        QPointF dp = p - clickedPos();
-        setClickedPos(p);
-        pyg.translate(dp);
+        QPointF dp = point - clickedPos();
+        setClickedPos(point);
+        pts_tmp.translate(dp);
     } break;
-    default: break;
+    default: return;
     }
 
-    if(checkCacheValid(pyg))
-        setCache(pyg);
+    if(scene()->sceneRect().contains(pts_tmp.boundingRect())
+            && checkPolygon(pts_tmp, margin())){
+        setPolygon(pts_tmp);
+        update();
+    }
+}
 
-    showPolygonFromCache();
+void GraphicsPolygonItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+    QPolygonF pts_tmp = cache();
+    if(pts_tmp.size() > 0){
+        pts_tmp.append(event->scenePos());
+        showHoverPolygon(pts_tmp);
+    }
+
+    BasicGraphicsItem::hoverMoveEvent(event);
 }
 
 void GraphicsPolygonItem::paint(QPainter *painter,
@@ -126,27 +130,36 @@ void GraphicsPolygonItem::paint(QPainter *painter,
     if(isValid())
         painter->drawPolygon(d->polygon);
     else
-        painter->drawPolyline(cache());
+        painter->drawPolyline(d->tempPolygon);
 
     if(option->state & QStyle::State_Selected)
         drawAnchor(painter);
 }
 
-bool GraphicsPolygonItem::checkCacheValid(const QPolygonF &pyg)
+void GraphicsPolygonItem::pointsChanged(const QPolygonF &ply)
 {
-    if(pyg.size() < 3)
-        return false;
+    QRectF rect = scene()->sceneRect();
+    if(!rect.contains(ply.last()))
+        return;
 
-    QRectF rectF = pyg.boundingRect();
-    return scene()->sceneRect().contains(rectF)
-            && rectF.width() >= margin()
-            && rectF.height() >= margin();
+    int size = ply.size();
+    if(size < 3)
+        setCache(ply);
+    else{
+        if(Graphics::distance(ply.first(), ply.last()) < margin()
+                && checkPolygon(ply, margin())){
+            QPolygonF pts_tmp = ply;
+            pts_tmp.removeLast();
+            setPolygon(pts_tmp);
+        }else
+            setCache(ply);
+    }
+
+    update();
 }
 
-void GraphicsPolygonItem::showPolygonFromCache()
+void GraphicsPolygonItem::showHoverPolygon(const QPolygonF &ply)
 {
-    QPolygonF pyg = cache();
-    if(checkCacheValid(pyg))
-        setPolygon(pyg.toPolygon());
+    d->tempPolygon = ply;
+    update();
 }
-

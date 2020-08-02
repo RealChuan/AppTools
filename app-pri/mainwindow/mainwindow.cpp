@@ -18,13 +18,6 @@ public:
         menuButtonGroup = new QButtonGroup(owner);
         menuButtonGroup->setExclusive(true);
         pageWidget = new QStackedWidget(owner);
-        v1 = new QVBoxLayout;
-        v2 = new QVBoxLayout;
-
-        v1->setContentsMargins(0, 0, 0, 0);
-        v1->setSpacing(0);
-        v2->setContentsMargins(0, 0, 0, 0);
-        v2->setSpacing(0);
 
         accountButton = new QToolButton(owner);
         accountButton->setCheckable(true);
@@ -38,8 +31,6 @@ public:
     QButtonGroup *switchButtonGroup;
     QButtonGroup *menuButtonGroup;
     QStackedWidget *pageWidget;
-    QVBoxLayout *v1;
-    QVBoxLayout *v2;
 
     QToolButton *accountButton;
     UserAccountSystem *userSystem;
@@ -134,57 +125,50 @@ void MainWindow::initToolBar()
 
 QWidget *MainWindow::menuWidget()
 {
-    QPushButton *toolsButton = new QPushButton(tr("Common Tools"), this);
-    QPushButton *tcpButton = new QPushButton(tr("Tcp Assistant"), this);
-    QPushButton *serialButton = new QPushButton(tr("Serial Assistant"), this);
-    QPushButton *crcButton = new QPushButton(tr("CRC Assistant"), this);
-    QPushButton *aboutButton = new QPushButton(tr("About"), this);
-    QPushButton *qtButton = new QPushButton(tr("About Qt"), this);
-
-    toolsButton->setFlat(true);
-    tcpButton->setFlat(true);
-    serialButton->setFlat(true);
-    crcButton->setFlat(true);
-    aboutButton->setFlat(true);
-    qtButton->setFlat(true);
-
-    toolsButton->setProperty("Group", Tool);
-    tcpButton->setProperty("Group", Tool);
-    serialButton->setProperty("Group", Tool);
-    crcButton->setProperty("Group", Tool);
-    aboutButton->setProperty("Group", About);
-    qtButton->setProperty("Group", About);
+    QPushButton *toolsButton = initButton(tr("Common Tools"), Tool);
+    QPushButton *tcpButton = initButton(tr("Tcp Assistant"), Tool);
+    QPushButton *serialButton = initButton(tr("Serial Assistant"), Tool);
+    QPushButton *crcButton = initButton(tr("CRC Assistant"), Tool);
+    QPushButton *aboutButton = initButton(tr("About"), About);
+    QPushButton *qtButton = initButton(tr("About Qt"), About);
 
     connect(qtButton, &QPushButton::clicked, [this]{ QMessageBox::aboutQt(this); });
 
     d->switchButtonGroup->addButton(toolsButton);
-    d->switchButtonGroup->addButton(aboutButton);
-
     d->menuButtonGroup->addButton(tcpButton);
     d->menuButtonGroup->addButton(serialButton);
     d->menuButtonGroup->addButton(crcButton);
+
+    d->switchButtonGroup->addButton(aboutButton);
     d->menuButtonGroup->addButton(qtButton);
 
     initMenu();
-
-    d->v1->addWidget(toolsButton);
-    d->v1->addWidget(tcpButton);
-    d->v1->addWidget(serialButton);
-    d->v1->addWidget(crcButton);
-
-    d->v2->addWidget(aboutButton);
-    d->v2->addWidget(qtButton);
 
     QWidget *widget = new QWidget(this);
     widget->setObjectName("menuWidget");
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addLayout(d->v1);
-    layout->addLayout(d->v2);
+
+    layout->addWidget(toolsButton);
+    layout->addWidget(tcpButton);
+    layout->addWidget(serialButton);
+    layout->addWidget(crcButton);
+
+    layout->addWidget(aboutButton);
+    layout->addWidget(qtButton);
+
     layout->addStretch();
 
     return widget;
+}
+
+QPushButton *MainWindow::initButton(const QString &text, const MainWindow::ButtonType type)
+{
+    QPushButton *button = new QPushButton(text, this);
+    button->setFlat(true);
+    button->setProperty("Group", type);
+    return button;
 }
 
 QStackedWidget *MainWindow::initPageWidget(const QString& str)

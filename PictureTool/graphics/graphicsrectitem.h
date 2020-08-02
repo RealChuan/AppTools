@@ -13,21 +13,20 @@ public:
 
     void setRect(const QRectF&);
     QRectF rect() const;
+
     bool isValid() const override;
     int type() const override;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
-
 private:
-    bool checkCacheValid(const QPolygonF& pyg);
-    void showRectFromCache();
+    void pointsChanged(const QPolygonF &ply);
+    void showHoverRect(const QPolygonF &ply);
 
     QScopedPointer<GraphicsRectItemPrivate> d;
 };

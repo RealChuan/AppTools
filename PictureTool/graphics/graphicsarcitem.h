@@ -3,9 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
-struct GRAPHICS_EXPORT Arch{
+struct GRAPHICS_EXPORT Arc{
     bool isValid() const;
-    double diffLen() const;
 
     QPointF center;
     double minRadius = 0;
@@ -27,11 +26,11 @@ public:
     };
 
     GraphicsArcItem(QGraphicsItem *parent = nullptr);
-    GraphicsArcItem(const Arch &arch, QGraphicsItem* parent = nullptr);
+    GraphicsArcItem(const Arc &arc, QGraphicsItem* parent = nullptr);
     ~GraphicsArcItem() override;
 
-    void setArc(const Arch &arch);
-    Arch arch() const;
+    void setArc(const Arc &arc);
+    Arc arch() const;
 
     bool isValid() const override;
     int type() const override;
@@ -46,12 +45,8 @@ protected:
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
 private:
-    void pointsChanged(const QPolygonF& pts);
-    void calculateArch(const QPolygonF& pts);
-    bool calculateCurrentPath(const QPolygonF &pts);
-
-    QPainterPath calculatePath(const QPolygonF &pts, QPainterPath &shape);
-    bool ptsAndPathVaild(const QPainterPath& path, const QPolygonF& pts);
+    void pointsChanged(const QPolygonF& ply);
+    void showHoverArc(const QPolygonF &ply);
 
 private:
     QScopedPointer<GraphicsArcItemPrivate> d;

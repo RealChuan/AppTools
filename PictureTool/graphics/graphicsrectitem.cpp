@@ -9,6 +9,7 @@
 
 struct GraphicsRectItemPrivate{
     QRectF rect;
+    QRectF tempRect;
     bool linehovered = false;
     QLineF hoveredLine;
 };
@@ -30,12 +31,17 @@ GraphicsRectItem::~GraphicsRectItem()
 {
 }
 
+inline bool checkRect(const QRectF &rect, const double margin)
+{
+    return rect.isValid()
+            && rect.width() > margin
+            && rect.height() > margin;
+}
+
 void GraphicsRectItem::setRect(const QRectF& rect)
 {
-    prepareGeometryChange();
-    if(!rect.isValid())
+    if(!checkRect(rect, margin()))
         return;
-
     d->rect = rect;
     QPolygonF cache;
     cache << rect.topLeft() << rect.bottomRight();
@@ -49,7 +55,7 @@ QRectF GraphicsRectItem::rect() const
 
 bool GraphicsRectItem::isValid() const
 {
-    return d->rect.isValid();
+    return checkRect(d->rect, margin());
 }
 
 int GraphicsRectItem::type() const
@@ -63,17 +69,14 @@ void GraphicsRectItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         return BasicGraphicsItem::mousePressEvent(event);
 
     setClickedPos(event->scenePos());
-    QPointF p = event->pos();
-    if(!isValid() && scene()->sceneRect().contains(p)){
-        QPolygonF pts = cache();
-        pts.append(event->scenePos());
-        if(pts.count() == 2 && !checkCacheValid(pts))
-            pts.removeLast();
-        setCache(pts);
-        showRectFromCache();
-    }
 
-    update();
+    if(isValid())
+        return;
+
+    QPointF point = event->pos();
+    QPolygonF pts_tmp = cache();
+    pts_tmp.append(point);
+    pointsChanged(pts_tmp);
 }
 
 QPolygonF polygonFromRect(const QRectF& rect)
@@ -95,10 +98,10 @@ void GraphicsRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if(!isSelected())
         setSelected(true);
 
-    QPointF p = event->scenePos();
-    QPolygonF ply = cache();
-    QPointF dp = p - clickedPos();
-    setClickedPos(p);
+    QPointF point = event->scenePos();
+    QPolygonF pts_tmp = cache();
+    QPointF dp = point - clickedPos();
+    setClickedPos(point);
 
     if(d->linehovered){
         QPointF p1 = d->hoveredLine.p1();
@@ -123,32 +126,31 @@ void GraphicsRectItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
         d->hoveredLine = QLineF(p1, p2);
 
-        ply.clear();
-        ply.append(ply1.at(0));
-        ply.append(ply1.at(2));
+        pts_tmp.clear();
+        pts_tmp.append(ply1.at(0));
+        pts_tmp.append(ply1.at(2));
     }else{
         switch (mouseRegion()) {
         case DotRegion:{
             int index = hoveredDotIndex();
-            ply.replace(index, p);
+            pts_tmp.replace(index, point);
         } break;
-        case All: ply.translate(dp); break;
-        default: break;
+        case All: pts_tmp.translate(dp); break;
+        default: return;
         }
     }
-    if(checkCacheValid(ply))
-        setCache(ply);
-    showRectFromCache();
-}
-
-void GraphicsRectItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    showRectFromCache();
-    BasicGraphicsItem::mouseReleaseEvent(event);
+    pointsChanged(pts_tmp);
 }
 
 void GraphicsRectItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
+    QPointF point = event->scenePos();
+    QPolygonF pts_tmp = cache();
+    if(pts_tmp.size() == 1){
+        pts_tmp.append(point);
+        showHoverRect(pts_tmp);
+    }
+
     if(!isValid())
         return;
 
@@ -156,12 +158,11 @@ void GraphicsRectItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if(mouseRegion() == DotRegion)
         return;
 
-    QPointF p = event->scenePos();
     QPolygonF ply = polygonFromRect(rect());
     for(int i = 0; i < ply.count(); ++i){
         QLineF pl(ply.at(i), ply.at( (i + 1) % 4));
         QPolygonF tmp = Graphics::boundingFromLine(pl, margin() / 4);
-        if(tmp.containsPoint(p, Qt::OddEvenFill)){
+        if(tmp.containsPoint(point, Qt::OddEvenFill)){
             d->linehovered = true;
             d->hoveredLine = pl;
             setCursor(Graphics::curorFromAngle(pl.angle()));
@@ -181,34 +182,39 @@ void GraphicsRectItem::paint(QPainter *painter,
     painter->setPen(QPen(LineColor, linew));
     setMargin(painter->transform().m11());
 
-    QPolygonF pyg = cache();
-    if(pyg.size() == 2)
-        painter->drawRect(pyg.boundingRect());
+    if(isValid())
+        painter->drawRect(d->rect);
+    else
+        painter->drawRect(d->tempRect);
 
     if(option->state & QStyle::State_Selected)
         drawAnchor(painter);
 }
 
-bool GraphicsRectItem::checkCacheValid(const QPolygonF& pyg)
+void GraphicsRectItem::pointsChanged(const QPolygonF &ply)
 {
-    if(pyg.size() != 2)
-        return false;
-    QPointF dp = pyg.back() - pyg.front();
-    QRectF r(pyg.front(), pyg.back());
-    if((dp.x() < margin())
-            || (dp.y() < margin())
-            || !scene()->sceneRect().contains(r))
-        return false;
-    return true;
+    QRectF rect = scene()->sceneRect();
+    if(!rect.contains(ply.last()))
+        return;
+
+    switch (ply.size()) {
+    case 1: setCache(ply); break;
+    case 2:{
+        QRectF rect_(ply[0], ply[1]);
+        if(checkRect(rect_, margin()))
+            setRect(rect_);
+        else
+            return;
+    } break;
+    default: return;
+    }
+    update();
 }
 
-void GraphicsRectItem::showRectFromCache()
+void GraphicsRectItem::showHoverRect(const QPolygonF &ply)
 {
-    QPolygonF pyg = cache();
-    if(pyg.size() != 2)
+    if(ply.size() != 2)
         return;
-    QRectF r(pyg[0], pyg[1]);
-    if(scene()->sceneRect().contains(r))
-        setRect(r);
+    d->tempRect = QRectF(ply[0], ply[1]);
     update();
 }
