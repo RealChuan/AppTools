@@ -11,6 +11,7 @@ class MainWindow : public CommonWidget
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
     void extensionsInitialized();
 

@@ -9,6 +9,7 @@ class SystemConversionBox : public QGroupBox
     Q_OBJECT
 public:
     SystemConversionBox(QWidget *parent = nullptr);
+    ~SystemConversionBox();
 
 private slots:
     void onDecimalChanged(const QString&);

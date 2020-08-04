@@ -53,6 +53,10 @@ CRCWidget::CRCWidget(QWidget *parent)
     d->modelBox->setCurrentIndex(7);
 }
 
+CRCWidget::~CRCWidget()
+{
+}
+
 void CRCWidget::onModelChanged(int index)
 {
     CRCModel model = CRCModel(index);

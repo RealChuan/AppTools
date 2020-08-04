@@ -10,6 +10,7 @@ class CRCWidget : public QWidget
     Q_OBJECT
 public:
     explicit CRCWidget(QWidget *parent = nullptr);
+    ~CRCWidget();
 
 private slots:
     void onModelChanged(int);

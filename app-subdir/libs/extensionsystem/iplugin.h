@@ -33,8 +33,8 @@
 namespace ExtensionSystem {
 
 namespace Internal {
-    class IPluginPrivate;
-    class PluginSpecPrivate;
+class IPluginPrivate;
+class PluginSpecPrivate;
 }
 
 class PluginManager;

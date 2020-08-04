@@ -1,5 +1,7 @@
 CONFIG += c++11
 
+DEFINES += QT_DEPRECATED_WARNINGS
+
 contains(QT_ARCH, i386) {
     BIN = bin-32
 }else{

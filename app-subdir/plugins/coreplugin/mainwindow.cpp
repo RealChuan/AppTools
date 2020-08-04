@@ -58,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent)
     setupUI();
 }
 
+MainWindow::~MainWindow()
+{
+}
+
 void MainWindow::extensionsInitialized()
 {
     QVector<MPages*> mPages = PluginManager::getObjects<MPages>();

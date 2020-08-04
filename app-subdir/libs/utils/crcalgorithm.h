@@ -57,45 +57,6 @@ static const int CRC_MODEL_SIZE = int(CRC_32_MPEG2) + 1;
 //static CRCModelMap CRC_MODEL_MAP = getCRCModelMap();
 
 /**
- * @brief crcCalculate  -- crc计算
- * @param input         -- 输入数据
- * @param length        -- 输入数据长度
- * @param crc           -- crc计算结果
- * @param model         -- crc参数模型
- */
-template<typename T>
-T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
-    T crcReg = static_cast<T>(getInitValue(model));
-    T poly = static_cast<T>(getPoly(model));
-    uint8_t byte = 0;
-
-    T temp = 1;
-    while (length--){
-        byte = *(input++);
-
-        if (getInputReversal(model)){
-            reverseInt(byte);
-        }
-
-        crcReg ^= static_cast<T>((byte << 8*(sizeof (T)-1)));
-        for(int i=0; i < 8; i++){
-            if(crcReg & (temp << (sizeof (T)*8-1))){
-                crcReg = static_cast<T>((crcReg << 1) ^ poly);
-            }else {
-                crcReg = static_cast<T>(crcReg << 1);
-            }
-        }
-    }
-
-    if (getOutputReversal(model)){
-        reverseInt(crcReg);
-    }
-
-    T crc = (crcReg ^ static_cast<T>(getXorValue(model))) ;
-    return crc;
-}
-
-/**
  * @brief reverseInt    -- 将一个整数按位反转
  * @param input         -- 输入输出数据
  */
@@ -161,6 +122,45 @@ UTILS_EXPORT bool getOutputReversal(CRCModel model);
 UTILS_EXPORT int getBitsWidth(CRCModel model);
 
 UTILS_EXPORT quint32 CRC_Calculate(unsigned char *data, quint64 lenght, int model_);
+
+/**
+ * @brief crcCalculate  -- crc计算
+ * @param input         -- 输入数据
+ * @param length        -- 输入数据长度
+ * @param crc           -- crc计算结果
+ * @param model         -- crc参数模型
+ */
+template<typename T>
+T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
+    T crcReg = static_cast<T>(getInitValue(model));
+    T poly = static_cast<T>(getPoly(model));
+    uint8_t byte = 0;
+
+    T temp = 1;
+    while (length--){
+        byte = *(input++);
+
+        if (getInputReversal(model)){
+            reverseInt(byte);
+        }
+
+        crcReg ^= static_cast<T>((byte << 8*(sizeof (T)-1)));
+        for(int i=0; i < 8; i++){
+            if(crcReg & (temp << (sizeof (T)*8-1))){
+                crcReg = static_cast<T>((crcReg << 1) ^ poly);
+            }else {
+                crcReg = static_cast<T>(crcReg << 1);
+            }
+        }
+    }
+
+    if (getOutputReversal(model)){
+        reverseInt(crcReg);
+    }
+
+    T crc = (crcReg ^ static_cast<T>(getXorValue(model))) ;
+    return crc;
+}
 
 }
 

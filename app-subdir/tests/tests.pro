@@ -2,4 +2,4 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     pageplugin \
-    tcptooltest
+#    tcptooltest

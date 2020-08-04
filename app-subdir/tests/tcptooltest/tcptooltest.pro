@@ -20,8 +20,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp
 
+win32 {
 LIBS += \
     $$APP_OUTPUT_PATH/../libs/$$replaceLibName(tcptoolplugin).lib
+}
+
+unix:!macx{
+LIBS += \
+    -L$$APP_OUTPUT_PATH/plugins \
+    -l$$replaceLibName(tcptoolplugin)
+}
 
 INCLUDEPATH += $$PWD/../../plugins/tcptoolplugin/
 DEPENDPATH  += $$PWD/../../plugins/tcptoolplugin/

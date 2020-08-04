@@ -26,6 +26,10 @@ FloatBox::FloatBox(QWidget *parent)
     setupUI();
 }
 
+FloatBox::~FloatBox()
+{
+}
+
 void FloatBox::onFloat2Hex()
 {
     QString str = d->floatEdit->text().trimmed();
