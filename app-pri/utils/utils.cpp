@@ -71,14 +71,7 @@ QString compilerString()
 #elif defined(Q_CC_GNU)
     return QLatin1String("GCC " ) + QLatin1String(__VERSION__);
 #elif defined(Q_CC_MSVC)
-    if (_MSC_VER > 1999)
-        return QLatin1String("MSVC <unknown>");
-    if (_MSC_VER >= 1910)
-        return QLatin1String("MSVC 2017");
-    if (_MSC_VER >= 1900)
-        return QLatin1String("MSVC 2015");
-    if (_MSC_VER >= 1800)
-        return QLatin1String("MSVC 2013");
+    return QString("MSVC Version: %1").arg(_MSC_VER);
 #endif
     return QLatin1String("<unknown compiler>");
 }
@@ -86,12 +79,12 @@ QString compilerString()
 void Utils::printBuildInfo()
 {
     QString info = QString("Qt %1 (%2, %3 bit)").
-            arg(QLatin1String(qVersion()),
+            arg(qVersion(),
                 compilerString(),
                 QString::number(QSysInfo::WordSize));
-    qDebug().noquote() << QObject::tr("Build with:") << info;
-
+    qDebug() << QObject::tr("Build with: ") << info;
 }
+
 void Utils::setHighDpiEnvironmentVariable()
 {
     if (Utils::HostOsInfo().isMacHost())

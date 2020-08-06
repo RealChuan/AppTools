@@ -50,7 +50,7 @@ void FileUtil::onWrite(const QString &msg)
     }
 
     d->stream << msg;
-    //d->file.write(msg.toLocal8Bit().constData());
+    //d->file.write(msg.toUtf8().constData());
 }
 
 void FileUtil::newDir(const QString &path)
@@ -85,10 +85,11 @@ bool FileUtil::rollFile(int count)
             d->file.close();
         }
         d->file.setFileName(filename);
-        d->file.open(QIODevice::WriteOnly | QIODevice::Append |
-                     QIODevice::Unbuffered);
+        d->file.open(QIODevice::WriteOnly
+                     | QIODevice::Append
+                     | QIODevice::Unbuffered);
         d->stream.setDevice(&d->file);
-        fprintf(stderr, "%s\n", filename.toLocal8Bit().constData());
+        fprintf(stderr, "%s\n", filename.toUtf8().constData());
         return true;
     }
     return false;
@@ -117,7 +118,8 @@ static QtMsgType g_MsgType = QtWarningMsg;
 // 消息处理函数
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    if(type < g_MsgType) return;
+    if(type < g_MsgType)
+        return;
 
     QString level;
     switch(type){
@@ -165,9 +167,13 @@ void LogAsync::startWork()
     d->waitCondition.wait(&d->mutex);
 }
 
-void LogAsync::finish()
+void LogAsync::stop()
 {
-    QThread::msleep(200);
+    if(isRunning()){
+        QThread::msleep(500);   // 最后一条日志格式化可能来不及进入信号槽
+        quit();
+        wait();
+    }
 }
 
 void LogAsync::run()
@@ -187,10 +193,7 @@ LogAsync::LogAsync(QObject *parent)
 
 LogAsync::~LogAsync()
 {
-    if(isRunning()){
-        quit();
-        wait();
-    }
+    stop();
     qInstallMessageHandler(nullptr);
     fprintf(stderr, "%s\n", "~LogAsync");
 }

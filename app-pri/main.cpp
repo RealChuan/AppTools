@@ -12,19 +12,19 @@
 
 int main(int argc, char *argv[])
 {
-    Utils::printBuildInfo();
     Utils::setHighDpiEnvironmentVariable();
 
     QApplication a(argc, argv);
     QDir::setCurrent(a.applicationDirPath());
+    Utils::loadLanguage();
 
     // 异步日志
     //LogAsync *log = LogAsync::instance();
     //log->setLogLevel(QtDebugMsg); // 实际环境中可通过读取配置设置日志级别
     //log->startWork();
 
+    Utils::printBuildInfo();
     Utils::setUTF8Code();
-    Utils::loadLanguage();
     Utils::loadFonts();
     Utils::setQSS();
 
@@ -46,5 +46,7 @@ int main(int argc, char *argv[])
     w.show();
     waitWidget.close();
 
-    return a.exec();
+    int result = a.exec();
+    //log->stop();
+    return result;
 }

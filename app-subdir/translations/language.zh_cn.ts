@@ -12,74 +12,74 @@
 <context>
     <name>CRCWidget</name>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="64"/>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="65"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="68"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="69"/>
         <source>true</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="64"/>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="65"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="68"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="69"/>
         <source>false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="116"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="120"/>
         <source>CRC (CRCH CRCL): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="119"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="123"/>
         <source>Calculate</source>
         <translation>计算</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="123"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="127"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="126"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="130"/>
         <source>Name: </source>
         <translation>名称： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="128"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="132"/>
         <source>Width: </source>
         <translation>数据宽度： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="130"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="134"/>
         <source>Poly Formula: </source>
         <translation>多项式公式： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="132"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="136"/>
         <source>Poly: </source>
         <translation>多项式： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="134"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="138"/>
         <source>Init: </source>
         <translation>初始值： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="136"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="140"/>
         <source>Reverse Input: </source>
         <translation>输入翻转： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="138"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="142"/>
         <source>Reverse Output: </source>
         <translation>输出翻转： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="140"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="144"/>
         <source>XOrOut: </source>
         <translation>异或值： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="153"/>
+        <location filename="../plugins/crctoolplugin/crcwidget.cpp" line="157"/>
         <source>CRC Calculator</source>
         <translation>CRC 计算器</translation>
     </message>
@@ -734,27 +734,27 @@ will also disable the following plugins:
 <context>
     <name>FloatBox</name>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="55"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="59"/>
         <source>Float Convert</source>
         <translation>浮点数转换</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="56"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="60"/>
         <source>To Hex</source>
         <translation>转为Hex</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="57"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="61"/>
         <source>To Float</source>
         <translation>转为Float</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="62"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="66"/>
         <source>Float: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="65"/>
+        <location filename="../plugins/crctoolplugin/floatbox.cpp" line="69"/>
         <source>Float Hex: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -823,12 +823,12 @@ Offset: %2</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="117"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="121"/>
         <source>Hello World!</source>
         <translation>你好哇！</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="128"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="132"/>
         <source>Reload QSS</source>
         <translation>重新加载QSS</translation>
     </message>
@@ -849,32 +849,32 @@ Offset: %2</source>
         <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="138"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="142"/>
         <source>Set up</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="157"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="161"/>
         <source>Common Tools</source>
         <translation>通用工具</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="158"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="162"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="159"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="163"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="160"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="164"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="161"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="165"/>
         <source>Test</source>
         <translation>测试</translation>
     </message>
@@ -1019,66 +1019,70 @@ Offset: %2</source>
         <translation>加载字体文件：%1</translation>
     </message>
     <message>
-        <location filename="../libs/utils/utils.cpp" line="92"/>
+        <location filename="../libs/utils/utils.cpp" line="85"/>
+        <source>Build with: </source>
+        <translation>构建： </translation>
+    </message>
+    <message>
         <source>Build with:</source>
-        <translation>构建：</translation>
+        <translation type="vanished">构建：</translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="41"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="43"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="46"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="48"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="51"/>
         <source>TcpServer</source>
         <translation>服务端</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="49"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="52"/>
         <source>TcpClient</source>
         <translation>客户端</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="50"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="53"/>
         <source>Local IP List: </source>
         <translation>本地IP列表： </translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="53"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="56"/>
         <source>Please enter the server IP address.</source>
         <translation>请输入服务器IP地址。</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="57"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="60"/>
         <source>Local Port: </source>
         <translation>本地端口： </translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="59"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="62"/>
         <source>Please enter the port number.</source>
         <translation>请输入端口号。</translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="57"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="66"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="69"/>
         <source>Auto Delivery</source>
         <translation>自动发送</translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="59"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="68"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="77"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="71"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="80"/>
         <source> ms</source>
         <translation> 毫秒</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="74"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="77"/>
         <source>Connect All</source>
         <translation>全部连接</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="75"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="78"/>
         <source>Auto Reconnect</source>
         <translation>自动重连</translation>
     </message>
@@ -1094,7 +1098,7 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="56"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="65"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="68"/>
         <source>Hex</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1110,23 +1114,23 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="66"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="84"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="87"/>
         <source>Save Data</source>
         <translation>保存数据</translation>
     </message>
     <message>
         <location filename="../plugins/serialtoolplugin/serialwidget.cpp" line="67"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="85"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="88"/>
         <source>Clear Screen</source>
         <translation>清空屏幕</translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="40"/>
+        <location filename="../app/main.cpp" line="42"/>
         <source>0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../app/main.cpp" line="42"/>
+        <location filename="../app/main.cpp" line="44"/>
         <source>Youth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1159,7 +1163,7 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/coreplugin/coreplugin.cpp" line="25"/>
-        <location filename="../app/main.cpp" line="41"/>
+        <location filename="../app/main.cpp" line="43"/>
         <source>AppPlugin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1460,23 +1464,23 @@ Offset: %2</source>
 <context>
     <name>SystemConversionBox</name>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="68"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="72"/>
         <source>System Conversion</source>
         <translation>进制转换</translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="71"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="75"/>
         <source>Decimal: </source>
         <translation>10进制： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="73"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="77"/>
         <source>Binary: </source>
         <translation>2进制： </translation>
     </message>
     <message>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="75"/>
-        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="77"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="79"/>
+        <location filename="../plugins/crctoolplugin/systemconversionbox.cpp" line="81"/>
         <source>Octal: </source>
         <translation>8进制： </translation>
     </message>
@@ -1578,7 +1582,7 @@ Offset: %2</source>
     </message>
     <message>
         <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="179"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="557"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="558"/>
         <source>Please enter the port number!</source>
         <translation>请输入端口号！</translation>
     </message>
@@ -1643,85 +1647,85 @@ Offset: %2</source>
         <translation>客户端离线！</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="377"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="378"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="379"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="380"/>
         <source>Text Files(*.txt)</source>
         <translation>文本文件(*.txt)</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="384"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="385"/>
         <source>Write File: Can&apos;t open file:
  %1 !</source>
         <translation>写入文件：无法打开文件：
 &#xa0; %1！</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="391"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="392"/>
         <source>The file was saved successfully.</source>
         <translation>文件已成功保存。</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="394"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="395"/>
         <source>No file saved.</source>
         <translation>未保存文件。</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="404"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="405"/>
         <source>Data Display Window</source>
         <translation>数据显示窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="408"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="409"/>
         <source>Data Sending Window</source>
         <translation>数据发送窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="434"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="435"/>
         <source>Parameter Setting Window</source>
         <translation>参数设置窗口</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="517"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="518"/>
         <source> &gt;&gt; Network Send: </source>
         <translation> &gt;&gt; 网络发送： </translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="521"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="522"/>
         <source> &gt;&gt; Network Recv: </source>
         <translation> &gt;&gt; 网络接收： </translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="525"/>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="529"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="526"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="530"/>
         <source> &gt;&gt; Prompt Message: </source>
         <translation> &gt;&gt; 提示信息： </translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="535"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="536"/>
         <source>Time [%1] %2 %3</source>
         <translation>时间 [%1] %2 %3</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="543"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="544"/>
         <source>Send: %1 Bytes</source>
         <translation>发送： %1 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="548"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="549"/>
         <source>Recv: %1 Bytes</source>
         <translation>接收： %1 字节</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="567"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="568"/>
         <source>Please enter the ip address!</source>
         <translation>请输入IP地址！</translation>
     </message>
     <message>
-        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="425"/>
+        <location filename="../plugins/tcptoolplugin/tcpwidget.cpp" line="426"/>
         <source>Communication Mode: </source>
         <translation>通讯方式： </translation>
     </message>
