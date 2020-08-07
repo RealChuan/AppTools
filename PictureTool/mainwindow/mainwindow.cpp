@@ -12,14 +12,19 @@ public:
         : owner(parent){
         drawWidget = new DrawWidget(owner);
         imageViewer = new ImageViewer(owner);
+        stackedWidget = new QStackedWidget(owner);
+        stackedWidget->addWidget(imageViewer);
+        stackedWidget->addWidget(drawWidget);
     }
     QWidget *owner;
     DrawWidget *drawWidget;
     ImageViewer *imageViewer;
+    QStackedWidget *stackedWidget;
 };
 
-MainWindow::MainWindow(QWidget *parent) : CommonWidget(parent)
-  , d(new MainWindowPrivate(this))
+MainWindow::MainWindow(QWidget *parent)
+    : CommonWidget(parent)
+    , d(new MainWindowPrivate(this))
 {
     connect(this, &MainWindow::aboutToclose, qApp, &QApplication::quit);
     setupUI();
@@ -34,14 +39,7 @@ void MainWindow::setupUI()
 {
     setTitle(tr("PictureTool"));
     initToolBar();
-    QWidget *widget = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(widget);
-    layout->setSpacing(0);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(d->imageViewer);
-    layout->addWidget(d->drawWidget);
-    d->drawWidget->hide();
-    setCentralWidget(widget);
+    setCentralWidget(d->stackedWidget);
 }
 
 void MainWindow::initToolBar()
@@ -50,24 +48,28 @@ void MainWindow::initToolBar()
     qssButton->setObjectName("QssButton");
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
-    QMenu *menu = new QMenu(tr("Mainwindow"), this);
-    menu->addAction(tr("DrawWidget"), [this] {
-        d->drawWidget->show();
-        d->imageViewer->hide();
+    QComboBox *menuBox = new QComboBox(this);
+    menuBox->addItems(QStringList() << tr("ImageViewer") << tr("DrawWidget"));
+    connect(menuBox, &QComboBox::currentTextChanged,
+            [this](const QString &text){
+        if(text == tr("ImageViewer"))
+            d->stackedWidget->setCurrentWidget(d->imageViewer);
+        else if(text == tr("DrawWidget"))
+            d->stackedWidget->setCurrentWidget(d->drawWidget);
     });
-    menu->addSeparator();
-    menu->addAction(tr("ImageView"), [this] {
-        d->imageViewer->show();
-        d->drawWidget->hide();
-    });
-    QMenuBar *menuBar = new QMenuBar(this);
-    menuBar->addMenu(menu);
+
+    menuBox->setStyleSheet("QComboBox{"
+                           "border-style:none none solid none;"
+                           "border-radius: 0px;"
+                           "background: white;"
+                           "font-size: 14px;"
+                           "}");
 
     QWidget *titleBar = new QWidget(this);
     QHBoxLayout *titleLayout = new QHBoxLayout(titleBar);
     titleLayout->setContentsMargins(0, 0, 0, 0);
     titleLayout->setSpacing(10);
-    titleLayout->addWidget(menuBar);
+    titleLayout->addWidget(menuBox);
     titleLayout->addWidget(qssButton);
     setTitleBar(titleBar);
 }
