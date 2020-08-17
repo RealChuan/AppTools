@@ -13,6 +13,7 @@ public:
 
 signals:
     void imageReady(const QImage&);
+    void imageLoadReady(const QString&, const QString&, const QImage&);
 
 private slots:
     void onOpenImage();
@@ -21,12 +22,14 @@ private slots:
     void onImageChanged(const QString&);
     void onChangedImage(int);
     void onImageLoaded(const QString&, const QString&, const QImage&);
-    void onDestroyImageLoadThread();
 
     void onFormatChecked(bool);
     void onFormatChanged(const QString&);
     
 private:
+    void startImageLoadThread(const QString &url);
+    void destroyImageLoadThread();
+    void imageLoad(const QString &fileUrl);
     void clearThumbnail();
     void setupUI();
     QWidget *toolWidget();

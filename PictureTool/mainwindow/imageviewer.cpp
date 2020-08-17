@@ -1,6 +1,5 @@
 #include "imageviewer.h"
 #include "imagelistmodel.h"
-#include "imageloadthread.h"
 
 #include <graphics/imageview.h>
 #include <controls/messbox.h>
@@ -31,10 +30,11 @@ public:
     QLabel *scaleLabel;
     ImageVector imageVector;
     ImageListView *imageListView;
-    ImageLoadThread *imageLoadThread = nullptr;
 
     QComboBox *formatBox;
     QComboBox *colorBox;
+    bool runing = true;
+    QFuture<void> watcher;
 };
 
 ImageViewer::ImageViewer(QWidget *parent)
@@ -47,6 +47,7 @@ ImageViewer::ImageViewer(QWidget *parent)
 
 ImageViewer::~ImageViewer()
 {
+    destroyImageLoadThread();
     clearThumbnail();
 }
 
@@ -87,17 +88,9 @@ void ImageViewer::onImageChanged(const QString &url)
         }
     }
 
-    onDestroyImageLoadThread();
+    destroyImageLoadThread();
     clearThumbnail();
-
-    // 因为有可能在加载过程中中断，开启一个新的路径进行加载，
-    // 所以没有使用线程池方式丢入任务 （QtConcurrent::run）
-    d->imageLoadThread = new ImageLoadThread(WIDTH, url, this);
-    connect(d->imageLoadThread, &ImageLoadThread::finished,
-            this, &ImageViewer::onDestroyImageLoadThread);
-    connect(d->imageLoadThread, &ImageLoadThread::imageReady,
-            this, &ImageViewer::onImageLoaded);
-    d->imageLoadThread->start();
+    startImageLoadThread(url);
 }
 
 void ImageViewer::onChangedImage(int index)
@@ -115,14 +108,6 @@ void ImageViewer::onImageLoaded(const QString &filename,
         return;
     d->imageVector.push_back(new Image{filename, absoluteFilePath, pixmap});
     d->imageListView->setImageVector(d->imageVector);
-}
-
-void ImageViewer::onDestroyImageLoadThread()
-{
-    if(!d->imageLoadThread)
-        return;
-    d->imageLoadThread->deleteLater();
-    d->imageLoadThread = nullptr;
 }
 
 void ImageViewer::onFormatChecked(bool state)
@@ -145,6 +130,38 @@ void ImageViewer::onFormatChanged(const QString &)
     }
     d->imageViewFormat->setPixmap(pixmap);
     d->imageViewFormat->fitToScreen();
+}
+
+void ImageViewer::startImageLoadThread(const QString &url)
+{
+    d->runing = true;
+    d->watcher = QtConcurrent::run(this, &ImageViewer::imageLoad, url);
+}
+
+void ImageViewer::destroyImageLoadThread()
+{
+    if(d->watcher.isRunning()){
+        d->runing = false;
+        d->watcher.waitForFinished();
+    }
+}
+
+void ImageViewer::imageLoad(const QString &fileUrl)
+{
+    QFileInfo file(fileUrl);
+    QFileInfoList list = file.absoluteDir().entryInfoList(QDir::Files
+                                                          | QDir::NoDotAndDotDot);
+
+    for(QFileInfo &info : list){
+        if(!d->runing)
+            break;
+        QImage image(info.absoluteFilePath());
+        if(image.isNull())
+            continue;
+        if(image.width() > WIDTH)
+            image = image.scaled(WIDTH, WIDTH, Qt::KeepAspectRatio);
+        emit imageLoadReady(info.fileName(), info.absoluteFilePath(), image);
+    }
 }
 
 void ImageViewer::clearThumbnail()
@@ -226,4 +243,5 @@ void ImageViewer::buildConnect()
     connect(d->imageListView, &ImageListView::changeItem, this, &ImageViewer::onChangedImage);
     connect(d->formatBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
     connect(d->colorBox, &QComboBox::currentTextChanged, this, &ImageViewer::onFormatChanged);
+    connect(this, &ImageViewer::imageLoadReady, this, &ImageViewer::onImageLoaded);
 }

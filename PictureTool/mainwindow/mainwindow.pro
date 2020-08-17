@@ -24,14 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     drawwidget.cpp \
     imagelistmodel.cpp \
-    imageloadthread.cpp \
     imageviewer.cpp \
     mainwindow.cpp
 
 HEADERS += \
     drawwidget.h \
     imagelistmodel.h \
-    imageloadthread.h \
     imageviewer.h \
     mainwindow_global.h \
     mainwindow.h

@@ -310,7 +310,8 @@ QRect ImageView::textRect(const Qt::Corner pos, const QFontMetrics &metrics, con
 
 void ImageView::drawInfo(QPainter *painter)
 {
-    if(d->rgbInfo.isEmpty()) return;
+    if(d->rgbInfo.isEmpty())
+        return;
     QFontMetrics metrics = painter->fontMetrics();
     int marginX = 5;
     int marginY = metrics.leading() + metrics.ascent() + 2;
@@ -324,7 +325,6 @@ void ImageView::drawInfo(QPainter *painter)
     painter->drawRect(rect);
     painter->setPen(QColor(83,209,255));
     painter->drawText(textPos, d->rgbInfo);
-
 }
 
 void ImageView::drawCrossLine(QPainter *painter)
