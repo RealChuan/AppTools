@@ -7,6 +7,9 @@
 #include <QtWidgets>
 #include <QtConcurrent>
 
+using namespace Graphics;
+using namespace Control;
+
 class ImageViewerPrivate{
 public:
     ImageViewerPrivate(QWidget *parent)

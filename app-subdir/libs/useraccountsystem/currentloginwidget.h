@@ -3,6 +3,10 @@
 
 #include <controls/dialog.h>
 
+using namespace Control;
+
+namespace  AccountSystem {
+
 class AccountQuery;
 class CurrentLoginWidgetPrivate;
 class CurrentLoginWidget : public Dialog
@@ -26,5 +30,7 @@ private:
 
     QScopedPointer<CurrentLoginWidgetPrivate> d;
 };
+
+}
 
 #endif // LOGOUTORDELETE_H

@@ -32,6 +32,8 @@ class QPushButton;
 class QLabel;
 QT_END_NAMESPACE
 
+using namespace Control;
+
 namespace ExtensionSystem {
 class PluginSpec;
 class PluginView;

@@ -7,6 +7,8 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
+namespace Graphics {
+
 bool RotatedRect::isValid() const
 {
     return width > 0 && height > 0;
@@ -283,4 +285,6 @@ void GraphicsRotatedRectItem::pointsChanged(const QPolygonF &ply)
     }
 
     update();
+}
+
 }

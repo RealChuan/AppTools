@@ -3,6 +3,8 @@
 
 #include "dialog.h"
 
+namespace Control {
+
 class MessBoxPrivate;
 class MessBox : public Dialog
 {
@@ -37,5 +39,7 @@ private:
 
     QScopedPointer<MessBoxPrivate> d;
 };
+
+}
 
 #endif // MESSAGEBOX_H

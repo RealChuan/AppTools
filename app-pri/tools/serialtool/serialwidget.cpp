@@ -8,6 +8,8 @@
 #include <QSerialPortInfo>
 #include <QtWidgets>
 
+using namespace Control;
+
 inline QString formatHex(const QByteArray &msg)
 {
     QString temp;

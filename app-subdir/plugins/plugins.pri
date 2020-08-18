@@ -2,11 +2,13 @@ include(../Common.pri)
 
 TEMPLATE = lib
 
-win32{
+win32 {
 DESTDIR = $$APP_OUTPUT_PATH/../libs
 DLLDESTDIR = $$APP_OUTPUT_PATH/plugins
+LIBS += -L$$DESTDIR
 }
 
-unix:!macx {
+unix {
 DESTDIR = $$APP_OUTPUT_PATH/plugins
+LIBS += -L$$APP_OUTPUT_PATH
 }

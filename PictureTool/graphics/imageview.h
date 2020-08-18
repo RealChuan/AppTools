@@ -5,6 +5,8 @@
 
 #include "graphics_global.h"
 
+namespace Graphics {
+
 class ImageViewPrivate;
 class GRAPHICS_EXPORT ImageView : public QGraphicsView
 {
@@ -61,5 +63,7 @@ private:
 
     QScopedPointer<ImageViewPrivate> d;
 };
+
+}
 
 #endif // IMAGEVIEW_H

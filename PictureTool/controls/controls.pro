@@ -6,7 +6,7 @@ DEFINES += CONTROLS_LIBRARY
 TARGET = $$replaceLibName(controls)
 
 LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
+    -l$$replaceLibName(utils) \
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

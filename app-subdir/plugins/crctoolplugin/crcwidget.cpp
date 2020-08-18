@@ -6,7 +6,7 @@
 
 #include <QtWidgets>
 
-using namespace CRC;
+using namespace Utils::CRC;
 
 class CRCWidgetPrivate{
 public:

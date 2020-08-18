@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GRAPHICS_EXPORT Circle{
     bool isVaild() const;
     QRectF boundingRect() const;
@@ -41,5 +43,7 @@ private:
 
     QScopedPointer<GraphicsCircleItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSCIRCLEITEM_H

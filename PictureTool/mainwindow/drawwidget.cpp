@@ -13,6 +13,8 @@
 #include <QtWidgets>
 #include <QDebug>
 
+using namespace Graphics;
+
 class DrawWidgetPrivate{
 public:
     DrawWidgetPrivate(QWidget *parent)

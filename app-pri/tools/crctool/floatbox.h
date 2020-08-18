@@ -9,6 +9,7 @@ class FloatBox : public QGroupBox
     Q_OBJECT
 public:
     FloatBox(QWidget *parent = nullptr);
+    ~FloatBox();
 
 private slots:
     void onFloat2Hex();

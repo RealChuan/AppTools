@@ -12,13 +12,12 @@ void Utils::setUTF8Code()
 void Utils::setQSS()
 {
     Json json("./config/config.json", true);
-    QStringList qssPath = json.getStringList("qss_files");
+    QStringList qssPath = json.getValue("qss_files").toStringList();
     QString qss;
     for(const QString& path: qssPath){
         qDebug() << QString(QObject::tr("Loading QSS file: %1.")).arg(path);
         QFile file(path);
-        if (!file.open(QIODevice::ReadOnly
-                       | QIODevice::Text)){
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
             qDebug() << QString(QObject::tr("Cannot open the file: %1!")).arg(path)
                      << file.errorString();
             continue;
@@ -33,7 +32,7 @@ void Utils::setQSS()
 void Utils::loadFonts()
 {
     Json json("./config/config.json", true);
-    QStringList fontFiles = json.getStringList("font_files");
+    QStringList fontFiles = json.getValue("font_files").toStringList();
 
     for (const QString &file : fontFiles) {
         qDebug() << QString(QObject::tr("Loading Font file: %1")).arg(file);

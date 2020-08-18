@@ -6,6 +6,10 @@
 #include <QVariant>
 #include <QDebug>
 
+using namespace Utils;
+
+namespace  AccountSystem {
+
 class AccountQueryPrivate{
 public:
     AccountQueryPrivate(QObject *parent)
@@ -107,4 +111,6 @@ void AccountQuery::allUsername()
     QSqlQuery query = d->db->query(sql);
     while(query.next())
         d->allUsername.append(query.value("username").toString());
+}
+
 }

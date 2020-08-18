@@ -6,11 +6,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
 
-LIBSPATH = $$APP_OUTPUT_PATH/../libs
+win32 {
+LIBS += -L$$APP_OUTPUT_PATH/../libs
+}
+
+unix {
+LIBS += -L$$APP_OUTPUT_PATH
+}
+
 LIBS += \
-    -l$$LIBSPATH$$/$$replaceLibName(utils) \
-    -l$$LIBSPATH$$/$$replaceLibName(controls) \
-    -l$$LIBSPATH$$/$$replaceLibName(mainwindow) \
+    -l$$replaceLibName(utils) \
+    -l$$replaceLibName(controls) \
+    -l$$replaceLibName(mainwindow) \
+    -l$$replaceLibName(graphics) \
 
 RC_ICONS = app.ico
 #ICON     = app.icns

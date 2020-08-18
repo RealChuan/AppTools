@@ -3,6 +3,8 @@
 
 #include "commonwidget.h"
 
+namespace Control {
+
 class Dialog : public CommonWidget
 {
     Q_OBJECT
@@ -19,5 +21,7 @@ signals:
     void accepted();
     void rejected();
 };
+
+}
 
 #endif // DIALOG_H

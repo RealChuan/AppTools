@@ -2,6 +2,8 @@
 
 #include <QEventLoop>
 
+namespace Control {
+
 Dialog::Dialog(QWidget *parent)
     : CommonWidget(parent)
 {
@@ -42,4 +44,6 @@ void Dialog::accept()
 void Dialog::reject()
 {
     emit rejected();
+}
+
 }

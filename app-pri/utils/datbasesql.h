@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QSqlQuery>
 
+namespace Utils {
+
 struct DatabaseParam{
     QString type = "MySQL";     //"SQLite"
     QString ip = "127.0.0.1";
@@ -37,5 +39,7 @@ private:
 
     QScopedPointer<DatabaseSQLPrivate> d;
 };
+
+}
 
 #endif // DATBASESQL_H

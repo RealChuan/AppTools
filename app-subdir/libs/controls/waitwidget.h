@@ -5,6 +5,8 @@
 
 #include <QSplashScreen>
 
+namespace Control {
+
 class WaitWidgetPrivate;
 class CONTROLS_EXPORT WaitWidget : public QSplashScreen
 {
@@ -23,5 +25,7 @@ private:
 
     QScopedPointer<WaitWidgetPrivate> d;
 };
+
+}
 
 #endif // WAITWIDGET_H

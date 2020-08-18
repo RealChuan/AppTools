@@ -3,6 +3,8 @@
 
 #include <core/mpages.h>
 
+using namespace Core;
+
 class TcpPage : public MPages
 {
     Q_OBJECT

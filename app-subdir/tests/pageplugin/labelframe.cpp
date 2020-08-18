@@ -5,7 +5,8 @@
 
 #include <QtWidgets>
 
-using namespace CRC;
+using namespace Utils::CRC;
+using namespace Control;
 
 LabelFrame::LabelFrame(QWidget *parent)
     : QWidget(parent)

@@ -6,7 +6,7 @@
 
 #include <QtWidgets>
 
-using namespace CRC;
+using namespace Utils::CRC;
 
 class CRCWidgetPrivate{
 public:
@@ -51,6 +51,10 @@ CRCWidget::CRCWidget(QWidget *parent)
     init();
     buildConnect();
     d->modelBox->setCurrentIndex(7);
+}
+
+CRCWidget::~CRCWidget()
+{
 }
 
 void CRCWidget::onModelChanged(int index)

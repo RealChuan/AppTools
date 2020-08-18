@@ -5,20 +5,10 @@ QT += widgets sql
 DEFINES += USERACCOUNTSYSTEM_LIBRARY
 TARGET = $$replaceLibName(useraccountsystem)
 
-win32{
 LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
-    -l$$DESTDIR/$$replaceLibName(extensionsystem) \
-    -l$$DESTDIR/$$replaceLibName(controls) \
-}
-
-unix:!macx {
-LIBS += \
-    -L$$DESTDIR \
     -l$$replaceLibName(utils) \
     -l$$replaceLibName(extensionsystem) \
     -l$$replaceLibName(controls) \
-}
 
 SOURCES += \
     accountquery.cpp \

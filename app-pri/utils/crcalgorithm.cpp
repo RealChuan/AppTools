@@ -1,5 +1,11 @@
 #include "crcalgorithm.h"
 
+namespace Utils {
+
+std::string CRC::Setstr(const char *val)
+{
+    return val;
+}
 
 std::string CRC::getPolyFormula(CRC::CRCModel model)
 {
@@ -262,4 +268,6 @@ quint32 CRC::CRC_Calculate(unsigned char *data, quint64 lenght, int model_)
     }
 
     return crc;
+}
+
 }

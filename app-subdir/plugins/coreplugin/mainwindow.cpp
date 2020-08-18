@@ -10,6 +10,8 @@
 #include <QtWidgets>
 
 using namespace ExtensionSystem;
+using namespace AccountSystem;
+using namespace Core;
 
 class MainWindowPrivate{
 public:

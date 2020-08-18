@@ -8,6 +8,8 @@
 #include <QtMath>
 #include <QDebug>
 
+namespace Graphics {
+
 bool Arc::isValid() const
 {
     return maxRadius > minRadius;
@@ -498,4 +500,6 @@ void GraphicsArcItem::showHoverArc(const QPolygonF &ply)
     }
 
     update();
+}
+
 }

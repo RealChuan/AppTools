@@ -5,20 +5,10 @@ QT += widgets
 DEFINES += CRCTOOLPLUGIN_LIBRARY
 TARGET = $$replaceLibName(crctoolplugin)
 
-win32{
 LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
-    -l$$DESTDIR/$$replaceLibName(extensionsystem) \
-    -l$$DESTDIR/$$replaceLibName(core) \
-}
-
-unix:!macx {
-LIBS += \
-    -L$$DESTDIR/.. \
     -l$$replaceLibName(utils) \
     -l$$replaceLibName(extensionsystem) \
     -l$$replaceLibName(core) \
-}
 
 SOURCES += \
     crcpage.cpp \

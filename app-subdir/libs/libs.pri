@@ -1,16 +1,15 @@
 include(../Common.pri)
 
-unix:!macx {
-CONFIG += c++14
-}
-
 TEMPLATE = lib
 
-win32{
+win32 {
 DESTDIR = $$APP_OUTPUT_PATH/../libs
 DLLDESTDIR = $$APP_OUTPUT_PATH
 }
 
-unix:!macx {
+unix {
+CONFIG += c++14
 DESTDIR = $$APP_OUTPUT_PATH
 }
+
+LIBS += -L$$DESTDIR

@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <QRegularExpression>
 
+namespace Utils {
+
 struct JsonPrivate{
     bool jsonLoad = false;
     QJsonDocument jsonDoc;  // Json的文档对象
@@ -29,6 +31,11 @@ QString Json::errorString() const
     return d->errorString;
 }
 
+void Json::setValue(const QString &path, const QVariant &value)
+{
+    setJsonValue(d->rootObj, path, value.toJsonValue());
+}
+
 QVariant Json::getValue(const QString &path, const QJsonObject &fromNode) const
 {
     if(!d->jsonLoad)
@@ -36,16 +43,25 @@ QVariant Json::getValue(const QString &path, const QJsonObject &fromNode) const
     return getJsonValue(path, fromNode).toVariant();
 }
 
-QStringList Json::getStringList(const QString &path, const QJsonObject &fromNode) const
+QString Json::toString(bool pretty) const
 {
-    if(!d->jsonLoad)
-        return QStringList();
-    QStringList list;
-    QJsonArray array = getJsonValue(path, fromNode).toArray();
-    for(const QJsonValue &value: array)
-        list.append(value.toString());
+    return QJsonDocument(d->rootObj).toJson(pretty ? QJsonDocument::Indented : QJsonDocument::Compact);
+}
 
-    return list;
+bool Json::save(const QString &path, bool pretty) const
+{
+    QFile file(path);
+
+    if (!file.open(QIODevice::WriteOnly
+                   | QIODevice::Truncate
+                   | QIODevice::Text))
+        return false;
+
+    QTextStream out(&file);
+    out << toString(pretty);
+    out.flush();
+    file.close();
+    return true;
 }
 
 void Json::loadJson(const QString &jsonOrFilePath, bool jsonfile)
@@ -90,10 +106,10 @@ QJsonArray Json::getJsonArray(const QString &path, const QJsonObject &fromNode) 
 QJsonValue Json::getJsonValue(const QString &path, const QJsonObject &fromNode) const
 {
     QJsonObject parent = fromNode.isEmpty() ? d->rootObj : fromNode;
-    QStringList names  = path.split(QRegularExpression("\\."));
+    QStringList names = path.split(QRegularExpression("\\."));
 
     int size = names.size();
-    for (int i = 0; i < size - 1; ++i) {
+    for (int i=0; i<size-1; ++i) {
         if (parent.isEmpty()){
             d->errorString = QString(tr("%1 is empty!").arg(names.at(i)));
             qDebug() << d->errorString;
@@ -102,4 +118,27 @@ QJsonValue Json::getJsonValue(const QString &path, const QJsonObject &fromNode) 
         parent = parent.value(names.at(i)).toObject();
     }
     return parent.value(names.last());
+}
+
+void Json::setJsonValue(QJsonObject &parent, const QString &path, const QJsonValue &newValue)
+{
+    const int indexOfDot = path.indexOf('.');     // 第一个 . 的位置
+    const QString property = path.left(indexOfDot); // 第一个 . 之前的内容，如果 indexOfDot 是 -1 则返回整个字符串
+    const QString restPath = (indexOfDot>0) ? path.mid(indexOfDot+1) : QString(); // 第一个 . 后面的内容
+
+    QJsonValue fieldValue = parent[property];
+
+    if(restPath.isEmpty()) {
+        // 找到要设置的属性
+        fieldValue = newValue;
+    } else {
+        // 路径中间的属性，递归访问它的子属性
+        QJsonObject obj = fieldValue.toObject();
+        setJsonValue(obj, restPath, newValue);
+        fieldValue = obj; // 因为 QJsonObject 操作的都是对象的副本，所以递归结束后需要保存起来再次设置回 parent
+    }
+
+    parent[property] = fieldValue; // 如果不存在则会创建
+}
+
 }

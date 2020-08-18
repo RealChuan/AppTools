@@ -4,6 +4,8 @@
 #include <QComboBox>
 #include <QLineEdit>
 
+namespace Control {
+
 class AccountItemPrivate;
 class AccountItemWidget : public QWidget
 {
@@ -75,5 +77,7 @@ public:
 private:
     QScopedPointer<AvatarWidgetPrivate> d;
 };
+
+}
 
 #endif // EIDTCOMBOBOX_H

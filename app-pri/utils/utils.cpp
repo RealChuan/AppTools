@@ -12,7 +12,7 @@ void Utils::setUTF8Code()
 void Utils::setQSS()
 {
     Json json("./config/config.json", true);
-    QStringList qssPath = json.getStringList("qss_files");
+    QStringList qssPath = json.getValue("qss_files").toStringList();
     QString qss;
     for(const QString& path: qssPath){
         qDebug() << QString(QObject::tr("Loading QSS file: %1.")).arg(path);
@@ -33,7 +33,7 @@ void Utils::setQSS()
 void Utils::loadFonts()
 {
     Json json("./config/config.json", true);
-    QStringList fontFiles = json.getStringList("font_files");
+    QStringList fontFiles = json.getValue("font_files").toStringList();
 
     for (const QString &file : fontFiles) {
         qDebug() << QString(QObject::tr("Loading Font file: %1")).arg(file);

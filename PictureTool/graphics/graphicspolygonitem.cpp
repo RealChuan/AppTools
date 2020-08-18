@@ -6,6 +6,8 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
+namespace Graphics {
+
 #define PolygonMinPointSize 3
 
 struct GraphicsPolygonItemPrivate{
@@ -162,4 +164,6 @@ void GraphicsPolygonItem::showHoverPolygon(const QPolygonF &ply)
 {
     d->tempPolygon = ply;
     update();
+}
+
 }

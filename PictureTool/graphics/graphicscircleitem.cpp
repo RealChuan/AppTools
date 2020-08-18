@@ -8,6 +8,8 @@
 #include <QtMath>
 #include <QDebug>
 
+namespace Graphics {
+
 bool Circle::isVaild() const
 {
     return qAbs(radius) > 0;
@@ -234,4 +236,6 @@ void GraphicsCircleItem::showHoverCircle(const QPolygonF &ply)
         return;
     Graphics::calculateCircle(ply, d->tempCircle.center, d->tempCircle.radius);
     update();
+}
+
 }

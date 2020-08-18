@@ -5,6 +5,8 @@
 
 #include <controls/commonwidget.h>
 
+using namespace Control;
+
 class MainWindowPrivate;
 class MAINWINDOW_EXPORT MainWindow : public CommonWidget
 {

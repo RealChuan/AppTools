@@ -6,6 +6,9 @@
 #include <QObject>
 
 class QPushButton;
+
+namespace Core {
+
 class MPagesPrivate;
 class CORE_EXPORT MPages : public QObject
 {
@@ -28,5 +31,7 @@ private:
     QScopedPointer<MPagesPrivate> d;
 
 };
+
+}
 
 #endif // MPAGES_H

@@ -3,6 +3,8 @@
 
 #include <QtWidgets>
 
+namespace Control {
+
 class AccountItemPrivate{
 public:
     AccountItemPrivate(QWidget *parent)
@@ -220,4 +222,6 @@ AvatarWidget::~AvatarWidget()
 void AvatarWidget::setIcon(const QPixmap &icon)
 {
     d->avatarLabel->setPixmap(icon);
+}
+
 }

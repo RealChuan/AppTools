@@ -3,6 +3,8 @@
 
 #include <controls/commonwidget.h>
 
+using namespace Control;
+
 class QPushButton;
 class QStackedWidget;
 class QAbstractButton;

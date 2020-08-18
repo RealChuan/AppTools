@@ -2,6 +2,8 @@
 
 #include <QtWidgets>
 
+namespace Control {
+
 class CommonWidgetPrivate{
 public:
     CommonWidgetPrivate(QWidget *parent)
@@ -190,4 +192,6 @@ void CommonWidget::buildConnnect()
     connect(this, &CommonWidget::aboutToclose, this, &CommonWidget::close);
     connect(this, &CommonWidget::windowTitleChanged, d->titleLabel, &QLabel::setText);
     connect(this, &CommonWidget::windowIconChanged, d->iconLabel, &QLabel::setWindowIcon);
+}
+
 }

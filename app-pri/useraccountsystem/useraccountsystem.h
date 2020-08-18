@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+namespace AccountSystem {
+
 class AccountQuery;
 class UserAccountSystemPrivate;
 class UserAccountSystem : public QObject
@@ -25,5 +27,7 @@ private:
 
     QScopedPointer<UserAccountSystemPrivate> d;
 };
+
+}
 
 #endif // USERACCOUNTSYSTEM_H

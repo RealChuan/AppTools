@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GRAPHICS_EXPORT RotatedRect
 {
     bool isValid() const;
@@ -40,5 +42,7 @@ private:
 
     QScopedPointer<GraphicsRotatedRectItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSROTATEDRECTITEM_H

@@ -2,6 +2,10 @@
 #define LOGINWIDGET_H
 #include <controls/dialog.h>
 
+using namespace Control;
+
+namespace AccountSystem {
+
 class AccountQuery;
 class LoginWidgetPrivate;
 class LoginWidget : public Dialog
@@ -26,5 +30,7 @@ private:
 
     QScopedPointer<LoginWidgetPrivate> d;
 };
+
+}
 
 #endif // LOGINWIDGET_H

@@ -6,6 +6,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
+namespace Graphics {
+
 struct GraphicsLineItemPrivate{
     QLineF line;
     QLineF tempLine;
@@ -152,4 +154,6 @@ void GraphicsLineItem::showHoverLine(const QPolygonF &ply)
         return;
     d->tempLine.setPoints(ply[0], ply[1]);
     update();
+}
+
 }

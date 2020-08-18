@@ -8,6 +8,8 @@
 #include <QTextStream>
 #include <QCoreApplication>
 
+namespace Utils {
+
 #define ROLLSIZE 1000*1000*1000
 
 const static int kRollPerSeconds_ = 60*60*24;
@@ -196,4 +198,6 @@ LogAsync::~LogAsync()
     stop();
     qInstallMessageHandler(nullptr);
     fprintf(stderr, "%s\n", "~LogAsync");
+}
+
 }

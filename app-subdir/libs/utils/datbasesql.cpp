@@ -4,6 +4,8 @@
 #include <QSqlError>
 #include <QDebug>
 
+namespace Utils {
+
 struct DatabaseSQLPrivate{
     QSqlDatabase database;
     QString error;
@@ -123,4 +125,6 @@ bool DatabaseSQL::openSQLite(const QString &databaseName)
     d->error = QString(tr("SQLite Open Error: %1 !").
                        arg(d->database.lastError().text()));
     return false;
+}
+
 }

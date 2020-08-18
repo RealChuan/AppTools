@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+namespace AccountSystem {
+
 class AccountQueryPrivate;
 class AccountQuery : public QObject
 {
@@ -21,5 +23,7 @@ private:
 
     QScopedPointer<AccountQueryPrivate> d;
 };
+
+}
 
 #endif // SQLQUERY_H

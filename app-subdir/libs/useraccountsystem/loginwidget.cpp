@@ -7,6 +7,8 @@
 
 #include <QtWidgets>
 
+namespace  AccountSystem {
+
 class LoginWidgetPrivate{
 public:
     LoginWidgetPrivate(QWidget *parent)
@@ -134,4 +136,6 @@ void LoginWidget::setupUI()
 void LoginWidget::buildConnect()
 {
     connect(d->passwordEdit, &PasswordLineEdit::returnPressed, this, &LoginWidget::onLogin);
+}
+
 }

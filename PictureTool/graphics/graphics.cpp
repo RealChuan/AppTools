@@ -1,5 +1,7 @@
 #include "graphics.h"
 
+#include <QtMath>
+
 bool Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &radius)
 {
     if(pts.size() < 3)
@@ -37,7 +39,7 @@ bool Graphics::calculateCircle(const QPolygonF &pts, QPointF &center, double &ra
     double A, B;
     A = a / (-2);
     B = b / (-2);
-    radius = sqrt(a*a + b*b - 4 * c) / 2;
+    radius = qSqrt(a*a + b*b - 4 * c) / 2;
     center = QPointF(A, B);
 
     return true;

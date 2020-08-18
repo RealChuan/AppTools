@@ -1,9 +1,11 @@
 include(../Common.pri)
 
-win32{
+win32 {
 DLLDESTDIR = $$APP_OUTPUT_PATH/test
+LIBS += -L$$APP_OUTPUT_PATH/../libs
 }
 
-unix:!macx {
+unix {
 DESTDIR = $$APP_OUTPUT_PATH/test
+LIBS += -L$$APP_OUTPUT_PATH
 }

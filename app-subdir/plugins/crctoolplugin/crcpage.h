@@ -3,6 +3,8 @@
 
 #include <core/mpages.h>
 
+using namespace Core;
+
 class CRCPage : public MPages
 {
     Q_OBJECT

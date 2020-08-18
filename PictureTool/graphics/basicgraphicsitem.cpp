@@ -9,6 +9,8 @@
 #include <QWheelEvent>
 #include <QMenu>
 
+namespace Graphics {
+
 class BasicGraphicsItemPrivate{
 public:
     BasicGraphicsItemPrivate(QObject *parent)
@@ -207,4 +209,6 @@ void BasicGraphicsItem::setMyCursor(const QPointF &center, const QPointF &pos)
 void BasicGraphicsItem::createPopMenu()
 {
     d->menu->addAction(tr("Delete"), this, &BasicGraphicsItem::deleteMyself);
+}
+
 }

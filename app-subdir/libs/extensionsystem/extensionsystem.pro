@@ -5,18 +5,9 @@ QT += widgets
 DEFINES += EXTENSIONSYSTEM_LIBRARY
 TARGET = $$replaceLibName(extensionsystem)
 
-win32{
 LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
-    -l$$DESTDIR/$$replaceLibName(aggregation) \
-}
-
-unix:!macx {
-LIBS += \
-    -L$$DESTDIR \
     -l$$replaceLibName(utils) \
     -l$$replaceLibName(aggregation) \
-}
 
 HEADERS += \
     pluginerrorview.h \

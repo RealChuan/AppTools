@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GraphicsPolygonItemPrivate;
 class GRAPHICS_EXPORT GraphicsPolygonItem : public BasicGraphicsItem
 {
@@ -30,5 +32,7 @@ private:
 
     QScopedPointer<GraphicsPolygonItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSPOLYGONITEM_H

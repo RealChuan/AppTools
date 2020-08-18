@@ -5,6 +5,8 @@
 
 #include "utils_global.h"
 
+namespace Utils {
+
 struct FileUtilPrivate;
 class FileUtil : public QObject
 {
@@ -48,5 +50,7 @@ private:
 
     QScopedPointer<LogAsyncPrivate> d;
 };
+
+}
 
 #endif // LOGASYNC_H

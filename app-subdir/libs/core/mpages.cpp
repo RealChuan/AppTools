@@ -2,6 +2,8 @@
 
 #include <QtWidgets>
 
+namespace Core {
+
 class MPagesPrivate{
 public:
     MPagesPrivate(QObject *parent)
@@ -48,4 +50,6 @@ void MPages::setButtonName(const QString &text)
 void MPages::setButtonGroup(MPages::Group group)
 {
     d->button->setProperty("Group", group);
+}
+
 }

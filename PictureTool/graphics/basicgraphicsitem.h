@@ -6,6 +6,8 @@
 
 #include "graphics_global.h"
 
+namespace Graphics {
+
 #define LineColor QColor(57,163,255)
 
 class BasicGraphicsItemPrivate;
@@ -77,5 +79,7 @@ private:
 
     QScopedPointer<BasicGraphicsItemPrivate> d;
 };
+
+}
 
 #endif // BASICGRAPHICSITEM_H

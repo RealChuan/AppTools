@@ -8,12 +8,11 @@
 
 #include <string>
 
+namespace Utils {
+
 namespace CRC {
 
-std::string Setstr(const char *val)
-{
-    return val;
-}
+std::string Setstr(const char *val);
 
 // crc算法模型（crc参数模型）
 enum CRCModel{ CRC_8, CRC_8_ITU, CRC_8_ROHC, CRC_8_MAXIM,
@@ -160,6 +159,8 @@ T crcCalculate(uint8_t *input, uint64_t length, CRCModel model){
 
     T crc = (crcReg ^ static_cast<T>(getXorValue(model))) ;
     return crc;
+}
+
 }
 
 }

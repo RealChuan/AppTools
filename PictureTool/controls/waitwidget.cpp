@@ -4,6 +4,8 @@
 
 #include <QtWidgets>
 
+namespace Control {
+
 class WaitWidgetPrivate{
 public:
     WaitWidgetPrivate(QWidget *parent)
@@ -59,4 +61,6 @@ void WaitWidget::setupUI()
     layout->addWidget(d->processBar);
     resize(600, 5);
     Utils::windowCenter(this);
+}
+
 }

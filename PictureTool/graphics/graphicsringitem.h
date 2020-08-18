@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GRAPHICS_EXPORT Ring{
     QRectF boundingRect() const;
     QRectF minBoundingRect() const;
@@ -46,5 +48,7 @@ private:
 
     QScopedPointer<GraphicsRingItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSRINGITEM_H

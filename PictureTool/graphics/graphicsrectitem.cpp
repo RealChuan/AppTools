@@ -7,6 +7,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
+namespace Graphics {
+
 struct GraphicsRectItemPrivate{
     QRectF rect;
     QRectF tempRect;
@@ -217,4 +219,6 @@ void GraphicsRectItem::showHoverRect(const QPolygonF &ply)
         return;
     d->tempRect = QRectF(ply[0], ply[1]);
     update();
+}
+
 }

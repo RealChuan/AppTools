@@ -29,6 +29,10 @@ SystemConversionBox::SystemConversionBox(QWidget *parent)
     buildConnect();
 }
 
+SystemConversionBox::~SystemConversionBox()
+{
+}
+
 void SystemConversionBox::onDecimalChanged(const QString &text)
 {
     QString dec = text.trimmed();

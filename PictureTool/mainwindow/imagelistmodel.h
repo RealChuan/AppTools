@@ -21,6 +21,7 @@ class ImageListModel : public QAbstractListModel
     Q_OBJECT
 public:
     ImageListModel(QObject* parent = nullptr);
+    ~ImageListModel();
     int columnCount(const QModelIndex & = QModelIndex()) const override{ return 1; }
     int rowCount(const QModelIndex & = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -37,6 +38,7 @@ class ImageListView : public QListView
     Q_OBJECT
 public:
     ImageListView(QWidget* parent = nullptr);
+    ~ImageListView();
 
     void setImageVector(const ImageVector&);
 

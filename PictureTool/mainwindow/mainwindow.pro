@@ -6,9 +6,9 @@ DEFINES += MAINWINDOW_LIBRARY
 TARGET = $$replaceLibName(mainwindow)
 
 LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
-    -l$$DESTDIR/$$replaceLibName(controls) \
-    -l$$DESTDIR/$$replaceLibName(graphics) \
+    -l$$replaceLibName(utils) \
+    -l$$replaceLibName(controls) \
+    -l$$replaceLibName(graphics) \
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

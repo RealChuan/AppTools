@@ -8,6 +8,8 @@
 #include <QApplication>
 #include <QSettings>
 
+namespace  AccountSystem {
+
 struct Account{
     QString username;
     QString password;
@@ -117,4 +119,6 @@ void UserAccountSystem::saveSetting()
         setting->setValue("AutoLoginPassword", d->currentAccount.password);
     }
     setting->endGroup();
+}
+
 }

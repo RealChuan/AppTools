@@ -12,6 +12,10 @@ ImageListModel::ImageListModel(QObject *parent)
 {
 }
 
+ImageListModel::~ImageListModel()
+{
+}
+
 int ImageListModel::rowCount(const QModelIndex &) const
 {
     return d->imageVector.size();
@@ -62,6 +66,10 @@ ImageListView::ImageListView(QWidget *parent)
 {
     setupUI();
     connect(this, &QListView::doubleClicked, this, &ImageListView::onChangedItem);
+}
+
+ImageListView::~ImageListView()
+{
 }
 
 void ImageListView::setImageVector(const ImageVector &imageVector)

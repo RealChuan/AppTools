@@ -3,6 +3,10 @@
 
 #include <controls/dialog.h>
 
+using namespace Control;
+
+namespace  AccountSystem {
+
 class AccountQuery;
 class ChangePasswdWidgetPrivate;
 class ChangePasswdWidget : public Dialog
@@ -25,5 +29,7 @@ private:
 
     QScopedPointer<ChangePasswdWidgetPrivate> d;
 };
+
+}
 
 #endif // CHANGEPASSWD_H

@@ -6,6 +6,8 @@
 
 #include <QtWidgets>
 
+namespace  AccountSystem {
+
 class RegisterWidgetPrivate{
 public:
     RegisterWidgetPrivate(QWidget *parent)
@@ -121,4 +123,6 @@ void RegisterWidget::setupUI()
     layout->addLayout(btnLayout);
 
     setCentralWidget(widget);
+}
+
 }

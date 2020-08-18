@@ -5,16 +5,7 @@ QT += widgets
 DEFINES += CONTROLS_LIBRARY
 TARGET = $$replaceLibName(controls)
 
-win32{
-LIBS += \
-    -l$$DESTDIR/$$replaceLibName(utils) \
-}
-
-unix:!macx {
-LIBS += \
-    -L$$DESTDIR \
-    -l$$replaceLibName(utils) \
-}
+LIBS += -l$$replaceLibName(utils)
 
 SOURCES += \
     accountcontrols.cpp \

@@ -4,6 +4,8 @@
 #include "controls_global.h"
 #include "commonwidget.h"
 
+namespace Control {
+
 class CONTROLS_EXPORT Dialog : public CommonWidget
 {
     Q_OBJECT
@@ -20,5 +22,7 @@ signals:
     void accepted();
     void rejected();
 };
+
+}
 
 #endif // DIALOG_H

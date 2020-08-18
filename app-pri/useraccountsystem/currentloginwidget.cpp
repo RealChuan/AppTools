@@ -7,6 +7,8 @@
 
 #include <QtWidgets>
 
+namespace AccountSystem {
+
 class CurrentLoginWidgetPrivate{
 public:
     CurrentLoginWidgetPrivate(QWidget *parent)
@@ -102,4 +104,6 @@ void CurrentLoginWidget::setupUI()
     layout->addWidget(deleteAccountButton, 4, 1, 1, 1);
     layout->addWidget(logoutButton, 5, 0, 1, 2);
     setCentralWidget(widget);
+}
+
 }

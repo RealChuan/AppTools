@@ -8,6 +8,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtMath>
 
+namespace Graphics {
+
 #define CircleMaxSize 4
 
 QRectF Ring::boundingRect() const
@@ -291,4 +293,6 @@ void GraphicsRingItem::showHoverRing(const QPolygonF &ply)
     }
 
     update();
+}
+
 }

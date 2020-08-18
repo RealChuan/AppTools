@@ -2,6 +2,8 @@
 
 #include <QtWidgets>
 
+namespace Control {
+
 class MessBoxPrivate{
 public:
     MessBoxPrivate(CommonWidget *parent)
@@ -136,4 +138,6 @@ void MessBox::buildConnect()
     connect(d->closeButton, &QPushButton::clicked, this, &MessBox::rejected);
     connect(d->yesButton, &QPushButton::clicked, this, &MessBox::accept);
     connect(d->noButton, &QPushButton::clicked, this, &MessBox::rejected);
+}
+
 }

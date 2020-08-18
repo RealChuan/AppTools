@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+namespace Control {
+
 class CommonWidgetPrivate;
 class CommonWidget : public QWidget
 {
@@ -37,5 +39,7 @@ private:
 
     QScopedPointer<CommonWidgetPrivate> d;
 };
+
+}
 
 #endif // COMMONWIDGET_H

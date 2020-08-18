@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GraphicsLineItemPrivate;
 class GRAPHICS_EXPORT GraphicsLineItem : public BasicGraphicsItem
 {
@@ -30,5 +32,7 @@ private:
 
     QScopedPointer<GraphicsLineItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSLINEITEM_H

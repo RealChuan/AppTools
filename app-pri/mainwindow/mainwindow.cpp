@@ -9,6 +9,8 @@
 
 #include <QtWidgets>
 
+using namespace AccountSystem;
+
 class MainWindowPrivate{
 public:
     MainWindowPrivate(MainWindow *parent)

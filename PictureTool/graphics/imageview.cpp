@@ -11,6 +11,10 @@
 #include <QMenu>
 #include <QApplication>
 
+using namespace Control;
+
+namespace Graphics {
+
 const qreal DEFAULT_SCALE_FACTOR = 1.2;
 
 class ImageViewPrivate{
@@ -372,4 +376,6 @@ void ImageView::reset()
 {
     scene()->clear();
     resetTransform();
+}
+
 }

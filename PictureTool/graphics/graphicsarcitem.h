@@ -3,6 +3,8 @@
 
 #include "basicgraphicsitem.h"
 
+namespace Graphics {
+
 struct GRAPHICS_EXPORT Arc{
     bool isValid() const;
 
@@ -51,5 +53,7 @@ private:
 private:
     QScopedPointer<GraphicsArcItemPrivate> d;
 };
+
+}
 
 #endif // GRAPHICSARCITEM_H

@@ -6,6 +6,8 @@
 
 #include <QtWidgets>
 
+namespace  AccountSystem {
+
 class ChangePasswdWidgetPrivate{
 public:
     ChangePasswdWidgetPrivate(QWidget *parent)
@@ -133,4 +135,6 @@ void ChangePasswdWidget::setupUI()
     layout->addLayout(btnLayout);
 
     setCentralWidget(widget);
+}
+
 }

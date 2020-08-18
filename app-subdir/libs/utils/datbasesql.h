@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QSqlQuery>
 
+namespace Utils {
+
 struct UTILS_EXPORT DatabaseParam{
     QString type = "MySQL";     //"SQLite"
     QString ip = "127.0.0.1";
@@ -27,8 +29,6 @@ public:
     QSqlQuery query(const QString &sql);
     QString errorString() const;
 
-signals:
-
 private:
     bool openMySQL(const QString &ip,
                    int port,
@@ -39,5 +39,7 @@ private:
 
     QScopedPointer<DatabaseSQLPrivate> d;
 };
+
+}
 
 #endif // DATBASESQL_H
