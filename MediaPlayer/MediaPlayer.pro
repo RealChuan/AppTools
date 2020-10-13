@@ -13,13 +13,17 @@ SOURCES += \
     mainwindow.cpp \
     mediawidget.cpp \
     playcontrols.cpp \
-    playlistmodel.cpp
+    playerwidget.cpp \
+    playlistmodel.cpp \
+    playlistwidget.cpp
 
 HEADERS += \
     mainwindow.h \
     mediawidget.h \
     playcontrols.h \
-    playlistmodel.h
+    playerwidget.h \
+    playlistmodel.h \
+    playlistwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

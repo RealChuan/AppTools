@@ -16,6 +16,12 @@ public:
     bool isMuted() const;
     qreal playbackRate() const;
 
+public slots:
+    void setState(QMediaPlayer::State state);
+    void setVolume(int volume);
+    void setMuted(bool muted);
+    void setPlaybackRate(float rate);
+
 signals:
     void play(bool);
     void stop();
