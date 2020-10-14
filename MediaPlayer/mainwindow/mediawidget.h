@@ -3,7 +3,6 @@
 
 #include <QVideoWidget>
 
-class MediaWidgetPrivate;
 class MediaWidget : public QVideoWidget
 {
     Q_OBJECT
@@ -20,11 +19,6 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-
-private:
-    void buildConnect();
-
-    QScopedPointer<MediaWidgetPrivate> d_ptr;
 };
 
 #endif // MEDIAWIDGET_H

@@ -1,6 +1,5 @@
 #include <utils/logasync.h>
 #include <utils/utils.h>
-#include <controls/waitwidget.h>
 #include <mainwindow/mainwindow.h>
 
 #include <QApplication>
@@ -22,18 +21,8 @@ int main(int argc, char *argv[])
 
     Utils::printBuildInfo();
     Utils::setUTF8Code();
-    Utils::loadFonts();
-    Utils::setQSS();
-
-    // 等待界面
-    WaitWidget waitWidget;
-    waitWidget.show();
-    a.processEvents();
-
-    a.setApplicationVersion(QObject::tr("0.0.1"));
-    a.setApplicationDisplayName(QObject::tr("PictureTool"));
-    a.setApplicationName(QObject::tr("PictureTool"));
-    a.setOrganizationName(QObject::tr("Youth"));
+    //Utils::loadFonts();
+    //Utils::setQSS();
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);
@@ -42,7 +31,6 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
-    waitWidget.close();
 
     int result = a.exec();
     //log->stop();

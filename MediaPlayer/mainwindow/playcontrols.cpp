@@ -10,22 +10,22 @@ public:
         playButton->setCheckable(true);
         playButton->setEnabled(true);
         playButton->setObjectName("PlayButton");
-        playButton->setToolTip("Play|Pause");
+        playButton->setToolTip(QObject::tr("Play|Pause"));
 
         previousButton = new QToolButton(owner);
         previousButton->setEnabled(true);
         previousButton->setObjectName("PreviousButton");
-        previousButton->setToolTip("Previous");
+        previousButton->setToolTip(QObject::tr("Previous"));
 
         nextButton = new QToolButton(owner);
         nextButton->setEnabled(true);
         nextButton->setObjectName("NextButton");
-        nextButton->setToolTip("Next");
+        nextButton->setToolTip(QObject::tr("Next"));
 
         muteButton = new QToolButton(owner);
         muteButton->setCheckable(true);
         muteButton->setObjectName("VolumeButton");
-        muteButton->setToolTip("Volume");
+        muteButton->setToolTip(QObject::tr("Volume"));
 
         volumeSlider = new QSlider(Qt::Horizontal, owner);
         volumeSlider->setRange(0, 100);
@@ -35,6 +35,10 @@ public:
         rateBox->addItem("1.0x", QVariant(1.0));
         rateBox->addItem("2.0x", QVariant(2.0));
         rateBox->setCurrentIndex(1);
+
+        fullScreenBtn = new QToolButton(owner);
+        fullScreenBtn->setCheckable(true);
+        fullScreenBtn->setToolTip(QObject::tr("Full Screen"));
     }
     QWidget *owner;
     QToolButton *playButton;
@@ -43,6 +47,7 @@ public:
     QToolButton *muteButton;
     QSlider *volumeSlider;
     QComboBox *rateBox;
+    QToolButton *fullScreenBtn;
 
     QMediaPlayer::State playerState = QMediaPlayer::StoppedState;
     bool playerMuted = false;
@@ -77,6 +82,11 @@ bool PlayControls::isMuted() const
 qreal PlayControls::playbackRate() const
 {
     return d_ptr->rateBox->itemData(d_ptr->rateBox->currentIndex()).toDouble();
+}
+
+bool PlayControls::isFullScreenButtonChecked()
+{
+    return d_ptr->fullScreenBtn->isChecked();
 }
 
 void PlayControls::setState(QMediaPlayer::State state)
@@ -161,6 +171,11 @@ void PlayControls::onVolumeSliderValueChanged()
     emit changeVolume(volume());
 }
 
+void PlayControls::setFullScreenButtonChecked(bool checked)
+{
+    d_ptr->fullScreenBtn->setChecked(checked);
+}
+
 void PlayControls::setupUI()
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -171,6 +186,7 @@ void PlayControls::setupUI()
     layout->addWidget(d_ptr->rateBox);
     layout->addWidget(d_ptr->muteButton);
     layout->addWidget(d_ptr->volumeSlider);
+    layout->addWidget(d_ptr->fullScreenBtn);
     layout->addStretch();
 }
 
@@ -182,4 +198,5 @@ void PlayControls::buildConnect()
     connect(d_ptr->muteButton, &QToolButton::clicked, this, &PlayControls::muteClicked);
     connect(d_ptr->volumeSlider, &QSlider::valueChanged, this, &PlayControls::onVolumeSliderValueChanged);
     connect(d_ptr->rateBox, QOverload<int>::of(&QComboBox::activated), this, &PlayControls::updateRate);
+    connect(d_ptr->fullScreenBtn, &QToolButton::clicked, this, &PlayControls::fullScreen);
 }

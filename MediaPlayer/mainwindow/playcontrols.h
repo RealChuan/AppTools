@@ -15,12 +15,14 @@ public:
     int volume() const;
     bool isMuted() const;
     qreal playbackRate() const;
+    bool isFullScreenButtonChecked();
 
 public slots:
     void setState(QMediaPlayer::State state);
     void setVolume(int volume);
     void setMuted(bool muted);
     void setPlaybackRate(float rate);
+    void setFullScreenButtonChecked(bool);
 
 signals:
     void play(bool);
@@ -30,6 +32,7 @@ signals:
     void changeVolume(int volume);
     void changeMuting(bool muting);
     void changeRate(qreal rate);
+    void fullScreen(bool);
 
 private slots:
     void playClicked();

@@ -1,9 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "mainwindow_global.h"
+
 #include <QMainWindow>
 
-class MainWindow : public QMainWindow
+class MAINWINDOW_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
 

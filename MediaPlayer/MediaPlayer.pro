@@ -1,31 +1,14 @@
-QT       += core gui multimediawidgets
+TEMPLATE = subdirs
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+SUBDIRS += \
+    utils \
+    mainwindow \
+    app \
 
-CONFIG += c++11
+TRANSLATIONS += \
+    translations/language.zh_cn.ts \
+    translations/language.zh_en.ts
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    mediawidget.cpp \
-    playcontrols.cpp \
-    playerwidget.cpp \
-    playlistmodel.cpp \
-    playlistwidget.cpp
-
-HEADERS += \
-    mainwindow.h \
-    mediawidget.h \
-    playcontrols.h \
-    playerwidget.h \
-    playlistmodel.h \
-    playlistwidget.h
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+message("1.Build;")
+message("2.Copy the file in the bin/ directory to the executable program directory;")
+message("3.Run the program.");

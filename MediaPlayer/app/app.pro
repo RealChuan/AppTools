@@ -16,19 +16,11 @@ LIBS += -L$$APP_OUTPUT_PATH
 
 LIBS += \
     -l$$replaceLibName(utils) \
-    -l$$replaceLibName(controls) \
-    -l$$replaceLibName(mainwindow) \
-    -l$$replaceLibName(graphics)
-
-RC_ICONS = app.ico
-#ICON     = app.icns
+    -l$$replaceLibName(mainwindow)
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp
-
-OTHER_FILES += \
-    app.ico
 
 DESTDIR = $$APP_OUTPUT_PATH
