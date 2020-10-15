@@ -97,12 +97,15 @@ void PlayControls::setState(QMediaPlayer::State state)
 
     switch (state) {
     case QMediaPlayer::StoppedState:
+        d_ptr->playButton->setChecked(false);
         //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
         break;
     case QMediaPlayer::PlayingState:
+        d_ptr->playButton->setChecked(true);
         //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
         break;
     case QMediaPlayer::PausedState:
+        d_ptr->playButton->setChecked(false);
         //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
         break;
     }
@@ -142,18 +145,16 @@ void PlayControls::setPlaybackRate(float rate)
 
 void PlayControls::playClicked()
 {
-    bool played = false;
     switch (d_ptr->playerState) {
     case QMediaPlayer::StoppedState:
     case QMediaPlayer::PausedState:
-        played = true;
+        emit play();
         break;
     case QMediaPlayer::PlayingState:
-        played = false;
+        emit pause();
         break;
     default: break;
     }
-    emit play(played);
 }
 
 void PlayControls::muteClicked()
@@ -192,7 +193,7 @@ void PlayControls::setupUI()
 
 void PlayControls::buildConnect()
 {
-    connect(d_ptr->playButton, &QToolButton::clicked, this, &PlayControls::play);
+    connect(d_ptr->playButton, &QToolButton::clicked, this, &PlayControls::playClicked);
     connect(d_ptr->previousButton, &QToolButton::clicked, this, &PlayControls::previous);
     connect(d_ptr->nextButton, &QToolButton::clicked, this, &PlayControls::next);
     connect(d_ptr->muteButton, &QToolButton::clicked, this, &PlayControls::muteClicked);

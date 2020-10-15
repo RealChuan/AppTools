@@ -22,6 +22,7 @@ PlaylistModel::PlaylistModel(QObject *parent)
 
 PlaylistModel::~PlaylistModel()
 {
+    d_ptr->playlist->clear();
     d_ptr->dataMap.clear();
 }
 
