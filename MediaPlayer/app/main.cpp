@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     QDir::setCurrent(a.applicationDirPath());
     Utils::loadLanguage();
 
+     QCoreApplication::setApplicationName(QObject::tr("Media Player"));
+
     // 异步日志
     //LogAsync *log = LogAsync::instance();
     //log->setLogLevel(QtDebugMsg); // 实际环境中可通过读取配置设置日志级别
@@ -21,8 +23,8 @@ int main(int argc, char *argv[])
 
     Utils::printBuildInfo();
     Utils::setUTF8Code();
-    //Utils::loadFonts();
-    //Utils::setQSS();
+    Utils::loadFonts();
+    Utils::setQSS();
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);

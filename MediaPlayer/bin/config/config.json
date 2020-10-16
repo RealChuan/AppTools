@@ -1,0 +1,9 @@
+{		
+	"qss_files": [
+        "qss/PlayControl.css"
+    ],
+	
+	"font_files": [
+        "fonts/pingfangSS.ttf"
+    ]
+}

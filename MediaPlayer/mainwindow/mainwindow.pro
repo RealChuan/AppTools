@@ -13,16 +13,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     mainwindow.cpp \
     mediawidget.cpp \
-    playcontrols.cpp \
+    playcontrolwidget.cpp \
     playerwidget.cpp \
     playlistmodel.cpp \
-    playlistwidget.cpp
+    playlistview.cpp
 
 HEADERS += \
     mainwindow.h \
     mainwindow_global.h \
     mediawidget.h \
-    playcontrols.h \
+    playcontrolwidget.h \
     playerwidget.h \
     playlistmodel.h \
-    playlistwidget.h
+    playlistview.h

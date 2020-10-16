@@ -11,18 +11,13 @@ class PlayerWidget : public QWidget
 public:
     explicit PlayerWidget(QWidget *parent = nullptr);
     ~PlayerWidget();
-
-signals:
     
 private slots:
+    void setCustomAudioRole(const QString &role);
+
     void onPlay(bool);
-
-    void durationChanged(qint64 duration);
-    void positionChanged(qint64 progress);
     void metaDataChanged();
-
     void previousClicked();
-
     void seek(int seconds);
 
     void statusChanged(QMediaPlayer::MediaStatus status);
@@ -39,7 +34,6 @@ private:
     void setTrackInfo(const QString &info);
     void setStatusInfo(const QString &info);
     void handleCursor(QMediaPlayer::MediaStatus status);
-    void updateDurationInfo(qint64 currentInfo);
     bool isPlayerAvailable() const;
 
     QScopedPointer<PlayerWidgetPrivate> d_ptr;

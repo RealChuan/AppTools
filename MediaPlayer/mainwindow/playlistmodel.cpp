@@ -41,8 +41,8 @@ QModelIndex PlaylistModel::index(int row, int column, const QModelIndex &parent)
     return d_ptr->playlist && !parent.isValid()
             && row >= 0 && row < d_ptr->playlist->mediaCount()
             && column >= 0 && column < ColumnCount
-        ? createIndex(row, column)
-        : QModelIndex();
+            ? createIndex(row, column)
+            : QModelIndex();
 }
 
 QModelIndex PlaylistModel::parent(const QModelIndex &child) const
@@ -53,13 +53,19 @@ QModelIndex PlaylistModel::parent(const QModelIndex &child) const
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if (index.isValid() && role == Qt::DisplayRole) {
+    if(!index.isValid())
+        return QVariant();
+    switch (role) {
+    case Qt::ToolTipRole:
+    case Qt::DisplayRole: {
         QVariant value = d_ptr->dataMap[index];
-        if (!value.isValid() && index.column() == Title) {
-            QUrl location = d_ptr->playlist->media(index.row()).request().url();
-            return QFileInfo(location.path()).fileName();
-        }
-        return value;
+        if (value.isValid() || index.column() != Title)
+            return value;
+        QUrl location = d_ptr->playlist->media(index.row()).request().url();
+        QString str = QString(tr("%1.%2").arg(index.row() + 1).arg(QFileInfo(location.path()).fileName()));
+        return str;
+    }break;
+    default: break;
     }
     return QVariant();
 }

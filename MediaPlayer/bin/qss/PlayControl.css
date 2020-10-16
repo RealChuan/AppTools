@@ -1,0 +1,60 @@
+.PlayControlWidget{
+	max-height: 80px;
+	min-height: 80px;
+	background:transparent;
+}
+
+QListView{
+	max-width: 300px;
+	min-width: 100px;
+	background-color: rgb(13,14,17);
+	show-decoration-selected: 1; /* make the selection span the entire width of the view */
+	color: #f3f3f3;
+	font-size:15px;
+}
+
+QListView::item:alternate {
+	color: white;
+    background: rgb(0,123,146);
+}
+
+QListView::item:selected {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+}
+
+QListView::item:selected:!active {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+}
+
+QListView::item:selected:active {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+}
+
+QListView::item:hover {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+} 
+
+QSlider::groove:horizontal,QSlider::add-page:horizontal{
+    height:3px;
+    border-radius:3px;
+    background:#CECECE;
+}
+
+QSlider::sub-page:horizontal{
+    height:8px;
+    border-radius:3px;
+    background:#9c9c9c;
+}
+
+QSlider::handle:horizontal{
+    width:8px;
+    margin-top:-5px;
+    margin-bottom:-4px;
+    border-radius:6px;
+    background: #f3f3f3;
+}
+ 

@@ -1,5 +1,7 @@
 #include "mediawidget.h"
 
+#include <utils/utils.h>
+
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QMediaPlayer>
@@ -11,7 +13,7 @@ MediaWidget::MediaWidget(QWidget *parent)
     , m_menu(new QMenu(this))
 {
     QPalette p = palette();
-    p.setColor(QPalette::Window, Qt::black);
+    p.setColor(QPalette::Window, QColor(13,14,17));
     setPalette(p);
 
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -74,4 +76,6 @@ void MediaWidget::contextMenuEvent(QContextMenuEvent *event)
 void MediaWidget::initMenu()
 {
     m_menu->addAction(tr("Open"), this, &MediaWidget::open);
+    m_menu->addSeparator();
+    m_menu->addAction(tr("Reload QSS"), []{ Utils::setQSS(); });
 }
