@@ -9,11 +9,12 @@
 class PlayerWidgetPrivate{
 public:
     PlayerWidgetPrivate(QWidget *parent)
-        : owner(parent){
+        : owner(parent)
+        , mediaPlayer(new QMediaPlayer)
+    {
         playControls = new PlayControlWidget(owner);
         playListWidget = new PlayListView(owner);
         mediaWidget = new MediaWidget(owner);
-        mediaPlayer = new QMediaPlayer(owner);
         mediaPlayer->setAudioRole(QAudio::VideoRole);
         mediaPlayer->setVideoOutput(mediaWidget);
         mediaPlayer->setPlaylist(playListWidget->mediaList());
@@ -24,7 +25,7 @@ public:
         playControls->setMuted(mediaPlayer->isMuted());
     }
     QWidget *owner;
-    QMediaPlayer *mediaPlayer;
+    QScopedPointer<QMediaPlayer> mediaPlayer;
     MediaWidget *mediaWidget;
     PlayControlWidget *playControls;
     PlayListView *playListWidget;
@@ -60,7 +61,6 @@ PlayerWidget::PlayerWidget(QWidget *parent)
 
 PlayerWidget::~PlayerWidget()
 {
-
 }
 
 void PlayerWidget::setCustomAudioRole(const QString &role)
@@ -191,26 +191,26 @@ void PlayerWidget::setupUI()
 
 void PlayerWidget::buildConnect()
 {
-    connect(d_ptr->mediaPlayer, QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &PlayerWidget::metaDataChanged);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &PlayerWidget::statusChanged);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::bufferStatusChanged, this, &PlayerWidget::bufferingProgress);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::videoAvailableChanged, this, &PlayerWidget::videoAvailableChanged);
-    connect(d_ptr->mediaPlayer, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &PlayerWidget::displayErrorMessage);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::stateChanged, this, &PlayerWidget::stateChanged);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::volumeChanged, d_ptr->playControls, &PlayControlWidget::setVolume);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::mutedChanged, d_ptr->playControls, &PlayControlWidget::setMuted);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::durationChanged, d_ptr->playControls, &PlayControlWidget::durationChanged);
-    connect(d_ptr->mediaPlayer, &QMediaPlayer::positionChanged, d_ptr->playControls, &PlayControlWidget::positionChanged);
+    connect(d_ptr->mediaPlayer.data(), QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &PlayerWidget::metaDataChanged);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::mediaStatusChanged, this, &PlayerWidget::statusChanged);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::bufferStatusChanged, this, &PlayerWidget::bufferingProgress);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::videoAvailableChanged, this, &PlayerWidget::videoAvailableChanged);
+    connect(d_ptr->mediaPlayer.data(), QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &PlayerWidget::displayErrorMessage);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::stateChanged, this, &PlayerWidget::stateChanged);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::volumeChanged, d_ptr->playControls, &PlayControlWidget::setVolume);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::mutedChanged, d_ptr->playControls, &PlayControlWidget::setMuted);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::durationChanged, d_ptr->playControls, &PlayControlWidget::durationChanged);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::positionChanged, d_ptr->playControls, &PlayControlWidget::positionChanged);
 
     connect(d_ptr->playControls, &PlayControlWidget::seek, this, &PlayerWidget::seek);
-    connect(d_ptr->playControls, &PlayControlWidget::play, d_ptr->mediaPlayer, &QMediaPlayer::play);
-    connect(d_ptr->playControls, &PlayControlWidget::pause, d_ptr->mediaPlayer, &QMediaPlayer::pause);
-    connect(d_ptr->playControls, &PlayControlWidget::stop, d_ptr->mediaPlayer, &QMediaPlayer::stop);
+    connect(d_ptr->playControls, &PlayControlWidget::play, d_ptr->mediaPlayer.data(), &QMediaPlayer::play);
+    connect(d_ptr->playControls, &PlayControlWidget::pause, d_ptr->mediaPlayer.data(), &QMediaPlayer::pause);
+    connect(d_ptr->playControls, &PlayControlWidget::stop, d_ptr->mediaPlayer.data(), &QMediaPlayer::stop);
     connect(d_ptr->playControls, &PlayControlWidget::next, d_ptr->playListWidget, &PlayListView::onNext);
     connect(d_ptr->playControls, &PlayControlWidget::previous, this, &PlayerWidget::previousClicked);
-    connect(d_ptr->playControls, &PlayControlWidget::changeVolume, d_ptr->mediaPlayer, &QMediaPlayer::setVolume);
-    connect(d_ptr->playControls, &PlayControlWidget::changeMuting, d_ptr->mediaPlayer, &QMediaPlayer::setMuted);
-    connect(d_ptr->playControls, &PlayControlWidget::changeRate, d_ptr->mediaPlayer, &QMediaPlayer::setPlaybackRate);
+    connect(d_ptr->playControls, &PlayControlWidget::changeVolume, d_ptr->mediaPlayer.data(), &QMediaPlayer::setVolume);
+    connect(d_ptr->playControls, &PlayControlWidget::changeMuting, d_ptr->mediaPlayer.data(), &QMediaPlayer::setMuted);
+    connect(d_ptr->playControls, &PlayControlWidget::changeRate, d_ptr->mediaPlayer.data(), &QMediaPlayer::setPlaybackRate);
     connect(d_ptr->playControls, &PlayControlWidget::stop, d_ptr->mediaWidget, QOverload<>::of(&QVideoWidget::update));
 
     connect(d_ptr->mediaWidget, &MediaWidget::addMedia, d_ptr->playListWidget, &PlayListView::addMedia);

@@ -8,6 +8,7 @@ public:
         : owner(parent){
         progressSlider = new QSlider(Qt::Horizontal, owner);
         durationLabel = new QLabel(owner);
+        totalTimeLabel = new QLabel(owner);
 
         playButton = new QToolButton(owner);
         playButton->setCheckable(true);
@@ -41,11 +42,13 @@ public:
 
         fullScreenBtn = new QToolButton(owner);
         fullScreenBtn->setCheckable(true);
+        fullScreenBtn->setObjectName("FullScreenButton");
         fullScreenBtn->setToolTip(QObject::tr("Full Screen"));
     }
     QWidget *owner;
     QSlider *progressSlider;
     QLabel *durationLabel;
+    QLabel *totalTimeLabel;
     QToolButton *playButton;
     QToolButton *previousButton;
     QToolButton *nextButton;
@@ -54,7 +57,7 @@ public:
     QComboBox *rateBox;
     QToolButton *fullScreenBtn;
 
-    qint64 duration;
+    qint64 totalTime;
     QMediaPlayer::State playerState = QMediaPlayer::StoppedState;
     bool playerMuted = false;
 };
@@ -102,8 +105,14 @@ void PlayControlWidget::setProcessValue(int offset)
 
 void PlayControlWidget::durationChanged(qint64 duration)
 {
-    d_ptr->duration = duration / 1000;
-    d_ptr->progressSlider->setMaximum(d_ptr->duration);
+    d_ptr->totalTime = duration / 1000;
+    d_ptr->progressSlider->setMaximum(d_ptr->totalTime);
+    QTime totalTime((d_ptr->totalTime / 3600) % 60, (d_ptr->totalTime / 60) % 60,
+                    d_ptr->totalTime % 60, (d_ptr->totalTime * 1000) % 1000);
+    QString format = "mm:ss";
+    if (d_ptr->totalTime > 3600)
+        format = "hh:mm:ss";
+    d_ptr->totalTimeLabel->setText(totalTime.toString(format));
 }
 
 void PlayControlWidget::positionChanged(qint64 progress)
@@ -204,12 +213,15 @@ void PlayControlWidget::setFullScreenButtonChecked(bool checked)
 
 void PlayControlWidget::setupUI()
 {
-    QHBoxLayout *sliderLayout = new QHBoxLayout;
-    sliderLayout->setContentsMargins(0, 0, 0, 0);
-    sliderLayout->addWidget(d_ptr->progressSlider);
-    sliderLayout->addWidget(d_ptr->durationLabel);
+    QHBoxLayout *durationLayout = new QHBoxLayout;
+    durationLayout->setSpacing(0);
+    durationLayout->setContentsMargins(0, 0, 0, 0);
+    durationLayout->addWidget(d_ptr->durationLabel);
+    durationLayout->addStretch();
+    durationLayout->addWidget(d_ptr->totalTimeLabel);
 
     QHBoxLayout *controlLayout = new QHBoxLayout;
+    controlLayout->setSpacing(10);
     controlLayout->setContentsMargins(0, 0, 0, 0);
     controlLayout->addStretch();
     controlLayout->addWidget(d_ptr->previousButton);
@@ -222,9 +234,10 @@ void PlayControlWidget::setupUI()
     controlLayout->addWidget(d_ptr->fullScreenBtn);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(20, 0, 20, 10);
     layout->setSpacing(0);
-    layout->addLayout(sliderLayout);
+    layout->addWidget(d_ptr->progressSlider);
+    layout->addLayout(durationLayout);
     layout->addLayout(controlLayout);
 }
 
@@ -242,16 +255,12 @@ void PlayControlWidget::buildConnect()
 
 void PlayControlWidget::updateDurationInfo(qint64 currentInfo)
 {
-    QString tStr;
-    if (currentInfo || d_ptr->duration) {
-        QTime currentTime((currentInfo / 3600) % 60, (currentInfo / 60) % 60,
-                          currentInfo % 60, (currentInfo * 1000) % 1000);
-        QTime totalTime((d_ptr->duration / 3600) % 60, (d_ptr->duration / 60) % 60,
-                        d_ptr->duration % 60, (d_ptr->duration * 1000) % 1000);
-        QString format = "mm:ss";
-        if (d_ptr->duration > 3600)
-            format = "hh:mm:ss";
-        tStr = currentTime.toString(format) + " / " + totalTime.toString(format);
-    }
-    d_ptr->durationLabel->setText(tStr);
+    if (!currentInfo && !d_ptr->totalTime)
+        return;
+    QTime currentTime((currentInfo / 3600) % 60, (currentInfo / 60) % 60,
+                      currentInfo % 60, (currentInfo * 1000) % 1000);
+    QString format = "mm:ss";
+    if (d_ptr->totalTime > 3600)
+        format = "hh:mm:ss";
+    d_ptr->durationLabel->setText(currentTime.toString(format));
 }
