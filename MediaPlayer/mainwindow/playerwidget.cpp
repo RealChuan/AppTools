@@ -5,16 +5,18 @@
 
 #include <QtWidgets>
 #include <QMediaMetaData>
+#include <QMediaPlaylist>
+#include <QKeyEvent>
 
 class PlayerWidgetPrivate{
 public:
     PlayerWidgetPrivate(QWidget *parent)
         : owner(parent)
-        , mediaPlayer(new QMediaPlayer)
-    {
-        playControls = new PlayControlWidget(owner);
-        playListWidget = new PlayListView(owner);
-        mediaWidget = new MediaWidget(owner);
+        , mediaPlayer(new QMediaPlayer) {
+        playControls = new PlayControlWidget(parent);
+        playListWidget = new PlayListView(parent);
+        mediaWidget = new MediaWidget(parent);
+
         mediaPlayer->setAudioRole(QAudio::VideoRole);
         mediaPlayer->setVideoOutput(mediaWidget);
         mediaPlayer->setPlaylist(playListWidget->mediaList());
@@ -57,6 +59,7 @@ PlayerWidget::PlayerWidget(QWidget *parent)
     }
 
     metaDataChanged();
+    setPlayButtonEnable();
 }
 
 PlayerWidget::~PlayerWidget()
@@ -76,6 +79,13 @@ void PlayerWidget::onPlay(bool play)
         d_ptr->mediaPlayer->pause();
 }
 
+void PlayerWidget::onDoubleScreen()
+{
+    QSize size = d_ptr->mediaPlayer->media().canonicalResource().resolution();
+    if(size.isValid())
+        d_ptr->mediaWidget->resize(size);
+}
+
 void PlayerWidget::metaDataChanged()
 {
     if (!d_ptr->mediaPlayer->isMetaDataAvailable())
@@ -92,8 +102,12 @@ void PlayerWidget::metaDataChanged()
                                  : QPixmap());
 }
 
-void PlayerWidget::previousClicked()
+void PlayerWidget::onPrevious()
 {
+    if(d_ptr->playListWidget->mediaList()->isEmpty()
+            || d_ptr->mediaPlayer->state() == QMediaPlayer::StoppedState)
+        return;
+
     // Go to previous track if we are within the first 5 seconds of playback
     // Otherwise, seek to the beginning.
     if (d_ptr->mediaPlayer->position() <= 5000)
@@ -147,24 +161,7 @@ void PlayerWidget::bufferingProgress(int progress)
         setStatusInfo(tr("Buffering %1%").arg(progress));
 }
 
-void PlayerWidget::videoAvailableChanged(bool available)
-{
-    if (!available) {
-        disconnect(d_ptr->playControls, &PlayControlWidget::fullScreen, d_ptr->mediaWidget, &MediaWidget::setFullScreen);
-        disconnect(d_ptr->mediaWidget, &MediaWidget::fullScreenChanged, d_ptr->playControls, &PlayControlWidget::setFullScreenButtonChecked);
-        d_ptr->mediaWidget->setFullScreen(false);
-    } else {
-        connect(d_ptr->playControls, &PlayControlWidget::fullScreen, d_ptr->mediaWidget, &MediaWidget::setFullScreen);
-        connect(d_ptr->mediaWidget, &QVideoWidget::fullScreenChanged, d_ptr->playControls, &PlayControlWidget::setFullScreenButtonChecked);
-
-        if (d_ptr->playControls->isFullScreenButtonChecked())
-            d_ptr->mediaWidget->setFullScreen(true);
-    }
-
-    //m_colorButton->setEnabled(available);
-}
-
-void PlayerWidget::seek(int seconds)
+void PlayerWidget::onSeek(int seconds)
 {
     d_ptr->mediaPlayer->setPosition(seconds * 1000);
 }
@@ -174,19 +171,43 @@ void PlayerWidget::displayErrorMessage()
     setStatusInfo(d_ptr->mediaPlayer->errorString());
 }
 
+void PlayerWidget::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Space)
+        d_ptr->playControls->onPlay();
+}
+
+void PlayerWidget::setPlayListVisiable()
+{
+    d_ptr->playListWidget->setVisible(!d_ptr->playListWidget->isVisible());
+}
+
 void PlayerWidget::setupUI()
 {    
-    QVBoxLayout *leftLayout = new QVBoxLayout;
+    // mediaPlayer->setVideoOutput(mediaWidget); 使下面代码效果不好
+    //QVBoxLayout *mediaLayout = new QVBoxLayout(d_ptr->mediaWidget);
+    //mediaLayout->setContentsMargins(0, 0, 0, 0);
+    //mediaLayout->setSpacing(0);
+    //mediaLayout->addStretch();
+    //mediaLayout->addWidget(d_ptr->playControls);
+
+    QWidget *leftWidget = new QWidget(this);
+    QVBoxLayout *leftLayout = new QVBoxLayout(leftWidget);
     leftLayout->setContentsMargins(0, 0, 0, 0);
     leftLayout->setSpacing(0);
     leftLayout->addWidget(d_ptr->mediaWidget);
     leftLayout->addWidget(d_ptr->playControls);
 
+    QSplitter *splitter = new QSplitter(this);
+    splitter->setHandleWidth(0);
+    splitter->addWidget(leftWidget);
+    splitter->addWidget(d_ptr->playListWidget);
+    splitter->setSizes(QList<int>() << 1000 << 1);
+
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addLayout(leftLayout);
-    layout->addWidget(d_ptr->playListWidget);
+    layout->addWidget(splitter);
 }
 
 void PlayerWidget::buildConnect()
@@ -194,7 +215,7 @@ void PlayerWidget::buildConnect()
     connect(d_ptr->mediaPlayer.data(), QOverload<>::of(&QMediaPlayer::metaDataChanged), this, &PlayerWidget::metaDataChanged);
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::mediaStatusChanged, this, &PlayerWidget::statusChanged);
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::bufferStatusChanged, this, &PlayerWidget::bufferingProgress);
-    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::videoAvailableChanged, this, &PlayerWidget::videoAvailableChanged);
+    connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::videoAvailableChanged, d_ptr->mediaWidget, &MediaWidget::setFullScreen);
     connect(d_ptr->mediaPlayer.data(), QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &PlayerWidget::displayErrorMessage);
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::stateChanged, this, &PlayerWidget::stateChanged);
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::volumeChanged, d_ptr->playControls, &PlayControlWidget::setVolume);
@@ -202,23 +223,33 @@ void PlayerWidget::buildConnect()
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::durationChanged, d_ptr->playControls, &PlayControlWidget::durationChanged);
     connect(d_ptr->mediaPlayer.data(), &QMediaPlayer::positionChanged, d_ptr->playControls, &PlayControlWidget::positionChanged);
 
-    connect(d_ptr->playControls, &PlayControlWidget::seek, this, &PlayerWidget::seek);
+    connect(d_ptr->playControls, &PlayControlWidget::showList, this, &PlayerWidget::setPlayListVisiable);
+    connect(d_ptr->playControls, &PlayControlWidget::previous, this, &PlayerWidget::onPrevious);
+    connect(d_ptr->playControls, &PlayControlWidget::next, d_ptr->playListWidget, &PlayListView::onNext);
     connect(d_ptr->playControls, &PlayControlWidget::play, d_ptr->mediaPlayer.data(), &QMediaPlayer::play);
     connect(d_ptr->playControls, &PlayControlWidget::pause, d_ptr->mediaPlayer.data(), &QMediaPlayer::pause);
     connect(d_ptr->playControls, &PlayControlWidget::stop, d_ptr->mediaPlayer.data(), &QMediaPlayer::stop);
-    connect(d_ptr->playControls, &PlayControlWidget::next, d_ptr->playListWidget, &PlayListView::onNext);
-    connect(d_ptr->playControls, &PlayControlWidget::previous, this, &PlayerWidget::previousClicked);
+    connect(d_ptr->playControls, &PlayControlWidget::seek, this, &PlayerWidget::onSeek);
     connect(d_ptr->playControls, &PlayControlWidget::changeVolume, d_ptr->mediaPlayer.data(), &QMediaPlayer::setVolume);
     connect(d_ptr->playControls, &PlayControlWidget::changeMuting, d_ptr->mediaPlayer.data(), &QMediaPlayer::setMuted);
     connect(d_ptr->playControls, &PlayControlWidget::changeRate, d_ptr->mediaPlayer.data(), &QMediaPlayer::setPlaybackRate);
     connect(d_ptr->playControls, &PlayControlWidget::stop, d_ptr->mediaWidget, QOverload<>::of(&QVideoWidget::update));
 
-    connect(d_ptr->mediaWidget, &MediaWidget::addMedia, d_ptr->playListWidget, &PlayListView::addMedia);
+    connect(d_ptr->mediaWidget, &MediaWidget::doubleScreen, this, &PlayerWidget::onDoubleScreen);
+    connect(d_ptr->mediaWidget, &MediaWidget::previous, this, &PlayerWidget::onPrevious);
+    connect(d_ptr->mediaWidget, &MediaWidget::next, d_ptr->playListWidget, &PlayListView::onNext);
+    connect(d_ptr->mediaWidget, &MediaWidget::play, d_ptr->playControls, &PlayControlWidget::onPlay);
+    connect(d_ptr->mediaWidget, &MediaWidget::addMedia, d_ptr->playListWidget, &PlayListView::onOpenMedia);
+
+    connect(d_ptr->playListWidget, &PlayListView::playListChanged, this, &PlayerWidget::setPlayButtonEnable);
 }
 
-void PlayerWidget::init()
+void PlayerWidget::setPlayButtonEnable()
 {
-
+    if(d_ptr->mediaPlayer->playlist()->isEmpty())
+        d_ptr->playControls->setPlayButtonEnable(false);
+    else
+        d_ptr->playControls->setPlayButtonEnable(true);
 }
 
 void PlayerWidget::setTrackInfo(const QString &info)

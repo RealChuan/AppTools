@@ -56,7 +56,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     if(!index.isValid())
         return QVariant();
     switch (role) {
-    case Qt::ToolTipRole:
     case Qt::DisplayRole: {
         QVariant value = d_ptr->dataMap[index];
         if (value.isValid() || index.column() != Title)
@@ -65,6 +64,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         QString str = QString(tr("%1.%2").arg(index.row() + 1).arg(QFileInfo(location.path()).fileName()));
         return str;
     }break;
+    case Qt::ToolTipRole:{
+        QVariant value = d_ptr->dataMap[index];
+        if (value.isValid() || index.column() != Title)
+            return value;
+        QString path = d_ptr->playlist->media(index.row()).request().url().path();
+        return path;
+    } break;
     default: break;
     }
     return QVariant();

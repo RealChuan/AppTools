@@ -12,5 +12,6 @@ class MAINWINDOW_EXPORT MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 };
 #endif // MAINWINDOW_H

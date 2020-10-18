@@ -17,9 +17,13 @@ public:
 
 signals:
     void play();
+    void playListChanged();
 
 public slots:
+    void onOpenMedia();
     void addMedia(const QList<QUrl> &urls);
+    void onRemoveMedia();
+    void onRemoveAllMedia();
     void onPrevious();
     void onJump(const QModelIndex &index);
     void onNext();
@@ -27,7 +31,12 @@ public slots:
 private slots:
     void playlistPositionChanged(int);
 
+protected:
+    void contextMenuEvent(QContextMenuEvent *event) override;
+
 private:
+    void initMenu();
+
     QScopedPointer<PlayListWidgetPrivate> d_ptr;
 };
 

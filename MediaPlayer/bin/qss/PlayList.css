@@ -1,0 +1,44 @@
+.PlayerWidget QListView{
+	min-width: 200px;
+	background-color: rgb(13,14,17);
+	show-decoration-selected: 1; /* make the selection span the entire width of the view */
+	color: #f3f3f3;
+	font-size:15px;
+	border-width: 1px;
+	border-color: rgb(0,123,146);
+	border-style: none none none solid;
+}
+
+.PlayerWidget QListView::item:alternate {
+	color: white;
+    background-color: rgb(13,14,17);
+}
+
+.PlayerWidget QListView::item:selected {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+	background-color: rgb(13,14,17);
+}
+
+.PlayerWidget QListView::item:selected:!active {
+	color: white;
+    border: 1px solid rgb(0,123,146);
+	background-color: rgb(13,14,17);
+}
+
+.PlayerWidget QListView::item:selected:active {
+	color: white;
+    border: 2px solid rgb(0,123,146);
+	background-color: rgb(13,14,17);
+}
+
+.PlayerWidget QListView::item:hover {
+	color: white;
+    border: 2px solid rgb(0,123,146);
+	background-color: rgb(13,14,17);
+} 
+
+.PlayerWidget{
+	min-height: 500px;
+	min-width: 800px;	
+}

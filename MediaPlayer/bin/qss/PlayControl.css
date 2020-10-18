@@ -1,60 +1,115 @@
 .PlayControlWidget{
-	max-height: 80px;
-	min-height: 80px;
-	background:transparent;
+	max-height: 100px;
+	min-height: 100px;
+	background: rgb(13,14,17);
 }
 
-QListView{
-	max-width: 300px;
-	min-width: 100px;
-	background-color: rgb(13,14,17);
-	show-decoration-selected: 1; /* make the selection span the entire width of the view */
-	color: #f3f3f3;
-	font-size:15px;
+.PlayControlWidget QWdiget{
+	background: transparent;
 }
 
-QListView::item:alternate {
-	color: white;
-    background: rgb(0,123,146);
-}
-
-QListView::item:selected {
-	color: white;
-    border: 1px solid rgb(0,123,146);
-}
-
-QListView::item:selected:!active {
-	color: white;
-    border: 1px solid rgb(0,123,146);
-}
-
-QListView::item:selected:active {
-	color: white;
-    border: 1px solid rgb(0,123,146);
-}
-
-QListView::item:hover {
-	color: white;
-    border: 1px solid rgb(0,123,146);
-} 
-
-QSlider::groove:horizontal,QSlider::add-page:horizontal{
+.PlayControlWidget QSlider::groove:horizontal,QSlider::add-page:horizontal{
     height:3px;
     border-radius:3px;
     background:#CECECE;
 }
 
-QSlider::sub-page:horizontal{
+.PlayControlWidget QSlider::sub-page:horizontal{
     height:8px;
     border-radius:3px;
-    background:#9c9c9c;
+    background:rgb(0,123,146);
 }
 
-QSlider::handle:horizontal{
-    width:8px;
-    margin-top:-5px;
-    margin-bottom:-4px;
-    border-radius:6px;
-    background: #f3f3f3;
+.PlayControlWidget QSlider::handle:horizontal{	
+	width:8px;
+	background-color:rgb(0,123,146);
+	margin:-3px 0px -3px 0px;
+	border-radius:4px;
 }
+
+.PlayControlWidget QComboBox {
+    background-color: transparent;
+}
+
+.PlayControlWidget QComboBox:!editable{
+	background-color: transparent;
+}
+
+.PlayControlWidget QComboBox:!editable:on{
+	background-color: transparent;
+}
+
+.PlayControlWidget QComboBox QAbstractItemView {
+    border-radius: 0px;
+    background-color: rgb(13,14,17);
+}
+
+.PlayControlWidget QPushButton{
+	background-color: transparent;
+	border: 5;
+}
+
+#PlayButton{
+	min-width:  50px;
+    max-width:  50px;
+    min-height: 50px;
+    max-height: 50px;
+	qproperty-icon: url(image/play.png)off, url(image/pause.png)on;
+	qproperty-iconSize: 50px 50px;
+}
+
+#PreviousButton{
+	min-width:  40px;
+    max-width:  40px;
+    min-height: 40px;
+    max-height: 40px;
+	qproperty-icon: url(image/previous.png);
+	qproperty-iconSize: 40px 40px;
+}
+
+#NextButton{
+	min-width:  40px;
+    max-width:  40px;
+    min-height: 40px;
+    max-height: 40px;
+	qproperty-icon: url(image/next.png);
+	qproperty-iconSize: 40px 40px;
+}
+
+#MuteButton{
+	min-width:  30px;
+    max-width:  30px;
+    min-height: 30px;
+    max-height: 30px;
+	qproperty-icon: url(image/volume.png)off, url(image/mute.png)on;
+	qproperty-iconSize: 30px 30px;
+}
+
+#FullScreenButton{
+	min-width:  30px;
+    max-width:  30px;
+    min-height: 30px;
+    max-height: 30px;
+	qproperty-icon: url(image/exit_full_screen.png)off, url(image/full_screen.png)on;
+	qproperty-iconSize: 30px 30px;
+}
+
+#SetupButton{
+	min-width:  30px;
+    max-width:  30px;
+    min-height: 30px;
+    max-height: 30px;
+	qproperty-icon: url(image/setup.png);
+	qproperty-iconSize: 30px 30px;
+}
+
+#ShowListButton{
+	min-width:  30px;
+    max-width:  30px;
+    min-height: 30px;
+    max-height: 30px;
+	qproperty-icon: url(image/list.png);
+	qproperty-iconSize: 30px 30px;
+}
+
  

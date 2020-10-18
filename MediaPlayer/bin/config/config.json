@@ -1,6 +1,8 @@
 {		
 	"qss_files": [
-        "qss/PlayControl.css"
+        "qss/Common.css",
+		"qss/PlayList.css",
+		"qss/PlayControl.css"
     ],
 	
 	"font_files": [

@@ -49,6 +49,7 @@ void MainWindow::initToolBar()
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
     QComboBox *menuBox = new QComboBox(this);
+    menuBox->setObjectName("MenuBox");
     menuBox->addItems(QStringList() << tr("ImageViewer") << tr("DrawWidget"));
     connect(menuBox, &QComboBox::currentTextChanged,
             [this](const QString &text){
@@ -57,13 +58,6 @@ void MainWindow::initToolBar()
         else if(text == tr("DrawWidget"))
             d->stackedWidget->setCurrentWidget(d->drawWidget);
     });
-
-    menuBox->setStyleSheet("QComboBox{"
-                           "border-style:none none solid none;"
-                           "border-radius: 0px;"
-                           "background: white;"
-                           "font-size: 14px;"
-                           "}");
 
     QWidget *titleBar = new QWidget(this);
     QHBoxLayout *titleLayout = new QHBoxLayout(titleBar);

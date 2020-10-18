@@ -13,24 +13,28 @@ public:
     ~PlayerWidget();
     
 private slots:
-    void setCustomAudioRole(const QString &role);
-
+    void onPrevious();
     void onPlay(bool);
+    void onDoubleScreen();
+    void onSeek(int seconds);
     void metaDataChanged();
-    void previousClicked();
-    void seek(int seconds);
 
     void statusChanged(QMediaPlayer::MediaStatus status);
     void stateChanged(QMediaPlayer::State state);
     void bufferingProgress(int progress);
-    void videoAvailableChanged(bool available);
+
+    void setPlayListVisiable();
+    void setCustomAudioRole(const QString &role);
 
     void displayErrorMessage();
+    void setPlayButtonEnable();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
     
 private:
     void setupUI();
     void buildConnect();
-    void init();
     void setTrackInfo(const QString &info);
     void setStatusInfo(const QString &info);
     void handleCursor(QMediaPlayer::MediaStatus status);

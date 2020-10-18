@@ -10,26 +10,26 @@ public:
         durationLabel = new QLabel(owner);
         totalTimeLabel = new QLabel(owner);
 
-        playButton = new QToolButton(owner);
+        playButton = new QPushButton(owner);
         playButton->setCheckable(true);
         playButton->setEnabled(true);
         playButton->setObjectName("PlayButton");
         playButton->setToolTip(QObject::tr("Play|Pause"));
 
-        previousButton = new QToolButton(owner);
+        previousButton = new QPushButton(owner);
         previousButton->setEnabled(true);
         previousButton->setObjectName("PreviousButton");
         previousButton->setToolTip(QObject::tr("Previous"));
 
-        nextButton = new QToolButton(owner);
+        nextButton = new QPushButton(owner);
         nextButton->setEnabled(true);
         nextButton->setObjectName("NextButton");
         nextButton->setToolTip(QObject::tr("Next"));
 
-        muteButton = new QToolButton(owner);
+        muteButton = new QPushButton(owner);
         muteButton->setCheckable(true);
-        muteButton->setObjectName("VolumeButton");
-        muteButton->setToolTip(QObject::tr("Volume"));
+        muteButton->setObjectName("MuteButton");
+        muteButton->setToolTip(QObject::tr("Mute"));
 
         volumeSlider = new QSlider(Qt::Horizontal, owner);
         volumeSlider->setRange(0, 100);
@@ -39,27 +39,21 @@ public:
         rateBox->addItem("1.0x", QVariant(1.0));
         rateBox->addItem("2.0x", QVariant(2.0));
         rateBox->setCurrentIndex(1);
-
-        fullScreenBtn = new QToolButton(owner);
-        fullScreenBtn->setCheckable(true);
-        fullScreenBtn->setObjectName("FullScreenButton");
-        fullScreenBtn->setToolTip(QObject::tr("Full Screen"));
     }
     QWidget *owner;
     QSlider *progressSlider;
     QLabel *durationLabel;
     QLabel *totalTimeLabel;
-    QToolButton *playButton;
-    QToolButton *previousButton;
-    QToolButton *nextButton;
-    QToolButton *muteButton;
+    QPushButton *playButton;
+    QPushButton *previousButton;
+    QPushButton *nextButton;
+    QPushButton *muteButton;
     QSlider *volumeSlider;
     QComboBox *rateBox;
-    QToolButton *fullScreenBtn;
 
     qint64 totalTime;
     QMediaPlayer::State playerState = QMediaPlayer::StoppedState;
-    bool playerMuted = false;
+    int volume = 0;
 };
 
 PlayControlWidget::PlayControlWidget(QWidget *parent)
@@ -68,6 +62,11 @@ PlayControlWidget::PlayControlWidget(QWidget *parent)
 {
     setupUI();
     buildConnect();
+}
+
+void PlayControlWidget::setPlayButtonEnable(bool enable)
+{
+    d_ptr->playButton->setEnabled(enable);
 }
 
 QMediaPlayer::State PlayControlWidget::state() const
@@ -85,17 +84,12 @@ int PlayControlWidget::volume() const
 
 bool PlayControlWidget::isMuted() const
 {
-    return d_ptr->playerMuted;
+    return d_ptr->muteButton->isChecked();
 }
 
 qreal PlayControlWidget::playbackRate() const
 {
     return d_ptr->rateBox->itemData(d_ptr->rateBox->currentIndex()).toDouble();
-}
-
-bool PlayControlWidget::isFullScreenButtonChecked()
-{
-    return d_ptr->fullScreenBtn->isChecked();
 }
 
 void PlayControlWidget::setProcessValue(int offset)
@@ -132,15 +126,12 @@ void PlayControlWidget::setState(QMediaPlayer::State state)
     switch (state) {
     case QMediaPlayer::StoppedState:
         d_ptr->playButton->setChecked(false);
-        //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
         break;
     case QMediaPlayer::PlayingState:
         d_ptr->playButton->setChecked(true);
-        //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
         break;
     case QMediaPlayer::PausedState:
         d_ptr->playButton->setChecked(false);
-        //d_ptr->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
         break;
     }
 }
@@ -156,12 +147,9 @@ void PlayControlWidget::setVolume(int volume)
 
 void PlayControlWidget::setMuted(bool muted)
 {
-    if (muted == d_ptr->playerMuted)
+    if (muted == d_ptr->muteButton->isChecked())
         return;
-    d_ptr->playerMuted = muted;
-    //d_ptr->muteButton->setIcon(style()->standardIcon(muted
-    //                                                 ? QStyle::SP_MediaVolumeMuted
-    //                                                 : QStyle::SP_MediaVolume));
+    d_ptr->muteButton->setChecked(muted);
 }
 
 void PlayControlWidget::setPlaybackRate(float rate)
@@ -177,7 +165,7 @@ void PlayControlWidget::setPlaybackRate(float rate)
     d_ptr->rateBox->setCurrentIndex(d_ptr->rateBox->count() - 1);
 }
 
-void PlayControlWidget::playClicked()
+void PlayControlWidget::onPlay()
 {
     switch (d_ptr->playerState) {
     case QMediaPlayer::StoppedState:
@@ -191,9 +179,15 @@ void PlayControlWidget::playClicked()
     }
 }
 
-void PlayControlWidget::muteClicked()
+void PlayControlWidget::onMuted(bool muted)
 {
-    emit changeMuting(!d_ptr->playerMuted);
+    emit changeMuting(muted);
+    if(muted){
+        d_ptr->volume = volume();
+        setVolume(0);
+    }else{
+        setVolume(d_ptr->volume);
+    }
 }
 
 void PlayControlWidget::updateRate()
@@ -203,16 +197,36 @@ void PlayControlWidget::updateRate()
 
 void PlayControlWidget::onVolumeSliderValueChanged()
 {
-    emit changeVolume(volume());
+    int v = volume();
+    if(v == 0)
+        setMuted(true);
+    else
+       setMuted(false);
+    emit changeVolume(v);
 }
 
-void PlayControlWidget::setFullScreenButtonChecked(bool checked)
+void PlayControlWidget::paintEvent(QPaintEvent *event)
 {
-    d_ptr->fullScreenBtn->setChecked(checked);
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    p.setRenderHint(QPainter::Antialiasing);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    QWidget::paintEvent(event);
 }
 
 void PlayControlWidget::setupUI()
 {
+    QPushButton *setupButton = new QPushButton(this);
+    setupButton->setObjectName("SetupButton");
+    setupButton->setToolTip(tr("Set up"));
+    //connect(setupButton, &QPushButton::clicked, this, );
+
+    QPushButton *showListButton = new QPushButton(this);
+    showListButton->setObjectName("ShowListButton");
+    showListButton->setToolTip(tr("Show List|Hide List"));
+    connect(showListButton, &QPushButton::clicked, this, &PlayControlWidget::showList);
+
     QHBoxLayout *durationLayout = new QHBoxLayout;
     durationLayout->setSpacing(0);
     durationLayout->setContentsMargins(0, 0, 0, 0);
@@ -231,7 +245,8 @@ void PlayControlWidget::setupUI()
     controlLayout->addWidget(d_ptr->muteButton);
     controlLayout->addWidget(d_ptr->volumeSlider);
     controlLayout->addStretch();
-    controlLayout->addWidget(d_ptr->fullScreenBtn);
+    controlLayout->addWidget(setupButton);
+    controlLayout->addWidget(showListButton);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 20, 10);
@@ -244,13 +259,12 @@ void PlayControlWidget::setupUI()
 void PlayControlWidget::buildConnect()
 {
     connect(d_ptr->progressSlider, &QSlider::sliderMoved, this, &PlayControlWidget::seek);
-    connect(d_ptr->playButton, &QToolButton::clicked, this, &PlayControlWidget::playClicked);
-    connect(d_ptr->previousButton, &QToolButton::clicked, this, &PlayControlWidget::previous);
-    connect(d_ptr->nextButton, &QToolButton::clicked, this, &PlayControlWidget::next);
-    connect(d_ptr->muteButton, &QToolButton::clicked, this, &PlayControlWidget::muteClicked);
+    connect(d_ptr->previousButton, &QPushButton::clicked, this, &PlayControlWidget::previous);
+    connect(d_ptr->nextButton, &QPushButton::clicked, this, &PlayControlWidget::next);
+    connect(d_ptr->playButton, &QPushButton::clicked, this, &PlayControlWidget::onPlay);
+    connect(d_ptr->muteButton, &QPushButton::clicked, this, &PlayControlWidget::onMuted);
     connect(d_ptr->volumeSlider, &QSlider::valueChanged, this, &PlayControlWidget::onVolumeSliderValueChanged);
     connect(d_ptr->rateBox, QOverload<int>::of(&QComboBox::activated), this, &PlayControlWidget::updateRate);
-    connect(d_ptr->fullScreenBtn, &QToolButton::clicked, this, &PlayControlWidget::fullScreen);
 }
 
 void PlayControlWidget::updateDurationInfo(qint64 currentInfo)

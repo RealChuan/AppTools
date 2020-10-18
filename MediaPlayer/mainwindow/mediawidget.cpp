@@ -27,20 +27,9 @@ MediaWidget::~MediaWidget()
 
 }
 
-void MediaWidget::open()
+void MediaWidget::onFullScrren()
 {
-    QFileDialog fileDialog(this);
-    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    fileDialog.setWindowTitle(tr("Open Files"));
-    QStringList supportedMimeTypes = QMediaPlayer::supportedMimeTypes();
-    if (!supportedMimeTypes.isEmpty()) {
-        supportedMimeTypes.append("audio/x-m3u"); // MP3 playlists
-        fileDialog.setMimeTypeFilters(supportedMimeTypes);
-    }
-    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
-    if (fileDialog.exec() == QDialog::Accepted)
-        emit addMedia(fileDialog.selectedUrls());
-    //addToPlaylist(fileDialog.selectedUrls());
+    setFullScreen(!isFullScreen());
 }
 
 void MediaWidget::keyPressEvent(QKeyEvent *event)
@@ -49,7 +38,7 @@ void MediaWidget::keyPressEvent(QKeyEvent *event)
         setFullScreen(false);
         event->accept();
     } else if (event->key() == Qt::Key_Enter && event->modifiers() & Qt::Key_Alt) {
-        setFullScreen(!isFullScreen());
+        onFullScrren();
         event->accept();
     } else {
         QVideoWidget::keyPressEvent(event);
@@ -58,13 +47,14 @@ void MediaWidget::keyPressEvent(QKeyEvent *event)
 
 void MediaWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    setFullScreen(!isFullScreen());
+    onFullScrren();
     event->accept();
 }
 
 void MediaWidget::mousePressEvent(QMouseEvent *event)
 {
-    emit playOrPause();
+    if(event->button() == Qt::LeftButton)
+        emit play();
     QVideoWidget::mousePressEvent(event);
 }
 
@@ -75,7 +65,12 @@ void MediaWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void MediaWidget::initMenu()
 {
-    m_menu->addAction(tr("Open"), this, &MediaWidget::open);
+    m_menu->addAction(tr("Open"), this, &MediaWidget::addMedia);
+    m_menu->addSeparator();
+    m_menu->addAction(tr("Previous"), this, &MediaWidget::previous);
+    m_menu->addAction(tr("Next"), this, &MediaWidget::next);
+    m_menu->addAction(tr("Double Screen"), this, &MediaWidget::doubleScreen);
+    m_menu->addAction(tr("Full Screen"), this, &MediaWidget::onFullScrren);
     m_menu->addSeparator();
     m_menu->addAction(tr("Reload QSS"), []{ Utils::setQSS(); });
 }

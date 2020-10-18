@@ -26,10 +26,8 @@ void Utils::setQSS()
         qss.append(QLatin1String(file.readAll())).append("\n");
         file.close();
     }
-    if(!qss.isEmpty()){
-        qApp->style()->unpolish(qApp);
+    if(!qss.isEmpty())
         qApp->setStyleSheet(qss);
-    }
 }
 
 void Utils::loadFonts()

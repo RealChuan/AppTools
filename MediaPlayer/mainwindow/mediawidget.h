@@ -1,7 +1,6 @@
 #ifndef MEDIAWIDGET_H
 #define MEDIAWIDGET_H
 
-#include <QUrl>
 #include <QVideoWidget>
 
 class QMenu;
@@ -13,13 +12,16 @@ public:
     ~MediaWidget();
 
 signals:
-    void playOrPause();
+    void doubleScreen();
+    void previous();
+    void next();
+    void play();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 position);
-    void addMedia(const QList<QUrl> &urls);
+    void addMedia();
 
 private slots:
-    void open();
+    void onFullScrren();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

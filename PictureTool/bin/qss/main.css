@@ -12,34 +12,22 @@
 	min-height: 80px;
 }
 
-/*
-QListView {
-	max-height: 90px;
-    show-decoration-selected: 1; /* make the selection span the entire width of the view 
-}
-/*
-QListView::item:alternate {
-	width: 85px;
-	height: 85px;
-    background: #EEEEEE;
+#MenuBox{
+	border-style:none none solid none;
+    border-radius: 0px;
+    background: white;
+    font-size: 14px;
 }
 
-QListView::item:selected {
-    border: 1px solid #6a6ea9;
+#InfoWidget{
+	background: #f3f3f3;
 }
 
-QListView::item:selected:!active {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #ABAFE5, stop: 1 #8588B2);
+#ShapeWidget{
+	background:#e1e1e1; 
+	font-size: 13px;
 }
 
-QListView::item:selected:active {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #6a6ea9, stop: 1 #888dd9);
+QListWidget::Item{
+	height: 30px;
 }
-
-QListView::item:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #FAFBFE, stop: 1 #DCDEF1);
-}
-*/

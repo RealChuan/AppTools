@@ -229,6 +229,7 @@ QWidget *ImageViewer::toolWidget()
     formatLayout->addWidget(d->colorBox);
 
     QWidget *widget = new QWidget(this);
+    widget->setObjectName("InfoWidget");
     QVBoxLayout *rightLayout = new QVBoxLayout(widget);
     rightLayout->addWidget(openImageButton);
     rightLayout->addWidget(infoBox);

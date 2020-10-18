@@ -6,6 +6,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
 
+TARGET = PictrueTool
+
 win32 {
 LIBS += -L$$APP_OUTPUT_PATH/../libs
 }

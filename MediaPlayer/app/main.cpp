@@ -14,7 +14,10 @@ int main(int argc, char *argv[])
     QDir::setCurrent(a.applicationDirPath());
     Utils::loadLanguage();
 
-     QCoreApplication::setApplicationName(QObject::tr("Media Player"));
+    a.setApplicationVersion(QObject::tr("0.0.1"));
+    a.setApplicationDisplayName(QObject::tr("Media Player"));
+    a.setApplicationName(QObject::tr("Media Player"));
+    a.setOrganizationName(QObject::tr("Youth"));
 
     // 异步日志
     //LogAsync *log = LogAsync::instance();
@@ -28,7 +31,6 @@ int main(int argc, char *argv[])
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(2 * threadCount);
-
     //qDebug() << threadCount;
 
     MainWindow w;

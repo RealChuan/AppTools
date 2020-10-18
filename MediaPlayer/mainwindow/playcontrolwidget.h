@@ -11,13 +11,15 @@ class PlayControlWidget : public QWidget
 public:
     explicit PlayControlWidget(QWidget *parent = nullptr);
 
+    void setPlayButtonEnable(bool enable);
     QMediaPlayer::State state() const;
     int volume() const;
     bool isMuted() const;
     qreal playbackRate() const;
-    bool isFullScreenButtonChecked();
 
 public slots:
+    void onPlay();
+
     void setProcessValue(int offset);
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
@@ -26,25 +28,26 @@ public slots:
     void setVolume(int volume);
     void setMuted(bool muted);
     void setPlaybackRate(float rate);
-    void setFullScreenButtonChecked(bool);
 
 signals:
-    void seek(int seconds);
     void play();
     void pause();
     void stop();
     void next();
     void previous();
+    void seek(int seconds);
     void changeVolume(int volume);
     void changeMuting(bool muting);
     void changeRate(qreal rate);
-    void fullScreen(bool);
+    void showList();
 
 private slots:
-    void playClicked();
-    void muteClicked();
+    void onMuted(bool);
     void updateRate();
     void onVolumeSliderValueChanged();
+
+protected:
+    void paintEvent(QPaintEvent *event) override; // setStyleSheet 无效 解决方法
 
 private:
     void setupUI();

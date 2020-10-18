@@ -51,3 +51,9 @@ UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/te
    
    <div align=center><img src="app-subdir/doc/LoginWidget.png"></div>  
    
+3. #### MediaPlayer  
+
+   <div align=center><img src="MediaPlayer/doc/MediaPlayer.png"></div>  
+   
+   <div align=center><img src="MediaPlayer/doc/MediaPalyer_A.SUN.png"></div>  
+   

@@ -21,6 +21,7 @@ public:
         : owner(parent){
         imageView = new ImageView(owner);
         shapeWidget = new QListWidget(owner);
+        shapeWidget->setObjectName("ShapeWidget");
 
         QPixmap pixmap(4096, 2160);
         pixmap.fill(Qt::white);
