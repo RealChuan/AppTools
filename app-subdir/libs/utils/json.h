@@ -11,6 +11,7 @@ namespace Utils {
 struct JsonPrivate;
 class UTILS_EXPORT Json : public QObject
 {
+    Q_OBJECT
 public:
     explicit Json(const QString &jsonOrFilePath,
                   bool jsonfile = false,

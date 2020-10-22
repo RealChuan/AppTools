@@ -5,6 +5,7 @@ SUBDIRS += \
     aggregation \
     utils \
     controls \
+    crashhandler \
     core \
     extensionsystem \
     useraccountsystem \

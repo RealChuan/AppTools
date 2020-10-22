@@ -7,6 +7,10 @@ This code repository is for learning only. If it is used by others for commercia
 
 
 
+## The latest public library is in the app-pri folder  
+
+
+
 Surroundings: Qt5.15.0	Visual Studio 2019  
 
 UI Reference: [ Application template ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
@@ -16,6 +20,8 @@ UI Reference: [ Application template ](https://github.com/xtuer/template-app/tre
 2. app-pri:  A set of UI templates and a collection of gadgets;    
 
 3. app-subdir:  The application (sub-project) written based on QtCreator's plug-in system has similar functions to app-pri and is not complicated. It mainly learns the QtCreator's plug-in system;  
+
+4. MediaPlayer: Super simple and simple multimedia player;  
 
    
 

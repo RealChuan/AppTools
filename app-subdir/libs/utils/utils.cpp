@@ -56,11 +56,6 @@ void Utils::sleep(int sec)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
-bool Utils::checkFileExist(const QString &path)
-{
-    return QFileInfo::exists(path);
-}
-
 QString compilerString()
 {
 #if defined(__apple_build_version__) // Apple clang has other version numbers
@@ -125,11 +120,10 @@ static Utils::Language CURRENT_LANGUAGE = Utils::Chinese;
 void Utils::loadLanguage()
 {
     static QTranslator translator;
-    if(!checkFileExist(ConfigFile)){
+    if(!QFileInfo::exists(ConfigFile)){
         translator.load("./translator/language.zh_en.qm");
         CURRENT_LANGUAGE = Utils::English;
-    }
-    else{
+    }else{
         QSettings setting(ConfigFile, QSettings::IniFormat);
         setting.beginGroup("Language_config");     //向当前组追加前缀
         Utils::Language type = Utils::Language(setting.value("Language").toInt());
@@ -148,4 +142,12 @@ void Utils::loadLanguage()
 Utils::Language Utils::getCurrentLanguage()
 {
     return CURRENT_LANGUAGE;
+}
+
+bool Utils::createPath(const QString &path)
+{
+    QDir dir;
+    if (dir.exists(path))
+        return true;
+    return dir.mkpath(path);
 }

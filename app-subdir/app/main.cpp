@@ -1,10 +1,11 @@
-#include <utils/logasync.h>
 #include <utils/utils.h>
+#include <utils/logasync.h>
+#include <controls/waitwidget.h>
+#include <crashhandler/crashhandler.h>
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginspec.h>
 #include <extensionsystem/iplugin.h>
 #include <useraccountsystem/loginwidget.h>
-#include <controls/waitwidget.h>
 
 #include <QApplication>
 #include <QDir>
@@ -20,6 +21,9 @@ int main(int argc, char *argv[])
     Utils::setHighDpiEnvironmentVariable();
 
     QApplication a(argc, argv);
+
+    Utils::setCrashHandler();
+
     QDir::setCurrent(a.applicationDirPath());
     Utils::loadLanguage();
 

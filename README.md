@@ -7,6 +7,10 @@
 
 
 
+## 公用的库最新的在app-pri文件夹中
+
+
+
 环境：Qt5.15.0	Visual Studio 2019  
 
 UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/template-qt "xtuer/template-app")  
@@ -15,7 +19,9 @@ UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/te
 
 2. app-pri：一套UI模板以及一些小工具合集；    
 
-3. app-subdir：基于QtCreator的插件系统写的应用（子工程），功能与app-pri类似并不复杂，主要学习QtCreator的插件系统 ； 
+3. app-subdir：基于QtCreator的插件系统写的应用（子工程），功能与app-pri类似并不复杂，主要学习QtCreator的插件系统 ；  
+
+4. MediaPlayer ：超级简约十分简单的多媒体播放器；  
 
    
 

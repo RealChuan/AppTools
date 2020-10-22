@@ -10,6 +10,7 @@
 		"qss/MacTitle.css",
 		"qss/MenuButton.css",
 		"qss/CommonWidget.css",
+		"qss/CrashWidget.css",
 		"qss/HomePage.css",
 		"qss/TcpPage.css",
 		"qss/CRCPage.css"
