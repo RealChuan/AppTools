@@ -30,6 +30,7 @@ private:
     QWidget* menuWidget();
     QStackedWidget* initPageWidget(QString);
     void initMenu();
+    void createTray();
 
     QScopedPointer<MainWindowPrivate> d;
 };

@@ -25,3 +25,6 @@ HEADERS += \
     plugindialog.h
 
 OTHER_FILES += coreplugin.json
+
+RESOURCES += \
+    icon.qrc

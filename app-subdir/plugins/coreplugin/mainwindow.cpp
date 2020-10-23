@@ -6,6 +6,7 @@
 #include <core/mpages.h>
 #include <extensionsystem/pluginmanager.h>
 #include <useraccountsystem/useraccountsystem.h>
+#include <controls/messbox.h>
 
 #include <QtWidgets>
 
@@ -114,6 +115,7 @@ void MainWindow::onAccount(bool state)
 void MainWindow::setupUI()
 {
     initToolBar();
+    createTray();
 
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -220,15 +222,34 @@ QStackedWidget *MainWindow::initPageWidget(QString str)
 
 void MainWindow::initMenu()
 {
-    foreach(QAbstractButton* btn, d->switchButtonGroup->buttons()){
+    for(QAbstractButton* btn: d->switchButtonGroup->buttons()){
         btn->setLayoutDirection(Qt::LeftToRight);
         btn->setProperty("class", "GroupButton");
     }
-    foreach(QAbstractButton* btn, d->menuButtonGroup->buttons()){
+    for(QAbstractButton* btn: d->menuButtonGroup->buttons()){
         btn->setProperty("class", "GroupItemButton");
         btn->setCheckable(true);
     }
     onShowGroupButton(d->switchButtonGroup->buttons().at(0));
     connect(d->switchButtonGroup, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(onShowGroupButton(QAbstractButton*)));
+}
+
+void MainWindow::createTray()
+{
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        MessBox::Info(this, tr("Systray, I couldn't detect any system "
+                               "tray on this system."));
+        return;
+    }
+
+    QMenu *menu = new QMenu(this);
+    menu->addAction(tr("Quit"), qApp, &QApplication::quit);
+
+    QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(this);
+    systemTrayIcon->setIcon(QIcon(":/icon/app.ico"));
+    systemTrayIcon->setContextMenu(menu);
+    systemTrayIcon->show();
+
+    qApp->setQuitOnLastWindowClosed(false);
 }
