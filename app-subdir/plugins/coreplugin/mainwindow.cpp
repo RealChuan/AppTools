@@ -247,6 +247,7 @@ void MainWindow::createTray()
     menu->addAction(tr("Quit"), qApp, &QApplication::quit);
 
     QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(this);
+    systemTrayIcon->setToolTip(tr("This is an app."));
     systemTrayIcon->setIcon(QIcon(":/icon/app.ico"));
     systemTrayIcon->setContextMenu(menu);
     systemTrayIcon->show();

@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QMenu>
 #include <QStandardPaths>
+#include <QMimeData>
 
 MediaWidget::MediaWidget(QWidget *parent)
     : QVideoWidget(parent)
@@ -15,10 +16,9 @@ MediaWidget::MediaWidget(QWidget *parent)
     QPalette p = palette();
     p.setColor(QPalette::Window, QColor(13,14,17));
     setPalette(p);
-
     setAttribute(Qt::WA_OpaquePaintEvent);
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-
+    setAcceptDrops(true);
     initMenu();
 }
 
@@ -56,6 +56,27 @@ void MediaWidget::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton)
         emit play();
     QVideoWidget::mousePressEvent(event);
+}
+
+void MediaWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+    QVideoWidget::dragEnterEvent(event);
+    event->acceptProposedAction();
+}
+
+void MediaWidget::dragMoveEvent(QDragMoveEvent *event)
+{
+    QVideoWidget::dragMoveEvent(event);
+    event->acceptProposedAction();
+}
+
+void MediaWidget::dropEvent(QDropEvent *event)
+{
+    QVideoWidget::dropEvent(event);
+    QList<QUrl> urls = event->mimeData()->urls();
+    if (urls.isEmpty())
+        return;
+    emit addMediaUrls(urls);
 }
 
 void MediaWidget::contextMenuEvent(QContextMenuEvent *event)

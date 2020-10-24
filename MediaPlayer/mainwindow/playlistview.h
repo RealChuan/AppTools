@@ -21,7 +21,7 @@ signals:
 
 public slots:
     void onOpenMedia();
-    void addMedia(const QList<QUrl> &urls);
+    void onAddMedia(const QList<QUrl> &urls);
     void onRemoveMedia();
     void onRemoveAllMedia();
     void onPrevious();
@@ -35,6 +35,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
 private:
+    void showError();
     void initMenu();
 
     QScopedPointer<PlayListWidgetPrivate> d_ptr;

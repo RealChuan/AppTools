@@ -6,7 +6,6 @@
 #include <QWheelEvent>
 #include <QtMath>
 #include <QMimeData>
-#include <QMessageBox>
 #include <QDebug>
 #include <QMenu>
 #include <QApplication>

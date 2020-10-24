@@ -240,6 +240,7 @@ void PlayerWidget::buildConnect()
     connect(d_ptr->mediaWidget, &MediaWidget::next, d_ptr->playListWidget, &PlayListView::onNext);
     connect(d_ptr->mediaWidget, &MediaWidget::play, d_ptr->playControls, &PlayControlWidget::onPlay);
     connect(d_ptr->mediaWidget, &MediaWidget::addMedia, d_ptr->playListWidget, &PlayListView::onOpenMedia);
+    connect(d_ptr->mediaWidget, &MediaWidget::addMediaUrls, d_ptr->playListWidget, &PlayListView::onAddMedia);
 
     connect(d_ptr->playListWidget, &PlayListView::playListChanged, this, &PlayerWidget::setPlayButtonEnable);
 }

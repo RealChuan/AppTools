@@ -8,8 +8,14 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QMenu>
+#include <QMessageBox>
 #include <QScrollBar>
 #include <QStandardPaths>
+
+const QStringList filters({"All support files (*.avi *.mkv *.mp4 *.rmvb *.mp3 *.flac *.ape *.m4a)",
+                           "Video files (*.avi *.mkv *.mp4 *.rmvb)",
+                           "Music files (*.mp3 *.flac *.ape *.m4a)"
+                          });
 
 class PlayListWidgetPrivate{
 public:
@@ -58,14 +64,10 @@ void PlayListView::onOpenMedia()
     QFileDialog fileDialog(this);
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
     fileDialog.setWindowTitle(tr("Open Files"));
-    QStringList supportedMimeTypes = QMediaPlayer::supportedMimeTypes();
-    if (!supportedMimeTypes.isEmpty()) {
-        supportedMimeTypes.append("audio/x-m3u"); // MP3 playlists
-        fileDialog.setMimeTypeFilters(supportedMimeTypes);
-    }
+    fileDialog.setNameFilters(filters);
     fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
     if (fileDialog.exec() == QDialog::Accepted)
-        addMedia(fileDialog.selectedUrls());
+        onAddMedia(fileDialog.selectedUrls());
 }
 
 bool isPlaylist(const QUrl &url) // Check for ".m3u" playlists.
@@ -76,13 +78,14 @@ bool isPlaylist(const QUrl &url) // Check for ".m3u" playlists.
     return fileInfo.exists() && !fileInfo.suffix().compare(QLatin1String("m3u"), Qt::CaseInsensitive);
 }
 
-void PlayListView::addMedia(const QList<QUrl> &urls)
+void PlayListView::onAddMedia(const QList<QUrl> &urls)
 {
     for (auto &url: urls) {
-        if (isPlaylist(url))
+        if (isPlaylist(url)){
             d_ptr->mediaList->load(url);
-        else
+        } else
             d_ptr->mediaList->addMedia(url);
+        showError();
     }
     emit playListChanged();
 }
@@ -134,6 +137,16 @@ void PlayListView::playlistPositionChanged(int currentItem)
 void PlayListView::contextMenuEvent(QContextMenuEvent *event)
 {
     d_ptr->menu->exec(mapToGlobal(event->pos()));
+}
+
+void PlayListView::showError()
+{
+    if(d_ptr->mediaList->error() == QMediaPlaylist::NoError)
+        return;
+    qDebug() << d_ptr->mediaList->errorString();
+    //QMessageBox::warning(this,
+    //                     tr("PlayListError"),
+    //                     d_ptr->mediaList->errorString());
 }
 
 void PlayListView::initMenu()

@@ -56,10 +56,11 @@ ImageViewer::~ImageViewer()
 
 void ImageViewer::onOpenImage()
 {
-    QString filename = QFileDialog::getOpenFileName(this
-                                                    , tr("Open Image")
-                                                    , "."
-                                                    , tr("Images (*.png *.jpg *.bmp)"));
+    QString imageFilters(tr("Images (*.bmp *.gif *.jpg *.jpeg *.png *.svg *.tiff *.webp *.icns "
+                            "*.bitmap *.graymap *.pixmap *.tga *.xbitmap *.xpixmap)"));
+    qDebug() << imageFilters;
+    QString path = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).value(0, QDir::homePath());
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), path, imageFilters);
     if(filename.isEmpty())
         return;
     d->imageView->createScene(filename);
