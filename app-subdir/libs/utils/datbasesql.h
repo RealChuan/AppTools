@@ -29,6 +29,8 @@ public:
     QSqlQuery query(const QString &sql);
     QString errorString() const;
 
+    bool tableContains(const QString &tableName);
+
 private:
     bool openMySQL(const QString &ip,
                    int port,

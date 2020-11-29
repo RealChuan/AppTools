@@ -3,26 +3,37 @@
 
 #include "useraccountsystem_global.h"
 
-#include <QObject>
+#include <controls/dialog.h>
+
+using namespace Control;
 
 namespace AccountSystem{
 
 class AccountQuery;
 class UserAccountSystemPrivate;
-class USERACCOUNTSYSTEM_EXPORT UserAccountSystem : public QObject
+class USERACCOUNTSYSTEM_EXPORT UserAccountSystem : public Dialog
 {
     Q_OBJECT
 public:
-    UserAccountSystem(QObject *parent = nullptr);
+    UserAccountSystem(QWidget *parent = nullptr);
     ~UserAccountSystem();
 
-    void show();
+    bool loginState();
 
 signals:
     void login(bool);
 
+private slots:
+    void onLogin();
+    void onRegist();
+    void onChangedPassword();
+    void onCurrentLogin();
+
 private:
+    void setupUI();
+    void buildConnect();
     bool checkCurrentAccount();
+    void onLoginState(bool state);
 
     void loadSetting();
     void saveSetting();

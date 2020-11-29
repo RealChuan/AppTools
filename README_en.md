@@ -7,7 +7,7 @@ This code repository is for learning only. If it is used by others for commercia
 
 
 
-## The latest public library is in the app-pri folder  
+## The latest public library is in the app-subdir folder  
 
 
 

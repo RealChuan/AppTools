@@ -1,15 +1,13 @@
 #ifndef REGISTERWIDGET_H
 #define REGISTERWIDGET_H
 
-#include <controls/dialog.h>
+#include <QWidget>
 
-using namespace  Control;
-
-namespace  AccountSystem {
+namespace AccountSystem {
 
 class AccountQuery;
 class RegisterWidgetPrivate;
-class RegisterWidget : public Dialog
+class RegisterWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -20,6 +18,8 @@ public:
     QString password() const;
 
 signals:
+    void registered();
+    void cancel();
 
 private slots:
     void onRegister();

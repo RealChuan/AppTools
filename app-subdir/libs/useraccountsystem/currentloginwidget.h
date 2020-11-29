@@ -1,29 +1,31 @@
 #ifndef LOGOUTORDELETE_H
 #define LOGOUTORDELETE_H
 
-#include <controls/dialog.h>
+#include <QWidget>
 
-using namespace Control;
-
-namespace  AccountSystem {
+namespace AccountSystem {
 
 class AccountQuery;
 class CurrentLoginWidgetPrivate;
-class CurrentLoginWidget : public Dialog
+class CurrentLoginWidget : public QWidget
 {
     Q_OBJECT
 public:
     CurrentLoginWidget(AccountQuery*,
-                       const QString &,
-                       const QString &,
                        QWidget *parent = nullptr);
     ~CurrentLoginWidget();
 
+    void setAccount(const QString &username, const QString& password);
+
     QString password() const;
+
+signals:
+    void changePassword();
+    void deleteAccount();
+    void logout();
 
 private slots:
     void onDeleteAccount();
-    void onChangePassword();
 
 private:
     void setupUI();

@@ -3,29 +3,34 @@
 
 #include "useraccountsystem_global.h"
 
-#include <controls/dialog.h>
+#include <QWidget>
 
-using namespace Control;
-
-namespace  AccountSystem {
+namespace AccountSystem {
 
 class AccountQuery;
 class LoginWidgetPrivate;
-class USERACCOUNTSYSTEM_EXPORT LoginWidget : public Dialog
+class USERACCOUNTSYSTEM_EXPORT LoginWidget : public QWidget
 {
     Q_OBJECT
 public:
-    LoginWidget(AccountQuery*, const QStringList& ,QWidget *parent = nullptr);
+    LoginWidget(AccountQuery*, QWidget *parent = nullptr);
     ~LoginWidget();
+
+    void setNameList(const QStringList &usernameList);
 
     QString username() const;
     QString password() const;
     QStringList usernameList() const;
     bool autoLogin();
 
+    void clear();
+
+signals:
+    void registered();
+    void complete();
+
 private slots:
     void onLogin();
-    void onRegister();
 
 private:
     void setupUI();

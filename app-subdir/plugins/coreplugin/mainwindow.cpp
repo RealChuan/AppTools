@@ -39,6 +39,8 @@ public:
         accountButton->setObjectName("AccountButton");
         accountButton->setToolTip(QObject::tr("Account control"));
         userSystem = new UserAccountSystem(owner);
+        userSystem->setVisible(false);
+        accountButton->setChecked(userSystem->loginState());
     }
 
     MainWindow *owner;
@@ -109,7 +111,7 @@ void MainWindow::onAboutPlugins()
 void MainWindow::onAccount(bool state)
 {
     d->accountButton->setChecked(!state);
-    d->userSystem->show();
+    d->userSystem->exec();
 }
 
 void MainWindow::setupUI()
@@ -138,8 +140,7 @@ void MainWindow::initToolBar()
     connect(qssButton, &QPushButton::clicked, this, &Utils::setQSS);
 
     connect(d->accountButton, &QToolButton::clicked, this, &MainWindow::onAccount);
-    connect(d->userSystem, &UserAccountSystem::login,
-            d->accountButton, &QToolButton::setChecked);
+    connect(d->userSystem, &UserAccountSystem::login, d->accountButton, &QToolButton::setChecked);
 
     QToolButton *configButton = new QToolButton(this);
     configButton->setObjectName("ConfigButton");

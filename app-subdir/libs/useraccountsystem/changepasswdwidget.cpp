@@ -6,7 +6,9 @@
 
 #include <QtWidgets>
 
-namespace  AccountSystem {
+using namespace Control;
+
+namespace AccountSystem {
 
 class ChangePasswdWidgetPrivate{
 public:
@@ -37,28 +39,34 @@ public:
 };
 
 ChangePasswdWidget::ChangePasswdWidget(AccountQuery *accountQuery,
-                                       const QString &username,
-                                       const QString& password,
                                        QWidget *parent)
-    : Dialog(parent)
+    : QWidget(parent)
     , d(new ChangePasswdWidgetPrivate(this))
 {
-    d->username = username;
-    d->password = password;
     d->accountQuery = accountQuery;
-    setTitle(tr("ChangePasswd Widget"));
-    setMinButtonVisible(true);
     setupUI();
-    resize(300, 485);
 }
 
 ChangePasswdWidget::~ChangePasswdWidget()
 {
 }
 
+void ChangePasswdWidget::setAccount(const QString &username, const QString &password)
+{
+    d->username = username;
+    d->password = password;
+}
+
 QString ChangePasswdWidget::password() const
 {
     return d->password;
+}
+
+void ChangePasswdWidget::clear()
+{
+    d->currentPasswordEdit->clear();
+    d->newPasswordEdit->clear();
+    d->passwdAgainEdit->clear();
 }
 
 void ChangePasswdWidget::onChangePasswd()
@@ -104,7 +112,7 @@ void ChangePasswdWidget::onChangePasswd()
     d->promptLabel->clear();
     if(d->accountQuery->updateAccount(d->username, newPassword)){
         d->password = newPassword;
-        accept();
+        emit modify();
         return;
     }
     d->promptLabel->setText(tr("Registration failed, please try again later!"));
@@ -117,24 +125,21 @@ void ChangePasswdWidget::setupUI()
     changePasswdButton->setObjectName("BlueButton");
     cancelButton->setObjectName("GrayButton");
     connect(changePasswdButton, &QPushButton::clicked, this, &ChangePasswdWidget::onChangePasswd);
-    connect(cancelButton, &QPushButton::clicked, this, &ChangePasswdWidget::reject);
+    connect(cancelButton, &QPushButton::clicked, this, &ChangePasswdWidget::cancel);
     connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed, this, &ChangePasswdWidget::onChangePasswd);
 
     QHBoxLayout *btnLayout = new QHBoxLayout;
     btnLayout->addWidget(cancelButton);
     btnLayout->addWidget(changePasswdButton);
 
-    QWidget *widget = new QWidget(this);
-    widget->setObjectName("WhiteWidget");
-    QVBoxLayout *layout = new QVBoxLayout(widget);
+    setObjectName("WhiteWidget");
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(d->avatarWidget);
     layout->addWidget(d->currentPasswordEdit);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->newPasswordEdit);
     layout->addWidget(d->passwdAgainEdit);
     layout->addLayout(btnLayout);
-
-    setCentralWidget(widget);
 }
 
 }

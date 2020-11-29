@@ -11,6 +11,8 @@ class AccountQuery : public QObject
 public:
     AccountQuery(QObject *parent = nullptr);
 
+    QStringList userNameList() const;
+
     bool contains(const QString&);
     bool checkAccount(const QString&, const QString&);
     bool addAccount(const QString&, const QString&);
@@ -18,6 +20,7 @@ public:
     bool deleteAccount(const QString&);
 
 private:
+    void init();
     void loadparam();
     void allUsername();
 

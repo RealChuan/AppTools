@@ -1,25 +1,28 @@
 #ifndef CHANGEPASSWD_H
 #define CHANGEPASSWD_H
 
-#include <controls/dialog.h>
+#include <QWidget>
 
-using namespace Control;
-
-namespace  AccountSystem {
+namespace AccountSystem {
 
 class AccountQuery;
 class ChangePasswdWidgetPrivate;
-class ChangePasswdWidget : public Dialog
+class ChangePasswdWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ChangePasswdWidget(AccountQuery*,
-                       const QString &,
-                       const QString&,
-                       QWidget *parent = nullptr);
+    ChangePasswdWidget(AccountQuery*, QWidget *parent = nullptr);
     ~ChangePasswdWidget();
 
+    void setAccount(const QString &username, const QString& password);
+
     QString password() const;
+
+    void clear();
+
+signals:
+    void modify();
+    void cancel();
 
 private slots:
     void onChangePasswd();

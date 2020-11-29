@@ -6,7 +6,9 @@
 
 #include <QtWidgets>
 
-namespace  AccountSystem {
+using namespace Control;
+
+namespace AccountSystem {
 
 class RegisterWidgetPrivate{
 public:
@@ -33,14 +35,11 @@ public:
 };
 
 RegisterWidget::RegisterWidget(AccountQuery *accountQuery, QWidget *parent)
-    : Dialog(parent)
+    : QWidget(parent)
     , d(new RegisterWidgetPrivate(this))
 {
-    setTitle(tr("Register Widget"));
     d->accountQuery = accountQuery;
-    setMinButtonVisible(true);
     setupUI();
-    resize(300, 485);
 }
 
 RegisterWidget::~RegisterWidget()
@@ -91,7 +90,7 @@ void RegisterWidget::onRegister()
         return;
     }
     if(d->accountQuery->addAccount(username, password)){
-        accept();
+        emit registered();
         return;
     }
     d->promptLabel->setText(tr("Registration failed, please try again later!"));
@@ -104,7 +103,7 @@ void RegisterWidget::setupUI()
     registerButton->setObjectName("BlueButton");
     cancelButton->setObjectName("GrayButton");
     connect(registerButton, &QPushButton::clicked, this, &RegisterWidget::onRegister);
-    connect(cancelButton, &QPushButton::clicked, this, &RegisterWidget::reject);
+    connect(cancelButton, &QPushButton::clicked, this, &RegisterWidget::cancel);
     connect(d->passwdAgainEdit, &PasswordLineEdit::returnPressed,
             this, &RegisterWidget::onRegister);
 
@@ -112,17 +111,14 @@ void RegisterWidget::setupUI()
     btnLayout->addWidget(cancelButton);
     btnLayout->addWidget(registerButton);
 
-    QWidget *widget = new QWidget(this);
-    widget->setObjectName("WhiteWidget");
-    QVBoxLayout *layout = new QVBoxLayout(widget);
+    setObjectName("WhiteWidget");
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(d->avatarWidget);
     layout->addWidget(d->usernameEdit);
     layout->addWidget(d->passwordEdit);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->passwdAgainEdit);
     layout->addLayout(btnLayout);
-
-    setCentralWidget(widget);
 }
 
 }

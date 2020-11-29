@@ -4,42 +4,41 @@
 <context>
     <name>AccountSystem::ChangePasswdWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="49"/>
         <source>ChangePasswd Widget</source>
-        <translation>修改密码界面</translation>
+        <translation type="vanished">修改密码界面</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="68"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="69"/>
         <source>Please enter the password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="74"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="75"/>
         <source>Please enter the new password!</source>
         <translation>请输入新的密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="80"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="81"/>
         <source>Please enter the password again!</source>
         <translation>请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="86"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="87"/>
         <source>The current account %1 password is entered incorrectly, please re-enter!</source>
         <translation>当前帐户%1的密码输入错误，请重新输入！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="110"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="111"/>
         <source>Registration failed, please try again later!</source>
         <translation>注册失败，请稍后再试！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="115"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="116"/>
         <source>Changed Password</source>
         <translation>修改密码</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="116"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="117"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -47,32 +46,31 @@
 <context>
     <name>AccountSystem::CurrentLoginWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="45"/>
         <source>Current Login Widget</source>
-        <translation>当前登录界面</translation>
+        <translation type="vanished">当前登录界面</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="68"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="71"/>
         <source>Wrong password, please re-enter!</source>
         <translation>错误的密码，请再次输入！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="84"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="80"/>
         <source>Log Out</source>
         <translation>登出</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="85"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="81"/>
         <source>Change Password</source>
         <translation>修改密码</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="86"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="82"/>
         <source>Delete Account</source>
         <translation>删除账户</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="93"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="54"/>
         <source>Current online account: %1.</source>
         <translation>当前在线的账号：%1。</translation>
     </message>
@@ -80,32 +78,31 @@
 <context>
     <name>AccountSystem::LoginWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="39"/>
         <source>Login Widget</source>
-        <translation>登录界面</translation>
+        <translation type="vanished">登录界面</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="78"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="86"/>
         <source>Please enter username!</source>
         <translation>请输入用户名！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="84"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="92"/>
         <source>Please enter password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="95"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="103"/>
         <source>Incorrect account or password!</source>
         <translation>帐号或密码错误！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="110"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="108"/>
         <source>Registered</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="114"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="112"/>
         <source>Login</source>
         <translation>登录</translation>
     </message>
@@ -113,49 +110,71 @@
 <context>
     <name>AccountSystem::RegisterWidget</name>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="39"/>
         <source>Register Widget</source>
-        <translation>注册界面</translation>
+        <translation type="vanished">注册界面</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="65"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="64"/>
         <source>Please enter username!</source>
         <translation>请输入用户名！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="71"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="70"/>
         <source>Please enter password!</source>
         <translation>请输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="77"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="76"/>
         <source>Please enter password again!</source>
         <translation>请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="82"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="81"/>
         <source>Two passwords are different, please enter password again!</source>
         <translation>两个密码不同，请再次输入密码！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="88"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="87"/>
         <source>An account with the same name already exists, please modify the account name!</source>
         <translation>已经存在相同名称的帐户，请修改该帐户名称！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="97"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="96"/>
         <source>Registration failed, please try again later!</source>
         <translation>注册失败，请稍后再试！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="102"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="101"/>
         <source>Registered</source>
         <translation>注册</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="103"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="102"/>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>AccountSystem::UserAccountSystem</name>
+    <message>
+        <location filename="../libs/useraccountsystem/useraccountsystem.cpp" line="78"/>
+        <source>Login Widget</source>
+        <translation>登录界面</translation>
+    </message>
+    <message>
+        <location filename="../libs/useraccountsystem/useraccountsystem.cpp" line="87"/>
+        <source>Register Widget</source>
+        <translation>注册界面</translation>
+    </message>
+    <message>
+        <location filename="../libs/useraccountsystem/useraccountsystem.cpp" line="93"/>
+        <source>ChangePasswd Widget</source>
+        <translation>修改密码界面</translation>
+    </message>
+    <message>
+        <location filename="../libs/useraccountsystem/useraccountsystem.cpp" line="102"/>
+        <source>Current Login Widget</source>
+        <translation>当前登录界面</translation>
     </message>
 </context>
 <context>
@@ -938,12 +957,12 @@ Offset: %2</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="123"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="127"/>
         <source>Hello World!</source>
         <translation>你好哇！</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="134"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="138"/>
         <source>Reload QSS</source>
         <translation>重新加载QSS</translation>
     </message>
@@ -964,34 +983,49 @@ Offset: %2</source>
         <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="144"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="147"/>
         <source>Set up</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="163"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="166"/>
         <source>Common Tools</source>
         <translation>通用工具</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="164"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="167"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="165"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="168"/>
         <source>About Plugins</source>
         <translation>关于插件</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="166"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="169"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="167"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="170"/>
         <source>Test</source>
         <translation>测试</translation>
+    </message>
+    <message>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="242"/>
+        <source>Systray, I couldn&apos;t detect any system tray on this system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="248"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="251"/>
+        <source>This is an app.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1297,52 +1331,52 @@ Offset: %2</source>
         <translation>还原</translation>
     </message>
     <message>
-        <location filename="../libs/controls/accountcontrols.cpp" line="199"/>
+        <location filename="../libs/controls/accountcontrols.cpp" line="200"/>
         <source>Avatar</source>
         <translation>头像</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="18"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="20"/>
         <source>Please enter the current account password.</source>
         <translation>请输入当前帐户密码。</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="21"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="23"/>
         <source>Please enter a new password.</source>
         <translation>请输入新密码。</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="26"/>
+        <location filename="../libs/useraccountsystem/changepasswdwidget.cpp" line="28"/>
         <source>Please enter the new password again.</source>
         <translation>请再次输入新密码。</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="21"/>
+        <location filename="../libs/useraccountsystem/currentloginwidget.cpp" line="23"/>
         <source>Please enter password and click delete again!</source>
         <translation>请输入密码，然后再次单击删除！</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="21"/>
+        <location filename="../libs/useraccountsystem/loginwidget.cpp" line="23"/>
         <source>AutoLogin</source>
         <translation>自动登录</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="18"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="20"/>
         <source>Please enter user name.</source>
         <translation>请输入用户名。</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="20"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="22"/>
         <source>Please enter the password.</source>
         <translation>请输入密码。</translation>
     </message>
     <message>
-        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="24"/>
+        <location filename="../libs/useraccountsystem/registerwidget.cpp" line="26"/>
         <source>Please enter the password again.</source>
         <translation>请再次输入密码。</translation>
     </message>
     <message>
-        <location filename="../plugins/coreplugin/mainwindow.cpp" line="39"/>
+        <location filename="../plugins/coreplugin/mainwindow.cpp" line="40"/>
         <source>Account control</source>
         <translation>账户控制</translation>
     </message>
@@ -1888,52 +1922,52 @@ Contact Me - Email:
         <translation>数据库查询错误：%1！</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="63"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="68"/>
         <source>Unable to load database, This program needs the MYSQL driver!</source>
         <translation>无法加载数据库，该程序需要MYSQL驱动程序！</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="69"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="74"/>
         <source>MySQL IP Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="73"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="78"/>
         <source>MySQL Port Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="77"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="82"/>
         <source>MySQL Database Name Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="81"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="86"/>
         <source>MySQL Username Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="85"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="90"/>
         <source>MySQL Password Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="99"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="104"/>
         <source>MySQL Open Error: %1 !</source>
         <translation>MySQL 打开错误: %1 !</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="106"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="111"/>
         <source>Unable to load database, This program needs the SQLITE driver</source>
         <translation>无法加载数据库，此程序需要SQLITE驱动程序</translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="112"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="117"/>
         <source>SQLite Database Name Empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libs/utils/datbasesql.cpp" line="125"/>
+        <location filename="../libs/utils/datbasesql.cpp" line="130"/>
         <source>SQLite Open Error: %1 !</source>
         <translation>SQLite 打开错误: %1 !</translation>
     </message>

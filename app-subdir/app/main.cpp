@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     Utils::setQSS();
 
     // 等待界面
-    WaitWidget waitWidget;
+    Control::WaitWidget waitWidget;
     waitWidget.show();
     a.processEvents();
 
