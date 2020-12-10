@@ -18,16 +18,17 @@
 	background: #389cff;
     color: white;
 }
+
 .GroupButton {
     height: 40px;
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
     padding-left: 6px;
 }
 
 .GroupItemButton {
     height: 38px;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
     padding-left: 35px;
 	border-width: 3px;
@@ -39,4 +40,40 @@
 	color: #39a3ff;
     background: rgb(85,79,73);
     border-color: #39a3ff;
+}
+
+#ToolGroupButton{
+	qproperty-icon: url(image/menu/tool.png);
+}
+
+#AbortGroupButton{
+	qproperty-icon: url(image/menu/abort.png);
+}
+
+#PluginsButton{
+	qproperty-icon: url(image/menu/tool-other.png);
+}
+
+#QtButton{
+	qproperty-icon: url(image/menu/tool-other.png);
+}
+
+#TestGroupButton{
+	qproperty-icon: url(image/menu/test.png);
+}
+
+#CrcButton{
+	qproperty-icon: url(image/menu/tool-other.png);
+}
+
+#SerialButton{
+	qproperty-icon: url(image/menu/tool-other.png);
+}
+
+#TcpButton{
+	qproperty-icon: url(image/menu/tool-other.png);
+}
+
+#PageTestButton{
+	qproperty-icon: url(image/menu/tool-other.png);
 }

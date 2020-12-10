@@ -23,16 +23,16 @@ public:
         menuButtonGroup = new QButtonGroup(owner);
         menuButtonGroup->setExclusive(true);
         pageWidget = new QStackedWidget(owner);
-        v1 = new QVBoxLayout;
-        v2 = new QVBoxLayout;
-        v3 = new QVBoxLayout;
 
-        v1->setContentsMargins(0, 0, 0, 0);
-        v1->setSpacing(0);
-        v2->setContentsMargins(0, 0, 0, 0);
-        v2->setSpacing(0);
-        v3->setContentsMargins(0, 0, 0, 0);
-        v3->setSpacing(0);
+        vLayoutGroup1 = new QVBoxLayout;
+        vLayoutGroup2 = new QVBoxLayout;
+        vLayoutGroup3 = new QVBoxLayout;
+        vLayoutGroup1->setContentsMargins(0, 0, 0, 0);
+        vLayoutGroup1->setSpacing(0);
+        vLayoutGroup2->setContentsMargins(0, 0, 0, 0);
+        vLayoutGroup2->setSpacing(0);
+        vLayoutGroup3->setContentsMargins(0, 0, 0, 0);
+        vLayoutGroup3->setSpacing(0);
 
         accountButton = new QToolButton(owner);
         accountButton->setCheckable(true);
@@ -47,9 +47,9 @@ public:
     QButtonGroup *switchButtonGroup;
     QButtonGroup *menuButtonGroup;
     QStackedWidget *pageWidget;
-    QVBoxLayout *v1;
-    QVBoxLayout *v2;
-    QVBoxLayout *v3;
+    QVBoxLayout *vLayoutGroup1;
+    QVBoxLayout *vLayoutGroup2;
+    QVBoxLayout *vLayoutGroup3;
 
     QToolButton *accountButton;
     UserAccountSystem *userSystem;
@@ -69,22 +69,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::extensionsInitialized()
 {
-    QVector<MPages*> mPages = PluginManager::getObjects<MPages>();
-    for(const MPages* p: mPages){
-        if(!p->widget())
+    for(const MPages* page: PluginManager::getObjects<MPages>()){
+        if(!page->widget())
             continue;
-        if(p->button()->property("Group") == MPages::Tool)
-            d->v1->addWidget(p->button());
-        else if(p->button()->property("Group") == MPages::About)
-            d->v2->addWidget(p->button());
-        else if(p->button()->property("Group") == MPages::Test)
-            d->v3->addWidget(p->button());
+        if(page->button()->property("Group") == MPages::Tool)
+            d->vLayoutGroup1->addWidget(page->button());
+        else if(page->button()->property("Group") == MPages::About)
+            d->vLayoutGroup2->addWidget(page->button());
+        else if(page->button()->property("Group") == MPages::Test)
+            d->vLayoutGroup3->addWidget(page->button());
         else
             continue;
-        d->menuButtonGroup->addButton(p->button());
-        d->pageWidget->addWidget(p->widget());
-        connect(p->button(), &QPushButton::clicked, [=]{
-            d->pageWidget->setCurrentWidget(p->widget());
+        d->menuButtonGroup->addButton(page->button());
+        d->pageWidget->addWidget(page->widget());
+        connect(page->button(), &QPushButton::clicked, [=]{
+            d->pageWidget->setCurrentWidget(page->widget());
         });
     }
 
@@ -164,13 +163,17 @@ void MainWindow::initToolBar()
 QWidget *MainWindow::menuWidget()
 {
     QPushButton *toolsButton = new QPushButton(tr("Common Tools"), this);
+    toolsButton->setObjectName("ToolGroupButton");
     QPushButton *aboutButton = new QPushButton(tr("About"), this);
+    aboutButton->setObjectName("AbortGroupButton");
     QPushButton *pluginButton = new QPushButton(tr("About Plugins"), this);
+    pluginButton->setObjectName("PluginsButton");
     QPushButton *qtButton = new QPushButton(tr("About Qt"), this);
+    qtButton->setObjectName("QtButton");
     QPushButton *testButton = new QPushButton(tr("Test"), this);
+    testButton->setObjectName("TestGroupButton");
 
     connect(pluginButton, &QPushButton::clicked, this, &MainWindow::onAboutPlugins);
-
     connect(qtButton, &QPushButton::clicked, [this]{ QMessageBox::aboutQt(this); });
 
     toolsButton->setProperty("Group", MPages::Tool);
@@ -186,22 +189,22 @@ QWidget *MainWindow::menuWidget()
     d->menuButtonGroup->addButton(pluginButton);
     d->menuButtonGroup->addButton(qtButton);
 
-    d->v1->addWidget(toolsButton);
+    d->vLayoutGroup1->addWidget(toolsButton);
 
-    d->v2->addWidget(aboutButton);
-    d->v2->addWidget(pluginButton);
-    d->v2->addWidget(qtButton);
+    d->vLayoutGroup2->addWidget(aboutButton);
+    d->vLayoutGroup2->addWidget(pluginButton);
+    d->vLayoutGroup2->addWidget(qtButton);
 
-    d->v3->addWidget(testButton);
+    d->vLayoutGroup3->addWidget(testButton);
 
     QWidget *widget = new QWidget(this);
     widget->setObjectName("menuWidget");
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addLayout(d->v1);
-    layout->addLayout(d->v2);
-    layout->addLayout(d->v3);
+    layout->addLayout(d->vLayoutGroup1);
+    layout->addLayout(d->vLayoutGroup2);
+    layout->addLayout(d->vLayoutGroup3);
     layout->addStretch();
 
     return widget;

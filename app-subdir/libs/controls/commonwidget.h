@@ -24,6 +24,8 @@ public:
     void setCentralWidget(QWidget*);
     void setTitleBar(QWidget*);
 
+    void setShadowPadding(int shadowPadding = 10);
+
 signals:
     void aboutToclose();
 

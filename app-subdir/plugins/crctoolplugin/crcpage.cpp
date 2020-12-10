@@ -12,4 +12,5 @@ void CRCPage::init()
     setWidget(new CRCWidget);
     setButtonName(tr("CRC Assistant"));
     setButtonGroup(MPages::Tool);
+    setButtonObejctName("CrcButton");
 }

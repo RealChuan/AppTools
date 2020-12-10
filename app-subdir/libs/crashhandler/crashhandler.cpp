@@ -7,6 +7,9 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QDir>
+#include <QDesktopServices>
+#include <QUrl>
 
 inline QString getDumpFileName()
 {
@@ -20,14 +23,11 @@ inline QString getDumpFileName()
             .arg(qApp->applicationPid());
 
     QFile file(path);
-    if(file.open(QIODevice::WriteOnly
-                 | QIODevice::Truncate
-                 | QIODevice::Text)){
+    if(file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
         file.close();
         return path;
     }
-    qDebug() << "Path: " << path  << "\n"
-             << "Error: "<< file.errorString();
+    qDebug() << "Path: " << path  << "\n" << "Error: "<< file.errorString();
     return QString();
 }
 
@@ -93,15 +93,19 @@ BOOL PreventSetUnhandledExceptionFilter()
     return bRet;
 }
 
-LONG UnhandledExceptionFilterEx(LPEXCEPTION_POINTERS lpExceptionInfo)
+LONG WINAPI UnhandledExceptionFilterEx(LPEXCEPTION_POINTERS lpExceptionInfo)
 {
     if (IsDebuggerPresent())
         return EXCEPTION_CONTINUE_SEARCH;
 
     CreateMiniDump(lpExceptionInfo);
 
-    Utils::CrashDialog crashDialog;
-    crashDialog.exec();
+    if(qApp->thread() == QThread::currentThread()){
+        Utils::CrashDialog crashDialog;
+        crashDialog.exec();
+    }else{
+        Utils::openCrashAndLogPath();
+    }
 
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -113,8 +117,24 @@ void Utils::setCrashHandler()
     QString path = qApp->applicationDirPath() + "/crashes";
     if(!Utils::createPath(path))
         return;
+
+    //#ifdef QT_NO_DEBUG
+
 #if defined(Q_OS_WIN32)
     SetUnhandledExceptionFilter(UnhandledExceptionFilterEx);
     PreventSetUnhandledExceptionFilter();
 #endif
+
+    //#endif
+}
+
+void Utils::openCrashAndLogPath()
+{
+    QDir dir;
+    QString urlCrash = qApp->applicationDirPath() + "/crashes";
+    QString urlLog = qApp->applicationDirPath() + "/log";
+    if(dir.exists(urlCrash))
+        QDesktopServices::openUrl(QUrl(urlCrash, QUrl::TolerantMode));
+    if(dir.exists(urlLog))
+        QDesktopServices::openUrl(QUrl(urlLog, QUrl::TolerantMode));
 }

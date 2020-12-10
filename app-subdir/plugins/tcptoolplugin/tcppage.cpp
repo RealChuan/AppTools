@@ -12,4 +12,5 @@ void TcpPage::init()
     setWidget(new TcpWidget);
     setButtonName(tr("Tcp Assistant"));
     setButtonGroup(MPages::Tool);
+    setButtonObejctName("TcpButton");
 }

@@ -28,12 +28,13 @@ int main(int argc, char *argv[])
     Utils::loadLanguage();
 
     // 异步日志
-    //LogAsync *log = LogAsync::instance();
-    //log->setLogLevel(QtDebugMsg); // 实际环境中可通过读取配置设置日志级别
-    //log->startWork();
+    Utils::LogAsync *log = Utils::LogAsync::instance();
+    log->setOrientation(Utils::LogAsync::Orientation::StdAndFile);
+    log->setLogLevel(QtDebugMsg);
+    log->startWork();
 
     Utils::printBuildInfo();
-    Utils::setUTF8Code();
+    //Utils::setUTF8Code();
     Utils::loadFonts();
     Utils::setQSS();
 
@@ -75,9 +76,7 @@ int main(int argc, char *argv[])
 
     if(coreSpec) {
         waitWidget.fullProgressBar();
-        coreSpec->plugin()->remoteCommand(QStringList(),
-                                          QString(),
-                                          QStringList());
+        coreSpec->plugin()->remoteCommand(QStringList(), QString(), QStringList());
         waitWidget.close();
     } else {
         pluginManager.shutdown();
@@ -86,6 +85,6 @@ int main(int argc, char *argv[])
     }
 
     int result = a.exec();
-    //log->stop();
+    log->stop();
     return result;
 }

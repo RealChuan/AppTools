@@ -10,6 +10,8 @@ LONG WINAPI UnhandledExceptionFilterEx(LPEXCEPTION_POINTERS lpExceptionInfo);
 
 namespace Utils {
 
+void openCrashAndLogPath();
+
 CRASHHANDLER_EXPORT void setCrashHandler();
 
 }

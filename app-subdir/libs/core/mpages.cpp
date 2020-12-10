@@ -52,4 +52,9 @@ void MPages::setButtonGroup(MPages::Group group)
     d->button->setProperty("Group", group);
 }
 
+void MPages::setButtonObejctName(const QString &objectname)
+{
+    d->button->setObjectName(objectname);
+}
+
 }

@@ -61,7 +61,7 @@ QString compilerString()
 #if defined(__apple_build_version__) // Apple clang has other version numbers
     QString isAppleString = QLatin1String(" (Apple)");
     return QLatin1String("Clang " ) + QString::number(__clang_major__) + QLatin1Char('.')
-            + QString::number(__clang_minor__) + isAppleString;
+           + QString::number(__clang_minor__) + isAppleString;
 #elif defined(Q_CC_GNU)
     return QLatin1String("GCC " ) + QLatin1String(__VERSION__);
 #elif defined(Q_CC_MSVC)
@@ -72,10 +72,10 @@ QString compilerString()
 
 void Utils::printBuildInfo()
 {
-    QString info = QString("Qt %1 (%2, %3 bit)").
-            arg(qVersion(),
-                compilerString(),
-                QString::number(QSysInfo::WordSize));
+    QString info = QString("Qt %1 (%2, %3 bit)")
+                       .arg(qVersion())
+                       .arg(compilerString())
+                       .arg(QSysInfo::WordSize);
     qDebug() << QObject::tr("Build with: ") << info;
 }
 
@@ -84,16 +84,16 @@ void Utils::setHighDpiEnvironmentVariable()
     if (Utils::HostOsInfo().isMacHost())
         return;
 
-    //#ifdef Q_OS_WIN
-    //    if (!qEnvironmentVariableIsSet("QT_OPENGL"))
-    //        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-    //#endif
+#ifdef Q_OS_WIN
+    if (!qEnvironmentVariableIsSet("QT_OPENGL"))
+        QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+#endif
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     // work around QTBUG-80934
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-                Qt::HighDpiScaleFactorRoundingPolicy::Round);
+        Qt::HighDpiScaleFactorRoundingPolicy::Round);
 #endif
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 }

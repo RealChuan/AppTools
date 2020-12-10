@@ -1,4 +1,5 @@
 #include "crashdialog.h"
+#include "crashhandler.h"
 
 #include <QtWidgets>
 
@@ -19,7 +20,7 @@ CrashDialog::~CrashDialog()
 
 void CrashDialog::onOpenCrashPath()
 {
-    QDesktopServices::openUrl(QUrl(qApp->applicationDirPath() + "/crashes", QUrl::TolerantMode));
+    openCrashAndLogPath();
 }
 
 void CrashDialog::onRestart()
@@ -71,8 +72,8 @@ void CrashDialog::init()
 {
     QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss-zzz");
     QString path = QString("%1/crashes/%2-System Environment.txt")
-            .arg(qApp->applicationDirPath())
-            .arg(strTime);
+                       .arg(qApp->applicationDirPath())
+                       .arg(strTime);
 
     QFile file(path);
     if(file.open(QIODevice::WriteOnly | QIODevice::Text)){

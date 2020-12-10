@@ -3,13 +3,13 @@
 
 #include "utils_global.h"
 
-#define TIMEMS qPrintable (QTime::currentTime().toString("HH:mm:ss zzz"))
-#define TIME qPrintable (QTime::currentTime().toString("HH:mm:ss"))
-#define QDATE qPrintable (QDate::currentDate().toString("yyyy-MM-dd"))
-#define QTIME qPrintable (QTime::currentTime().toString("HH-mm-ss"))
-#define DATETIME qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"))
-#define STRDATETIME qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss"))
-#define STRDATETIMEMS qPrintable (QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.zzz"))
+#define TIMEMS qPrintable(QTime::currentTime().toString("HH:mm:ss zzz"))
+#define TIME qPrintable(QTime::currentTime().toString("HH:mm:ss"))
+#define QDATE qPrintable(QDate::currentDate().toString("yyyy-MM-dd"))
+#define QTIME qPrintable(QTime::currentTime().toString("HH-mm-ss"))
+#define DATETIME qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"))
+#define STRDATETIME qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss"))
+#define STRDATETIMEMS qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss.zzz"))
 
 #define AppPath qApp->applicationDirPath()
 

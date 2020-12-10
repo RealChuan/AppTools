@@ -12,4 +12,5 @@ void SerialPage::init()
     setWidget(new SerialWidget);
     setButtonName(tr("Serial Assistant"));
     setButtonGroup(MPages::Tool);
+    setButtonObejctName("SerialButton");
 }

@@ -26,6 +26,7 @@ protected:
     void setWidget(QWidget*);
     void setButtonName(const QString&);
     void setButtonGroup(Group);
+    void setButtonObejctName(const QString& objectname);
 
 private:
     QScopedPointer<MPagesPrivate> d;
