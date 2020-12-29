@@ -51,7 +51,6 @@ QString Json::toString(bool pretty) const
 bool Json::save(const QString &path, bool pretty) const
 {
     QFile file(path);
-
     if (!file.open(QIODevice::WriteOnly
                    | QIODevice::Truncate
                    | QIODevice::Text))
