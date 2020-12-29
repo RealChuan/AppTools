@@ -113,7 +113,7 @@ void MessBox::setupUI()
     QWidget *btnWidget = new QWidget(this);
     btnWidget->setObjectName("MessBtnWidget");
     QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
-    btnLayout->setContentsMargins(5, 5, 10, 5);
+    btnLayout->setContentsMargins(10, 5, 20, 5);
     btnLayout->setSpacing(5);
     btnLayout->addStretch();
     btnLayout->addWidget(d->yesButton);

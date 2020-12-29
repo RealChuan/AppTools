@@ -140,6 +140,8 @@ void CommonWidget::mouseDoubleClickEvent(QMouseEvent *event)
         d->maxButton->click();
     else if(d->restoreButton->isVisible())
         d->restoreButton->click();
+
+    QWidget::mouseDoubleClickEvent(event);
 }
 
 void CommonWidget::setupUI()
@@ -148,7 +150,6 @@ void CommonWidget::setupUI()
     d->titleWidget->setObjectName("titleWidget");
 
     QWidget *widget = new QWidget(this);
-    widget->setAttribute(Qt::WA_StyledBackground);
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
     effect->setOffset(0, 0);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
     effect->setColor(Qt::gray);       //设置阴影颜色，也可以setColor(QColor(220,220,220))

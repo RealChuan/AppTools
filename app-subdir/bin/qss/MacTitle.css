@@ -3,6 +3,9 @@
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	max-height: 40px;
+	border-width: 1px;
+	border-style: none none solid none;
+	border-color: rgb(231, 231, 231);
 }
 
 #titleWidget QToolButton {
