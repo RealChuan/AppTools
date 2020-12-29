@@ -177,6 +177,7 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent)
     button->setCheckable(true);
     connect(button, &QToolButton::clicked, this, &PasswordLineEdit::onShowPassword);
     QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(1, 1, 10, 1);
     layout->setSpacing(0);
     layout->addStretch();
     layout->addWidget(button);

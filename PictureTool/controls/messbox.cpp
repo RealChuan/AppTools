@@ -105,15 +105,15 @@ void MessBox::setupUI()
 {
     QHBoxLayout *mLayout = new QHBoxLayout;
     mLayout->setSpacing(20);
-    mLayout->addStretch();
+    mLayout->addSpacerItem(new QSpacerItem(20, 10, QSizePolicy::Maximum, QSizePolicy::Expanding));
     mLayout->addWidget(d->iconLabel);
     mLayout->addWidget(d->messageLabel);
-    mLayout->addStretch();
+    mLayout->addSpacerItem(new QSpacerItem(20, 10, QSizePolicy::Maximum, QSizePolicy::Expanding));
 
     QWidget *btnWidget = new QWidget(this);
     btnWidget->setObjectName("MessBtnWidget");
     QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
-    btnLayout->setContentsMargins(5, 5, 10, 5);
+    btnLayout->setContentsMargins(10, 5, 20, 5);
     btnLayout->setSpacing(5);
     btnLayout->addStretch();
     btnLayout->addWidget(d->yesButton);

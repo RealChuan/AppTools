@@ -33,6 +33,8 @@ Dialog::ExecFlags Dialog::exec()
     });
     loop.exec();
 
+    hide();
+
     return flag;
 }
 

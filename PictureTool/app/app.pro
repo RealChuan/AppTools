@@ -19,8 +19,9 @@ LIBS += -L$$APP_OUTPUT_PATH
 LIBS += \
     -l$$replaceLibName(utils) \
     -l$$replaceLibName(controls) \
+    -l$$replaceLibName(graphics) \
+    -l$$replaceLibName(crashhandler) \
     -l$$replaceLibName(mainwindow) \
-    -l$$replaceLibName(graphics)
 
 RC_ICONS = app.ico
 #ICON     = app.icns

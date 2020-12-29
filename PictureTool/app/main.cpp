@@ -1,6 +1,7 @@
 #include <utils/logasync.h>
 #include <utils/utils.h>
 #include <controls/waitwidget.h>
+#include <crashhandler/crashhandler.h>
 #include <mainwindow/mainwindow.h>
 
 #include <QApplication>
@@ -12,16 +13,20 @@ int main(int argc, char *argv[])
     Utils::setHighDpiEnvironmentVariable();
 
     QApplication a(argc, argv);
+
+    Utils::setCrashHandler();
+
     QDir::setCurrent(a.applicationDirPath());
     Utils::loadLanguage();
 
     // 异步日志
-    //LogAsync *log = LogAsync::instance();
-    //log->setLogLevel(QtDebugMsg); // 实际环境中可通过读取配置设置日志级别
-    //log->startWork();
+    Utils::LogAsync *log = Utils::LogAsync::instance();
+    log->setOrientation(Utils::LogAsync::Orientation::StdAndFile);
+    log->setLogLevel(QtDebugMsg);
+    log->startWork();
 
     Utils::printBuildInfo();
-    Utils::setUTF8Code();
+    //Utils::setUTF8Code();
     Utils::loadFonts();
     Utils::setQSS();
 
@@ -45,6 +50,6 @@ int main(int argc, char *argv[])
     waitWidget.close();
 
     int result = a.exec();
-    //log->stop();
+    log->stop();
     return result;
 }

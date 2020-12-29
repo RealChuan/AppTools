@@ -4,6 +4,7 @@ CONFIG += ordered
 SUBDIRS += \
     utils \
     controls \
+    crashhandler \
     graphics \
     mainwindow \
     app

@@ -3,6 +3,7 @@
         "qss/Common.css",
 		"qss/MacTitle.css",
 		"qss/CommonWidget.css",
+		"qss/CrashWidget.css",
 		"qss/main.css"
     ],
 	
