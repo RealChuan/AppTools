@@ -48,9 +48,9 @@ void Utils::windowCenter(QWidget *window)
     window->move(x, y);
 }
 
-void Utils::sleep(int sec)
+void Utils::msleep(int msec)
 {
-    QTime dieTime = QTime::currentTime().addMSecs(sec);
+    QTime dieTime = QTime::currentTime().addMSecs(msec);
 
     while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);

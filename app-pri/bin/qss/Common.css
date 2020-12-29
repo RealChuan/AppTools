@@ -97,11 +97,11 @@ QAbstractItemView::indicator {
 }
 
 QAbstractItemView::indicator {
-    border-image: url(image/checkbox-unchecked2.png) 0 0 0 0 stretch stretch;
+    border-image: url(image/common/checkbox-unchecked2.png) 0 0 0 0 stretch stretch;
 }
 
 QAbstractItemView::indicator:checked {
-    border-image: url(image/checkbox-checked-selectionmode.png) 0 0 0 0 stretch stretch;
+    border-image: url(image/common/checkbox-checked-selectionmode.png) 0 0 0 0 stretch stretch;
 }
 
 QAbstractItemView::icon {
@@ -346,19 +346,19 @@ QCheckBox::indicator, QRadioButton::indicator {
 }
 
 QCheckBox::indicator {
-    border-image: url(image/checkbox-unchecked2.png);
+    border-image: url(image/common/checkbox-unchecked2.png);
 }
 
 QCheckBox::indicator:checked {
-    border-image: url(image/checkbox-checked-selectionmode.png);
+    border-image: url(image/common/checkbox-checked-selectionmode.png);
 }
 
 QRadioButton::indicator {
-    border-image: url(image/radio-unchecked2.png);
+    border-image: url(image/common/radio-unchecked2.png);
 }
 
 QRadioButton::indicator:checked {
-    border-image: url(image/radio-checked-insensitive2.png);
+    border-image: url(image/common/radio-checked-insensitive2.png);
 }
 
 /******************************************************************************
@@ -414,11 +414,11 @@ QComboBox::drop-down {
     subcontrol-origin: border;
     subcontrol-position: right center;
     border-width: 0 0 0 0;
-    border-image: url(image/arrow-down.png);
+    border-image: url(image/common/arrow-down.png);
 }
 
 QComboBox::drop-down:hover {
-    border-image: url(image/arrow-down-hover.png);
+    border-image: url(image/common/arrow-down-hover.png);
 }
 
 QComboBox QAbstractItemView {
@@ -457,12 +457,12 @@ QAbstractSpinBox::down-button, QAbstractSpinBox::up-button {
 QAbstractSpinBox::down-button {
     subcontrol-position: center left;
     margin-left: 5px;
-    border-image: url(image/minus.png);
+    border-image: url(image/common/minus.png);
 }
 QAbstractSpinBox::up-button {
     subcontrol-position: center right;
     margin-right: 5px;
-    border-image: url(image/plus.png);
+    border-image: url(image/common/plus.png);
 }
 
 /******************************************************************************
@@ -547,19 +547,19 @@ QMenu::indicator {
 
 /* non-exclusive indicator = check box style indicator (see QActionGroup::setExclusive) */
 QMenu::indicator:non-exclusive:unchecked {
-    image: url(image/checkbox-unchecked2.png);
+    image: url(image/common/checkbox-unchecked2.png);
 }
 
 QMenu::indicator:non-exclusive:unchecked:selected {
-    image: url(image/checkbox-unchecked2.png);
+    image: url(image/common/checkbox-unchecked2.png);
 }
 
 QMenu::indicator:non-exclusive:checked {
-    image: url(image/checkbox-checked-selectionmode.png);
+    image: url(image/common/checkbox-checked-selectionmode.png);
 }
 
 QMenu::indicator:non-exclusive:checked:selected {
-    image: url(image/checkbox-checked-selectionmode.png);
+    image: url(image/common/checkbox-checked-selectionmode.png);
 }
 
 QMenuBar {

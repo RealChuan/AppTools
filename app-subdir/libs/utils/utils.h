@@ -30,7 +30,7 @@ UTILS_EXPORT void setUTF8Code();
 UTILS_EXPORT void setQSS();
 UTILS_EXPORT void loadFonts();
 UTILS_EXPORT void windowCenter(QWidget *window);
-UTILS_EXPORT void sleep(int sec);
+UTILS_EXPORT void msleep(int msec);
 UTILS_EXPORT void reboot();
 UTILS_EXPORT void saveLanguage(Language);
 UTILS_EXPORT void loadLanguage();

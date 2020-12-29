@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QCoreApplication>
+#include <QTimer>
 
 namespace Utils {
 
@@ -30,11 +31,12 @@ FileUtil::FileUtil(qint64 days, QObject *parent)
     d->autoDelFileDays = days;
     newDir("log");
     rollFile(0);
+    setTimer();
 }
 
 FileUtil::~FileUtil()
 {
-    d->stream.flush();
+    onFlush();
 }
 
 void FileUtil::onWrite(const QString &msg)
@@ -55,6 +57,11 @@ void FileUtil::onWrite(const QString &msg)
     //d->file.write(msg.toUtf8().constData());
 }
 
+void FileUtil::onFlush()
+{
+    d->stream.flush();
+}
+
 void FileUtil::newDir(const QString &path)
 {
     QDir dir;
@@ -67,7 +74,7 @@ QString FileUtil::getFileName(qint64* now) const
     *now = QDateTime::currentSecsSinceEpoch();
     QString data = QDateTime::fromSecsSinceEpoch(*now).toString("yyyy-MM-dd-hh-mm-ss");
     QString filename = QString("./log/%1.%2.%3.%4.log").arg(qAppName()).
-            arg(data).arg(QSysInfo::machineHostName()).arg(qApp->applicationPid());
+                       arg(data).arg(QSysInfo::machineHostName()).arg(qApp->applicationPid());
     return filename;
 }
 
@@ -87,9 +94,7 @@ bool FileUtil::rollFile(int count)
             d->file.close();
         }
         d->file.setFileName(filename);
-        d->file.open(QIODevice::WriteOnly
-                     | QIODevice::Append
-                     | QIODevice::Unbuffered);
+        d->file.open(QIODevice::WriteOnly| QIODevice::Append| QIODevice::Unbuffered);
         d->stream.setDevice(&d->file);
         fprintf(stderr, "%s\n", filename.toUtf8().constData());
         return true;
@@ -102,9 +107,7 @@ void FileUtil::autoDelFile()
     newDir("log");
     QDir dir("./log/");
 
-    QFileInfoList list = dir.entryInfoList(QDir::Files
-                                           | QDir::NoDotAndDotDot
-                                           , QDir::Time);
+    QFileInfoList list = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
     QDateTime cur = QDateTime::currentDateTime();
     QDateTime pre = cur.addDays(-d->autoDelFileDays);
 
@@ -115,32 +118,57 @@ void FileUtil::autoDelFile()
     }
 }
 
-static QtMsgType g_MsgType = QtWarningMsg;
+void FileUtil::setTimer()
+{
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &FileUtil::onFlush);
+    timer->start(5000); // 5秒刷新一次
+}
+
+static QtMsgType g_msgType = QtWarningMsg;
+static QMutex g_mutex;
+static LogAsync::Orientation g_orientation = LogAsync::Orientation::Std;
 
 // 消息处理函数
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    if(type < g_MsgType)
+    if(type < g_msgType)
         return;
 
     QString level;
     switch(type){
-    case QtDebugMsg:    level = QLatin1String("Debug"); break;
-    case QtWarningMsg:  level = QLatin1String("Warning"); break;
+    case QtDebugMsg: level = QLatin1String("Debug"); break;
+    case QtWarningMsg: level = QLatin1String("Warning"); break;
     case QtCriticalMsg: level = QLatin1String("Critica"); break;
-    case QtFatalMsg:    level = QLatin1String("Fatal"); break;
-    case QtInfoMsg:     level = QLatin1String("Info"); break;
+    case QtFatalMsg: level = QLatin1String("Fatal"); break;
+    case QtInfoMsg: level = QLatin1String("Info"); break;
+    default: level = QLatin1String("Unknown"); break;
     }
 
-    const QString dataTimeString = QDateTime::currentDateTime()
-            .toString("yyyy-MM-dd hh:mm:ss.zzz");
-    const QString threadId = QString::number(qulonglong(QThread::currentThreadId()));
-    QString contexInfo = QString("File:(%1) Line:(%2)")
-            .arg(QString(context.file),QString::number(context.line));
+    const QString dataTimeString(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"));
+    const QString threadId(QString::number(qulonglong(QThread::currentThreadId())));
+    QString contexInfo;
+#ifndef QT_NO_DEBUG
+    contexInfo = QString("File:(%1) Line:(%2)").arg(context.file).arg(context.line);
+#endif
     const QString message = QString("%1 %2 [%3] %4 - %5\n")
-            .arg(dataTimeString, threadId, level, msg, contexInfo);
+                                .arg(dataTimeString, threadId, level, msg, contexInfo);
 
-    LogAsync::instance()->appendBuf(message);
+    switch (g_orientation) {
+    case LogAsync::Orientation::Std:
+        fprintf(stderr, "%s", message.toLocal8Bit().constData());
+        break;
+    case LogAsync::Orientation::File:
+        LogAsync::instance()->appendBuf(message);
+        break;
+    case LogAsync::Orientation::StdAndFile:
+        fprintf(stderr, "%s", message.toLocal8Bit().constData());
+        LogAsync::instance()->appendBuf(message);
+        break;
+    default:
+        fprintf(stderr, "%s", message.toLocal8Bit().constData());
+        break;
+    }
 }
 
 struct LogAsyncPrivate{
@@ -148,18 +176,21 @@ struct LogAsyncPrivate{
     QMutex mutex;
 };
 
-static QMutex mutex;
-
 LogAsync *LogAsync::instance()
 {
-    QMutexLocker locker(&mutex);
+    QMutexLocker locker(&g_mutex);
     static LogAsync log;
     return &log;
 }
 
+void LogAsync::setOrientation(LogAsync::Orientation orientation)
+{
+    g_orientation = orientation;
+}
+
 void LogAsync::setLogLevel(QtMsgType type)
 {
-    g_MsgType = type;
+    g_msgType = type;
 }
 
 void LogAsync::startWork()
@@ -172,7 +203,7 @@ void LogAsync::startWork()
 void LogAsync::stop()
 {
     if(isRunning()){
-        QThread::msleep(500);   // 最后一条日志格式化可能来不及进入信号槽
+        QThread::sleep(1);   // 最后一条日志格式化可能来不及进入信号槽
         quit();
         wait();
     }

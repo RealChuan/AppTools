@@ -23,8 +23,8 @@ WaitWidget::WaitWidget(QWidget *parent)
     : QSplashScreen(parent)
     , d(new WaitWidgetPrivate(this))
 {
-    setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_StyledBackground);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    //setAttribute(Qt::WA_StyledBackground);
     setAttribute(Qt::WA_TranslucentBackground);
     setupUI();
     connect(&d->timer, &QTimer::timeout, this, &WaitWidget::updateProgressBar);

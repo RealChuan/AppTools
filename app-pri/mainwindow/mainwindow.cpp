@@ -128,11 +128,17 @@ void MainWindow::initToolBar()
 QWidget *MainWindow::menuWidget()
 {
     QPushButton *toolsButton = initButton(tr("Common Tools"), Tool);
+    toolsButton->setObjectName("ToolGroupButton");
     QPushButton *tcpButton = initButton(tr("Tcp Assistant"), Tool);
+    tcpButton->setObjectName("TcpButton");
     QPushButton *serialButton = initButton(tr("Serial Assistant"), Tool);
+    serialButton->setObjectName("SerialButton");
     QPushButton *crcButton = initButton(tr("CRC Assistant"), Tool);
+    crcButton->setObjectName("CrcButton");
     QPushButton *aboutButton = initButton(tr("About"), About);
+    aboutButton->setObjectName("AbortGroupButton");
     QPushButton *qtButton = initButton(tr("About Qt"), About);
+    qtButton->setObjectName("QtButton");
 
     connect(qtButton, &QPushButton::clicked, [this]{ QMessageBox::aboutQt(this); });
 

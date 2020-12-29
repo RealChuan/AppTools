@@ -71,6 +71,9 @@
 	max-height: 40px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+	border-width: 1px;
+	border-style: solid none none none;
+	border-color: rgb(231, 231, 231);
 }
 
 /******************************************************************************

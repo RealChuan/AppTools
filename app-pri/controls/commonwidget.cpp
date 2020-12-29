@@ -24,6 +24,9 @@ public:
         centralWidget = new QWidget(owner);
         centralWidget->setObjectName("CommonCentralWidget");
         titleBar = new QWidget(owner);
+        layout = new QHBoxLayout(owner);
+        layout->setSpacing(0);
+        layout->setContentsMargins(shadowPadding, shadowPadding, shadowPadding, shadowPadding);
     }
     QWidget *owner;
     QLabel *iconLabel;
@@ -34,6 +37,9 @@ public:
     QWidget *titleWidget;
     QWidget *centralWidget;
     QWidget *titleBar;
+    QHBoxLayout *layout;
+
+    int shadowPadding = 10;
 
     //记录鼠标位置
     QPoint lastPoint;
@@ -44,8 +50,7 @@ CommonWidget::CommonWidget(QWidget *parent)
     : QWidget(parent)
     , d(new CommonWidgetPrivate(this))
 {
-    setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_StyledBackground);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setupUI();
     resize(1000, 618);
@@ -93,12 +98,19 @@ void CommonWidget::setTitleBar(QWidget *widget)
     layout->addWidget(widget);
 }
 
+void CommonWidget::setShadowPadding(int shadowPadding)
+{
+    d->shadowPadding = shadowPadding;
+}
+
 void CommonWidget::mousePressEvent(QMouseEvent *event)
 {
     if(!d->titleWidget->rect().contains(event->pos()))
         return;     //标题栏点击有效
     //读取坐鼠标点击坐标点
     d->lastPoint = event->globalPos();
+
+    QWidget::mousePressEvent(event);
 }
 
 void CommonWidget::mouseMoveEvent(QMouseEvent *event)
@@ -110,11 +122,14 @@ void CommonWidget::mouseMoveEvent(QMouseEvent *event)
         d->lastPoint = event->globalPos();      //更新记录点
         move(pos() + d->movePoint);
     }
+
+    QWidget::mouseMoveEvent(event);
 }
 
-void CommonWidget::mouseReleaseEvent(QMouseEvent *)
+void CommonWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     d->lastPoint = QPoint();
+    QWidget::mouseReleaseEvent(event);
 }
 
 void CommonWidget::mouseDoubleClickEvent(QMouseEvent *event)
@@ -125,6 +140,8 @@ void CommonWidget::mouseDoubleClickEvent(QMouseEvent *event)
         d->maxButton->click();
     else if(d->restoreButton->isVisible())
         d->restoreButton->click();
+
+    QWidget::mouseDoubleClickEvent(event);
 }
 
 void CommonWidget::setupUI()
@@ -132,13 +149,21 @@ void CommonWidget::setupUI()
     d->titleWidget = titleWidget();
     d->titleWidget->setObjectName("titleWidget");
 
-    QGridLayout *layout = new QGridLayout(this);
+    QWidget *widget = new QWidget(this);
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    effect->setOffset(0, 0);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
+    effect->setColor(Qt::gray);       //设置阴影颜色，也可以setColor(QColor(220,220,220))
+    effect->setBlurRadius(d->shadowPadding);        //设定阴影的模糊半径，数值越大越模糊
+    widget->setGraphicsEffect(effect);
+
+    QGridLayout *layout = new QGridLayout(widget);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(d->titleWidget, 0, 0);
     layout->addWidget(d->centralWidget, 1, 0);
-    layout->addWidget(new QSizeGrip(this), 1, 0,
-                      Qt::AlignRight | Qt::AlignBottom);
+    layout->addWidget(new QSizeGrip(this), 1, 0, Qt::AlignRight | Qt::AlignBottom);
+
+    d->layout->addWidget(widget);
 }
 
 QWidget *CommonWidget::titleWidget()
@@ -149,11 +174,13 @@ QWidget *CommonWidget::titleWidget()
 
     connect(d->minButton, &QToolButton::clicked, this, &CommonWidget::showMinimized);
     connect(d->maxButton, &QToolButton::clicked, [=]{
+        d->layout->setContentsMargins(0, 0, 0, 0);
         showMaximized();
         d->maxButton->hide();
         d->restoreButton->show();
     });
     connect(d->restoreButton, &QToolButton::clicked, [=]{
+        d->layout->setContentsMargins(d->shadowPadding, d->shadowPadding, d->shadowPadding, d->shadowPadding);
         showNormal();
         d->maxButton->show();
         d->restoreButton->hide();
@@ -176,9 +203,7 @@ QWidget *CommonWidget::titleWidget()
     layout->addWidget(d->titleLabel);
     layout->addStretch();
     layout->addWidget(d->titleBar);
-    layout->addSpacerItem(new QSpacerItem(20, 20,
-                                          QSizePolicy::Maximum,
-                                          QSizePolicy::Maximum));
+    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Maximum, QSizePolicy::Maximum));
     layout->addWidget(d->minButton);
     layout->addWidget(d->maxButton);
     layout->addWidget(d->restoreButton);

@@ -22,6 +22,8 @@ public:
     void setCentralWidget(QWidget*);
     void setTitleBar(QWidget*);
 
+    void setShadowPadding(int shadowPadding = 10);
+
 signals:
     void aboutToclose();
 
@@ -29,7 +31,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-
     void mouseDoubleClickEvent(QMouseEvent *event);
 
 private:
