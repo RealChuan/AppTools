@@ -105,7 +105,9 @@ void CommonWidget::setShadowPadding(int shadowPadding)
 
 void CommonWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(!d->titleWidget->rect().contains(event->pos()))
+    QMargins margin = d->layout->contentsMargins();
+    QRect rect = d->titleWidget->rect().adjusted(margin.left(), margin.top(), margin.right(), margin.bottom());
+    if(!rect.contains(event->pos()))
         return;     //标题栏点击有效
     //读取坐鼠标点击坐标点
     d->lastPoint = event->globalPos();
@@ -115,7 +117,8 @@ void CommonWidget::mousePressEvent(QMouseEvent *event)
 
 void CommonWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (isMaximized()) return;
+    if (isMaximized())
+        return;
     if(!d->lastPoint.isNull()){
         //把移动的点记录下来
         d->movePoint = event->globalPos() - d->lastPoint;
