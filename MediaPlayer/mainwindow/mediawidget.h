@@ -27,8 +27,8 @@ private slots:
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;

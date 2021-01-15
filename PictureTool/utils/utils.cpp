@@ -151,3 +151,23 @@ bool Utils::createPath(const QString &path)
         return true;
     return dir.mkpath(path);
 }
+
+QString Utils::bytesToString(qint64 size)
+{
+    const double KB = 1024 * 1.0;
+    const double MB = KB * 1024;
+    const double GB = MB * 1024;
+    const double TB = GB * 1024;
+
+    if (size / TB >= 1)
+        return QString("%1 TB").arg(QString::number(size / TB, 'f', 2));
+    else if (size / GB >= 1)
+        return QString("%1 GB").arg(QString::number(size / GB, 'f', 2));
+    else if (size / MB >= 1)
+        return QString("%1 MB").arg(QString::number(size / MB, 'f', 2));
+    else if (size / KB >= 1)
+        return QString("%1 KB").arg(QString::number(size / KB, 'f', 2));
+    else
+        return QString("%1 B").arg(size);
+}
+

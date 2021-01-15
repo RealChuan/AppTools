@@ -36,6 +36,7 @@ UTILS_EXPORT void saveLanguage(Language);
 UTILS_EXPORT void loadLanguage();
 UTILS_EXPORT Language getCurrentLanguage();
 UTILS_EXPORT bool createPath(const QString& path);
+UTILS_EXPORT QString bytesToString(qint64 size);
 
 }
 

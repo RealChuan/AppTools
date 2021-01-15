@@ -1,11 +1,7 @@
 #ifndef TASKQUEUE_H
 #define TASKQUEUE_H
 
-#include "utils_global.h"
-
-#include <QQueue>
 #include <QMutex>
-#include <QThread>
 
 namespace Utils {
 
@@ -14,7 +10,7 @@ namespace Utils {
 /----------------------------------------------------------------------------*/
 
 template<typename T>
-class UTILS_EXPORT Queue
+class Queue
 {
 public:
     Queue()

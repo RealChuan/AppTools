@@ -3,6 +3,7 @@
 
 #include <graphics/imageview.h>
 #include <controls/messbox.h>
+#include <utils/utils.h>
 
 #include <QtWidgets>
 #include <QtConcurrent>
@@ -16,9 +17,10 @@ public:
         : owner(parent){
         imageView = new ImageView(owner);
         imageViewFormat = new ImageView(owner);
-        imageUrlLabel = new QLabel("-", owner);
-        imageUrlLabel->setWordWrap(true);
+        urlLabel = new QLabel("-", owner);
+        urlLabel->setWordWrap(true);
         sizeLabel = new QLabel("-", owner);
+        fileSizeLabel = new QLabel("-", owner);
         scaleLabel = new QLabel("-", owner);
         imageListView = new ImageListView(owner);
 
@@ -28,7 +30,8 @@ public:
     QWidget *owner;
     ImageView *imageView;
     ImageView *imageViewFormat;
-    QLabel *imageUrlLabel;
+    QLabel *urlLabel;
+    QLabel *fileSizeLabel;
     QLabel *sizeLabel;
     QLabel *scaleLabel;
     ImageVector imageVector;
@@ -82,12 +85,12 @@ void ImageViewer::onImageSizeChanged(const QSize &size)
 
 void ImageViewer::onImageChanged(const QString &url)
 {
-    d->imageUrlLabel->setText(url);
+    d->urlLabel->setText(url);
+    d->fileSizeLabel->setText(Utils::bytesToString(QFile(url).size()));
 
     for(const Image* image: d->imageVector){
         if(image->absoluteFilePath == url){
-            QPixmap pixmap(url);
-            d->imageView->setPixmap(pixmap);
+            d->imageView->setPixmap(QPixmap::fromImage(QImage(url)));
             return;
         }
     }
@@ -105,9 +108,8 @@ void ImageViewer::onChangedImage(int index)
 
 void ImageViewer::onImageLoaded(const QString &filename,
                                 const QString &absoluteFilePath,
-                                const QImage &image)
+                                const QPixmap &pixmap)
 {
-    QPixmap pixmap = QPixmap::fromImage(image);
     if(pixmap.isNull())
         return;
     d->imageVector.push_back(new Image{filename, absoluteFilePath, pixmap});
@@ -156,15 +158,15 @@ void ImageViewer::imageLoad(const QString &fileUrl)
     QFileInfoList list = file.absoluteDir().entryInfoList(QDir::Files
                                                           | QDir::NoDotAndDotDot);
 
-    for(QFileInfo &info : list){
+    for(const QFileInfo &info : list){
         if(!d->runing)
             break;
         QImage image(info.absoluteFilePath());
         if(image.isNull())
             continue;
         if(image.width() > WIDTH)
-            image = image.scaled(WIDTH, WIDTH, Qt::KeepAspectRatio);
-        emit imageLoadReady(info.fileName(), info.absoluteFilePath(), image);
+            image = image.scaled(WIDTH, WIDTH, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        emit imageLoadReady(info.fileName(), info.absoluteFilePath(), QPixmap::fromImage(image));
     }
 }
 
@@ -215,12 +217,14 @@ QWidget *ImageViewer::toolWidget()
 
     QGroupBox *infoBox = new QGroupBox(tr("Image Information"), this);
     QGridLayout *gridLayout = new QGridLayout(infoBox);
-    gridLayout->addWidget(new QLabel(tr("Image Size: "), this), 0, 0, 1, 1);
-    gridLayout->addWidget(d->sizeLabel, 0, 1, 1, 1);
-    gridLayout->addWidget(new QLabel(tr("Scaling Ratio:"), this), 1, 0, 1, 1);
-    gridLayout->addWidget(d->scaleLabel, 1, 1, 1, 1);
-    gridLayout->addWidget(new QLabel(tr("Image Url: "), this), 2, 0, 1, 1);
-    gridLayout->addWidget(d->imageUrlLabel, 2, 1, 1, 1);
+    gridLayout->addWidget(new QLabel(tr("Url: "), this), 0, 0, 1, 1);
+    gridLayout->addWidget(d->urlLabel, 0, 1, 1, 1);
+    gridLayout->addWidget(new QLabel(tr("File Size: "), this), 1, 0, 1, 1);
+    gridLayout->addWidget(d->fileSizeLabel, 1, 1, 1, 1);
+    gridLayout->addWidget(new QLabel(tr("Image Size: "), this), 2, 0, 1, 1);
+    gridLayout->addWidget(d->sizeLabel, 2, 1, 1, 1);
+    gridLayout->addWidget(new QLabel(tr("Scaling Ratio:"), this), 3, 0, 1, 1);
+    gridLayout->addWidget(d->scaleLabel, 3, 1, 1, 1);
 
     QCheckBox *formatBox = new QCheckBox(tr("Format"), this);
     connect(formatBox, &QCheckBox::clicked, this, &ImageViewer::onFormatChecked);

@@ -13,7 +13,7 @@ public:
 
 signals:
     void imageReady(const QImage&);
-    void imageLoadReady(const QString&, const QString&, const QImage&);
+    void imageLoadReady(const QString&, const QString&, const QPixmap&);
 
 private slots:
     void onOpenImage();
@@ -21,7 +21,7 @@ private slots:
     void onImageSizeChanged(const QSize &size);
     void onImageChanged(const QString&);
     void onChangedImage(int);
-    void onImageLoaded(const QString&, const QString&, const QImage&);
+    void onImageLoaded(const QString&, const QString&, const QPixmap&);
 
     void onFormatChecked(bool);
     void onFormatChanged(const QString&);
