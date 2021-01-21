@@ -36,8 +36,10 @@ int main(int argc, char *argv[])
     a.processEvents();
 
     a.setApplicationVersion(QObject::tr("0.0.1"));
-    a.setApplicationDisplayName(QObject::tr("PictureTool"));
-    a.setApplicationName(QObject::tr("PictureTool"));
+    a.setApplicationDisplayName(QObject::tr("Picture Tool"));
+    a.setApplicationName(QObject::tr("Picture Tool"));
+    a.setDesktopFileName(QObject::tr("Picture Tool"));
+    a.setOrganizationDomain(QObject::tr("Youth"));
     a.setOrganizationName(QObject::tr("Youth"));
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();

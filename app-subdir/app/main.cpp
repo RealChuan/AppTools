@@ -44,7 +44,10 @@ int main(int argc, char *argv[])
     a.processEvents();
 
     a.setApplicationVersion(QObject::tr("0.0.1"));
+    a.setApplicationDisplayName(QObject::tr("AppPlugin"));
     a.setApplicationName(QObject::tr("AppPlugin"));
+    a.setDesktopFileName(QObject::tr("AppPlugin"));
+    a.setOrganizationDomain(QObject::tr("Youth"));
     a.setOrganizationName(QObject::tr("Youth"));
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();

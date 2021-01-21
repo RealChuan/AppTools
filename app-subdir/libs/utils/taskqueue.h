@@ -2,6 +2,7 @@
 #define TASKQUEUE_H
 
 #include <QMutex>
+#include <QQueue>
 
 namespace Utils {
 

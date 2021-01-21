@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     a.setApplicationVersion(QObject::tr("0.0.1"));
     a.setApplicationDisplayName(QObject::tr("Media Player"));
     a.setApplicationName(QObject::tr("Media Player"));
+    a.setDesktopFileName(QObject::tr("Media Player"));
+    a.setOrganizationDomain(QObject::tr("Youth"));
     a.setOrganizationName(QObject::tr("Youth"));
 
     // 异步日志
