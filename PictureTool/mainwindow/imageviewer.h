@@ -13,15 +13,17 @@ public:
 
 signals:
     void imageReady(const QImage&);
-    void imageLoadReady(const QString&, const QString&, const QPixmap&);
+    void imageLoadReady(const QString&, const QString&, const QImage&);
 
 private slots:
     void onOpenImage();
+    void onMaskImage();
+
     void onScaleFactorChanged(qreal factor);
     void onImageSizeChanged(const QSize &size);
     void onImageChanged(const QString&);
     void onChangedImage(int);
-    void onImageLoaded(const QString&, const QString&, const QPixmap&);
+    void onImageLoaded(const QString&, const QString&, const QImage&image);
 
     void onFormatChecked(bool);
     void onFormatChanged(const QString&);
@@ -35,7 +37,7 @@ private:
     QWidget *toolWidget();
     void buildConnect();
     
-    QScopedPointer<ImageViewerPrivate> d;
+    QScopedPointer<ImageViewerPrivate> d_ptr;
 };
 
 #endif // IMAGEVIEWER_H

@@ -1,4 +1,5 @@
 #include "imageview.h"
+#include "graphicspixmapitem.h"
 
 #include <controls/messbox.h>
 
@@ -14,16 +15,12 @@ using namespace Control;
 
 namespace Graphics {
 
-const qreal DEFAULT_SCALE_FACTOR = 1.2;
-
 class ImageViewPrivate{
 public:
     ImageViewPrivate(QWidget *parent)
         : owner(parent)
         , menu(new QMenu){
-        imageItem = new QGraphicsPixmapItem;
-        imageItem->setCacheMode(QGraphicsItem::NoCache);
-        imageItem->setZValue(0);
+        pixmapItem = new GraphicsPixmapItem;
 
         // background item
         backgroundItem = new QGraphicsRectItem;
@@ -42,19 +39,22 @@ public:
         outlineItem->setZValue(1);
     }
     QWidget *owner;
-    QGraphicsPixmapItem *imageItem = nullptr;
-    QGraphicsRectItem *backgroundItem = nullptr;
-    QGraphicsRectItem *outlineItem = nullptr;
+    GraphicsPixmapItem *pixmapItem;
+    QGraphicsRectItem *backgroundItem;
+    QGraphicsRectItem *outlineItem;
     bool showBackground = false;
     bool showOutline = false;
     bool showCrossLine = false;
     QString rgbInfo;
     QPointF mousePoint;
     QScopedPointer<QMenu> menu;
+
+    const qreal scaleFactor = 1.2;
 };
 
-ImageView::ImageView(QWidget *parent) : QGraphicsView(parent)
-  , d(new ImageViewPrivate(this))
+ImageView::ImageView(QWidget *parent)
+    : QGraphicsView(parent)
+    , d_ptr(new ImageViewPrivate(this))
 {
     setScene(new QGraphicsScene(this));
     setTransformationAnchor(AnchorUnderMouse);
@@ -75,7 +75,12 @@ ImageView::~ImageView()
 
 QPixmap ImageView::pixmap() const
 {
-    return d->imageItem->pixmap();
+    return d_ptr->pixmapItem->pixmap();
+}
+
+GraphicsPixmapItem *ImageView::pixmapItem()
+{
+    return d_ptr->pixmapItem;
 }
 
 void ImageView::createScene(const QString &imageUrl)
@@ -104,46 +109,47 @@ void ImageView::createScene(const QString &imageUrl)
 
 void ImageView::setPixmap(const QPixmap &pixmap)
 {
-    d->imageItem->setPixmap(pixmap);
-    QRectF rectF = d->imageItem->boundingRect();
-    d->backgroundItem->setRect(rectF);
-    d->outlineItem->setRect(rectF);
+    d_ptr->pixmapItem->setCustomPixmap(pixmap);
+    QRectF rectF = d_ptr->pixmapItem->boundingRect();
+    d_ptr->backgroundItem->setRect(rectF);
+    d_ptr->outlineItem->setRect(rectF);
 
     scene()->setSceneRect(rectF);
-    resetToOriginalSize();
+    //resetToOriginalSize();
+    fitToScreen();
 
-    emit imageSizeChanged(d->imageItem->boundingRect().toRect().size());
+    emit imageSizeChanged(pixmap.size());
 }
 
 void ImageView::setViewBackground(bool enable)
 {
-    d->showBackground = enable;
-    if (d->backgroundItem)
-        d->backgroundItem->setVisible(enable);
+    d_ptr->showBackground = enable;
+    if (d_ptr->backgroundItem)
+        d_ptr->backgroundItem->setVisible(enable);
 }
 
 void ImageView::setViewOutline(bool enable)
 {
-    d->showOutline = enable;
-    if (d->outlineItem)
-        d->outlineItem->setVisible(enable);
+    d_ptr->showOutline = enable;
+    if (d_ptr->outlineItem)
+        d_ptr->outlineItem->setVisible(enable);
 }
 
 void ImageView::setViewCrossLine(bool enable)
 {
-    d->showCrossLine = enable;
+    d_ptr->showCrossLine = enable;
     if(!enable)
         scene()->update();
 }
 
 void ImageView::zoomIn()
 {
-    doScale(DEFAULT_SCALE_FACTOR);
+    doScale(d_ptr->scaleFactor);
 }
 
 void ImageView::zoomOut()
 {
-    doScale(1.0 / DEFAULT_SCALE_FACTOR);
+    doScale(1.0 / d_ptr->scaleFactor);
 }
 
 void ImageView::resetToOriginalSize()
@@ -154,7 +160,7 @@ void ImageView::resetToOriginalSize()
 
 void ImageView::fitToScreen()
 {
-    fitInView(d->imageItem, Qt::KeepAspectRatio);
+    fitInView(d_ptr->pixmapItem, Qt::KeepAspectRatio);
     emitScaleFactor();
 }
 
@@ -183,7 +189,7 @@ void ImageView::drawForeground(QPainter *painter, const QRectF &rect)
     painter->save();
     painter->resetTransform();
 
-    if(d->showCrossLine && d->imageItem){
+    if(d_ptr->showCrossLine && d_ptr->pixmapItem){
         drawInfo(painter);
         drawCrossLine(painter);
     }
@@ -193,7 +199,7 @@ void ImageView::drawForeground(QPainter *painter, const QRectF &rect)
 
 void ImageView::wheelEvent(QWheelEvent *event)
 {
-    qreal factor = qPow(DEFAULT_SCALE_FACTOR, event->angleDelta().y() / 240.0);
+    qreal factor = qPow(d_ptr->scaleFactor, event->angleDelta().y() / 240.0);
     doScale(factor);
     event->accept();
 }
@@ -202,17 +208,17 @@ void ImageView::mouseMoveEvent(QMouseEvent *event)
 {
     QGraphicsView::mouseMoveEvent(event);
 
-    if(d->showCrossLine && d->imageItem){
+    if(d_ptr->showCrossLine && d_ptr->pixmapItem){
         QPointF pointF = mapToScene(event->pos());
-        d->mousePoint = event->pos();
-        if(d->imageItem->contains(pointF)){
-            QRgb rgb = d->imageItem->pixmap().toImage().pixel(pointF.toPoint());
-            d->rgbInfo = QString("( %1, %2 ) | %3 %4 %5")
-                    .arg(QString::number(pointF.x())
-                         , QString::number(pointF.y())
-                         , QString::number(qRed(rgb))
-                         , QString::number(qGreen(rgb))
-                         , QString::number(qBlue(rgb)));
+        d_ptr->mousePoint = event->pos();
+        if(d_ptr->pixmapItem->contains(pointF)){
+            QRgb rgb = d_ptr->pixmapItem->pixmap().toImage().pixel(pointF.toPoint());
+            d_ptr->rgbInfo = QString("( %1, %2 ) | %3 %4 %5")
+                                 .arg(QString::number(pointF.x())
+                                          , QString::number(pointF.y())
+                                          , QString::number(qRed(rgb))
+                                          , QString::number(qGreen(rgb))
+                                          , QString::number(qBlue(rgb)));
             scene()->update();
         }
     }
@@ -248,7 +254,7 @@ void ImageView::dropEvent(QDropEvent *event)
 
 void ImageView::contextMenuEvent(QContextMenuEvent *event)
 {
-    d->menu->exec(event->globalPos());
+    d_ptr->menu->exec(event->globalPos());
 }
 
 void ImageView::initScene()
@@ -264,18 +270,18 @@ void ImageView::initScene()
 
     setBackgroundBrush(tilePixmap);
 
-    scene()->addItem(d->backgroundItem);
-    scene()->addItem(d->imageItem);
-    scene()->addItem(d->outlineItem);
+    scene()->addItem(d_ptr->backgroundItem);
+    scene()->addItem(d_ptr->pixmapItem);
+    scene()->addItem(d_ptr->outlineItem);
 }
 
 void ImageView::createPopMenu()
 {
-    d->menu->addAction(tr("Original Size"), this, &ImageView::resetToOriginalSize);
-    d->menu->addAction(tr("Adapt To Screen"), this, &ImageView::fitToScreen);
-    d->menu->addAction(tr("Rotate 90 Clockwise"), this, &ImageView::rotateNinetieth);
-    d->menu->addAction(tr("Rotate 90 Counterclockwise"), this, &ImageView::anti_rotateNinetieth);
-    d->menu->addSeparator();
+    d_ptr->menu->addAction(tr("Original Size"), this, &ImageView::resetToOriginalSize);
+    d_ptr->menu->addAction(tr("Adapt To Screen"), this, &ImageView::fitToScreen);
+    d_ptr->menu->addAction(tr("Rotate 90 Clockwise"), this, &ImageView::rotateNinetieth);
+    d_ptr->menu->addAction(tr("Rotate 90 Counterclockwise"), this, &ImageView::anti_rotateNinetieth);
+    d_ptr->menu->addSeparator();
 
     QAction *showBackgroundAction = new QAction(tr("Show Background"), this);
     showBackgroundAction->setCheckable(true);
@@ -286,9 +292,9 @@ void ImageView::createPopMenu()
     QAction *showCrossLineAction = new QAction(tr("Show CrossLine"), this);
     showCrossLineAction->setCheckable(true);
     connect(showCrossLineAction, &QAction::triggered, this, &ImageView::setViewCrossLine);
-    d->menu->addAction(showBackgroundAction);
-    d->menu->addAction(showOutlineAction);
-    d->menu->addAction(showCrossLineAction);
+    d_ptr->menu->addAction(showBackgroundAction);
+    d_ptr->menu->addAction(showOutlineAction);
+    d_ptr->menu->addAction(showCrossLineAction);
 }
 
 QRect ImageView::textRect(const Qt::Corner pos, const QFontMetrics &metrics, const QString &text)
@@ -313,12 +319,12 @@ QRect ImageView::textRect(const Qt::Corner pos, const QFontMetrics &metrics, con
 
 void ImageView::drawInfo(QPainter *painter)
 {
-    if(d->rgbInfo.isEmpty())
+    if(d_ptr->rgbInfo.isEmpty())
         return;
     QFontMetrics metrics = painter->fontMetrics();
     int marginX = 5;
     int marginY = metrics.leading() + metrics.ascent() + 2;
-    QRect rect = textRect(Qt::TopRightCorner, metrics, d->rgbInfo);
+    QRect rect = textRect(Qt::TopRightCorner, metrics, d_ptr->rgbInfo);
     QPoint textPos = QPoint(rect.x() + marginX, rect.y() + marginY);
 
     painter->setPen(Qt::NoPen);
@@ -327,7 +333,7 @@ void ImageView::drawInfo(QPainter *painter)
     painter->setBrush(bgColor);
     painter->drawRect(rect);
     painter->setPen(QColor(83,209,255));
-    painter->drawText(textPos, d->rgbInfo);
+    painter->drawText(textPos, d_ptr->rgbInfo);
 }
 
 void ImageView::drawCrossLine(QPainter *painter)
@@ -340,10 +346,10 @@ void ImageView::drawCrossLine(QPainter *painter)
     int w = rect().width();
     int h = rect().height();
 
-    painter->drawLine(QPointF(0, d->mousePoint.y()),
-                      QPointF(w, d->mousePoint.y()));
-    painter->drawLine(QPointF(d->mousePoint.x(), 0),
-                      QPointF(d->mousePoint.x(), h));
+    painter->drawLine(QPointF(0, d_ptr->mousePoint.y()),
+                      QPointF(w, d_ptr->mousePoint.y()));
+    painter->drawLine(QPointF(d_ptr->mousePoint.x(), 0),
+                      QPointF(d_ptr->mousePoint.x(), h));
 }
 
 void ImageView::emitScaleFactor()
@@ -366,9 +372,9 @@ void ImageView::doScale(qreal factor)
 
     scale(actualFactor, actualFactor);
     emitScaleFactor();
-    d->imageItem->setTransformationMode(transform().m11() < 1 ?
-                                            Qt::SmoothTransformation:
-                                            Qt::FastTransformation);
+    d_ptr->pixmapItem->setTransformationMode(transform().m11() < 1 ?
+                                                                   Qt::SmoothTransformation:
+                                                                   Qt::FastTransformation);
 }
 
 void ImageView::reset()

@@ -44,10 +44,12 @@ UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/te
 1. #### PictureTool：  
 
    1. ##### 看图界面：  
+   	<div align=center><img src="PictureTool/doc/ImageView.png"></div>  
+   	
+   2. ##### 马赛克绘制界面：  
+   <div align=center><img src="PictureTool/doc/MaskEdit.png"></div>  
    
-   <div align=center><img src="PictureTool/doc/ImageView.png"></div>  
-   
-   2. ##### 简单图形绘制界面  
+   3. ##### 简单图形绘制界面：  
 
    <div align=center><img src="PictureTool/doc/DrawScene.png"></div>  
    

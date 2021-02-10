@@ -36,15 +36,17 @@ UI Reference: [ Application template ](https://github.com/xtuer/template-app/tre
 
    
 
-### Interface display：  
+### Interface display:  
 
-1. #### PictureTool：  
+1. #### PictureTool:  
 
-   1. ##### Picture interface：  
+   1. ##### Picture Interface:  
+   	<div align=center><img src="PictureTool/doc/ImageView.png"></div>  
+   	
+   2. ##### Mosaic Drawing Interface:  
+   <div align=center><img src="PictureTool/doc/MaskEdit.png"></div>  
    
-   <div align=center><img src="PictureTool/doc/ImageView.png"></div>  
-   
-   2. ##### Simple graphical drawing interface  
+   3. ##### Simple Graphical Drawing Interface:  
 
    <div align=center><img src="PictureTool/doc/DrawScene.png"></div>  
    

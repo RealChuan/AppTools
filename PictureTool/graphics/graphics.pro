@@ -25,6 +25,7 @@ SOURCES += \
     graphicsarcitem.cpp \
     graphicscircleitem.cpp \
     graphicslineitem.cpp \
+    graphicspixmapitem.cpp \
     graphicspolygonitem.cpp \
     graphicsrectitem.cpp \
     graphicsringitem.cpp \
@@ -38,8 +39,11 @@ HEADERS += \
     graphicsarcitem.h \
     graphicscircleitem.h \
     graphicslineitem.h \
+    graphicspixmapitem.h \
     graphicspolygonitem.h \
     graphicsrectitem.h \
     graphicsringitem.h \
     graphicsrotatedrectitem.h \
     imageview.h
+
+RESOURCES +=

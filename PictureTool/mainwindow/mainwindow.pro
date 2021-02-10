@@ -16,11 +16,13 @@ SOURCES += \
     drawwidget.cpp \
     imagelistmodel.cpp \
     imageviewer.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    maskdialog.cpp
 
 HEADERS += \
     drawwidget.h \
     imagelistmodel.h \
     imageviewer.h \
     mainwindow_global.h \
-    mainwindow.h
+    mainwindow.h \
+    maskdialog.h

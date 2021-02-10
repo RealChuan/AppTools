@@ -7,6 +7,7 @@
 
 namespace Graphics {
 
+class GraphicsPixmapItem;
 class ImageViewPrivate;
 class GRAPHICS_EXPORT ImageView : public QGraphicsView
 {
@@ -16,6 +17,7 @@ public:
     ~ImageView() override;
 
     QPixmap pixmap() const;
+    GraphicsPixmapItem *pixmapItem();
 
 public slots:
     void createScene(const QString &imageUrlChanged);
@@ -61,7 +63,7 @@ private:
     void doScale(qreal factor);
     void reset();
 
-    QScopedPointer<ImageViewPrivate> d;
+    QScopedPointer<ImageViewPrivate> d_ptr;
 };
 
 }

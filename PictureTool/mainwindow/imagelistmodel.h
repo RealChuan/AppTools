@@ -10,7 +10,7 @@
 struct Image{
     QString filename;
     QString absoluteFilePath;
-    QPixmap pixmap;
+    QImage image;
 };
 
 typedef QVector<Image*> ImageVector;
