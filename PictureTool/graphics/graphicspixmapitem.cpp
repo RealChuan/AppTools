@@ -85,7 +85,7 @@ QImage GraphicsPixmapItem::maskImage() const
 void GraphicsPixmapItem::setPaintMode(GraphicsPixmapItem::Mode mode)
 {
     d_ptr->mode = mode;
-    setCursorByPenSizeAndMode();
+    setCursorPixmap();
 }
 
 GraphicsPixmapItem::Mode GraphicsPixmapItem::paintMode() const
@@ -96,7 +96,7 @@ GraphicsPixmapItem::Mode GraphicsPixmapItem::paintMode() const
 void GraphicsPixmapItem::setPenSize(int size)
 {
     d_ptr->penSize = size;
-    setCursorByPenSizeAndMode();
+    setCursorPixmap();
     update();
 }
 
@@ -145,12 +145,13 @@ void GraphicsPixmapItem::clearMask()
     update();
 }
 
-void GraphicsPixmapItem::setCursorByPenSizeAndMode()
+void GraphicsPixmapItem::setCursorPixmap()
 {
     if(d_ptr->mode == Normal){
         unsetCursor();
         return;
     }
+
     double size = d_ptr->penSize * d_ptr->scaleFactor;
     QPixmap pixmap(size, size);
     pixmap.fill(Qt::transparent);
@@ -160,14 +161,13 @@ void GraphicsPixmapItem::setCursorByPenSizeAndMode()
     QPen pen(d_ptr->color1);
     pen.setWidth(1);
     painter.setPen(pen);
+    d_ptr->maskPixmap = QPixmap(size, size);
     if(d_ptr->mode == MaskErase){
-        painter.setBrush(Qt::white);
-        d_ptr->maskPixmap = QPixmap(size, size);
         d_ptr->maskPixmap.fill(Qt::white);
+        painter.setBrush(Qt::white);
     }else{
-        QPixmap pix(size, size);
         double w = size / 2.0;
-        QPainter p(&pix);
+        QPainter p(&d_ptr->maskPixmap);
         p.setPen(d_ptr->color1);
         p.setBrush(d_ptr->color1);
         p.drawRect(0, 0, w, w);
@@ -175,14 +175,11 @@ void GraphicsPixmapItem::setCursorByPenSizeAndMode()
         p.setBrush(d_ptr->color2);
         p.drawRect(w, 0, w, w);
         p.drawRect(0, w, w, w);
-        painter.setBrush(QBrush(pix)); // 也可用自定义的图片
-        d_ptr->maskPixmap = pix;
     }
+    painter.setBrush(QBrush(d_ptr->maskPixmap)); // 也可用自定义的图片
     d_ptr->maskPixmap = d_ptr->maskPixmap.scaled(d_ptr->penSize, d_ptr->penSize,
                                                  Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    QRect r = pixmap.rect();
-    painter.drawEllipse(r);
+    painter.drawEllipse(pixmap.rect());
 
     QCursor cursor(pixmap);
     setCursor(cursor);
@@ -266,7 +263,7 @@ void GraphicsPixmapItem::paint(QPainter *painter,
     if(qFuzzyCompare(factor, d_ptr->scaleFactor))
         return;
     d_ptr->scaleFactor = factor;
-    setCursorByPenSizeAndMode();
+    setCursorPixmap();
 }
 
 }

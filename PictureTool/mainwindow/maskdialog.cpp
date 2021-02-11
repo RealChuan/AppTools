@@ -39,6 +39,7 @@ MaskDialog::MaskDialog(QWidget *parent)
     setupUI();
     buildConnect();
     resize(parent->size());
+    show();
 }
 
 MaskDialog::~MaskDialog()
@@ -174,6 +175,7 @@ void MaskDialog::setupUI()
 
     QWidget *widget = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(widget);
+    layout->setContentsMargins(0, 0, 0, 10);
     layout->addWidget(d_ptr->imageView);
     layout->addLayout(editLayout);
 
