@@ -21,7 +21,7 @@ public:
     void clear();
 
 signals:
-    void modify();
+    void modifyPassword();
     void cancel();
 
 private slots:

@@ -28,6 +28,11 @@ private slots:
     void onRegist();
     void onChangedPassword();
     void onCurrentLogin();
+    void onComplete();
+    void onDeleteAccount();
+    void onLogout();
+    void onModifyPassword();
+    void onRegister();
 
 private:
     void setupUI();

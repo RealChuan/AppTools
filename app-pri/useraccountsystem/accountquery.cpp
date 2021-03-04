@@ -5,6 +5,7 @@
 
 #include <QVariant>
 #include <QDebug>
+#include <QSqlError>
 
 using namespace Utils;
 
@@ -19,7 +20,7 @@ public:
     QObject *owner;
     DatabaseSQL *db;
     DatabaseParam dbParam;
-    QStringList allUsername;
+    QStringList userNameList;
 };
 
 AccountQuery::AccountQuery(QObject *parent)
@@ -31,12 +32,18 @@ AccountQuery::AccountQuery(QObject *parent)
         qDebug() << d->db->errorString();
         return;
     }
+    init();
     allUsername();
+}
+
+QStringList AccountQuery::userNameList() const
+{
+    return d->userNameList;
 }
 
 bool AccountQuery::contains(const QString &username)
 {
-    return d->allUsername.contains(username);
+    return d->userNameList.contains(username);
 }
 
 bool AccountQuery::checkAccount(const QString &username, const QString &password)
@@ -47,7 +54,7 @@ bool AccountQuery::checkAccount(const QString &username, const QString &password
     QSqlQuery query = d->db->query(sql);
     if(query.next() && query.value("password").toString() == password)
         return true;
-    qDebug() << d->db->errorString();
+    qWarning() << query.lastError().text();
     return false;
 }
 
@@ -59,11 +66,11 @@ bool AccountQuery::addAccount(const QString &username, const QString &password)
             .arg(password);
 
     QSqlQuery query = d->db->query(sql);
-    if(query.isActive()){
-        d->allUsername.append(username);
+    if(!query.lastError().isValid()){
+        d->userNameList.append(username);
         return true;
     }
-    qDebug() << d->db->errorString();
+    qWarning() << query.lastError().text();
     return false;
 }
 
@@ -75,23 +82,41 @@ bool AccountQuery::updateAccount(const QString &username, const QString &passwor
             .arg(username);
 
     QSqlQuery query = d->db->query(sql);
-    if(query.isActive())
+    if(!query.lastError().isValid())
         return true;
-    qDebug() << d->db->errorString();
+    qWarning() << query.lastError().text();
     return false;
 }
 
 bool AccountQuery::deleteAccount(const QString &username)
 {
-    QString sql = QLatin1String("DELETE FROM account "
-                                "WHERE username = '%1'")
+    QString sql = QLatin1String("DELETE FROM account WHERE username = '%1'")
             .arg(username);
 
     QSqlQuery query = d->db->query(sql);
-    if(query.isActive())
+    if(!query.lastError().isValid())
         return true;
-    qDebug() << d->db->errorString();
+    qWarning() << query.lastError().text();
     return false;
+}
+
+void AccountQuery::init()
+{
+    if(d->db->tableContains("account"))
+        return;
+    const QString createTable("CREATE TABLE [account]("
+                              "[ID] INTEGER NOT NULL ON CONFLICT REPLACE UNIQUE ON CONFLICT REPLACE, "
+                              "[username] VARCHAR(50) NOT NULL ON CONFLICT ROLLBACK UNIQUE ON CONFLICT ROLLBACK, "
+                              "[password] VARCHAR(50) NOT NULL ON CONFLICT FAIL, "
+                              "PRIMARY KEY([ID] COLLATE [BINARY] ASC));"
+                              ""
+                              "CREATE UNIQUE INDEX [name] ON [account]([username]);"
+                              ""
+                              "CREATE INDEX [username] ON [account]([username] COLLATE [BINARY] DESC);");
+
+    QSqlQuery query = d->db->query(createTable);
+    if(query.lastError().isValid())
+        qWarning() << query.lastError().text();
 }
 
 void AccountQuery::loadparam()
@@ -109,8 +134,9 @@ void AccountQuery::allUsername()
 {
     QString sql = QLatin1String("SELECT username FROM account");
     QSqlQuery query = d->db->query(sql);
+    d->userNameList.clear();
     while(query.next())
-        d->allUsername.append(query.value("username").toString());
+        d->userNameList.append(query.value("username").toString());
 }
 
 }

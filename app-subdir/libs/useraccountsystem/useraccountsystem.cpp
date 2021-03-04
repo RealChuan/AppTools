@@ -57,7 +57,7 @@ UserAccountSystem::UserAccountSystem(QWidget *parent)
     setRestoreMaxButtonVisible(false);
     loadSetting();
     if(d->autoLogin && checkCurrentAccount())
-        emit onLoginState(true);
+        onLoginState(true);
     setupUI();
     buildConnect();
     resize(300, 480);
@@ -106,6 +106,41 @@ void UserAccountSystem::onCurrentLogin()
     d->stackedWidget->setCurrentWidget(d->currentLoginWidget);
 }
 
+void UserAccountSystem::onComplete()
+{
+    d->currentAccount.username = d->loginWidget->username();
+    d->currentAccount.password = d->loginWidget->password();
+    d->autoLogin = d->loginWidget->autoLogin();
+    onCurrentLogin();
+}
+
+void UserAccountSystem::onDeleteAccount()
+{
+    d->currentAccount.username.clear();
+    d->currentAccount.password.clear();
+    onLogin();
+}
+
+void UserAccountSystem::onLogout()
+{
+    d->currentAccount.username.clear();
+    d->currentAccount.password.clear();
+    onLogin();
+}
+
+void UserAccountSystem::onModifyPassword()
+{
+    d->currentAccount.password = d->changePasswdWidget->password();
+    onCurrentLogin();
+}
+
+void UserAccountSystem::onRegister()
+{
+    d->currentAccount.username = d->registerWidget->username();
+    d->currentAccount.password = d->registerWidget->password();
+    onCurrentLogin();
+}
+
 void UserAccountSystem::onLoginState(bool state)
 {
     d->login = state;
@@ -126,46 +161,26 @@ void UserAccountSystem::setupUI()
 void UserAccountSystem::buildConnect()
 {
     connect(d->loginWidget, &LoginWidget::registered, this, &UserAccountSystem::onRegist);
-    connect(d->loginWidget, &LoginWidget::complete, [this] {
-        d->currentAccount.username = d->loginWidget->username();
-        d->currentAccount.password = d->loginWidget->password();
-        d->autoLogin = d->loginWidget->autoLogin();
-        onCurrentLogin();
-    });
+    connect(d->loginWidget, &LoginWidget::complete, this, &UserAccountSystem::onComplete);
 
     connect(d->currentLoginWidget, &CurrentLoginWidget::changePassword, this, &UserAccountSystem::onChangedPassword);
-    connect(d->currentLoginWidget, &CurrentLoginWidget::deleteAccount, [this] {
-        d->currentAccount.username.clear();
-        d->currentAccount.password.clear();
-        onLogin();
-    });
-    connect(d->currentLoginWidget, &CurrentLoginWidget::logout, [this] {
-        d->currentAccount.username.clear();
-        d->currentAccount.password.clear();
-        onLogin();
-    });
+    connect(d->currentLoginWidget, &CurrentLoginWidget::deleteAccount, this, &UserAccountSystem::onDeleteAccount);
+    connect(d->currentLoginWidget, &CurrentLoginWidget::logout, this, &UserAccountSystem::onLogout);
 
-    connect(d->changePasswdWidget, &ChangePasswdWidget::modify, [this]{
-        d->currentAccount.password = d->changePasswdWidget->password();
-        onCurrentLogin();
-    });
+    connect(d->changePasswdWidget, &ChangePasswdWidget::modifyPassword, this, &UserAccountSystem::onModifyPassword);
     connect(d->changePasswdWidget, &ChangePasswdWidget::cancel, this, &UserAccountSystem::onCurrentLogin);
 
-    connect(d->registerWidget, &RegisterWidget::registered, [this] {
-        d->currentAccount.username = d->registerWidget->username();
-        d->currentAccount.password = d->registerWidget->password();
-        onCurrentLogin();
-    });
+    connect(d->registerWidget, &RegisterWidget::registered, this, &UserAccountSystem::onRegister);
     connect(d->registerWidget, &RegisterWidget::cancel, this, &UserAccountSystem::onCurrentLogin);
 }
 
 bool UserAccountSystem::checkCurrentAccount()
 {
     if(d->currentAccount.username.isEmpty()
-            || d->currentAccount.password.isEmpty())
+        || d->currentAccount.password.isEmpty())
         return false;
     if(d->accountQuery->checkAccount(d->currentAccount.username,
-                                     d->currentAccount.password))
+                                      d->currentAccount.password))
         return true;
     return false;
 }

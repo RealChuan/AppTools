@@ -112,7 +112,7 @@ void ChangePasswdWidget::onChangePasswd()
     d->promptLabel->clear();
     if(d->accountQuery->updateAccount(d->username, newPassword)){
         d->password = newPassword;
-        emit modify();
+        emit modifyPassword();
         return;
     }
     d->promptLabel->setText(tr("Registration failed, please try again later!"));

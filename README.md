@@ -21,8 +21,10 @@ UI参考：[ 应用模版 ](https://github.com/xtuer/template-app/tree/master/te
 
 3. app-subdir：基于QtCreator的插件系统写的应用（子工程），功能与app-pri类似并不复杂，主要学习QtCreator的插件系统 ；  
 
-4. MediaPlayer ：超级简约十分简单的多媒体播放器；  
+4. MediaPlayer ：超级简约十分简单的多媒体播放器（需要安装LAVFilters以便可以解码更多格式的音视频）；
 
+   1. 另[Qt+Ffmpeg音视频播放器](https://github.com/RealChuan/FfmpegPlayer)，界面很粗糙（UI可参考本程序）；   
+   
    
 
 ### 使用方法：  

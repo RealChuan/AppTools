@@ -40,6 +40,14 @@ void Utils::loadFonts()
     }
 }
 
+void Utils::windowCenter(QWidget *child, QWidget *parent)
+{
+    QSize size = parent->size() - child->size();
+    int x = qMax(0, size.width() / 2);
+    int y = qMax(0, size.height() / 2);
+    child->move(x, y);
+}
+
 void Utils::windowCenter(QWidget *window)
 {
     QSize size = qApp->primaryScreen()->availableSize() - window->size();
@@ -48,8 +56,12 @@ void Utils::windowCenter(QWidget *window)
     window->move(x, y);
 }
 
-void Utils::msleep(int msec)
+void Utils::msleep(qint64 msec)
 {
+    if(msec <= 0){
+        qWarning() << QObject::tr("msec not <= 0!");
+        return;
+    }
     QEventLoop loop;
     QTimer::singleShot(msec, &loop, &QEventLoop::quit);
     loop.exec();
@@ -88,13 +100,16 @@ void Utils::setHighDpiEnvironmentVariable()
         QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    // work around QTBUG-80934
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-        Qt::HighDpiScaleFactorRoundingPolicy::Round);
+    if (Utils::HostOsInfo().isWindowsHost()
+        && !qEnvironmentVariableIsSet("QT_DEVICE_PIXEL_RATIO") // legacy in 5.6, but still functional
+        && !qEnvironmentVariableIsSet("QT_AUTO_SCREEN_SCALE_FACTOR")
+        && !qEnvironmentVariableIsSet("QT_SCALE_FACTOR")
+        && !qEnvironmentVariableIsSet("QT_SCREEN_SCALE_FACTORS")) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    }
 }
 
 void Utils::reboot()

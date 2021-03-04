@@ -229,7 +229,7 @@ void GraphicsRotatedRectItem::paint(QPainter *painter,
         painter->drawPolygon(cache());
         if(option->state & QStyle::State_Selected){
             painter->setPen(QPen(pen().color().darker(), linew));
-            QPointF c1 = (cache()[1] + cache()[2]) / 2;
+            QPointF c1 = (cache().at(1) + cache().at(2)) / 2;
             QLineF l = QLineF(c, c1);
             l = QLineF(c, l.pointAt(0.9));
             painter->drawLine(l);

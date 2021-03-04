@@ -118,7 +118,7 @@ void BasicGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         setCursor(Qt::SizeAllCursor);
     }
 
-    for(QPointF p : d->cache){
+    for(const QPointF &p : qAsConst(d->cache)){
         QPointF m(margin() / 2, margin() / 2);
         QRectF area(p - m, p + m);
         if(area.contains(pos)){
@@ -192,7 +192,8 @@ void BasicGraphicsItem::drawAnchor(QPainter *painter)
     if(!acceptHoverEvents())
         return;
 
-    for(const QPointF &p : cache())
+    QPolygonF polygonF = cache();
+    for(const QPointF &p : qAsConst(polygonF))
         painter->fillRect(QRectF(p.x() - d->margin / 2,
                                  p.y() - d->margin / 2,
                                  d->margin,

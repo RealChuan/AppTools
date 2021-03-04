@@ -1,28 +1,34 @@
 #ifndef LOGINWIDGET_H
 #define LOGINWIDGET_H
-#include <controls/dialog.h>
 
-using namespace Control;
+#include <QWidget>
 
 namespace AccountSystem {
 
 class AccountQuery;
 class LoginWidgetPrivate;
-class LoginWidget : public Dialog
+class LoginWidget : public QWidget
 {
     Q_OBJECT
 public:
-    LoginWidget(AccountQuery*, const QStringList& ,QWidget *parent = nullptr);
+    LoginWidget(AccountQuery*, QWidget *parent = nullptr);
     ~LoginWidget();
+
+    void setNameList(const QStringList &usernameList);
 
     QString username() const;
     QString password() const;
     QStringList usernameList() const;
     bool autoLogin();
 
+    void clear();
+
+signals:
+    void registered();
+    void complete();
+
 private slots:
     void onLogin();
-    void onRegister();
 
 private:
     void setupUI();

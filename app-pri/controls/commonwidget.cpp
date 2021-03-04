@@ -103,6 +103,22 @@ void CommonWidget::setShadowPadding(int shadowPadding)
     d->shadowPadding = shadowPadding;
 }
 
+void CommonWidget::onShowMaximized()
+{
+    d->layout->setContentsMargins(QMargins());
+    showMaximized();
+    d->maxButton->hide();
+    d->restoreButton->show();
+}
+
+void CommonWidget::onShowNormal()
+{
+    d->layout->setContentsMargins(d->shadowPadding, d->shadowPadding, d->shadowPadding, d->shadowPadding);
+    showNormal();
+    d->maxButton->show();
+    d->restoreButton->hide();
+}
+
 void CommonWidget::mousePressEvent(QMouseEvent *event)
 {
     QMargins margin = d->layout->contentsMargins();
@@ -175,19 +191,6 @@ QWidget *CommonWidget::titleWidget()
     closeButton->setObjectName("closeButton");
     closeButton->setToolTip(tr("Close"));
 
-    connect(d->minButton, &QToolButton::clicked, this, &CommonWidget::showMinimized);
-    connect(d->maxButton, &QToolButton::clicked, [=]{
-        d->layout->setContentsMargins(0, 0, 0, 0);
-        showMaximized();
-        d->maxButton->hide();
-        d->restoreButton->show();
-    });
-    connect(d->restoreButton, &QToolButton::clicked, [=]{
-        d->layout->setContentsMargins(d->shadowPadding, d->shadowPadding, d->shadowPadding, d->shadowPadding);
-        showNormal();
-        d->maxButton->show();
-        d->restoreButton->hide();
-    });
     connect(closeButton, &QToolButton::clicked, this, &CommonWidget::aboutToclose);
 
     if(isMaximized()){
@@ -217,6 +220,9 @@ QWidget *CommonWidget::titleWidget()
 
 void CommonWidget::buildConnnect()
 {
+    connect(d->minButton, &QToolButton::clicked, this, &CommonWidget::showMinimized);
+    connect(d->maxButton, &QToolButton::clicked, this, &CommonWidget::onShowMaximized);
+    connect(d->restoreButton, &QToolButton::clicked, this, &CommonWidget::onShowNormal);
     connect(this, &CommonWidget::aboutToclose, this, &CommonWidget::close);
     connect(this, &CommonWidget::windowTitleChanged, d->titleLabel, &QLabel::setText);
     connect(this, &CommonWidget::windowIconChanged, d->iconLabel, &QLabel::setWindowIcon);

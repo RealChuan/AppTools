@@ -21,8 +21,10 @@ UI Reference: [ Application template ](https://github.com/xtuer/template-app/tre
 
 3. app-subdir:  The application (sub-project) written based on QtCreator's plug-in system has similar functions to app-pri and is not complicated. It mainly learns the QtCreator's plug-in system;  
 
-4. MediaPlayer: Super simple and simple multimedia player;  
+4. MediaPlayer: Super simple and simple multimedia player(Need to install LAVFilters so that more formats of audio and video can be decoded);  
 
+   1. Another [Qt+Ffmpeg audio and video player](https://github.com/RealChuan/FfmpegPlayer), the interface is very rough (UI can refer to this program);  
+   
    
 
 ### Instructions:  

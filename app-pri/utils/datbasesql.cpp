@@ -53,6 +53,11 @@ QString DatabaseSQL::errorString() const
     return d->error;
 }
 
+bool DatabaseSQL::tableContains(const QString &tableName)
+{
+    return d->database.tables().contains(tableName);
+}
+
 bool DatabaseSQL::openMySQL(const QString &ip,
                             int port,
                             const QString &databaseName,

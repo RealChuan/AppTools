@@ -7,6 +7,8 @@
 
 #include <QtWidgets>
 
+using namespace Control;
+
 namespace AccountSystem {
 
 class LoginWidgetPrivate{
@@ -30,24 +32,24 @@ public:
 };
 
 LoginWidget::LoginWidget(AccountQuery *accountQuery,
-                         const QStringList &usernameList,
                          QWidget *parent)
-    : Dialog(parent)
+    : QWidget(parent)
     , d(new LoginWidgetPrivate(this))
 {
     setObjectName("LoginWidget");
-    setTitle(tr("Login Widget"));
     d->accountQuery = accountQuery;
-    setMinButtonVisible(true);
     setupUI();
     buildConnect();
-    for(const QString& username: usernameList)
-        d->usernameBox->addAccount(username);
-    resize(300, 485);
 }
 
 LoginWidget::~LoginWidget()
 {
+}
+
+void LoginWidget::setNameList(const QStringList &usernameList)
+{
+    for(const QString& username: usernameList)
+        d->usernameBox->addAccount(username);
 }
 
 QString LoginWidget::username() const
@@ -70,6 +72,12 @@ bool LoginWidget::autoLogin()
     return d->autoLoginBox->isChecked();
 }
 
+void LoginWidget::clear()
+{
+    d->passwordEdit->clear();
+    d->autoLoginBox->setChecked(false);
+}
+
 void LoginWidget::onLogin()
 {
     d->promptLabel->clear();
@@ -89,27 +97,17 @@ void LoginWidget::onLogin()
     if(d->accountQuery->checkAccount(username, password)){
         if(!d->usernameBox->accountList().contains(username))
             d->usernameBox->addAccount(username);
-        accept();
+        emit complete();
         return;
     }
     d->promptLabel->setText(tr("Incorrect account or password!"));
-}
-
-void LoginWidget::onRegister()
-{
-    RegisterWidget regist(d->accountQuery, this);
-    if(regist.exec() == RegisterWidget::Accepted){
-        d->usernameBox->addAccount(regist.username());
-        d->passwordEdit->setText(regist.password());
-        accept();
-    }
 }
 
 void LoginWidget::setupUI()
 {
     QPushButton *registerButton = new QPushButton(tr("Registered"), this);
     registerButton->setObjectName("FlatButton");
-    connect(registerButton, &QPushButton::clicked, this, &LoginWidget::onRegister);
+    connect(registerButton, &QPushButton::clicked, this, &LoginWidget::registered);
 
     QPushButton *loginButton = new QPushButton(tr("Login"), this);
     loginButton->setObjectName("BlueButton");
@@ -120,17 +118,14 @@ void LoginWidget::setupUI()
     chooseLayout->addWidget(d->autoLoginBox);
     chooseLayout->addWidget(registerButton);
 
-    QWidget *widget = new QWidget(this);
-    widget->setObjectName("WhiteWidget");
-    QVBoxLayout *layout = new QVBoxLayout(widget);
+    setObjectName("WhiteWidget");
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(d->avatarWidget);
     layout->addWidget(d->usernameBox);
     layout->addWidget(d->promptLabel);
     layout->addWidget(d->passwordEdit);
     layout->addLayout(chooseLayout);
     layout->addWidget(loginButton);
-
-    setCentralWidget(widget);
 }
 
 void LoginWidget::buildConnect()

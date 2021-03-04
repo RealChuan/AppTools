@@ -212,7 +212,7 @@ PluginSpec *IPlugin::pluginSpec() const
 void IPlugin::addObject(QObject *obj)
 {
     PluginManager::addObject(obj);
-    connect(this, &IPlugin::destroyed, [=]{
+    connect(this, &IPlugin::destroyed, this, [=]{
         PluginManager::removeObject(obj);
     });
 }

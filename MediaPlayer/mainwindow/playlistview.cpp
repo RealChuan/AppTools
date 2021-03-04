@@ -12,11 +12,6 @@
 #include <QScrollBar>
 #include <QStandardPaths>
 
-const QStringList filters({"All support files (*.avi *.mkv *.mp4 *.rmvb *.mp3 *.flac *.ape *.m4a)",
-                           "Video files (*.avi *.mkv *.mp4 *.rmvb)",
-                           "Music files (*.mp3 *.flac *.ape *.m4a)"
-                          });
-
 class PlayListWidgetPrivate{
 public:
     PlayListWidgetPrivate(QWidget *parent)
@@ -33,6 +28,9 @@ public:
     QMediaPlaylist *mediaList;
     PlaylistModel *playListModel;
     QMenu *menu;
+    const QStringList filters = QStringList({"All support files (*.avi *.mkv *.mp4 *.rmvb *.mp3 *.flac *.ape *.m4a)",
+                                             "Video files (*.avi *.mkv *.mp4 *.rmvb)",
+                                             "Music files (*.mp3 *.flac *.ape *.m4a)"});
 };
 
 PlayListView::PlayListView(QWidget *parent)
@@ -64,7 +62,7 @@ void PlayListView::onOpenMedia()
     QFileDialog fileDialog(this);
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
     fileDialog.setWindowTitle(tr("Open Files"));
-    fileDialog.setNameFilters(filters);
+    fileDialog.setNameFilters(d_ptr->filters);
     fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
     if (fileDialog.exec() == QDialog::Accepted)
         onAddMedia(fileDialog.selectedUrls());

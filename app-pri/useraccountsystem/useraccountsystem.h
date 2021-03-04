@@ -1,26 +1,42 @@
 #ifndef USERACCOUNTSYSTEM_H
 #define USERACCOUNTSYSTEM_H
 
-#include <QObject>
+#include <controls/dialog.h>
 
-namespace AccountSystem {
+using namespace Control;
+
+namespace AccountSystem{
 
 class AccountQuery;
 class UserAccountSystemPrivate;
-class UserAccountSystem : public QObject
+class UserAccountSystem : public Dialog
 {
     Q_OBJECT
 public:
-    UserAccountSystem(QObject *parent = nullptr);
+    UserAccountSystem(QWidget *parent = nullptr);
     ~UserAccountSystem();
 
-    void show();
+    bool loginState();
 
 signals:
     void login(bool);
 
+private slots:
+    void onLogin();
+    void onRegist();
+    void onChangedPassword();
+    void onCurrentLogin();
+    void onComplete();
+    void onDeleteAccount();
+    void onLogout();
+    void onModifyPassword();
+    void onRegister();
+
 private:
+    void setupUI();
+    void buildConnect();
     bool checkCurrentAccount();
+    void onLoginState(bool state);
 
     void loadSetting();
     void saveSetting();

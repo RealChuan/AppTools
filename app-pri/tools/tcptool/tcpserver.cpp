@@ -32,14 +32,14 @@ void TcpServer::onSendMessage(const QByteArray &bytes, const QString &clientInfo
     }
 
     if(clientInfo.isEmpty()) {
-        for(QTcpSocket* client : d->tcpClientVector)
+        for(QTcpSocket* client : qAsConst(d->tcpClientVector))
             client->write(bytes);
     } else {
         QString clientIP = clientInfo.split(":")[0].trimmed();
         int clientPort = clientInfo.split(":")[1].toInt();
-        for(QTcpSocket* client : d->tcpClientVector){
+        for(QTcpSocket* client : qAsConst(d->tcpClientVector)){
             if(client->peerAddress().toString().split("::ffff:")[0] == clientIP &&
-                    client->peerPort() == clientPort)
+                client->peerPort() == clientPort)
                 client->write(bytes);
         }
     }
@@ -58,8 +58,8 @@ void TcpServer::onNewConnect()
     d->tcpClientVector.push_back(client);
 
     QString clientInfo = tr("%1 : %2").
-            arg(client->peerAddress().toString().split("::ffff:")[0]).
-            arg(client->peerPort());
+                         arg(client->peerAddress().toString().split("::ffff:")[0]).
+                         arg(client->peerPort());
     emit newClientInfo(clientInfo);
 
     connect(client, SIGNAL(error(QAbstractSocket::SocketError)),
@@ -74,8 +74,8 @@ void TcpServer::onClientError(QAbstractSocket::SocketError)
     if(nullptr == client) return;
 
     QString error = tr("Client [%1 : %2] Error: %3.").
-            arg(client->peerAddress().toString().split("::ffff:")[0]).
-            arg(client->peerPort()).arg(client->errorString());
+                    arg(client->peerAddress().toString().split("::ffff:")[0]).
+                    arg(client->peerPort()).arg(client->errorString());
 
     emit errorMessage(error);
 }
@@ -87,8 +87,8 @@ void TcpServer::onClientDisconnect()
 
     if(client->state() == QAbstractSocket::UnconnectedState){
         QString clientInfo = tr("%1 : %2").
-                arg(client->peerAddress().toString().split("::ffff:")[0]).
-                arg(client->peerPort());
+                             arg(client->peerAddress().toString().split("::ffff:")[0]).
+                             arg(client->peerPort());
         emit disconnectClientInfo(clientInfo);
         d->tcpClientVector.removeOne(client);
         client->deleteLater();
@@ -109,7 +109,7 @@ void TcpServer::onClientReadyRead()
     //if(bytes.isEmpty()) return;
 
     QString clientInfo = tr("Client [%1 : %2] : ").
-            arg(client->peerAddress().toString().split("::ffff:")[0]).
-            arg(client->peerPort());
+                         arg(client->peerAddress().toString().split("::ffff:")[0]).
+                         arg(client->peerPort());
     emit clientMessage(clientInfo, bytes);
 }

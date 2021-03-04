@@ -7,6 +7,8 @@
 
 #include <QtWidgets>
 
+using namespace Control;
+
 namespace AccountSystem {
 
 class CurrentLoginWidgetPrivate{
@@ -33,23 +35,24 @@ public:
 };
 
 CurrentLoginWidget::CurrentLoginWidget(AccountQuery *accountQuery,
-                                       const QString &username,
-                                       const QString &password,
                                        QWidget *parent)
-    : Dialog(parent)
+    : QWidget(parent)
     , d(new CurrentLoginWidgetPrivate(this))
 {
-    d->username = username;
-    d->password = password;
     d->accountQuery = accountQuery;
-    setTitle(tr("Current Login Widget"));
-    setMinButtonVisible(true);
     setupUI();
-    resize(300, 485);
 }
 
 CurrentLoginWidget::~CurrentLoginWidget()
 {
+}
+
+void CurrentLoginWidget::setAccount(const QString &username, const QString &password)
+{
+    d->username = username;
+    d->password = password;
+    d->accountLabel->setText(tr("Current online account: %1.").arg(d->username));
+    d->passwordEdit->hide();
 }
 
 QString CurrentLoginWidget::password() const
@@ -63,20 +66,13 @@ void CurrentLoginWidget::onDeleteAccount()
     if(d->passwordEdit->isVisible()){
         if(d->passwordEdit->text() == d->password
                 && d->accountQuery->deleteAccount(d->username)){
-            reject();
+            emit deleteAccount();
         }else
             d->promptLabel->setText(tr("Wrong password, please re-enter!"));
         return;
     }
     d->passwordEdit->show();
     d->passwordEdit->setFocus();
-}
-
-void CurrentLoginWidget::onChangePassword()
-{
-    ChangePasswdWidget dialog(d->accountQuery, d->username, d->password, this);
-    if(dialog.exec() == ChangePasswdWidget::Accepted)
-        d->password = dialog.password();
 }
 
 void CurrentLoginWidget::setupUI()
@@ -87,15 +83,12 @@ void CurrentLoginWidget::setupUI()
     logoutButton->setObjectName("BlueButton");
     changePasswdButton->setObjectName("BlueButton");
     deleteAccountButton->setObjectName("GrayButton");
-    connect(logoutButton, &QPushButton::clicked, this, &CurrentLoginWidget::accepted);
-    connect(changePasswdButton, &QPushButton::clicked, this, &CurrentLoginWidget::onChangePassword);
+    connect(logoutButton, &QPushButton::clicked, this, &CurrentLoginWidget::logout);
+    connect(changePasswdButton, &QPushButton::clicked, this, &CurrentLoginWidget::changePassword);
     connect(deleteAccountButton, &QPushButton::clicked, this, &CurrentLoginWidget::onDeleteAccount);
-    d->accountLabel->setText(tr("Current online account: %1.").arg(d->username));
-    d->passwordEdit->hide();
 
-    QWidget *widget = new QWidget(this);
-    widget->setObjectName("WhiteWidget");
-    QGridLayout *layout = new QGridLayout(widget);
+    setObjectName("WhiteWidget");
+    QGridLayout *layout = new QGridLayout(this);
     layout->addWidget(d->avatarWidget, 0, 0, 1, 2);
     layout->addWidget(d->accountLabel, 1, 0, 1, 2);
     layout->addWidget(d->promptLabel, 2, 0, 1, 2);
@@ -103,7 +96,6 @@ void CurrentLoginWidget::setupUI()
     layout->addWidget(changePasswdButton, 4, 0, 1, 1);
     layout->addWidget(deleteAccountButton, 4, 1, 1, 1);
     layout->addWidget(logoutButton, 5, 0, 1, 2);
-    setCentralWidget(widget);
 }
 
 }

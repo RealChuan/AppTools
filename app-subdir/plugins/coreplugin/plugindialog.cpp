@@ -51,7 +51,7 @@ static bool s_isRestartRequired = false;
 
 PluginDialog::PluginDialog(QWidget *parent)
     : Dialog(parent),
-      m_view(new ExtensionSystem::PluginView(this))
+    m_view(new ExtensionSystem::PluginView(this))
 {
     QFrame *frame = new QFrame(this);
     QVBoxLayout *vl = new QVBoxLayout(frame);
@@ -110,8 +110,8 @@ PluginDialog::PluginDialog(QWidget *parent)
             this, &PluginDialog::openDetails);
     connect(m_view, &ExtensionSystem::PluginView::pluginSettingsChanged,
             this, &PluginDialog::updateRestartRequired);
-    connect(m_detailsButton, &QAbstractButton::clicked,
-            [this]  { openDetails(m_view->currentPlugin()); });
+    connect(m_detailsButton, &QAbstractButton::clicked, this, [this]
+            { openDetails(m_view->currentPlugin()); });
     connect(m_errorDetailsButton, &QAbstractButton::clicked,
             this, &PluginDialog::openErrorDetails);
     connect(m_closeButton, &QAbstractButton::clicked,

@@ -27,6 +27,10 @@ public:
 signals:
     void aboutToclose();
 
+private slots:
+    void onShowMaximized();
+    void onShowNormal();
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

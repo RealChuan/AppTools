@@ -72,14 +72,13 @@ void CrashDialog::init()
 {
     QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss-zzz");
     QString path = QString("%1/crashes/%2-System Environment.txt")
-                       .arg(qApp->applicationDirPath())
-                       .arg(strTime);
+                       .arg(qApp->applicationDirPath(), strTime);
 
     QFile file(path);
     if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QStringList systemEnviroment = QProcess::systemEnvironment();
         QString str;
-        for(const QString& info: systemEnviroment){
+        for(const QString& info: qAsConst(systemEnviroment)){
             str += info;
             str += '\n';
         }

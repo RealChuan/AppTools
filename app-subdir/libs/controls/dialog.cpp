@@ -4,12 +4,24 @@
 
 namespace Control {
 
+struct DialogPrivate{
+    QEventLoop loop;
+    Dialog::ExecFlags flag = Dialog::ExecFlags::Close;
+};
+
 Dialog::Dialog(QWidget *parent)
     : CommonWidget(parent)
+    , d_ptr(new DialogPrivate)
 {
     setMinButtonVisible(false);
     setRestoreMaxButtonVisible(false);
+    buildConnect();
     resize(600, 370);
+}
+
+Dialog::~Dialog()
+{
+
 }
 
 Dialog::ExecFlags Dialog::exec()
@@ -17,35 +29,40 @@ Dialog::ExecFlags Dialog::exec()
     setWindowFlags(Qt::Dialog | Qt::Popup | Qt::FramelessWindowHint);
     setWindowModality(Qt::ApplicationModal);
     show();
-    ExecFlags flag = Rejected;
-    QEventLoop loop(this);
-    connect(this, &Dialog::accepted, [&loop, &flag]{
-        flag = Accepted;
-        loop.quit();
-    });
-    connect(this, &Dialog::rejected, [&loop, &flag]{
-        flag = Rejected;
-        loop.quit();
-    });
-    connect(this, &Dialog::aboutToclose, [&loop, &flag]{
-        flag = Close;
-        loop.quit();
-    });
-    loop.exec();
+    raise();
+    activateWindow();
+
+    d_ptr->flag = Close;
+    d_ptr->loop.exec();
 
     hide();
 
-    return flag;
+    return d_ptr->flag;
 }
 
 void Dialog::accept()
 {
-    emit accepted();
+    d_ptr->flag = Accepted;
+    d_ptr->loop.quit();
 }
 
 void Dialog::reject()
 {
-    emit rejected();
+    d_ptr->flag = Rejected;
+    d_ptr->loop.quit();
+}
+
+void Dialog::onClosed()
+{
+    d_ptr->flag = Close;
+    d_ptr->loop.quit();
+}
+
+void Dialog::buildConnect()
+{
+    connect(this, &Dialog::accepted, this, &Dialog::accept);
+    connect(this, &Dialog::rejected, this, &Dialog::reject);
+    connect(this, &Dialog::aboutToclose, this, &Dialog::onClosed);
 }
 
 }

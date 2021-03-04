@@ -16,11 +16,8 @@ inline QString getDumpFileName()
     QString strTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm-ss-zzz");
 
     QString path = QString("%1/crashes/%2-%3-%4-%5.dmp")
-            .arg(qApp->applicationDirPath())
-            .arg(qAppName())
-            .arg(qApp->applicationVersion())
-            .arg(strTime)
-            .arg(qApp->applicationPid());
+                       .arg(qApp->applicationDirPath(), qAppName(), qApp->applicationVersion(), strTime,
+                            QString::number(qApp->applicationPid()));
 
     QFile file(path);
     if(file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
@@ -118,7 +115,7 @@ void Utils::setCrashHandler()
     if(!Utils::createPath(path))
         return;
 
-    //#ifdef QT_NO_DEBUG
+        //#ifdef QT_NO_DEBUG
 
 #if defined(Q_OS_WIN32)
     SetUnhandledExceptionFilter(UnhandledExceptionFilterEx);

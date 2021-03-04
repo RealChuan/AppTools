@@ -93,5 +93,5 @@ void MediaWidget::initMenu()
     m_menu->addAction(tr("Double Screen"), this, &MediaWidget::doubleScreen);
     m_menu->addAction(tr("Full Screen"), this, &MediaWidget::onFullScrren);
     m_menu->addSeparator();
-    m_menu->addAction(tr("Reload QSS"), []{ Utils::setQSS(); });
+    m_menu->addAction(tr("Reload QSS"), this, []{ Utils::setQSS(); });
 }

@@ -351,8 +351,8 @@ void GraphicsArcItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     QPointF p1 = findAnotherPtOfLine(d->arch.center, d->arch.maxRadius, d->arch.startAngle);
     QPointF p2 = findAnotherPtOfLine(d->arch.center, d->arch.maxRadius, d->arch.endAngle);
 
-    QLineF line1(p1, cache()[0]);
-    QLineF line2(p2, cache()[1]);
+    QLineF line1(p1, cache().at(0));
+    QLineF line2(p2, cache().at(1));
 
     if(qAbs(Graphics::distance(point, d->arch.center) - d->arch.minRadius) < margin() / 3) {
         d->mouseRegion = InEdge0;

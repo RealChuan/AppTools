@@ -8,6 +8,10 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+#Release编译,生成*.pdb调试文件
+QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+
 include(utils/utils.pri)
 include(controls/controls.pri)
 include(useraccountsystem/useraccountsystem.pri)
